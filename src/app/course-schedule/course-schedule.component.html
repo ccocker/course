@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-title>Weekly Course Schedule</mat-card-title>
+  <table class="calendar">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th *ngFor="let day of weekDays">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let timeSlot of timeSlots; let i = index">
+        <tr>
+          <td>{{ timeSlot }}</td>
+          <td *ngFor="let day of weekDays">
+            <mat-chip-listbox>
+              <ng-container
+                *ngFor="let booking of getBookingsForTimeSlot(timeSlot, day)"
+              >
+                <mat-chip>
+                  <div class="overflow-container">
+                    <div class="ellipsis">
+                      Room:{{ booking.roomNumber }}
+                      {{ booking.capacity }} Students
+                    </div>
+                    <div class="ellipsis">Class: {{ booking.class }}</div>
+                    <div class="ellipsis">Lecturer: {{ booking.lecturer }}</div>
+                    <div class="ellipsis">
+                      Tutors: {{ booking.tutors.join(", ") }}
+                    </div>
+                  </div>
+                </mat-chip>
+              </ng-container>
+            </mat-chip-listbox>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</mat-card>
