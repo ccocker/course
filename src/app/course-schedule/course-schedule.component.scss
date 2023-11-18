@@ -3,6 +3,7 @@
   grid-template-columns: 100px repeat(7, 1fr); // Adjust the first column width as needed
   grid-auto-rows: minmax(50px, auto); // Adjust the row height as needed
   gap: 1px;
+  grid-auto-flow: row;
 }
 
 .header {
