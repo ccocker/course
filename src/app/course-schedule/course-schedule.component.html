@@ -12,25 +12,21 @@
         <tr>
           <td>{{ timeSlot }}</td>
           <td *ngFor="let day of weekDays">
-            <mat-chip-listbox>
+            <div class="booking-container">
               <ng-container
                 *ngFor="let booking of getBookingsForTimeSlot(timeSlot, day)"
               >
-                <mat-chip>
-                  <div class="overflow-container">
-                    <div class="ellipsis">
-                      Room:{{ booking.roomNumber }}
-                      {{ booking.capacity }} Students
-                    </div>
-                    <div class="ellipsis">Class: {{ booking.class }}</div>
-                    <div class="ellipsis">Lecturer: {{ booking.lecturer }}</div>
-                    <div class="ellipsis">
-                      Tutors: {{ booking.tutors.join(", ") }}
-                    </div>
-                  </div>
-                </mat-chip>
+                <div class="booking-chip">
+                  <span
+                    >Room: {{ booking.roomNumber }} -
+                    {{ booking.capacity }} Students</span
+                  >
+                  <span>Class: {{ booking.class }}</span>
+                  <span>Lecturer: {{ booking.lecturer }}</span>
+                  <span>Tutors: {{ booking.tutors.join(", ") }}</span>
+                </div>
               </ng-container>
-            </mat-chip-listbox>
+            </div>
           </td>
         </tr>
       </ng-container>

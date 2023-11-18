@@ -1,5 +1,3 @@
-/* app-booking-calendar.component.css */
-
 .calendar {
   width: 100%;
   border-collapse: collapse;
@@ -12,73 +10,41 @@
   border: 1px solid #e0e0e0;
 }
 
-/* Set width for the 'Time' column */
 .calendar th:first-child,
 .calendar td:first-child {
-  width: 15%; /* Adjust this value as needed */
+  width: 15%;
 }
 
-/* Set equal width for each day column */
 .calendar th:not(:first-child),
 .calendar td:not(:first-child) {
-  width: calc(
-    85% / 7
-  ); /* Distribute remaining width equally among day columns */
+  width: calc(85% / 7);
 }
 
-/* Add CSS to make classes appear side by side */
-.mat-chip-listbox {
+.booking-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; /* Allow classes to wrap to the next line if needed */
-  align-items: center; /* Vertically align classes in the middle */
+  flex-wrap: nowrap; /* Prevent wrapping to the next line */
+  overflow-x: auto; /* Enable horizontal scrolling if content overflows */
+  gap: 8px; /* Add a gap between events */
 }
 
-.mat-chip {
-  margin: 2px;
-  padding: 8px;
-  line-height: 1.5;
-  white-space: nowrap;
+.booking-chip {
+  background-color: #f0f0f0;
+  padding: 6px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: normal; /* Allow text to wrap */
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
-  flex-grow: 1; /* Allow classes to grow and fill the available space */
+  display: inline-flex;
+  flex-direction: column; /* Stack content vertically */
+  gap: 4px; /* Gap between information spans */
+  align-items: start; /* Align items to the start of the container */
+  width: 120px; /* Fixed width for each booking chip */
+  font-size: 8px; /* Small font size for the text */
 }
 
-/* Adjust font size within mat-chip elements */
-.mat-chip div,
-.mat-chip ul {
-  font-size: 10px; /* Adjust the font size as needed */
-}
-
-/* Add ellipsis and overflow to the contents of the mat-chip */
-.overflow-container {
-  white-space: nowrap;
+span {
+  display: block; /* Each span takes up a full line */
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-/* Set a tooltip for the ellipsis content */
-.ellipsis {
-  position: relative;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  line-height: 1.1;
-}
-
-/* Show the tooltip on hover */
-.ellipsis:hover::after {
-  content: attr(title);
-  display: block;
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 5px;
-  top: 100%;
-  left: 0;
-  white-space: normal;
-  z-index: 999;
 }

@@ -40,39 +40,86 @@ export class CourseScheduleComponent {
       {
         day: 'Monday',
         roomNumber: '012.10.004',
+        timeSlot: '08:30 - 10:30',
         class: 'BC1-G1-1',
-        lecturer: 'Dr. Smith',
+        lecturer: 'Henry Cavill',
         capacity: 120,
       },
       {
         day: 'Monday',
         roomNumber: '012.10.005',
+        timeSlot: '08:30 - 10:30',
         class: 'BC1-G2-1',
-        lecturer: 'Dr. Smith',
-        capacity: 15,
+        lecturer: 'Henry Cavill',
+        capacity: 120,
       },
       {
         day: 'Monday',
-        roomNumber: '014.09.023',
+        roomNumber: '012.10.004',
+        timeSlot: '10:30 - 12:30',
         class: 'BC1-G3-1',
-        lecturer: 'Dr. Smith',
-        capacity: 20,
+        lecturer: 'Henry Cavill',
+        capacity: 120,
+      },
+      {
+        day: 'Monday',
+        roomNumber: '012.10.005',
+        timeSlot: '10:30 - 12:30',
+        class: 'BC1-G4-1',
+        lecturer: 'Henry Cavill',
+        capacity: 120,
+      },
+      {
+        day: 'Monday',
+        roomNumber: '012.10.005',
+        timeSlot: '09:30 - 11:30',
+        class: 'WBC-2-1',
+        lecturer: 'Henry Cavill',
+        capacity: 120,
       },
     ];
 
-    return this.weekDays.map((day) => ({
-      timeSlot: '13:30 - 14:30',
-      bookings: {
-        [day]: roomData
-          .filter((room) => room.day === day)
-          .map((room) => ({
-            roomNumber: room.roomNumber,
-            class: room.class,
-            lecturer: room.lecturer,
-            capacity: room.capacity,
-            tutors: this.generateTutors(room.capacity),
-          })),
-      },
+    type BookingMap = {
+      [timeSlot: string]: {
+        timeSlot: string;
+        bookings: {
+          [day: string]: {
+            roomNumber: string;
+            class: string;
+            lecturer: string;
+            capacity: number;
+            tutors: string[];
+          }[];
+        };
+      };
+    };
+
+    // Create a structure for bookings by time slot
+    const bookingsByTimeSlot = roomData.reduce<BookingMap>((acc, room) => {
+      const timeSlotKey = room.timeSlot;
+      if (!acc[timeSlotKey]) {
+        acc[timeSlotKey] = {
+          timeSlot: room.timeSlot,
+          bookings: this.weekDays.reduce((days, day) => {
+            days[day] = [];
+            return days;
+          }, {} as { [day: string]: any[] }),
+        };
+      }
+      acc[timeSlotKey].bookings[room.day].push({
+        roomNumber: room.roomNumber,
+        class: room.class,
+        lecturer: room.lecturer,
+        capacity: room.capacity,
+        tutors: this.generateTutors(room.capacity),
+      });
+      return acc;
+    }, {});
+
+    // Generate the CourseBooking array from the bookingsByTimeSlot object
+    return Object.values(bookingsByTimeSlot).map(({ timeSlot, bookings }) => ({
+      timeSlot,
+      bookings,
     }));
   }
 
