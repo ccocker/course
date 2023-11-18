@@ -48,21 +48,25 @@
       [style.gridColumnStart]="dayIndex + 2"
       [style.gridRowStart]="slotIndex + 2"
     >
-      <ng-container *ngFor="let event of schedule">
-        <div
-          *ngIf="event.day === day && event.gridRowStart === slotIndex + 2"
-          class="event"
-          [style.gridColumnStart]="event.gridColumnStart"
-          [style.gridColumnEnd]="event.gridColumnEnd"
-          [style.gridRowStart]="event.gridRowStart"
-          [style.gridRowEnd]="event.gridRowEnd"
-        >
-          <div>{{ event.roomNumber + "- Students" + event.capacity }}</div>
-          <div>{{ event.class }}</div>
-          <div>{{ "Lecturer: " + event.lecturer }}</div>
-          <div>{{ "Tutors: " + event.tutors.length }}</div>
-        </div>
-      </ng-container>
+      <!-- Flex container for events in the same time slot -->
+      <div class="event-group">
+        <ng-container *ngFor="let event of schedule">
+          <div
+            *ngIf="event.day === day && event.gridRowStart === slotIndex + 2"
+            class="event"
+            [style.gridColumnStart]="event.gridColumnStart"
+            [style.gridColumnEnd]="event.gridColumnEnd"
+            [style.gridRowStart]="event.gridRowStart"
+            [style.gridRowEnd]="event.gridRowEnd"
+          >
+            <div>{{ event.roomNumber + "- Students" + event.capacity }}</div>
+            <div>{{ event.class }}</div>
+            <div>{{ "Lecturer: " + event.lecturer }}</div>
+            <div>{{ "Tutors: " + event.tutors.length }}</div>
+            <div>{{ "Row End: " + event.gridRowEnd }}</div>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </ng-container>
 </div>

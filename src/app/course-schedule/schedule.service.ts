@@ -14,6 +14,11 @@ export interface ScheduleEvent {
   gridRowEnd?: number;
 }
 
+interface TimeSlotEventGroup {
+  timeSlot: string;
+  events: ScheduleEvent[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -382,6 +387,18 @@ export class ScheduleService {
   ];
 
   constructor() {}
+
+  getEventsByTimeSlot(): TimeSlotEventGroup[] {
+    const groups = new Map<string, ScheduleEvent[]>();
+
+    this.scheduleData.forEach((event) => {
+      const group = groups.get(event.timeSlot) || [];
+      group.push(event);
+      groups.set(event.timeSlot, group);
+    });
+
+    return Array.from(groups, ([timeSlot, events]) => ({ timeSlot, events }));
+  }
 
   calculateGridPosition(event: ScheduleEvent): ScheduleEvent {
     const days = [
