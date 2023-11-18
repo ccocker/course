@@ -22,14 +22,10 @@
 
 .schedule-cell {
   border: 1px solid #ccc;
-  display: flex; /* Allows side-by-side event display */
-  align-items: stretch; /* Aligns events vertically */
   font-size: 8px;
 }
 
 .event-group {
-  flex: 1; /* Each group takes up equal space */
-  display: flex; /* Enables side-by-side layout for events */
   overflow: hidden; /* Keeps content within the cell */
 }
 
@@ -38,5 +34,7 @@
   background-color: #e0e0e0;
   text-align: center;
   margin: 1px; /* Space between events */
-  flex-grow: 1; /* Events take up equal space within the group */
+
+  /* Ensure the event takes the full cell width and can span multiple rows */
+  width: 100%;
 }
