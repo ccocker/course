@@ -99,7 +99,7 @@ export class ScheduleService {
     {
       day: 'Monday',
       roomNumber: '012.10.004',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'WBC-3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -107,7 +107,7 @@ export class ScheduleService {
     {
       day: 'Monday',
       roomNumber: '012.10.005',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'BC2-G3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -187,7 +187,7 @@ export class ScheduleService {
     {
       day: 'Tuesday',
       roomNumber: '012.10.004',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'WBC-3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -195,7 +195,7 @@ export class ScheduleService {
     {
       day: 'Tuesday',
       roomNumber: '012.10.005',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'BC2-G3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -243,7 +243,7 @@ export class ScheduleService {
     {
       day: 'Wednesday',
       roomNumber: '012.10.004',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'WBC-3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -251,7 +251,7 @@ export class ScheduleService {
     {
       day: 'Wednesday',
       roomNumber: '012.10.005',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'BC2-G3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -283,7 +283,7 @@ export class ScheduleService {
     {
       day: 'Thursday',
       roomNumber: '012.10.004',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'WBC-3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -291,7 +291,7 @@ export class ScheduleService {
     {
       day: 'Thursday',
       roomNumber: '012.10.005',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'BC2-G3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -371,7 +371,7 @@ export class ScheduleService {
     {
       day: 'Friday',
       roomNumber: '012.10.004',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'WBC-3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
@@ -379,7 +379,7 @@ export class ScheduleService {
     {
       day: 'Friday',
       roomNumber: '012.10.005',
-      timeSlot: '16:30 - 06:30',
+      timeSlot: '16:30 - 18:30',
       class: 'BC2-G3-1',
       lecturer: 'Henry Cavill',
       capacity: 120,
