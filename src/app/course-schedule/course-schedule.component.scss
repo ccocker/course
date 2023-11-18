@@ -1,70 +1,39 @@
 .calendar {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.calendar th,
-.calendar td {
-  padding: 8px;
-  text-align: center;
-  border: 1px solid #e0e0e0;
-}
-
-.calendar th:first-child,
-.calendar td:first-child {
-  width: 15%;
-}
-
-.calendar th:not(:first-child),
-.calendar td:not(:first-child) {
-  width: calc(85% / 7);
-}
-
-.booking-container {
-  display: flex;
-  flex-wrap: nowrap; /* Prevent wrapping to the next line */
-  overflow-x: auto; /* Enable horizontal scrolling if content overflows */
-  gap: 8px; /* Add a gap between events */
-}
-
-.booking-chip {
-  background-color: #f0f0f0;
-  padding: 6px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  white-space: normal; /* Allow text to wrap */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-flex;
-  flex-direction: column; /* Stack content vertically */
-  gap: 4px; /* Gap between information spans */
-  align-items: start; /* Align items to the start of the container */
-  width: 120px; /* Fixed width for each booking chip */
-  font-size: 8px; /* Small font size for the text */
-}
-
-span {
-  display: block; /* Each span takes up a full line */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.calendar-grid {
   display: grid;
-  grid-template-columns: [times] auto repeat(5, 1fr);
-  grid-auto-rows: 1fr; /* Each row takes an equal fraction of the available space */
-  gap: 4px; /* Adjust the gap between grid items */
+  grid-template-columns: 100px repeat(7, 1fr); // Adjust the first column width as needed
+  grid-auto-rows: minmax(50px, auto); // Adjust the row height as needed
+  gap: 1px;
+}
+
+.header {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  text-align: center;
+  grid-row: 1;
 }
 
 .time-slot {
-  grid-column: times;
-  /* Additional styling */
+  grid-column: 1;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  text-align: right;
+  padding-right: 5px;
 }
 
-.booking-chip {
-  display: flex;
-  flex-direction: column;
-  /* Additional styling */
-  z-index: 1; /* Ensure this is above the grid background but below popups */
-  /* Use background, padding, etc., to style the booking chip */
+.schedule-cell {
+  border: 1px solid #ccc;
+  position: relative; // For positioning events inside
+  font-size: 8px;
+}
+
+.event {
+  // padding: 10px;
+  // margin: 10px;
+  border: 1px solid red;
+  background-color: #e0e0e0;
+  text-align: center;
+  overflow: hidden;
+  position: absolute; // To be positioned absolutely within the schedule-cell
+  width: 100%;
+  height: 100%;
 }

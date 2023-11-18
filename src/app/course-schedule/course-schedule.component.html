@@ -1,43 +1,68 @@
-<mat-card>
-  <mat-card-title>Weekly Course Schedule</mat-card-title>
-  <table class="calendar">
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th *ngFor="let day of weekDays">{{ day }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let timeSlot of timeSlots; let i = index">
-        <tr>
-          <td>{{ timeSlot }}</td>
-          <td *ngFor="let day of weekDays; let di = index">
-            <ng-container
-              *ngIf="
-                getBookingsForTimeSlot(timeSlot, day).length;
-                else emptyCell
-              "
-            >
-              <td
-                [attr.colspan]="booking.colspan"
-                *ngFor="let booking of getBookingsForTimeSlot(timeSlot, day)"
-              >
-                <div class="booking-chip">
-                  <!-- Booking details here -->
-                  <span
-                    >Room: {{ booking.roomNumber }} -
-                    {{ booking.capacity }} Students</span
-                  >
-                  <span>Class: {{ booking.class }}</span>
-                  <span>Lecturer: {{ booking.lecturer }}</span>
-                  <span>Tutors: {{ booking.tutors.join(", ") }}</span>
-                </div>
-              </td>
-            </ng-container>
-            <ng-template #emptyCell><td></td></ng-template>
-          </td>
-        </tr>
+<div class="calendar">
+  <!-- Calendar header: Day of the week labels -->
+  <div class="header">Time/Day</div>
+  <div
+    class="header"
+    *ngFor="
+      let day of [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ]
+    "
+  >
+    {{ day }}
+  </div>
+
+  <!-- Time slot labels on the left side -->
+  <div
+    class="time-slot"
+    *ngFor="let slot of timeSlots; let i = index"
+    [style.gridRowStart]="i + 2"
+  >
+    {{ slot }}
+  </div>
+
+  <!-- Calendar cells for each day and time slot -->
+  <ng-container
+    *ngFor="
+      let day of [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ];
+      let dayIndex = index
+    "
+  >
+    <div
+      *ngFor="let slot of timeSlots; let slotIndex = index"
+      class="schedule-cell"
+      [style.gridColumnStart]="dayIndex + 2"
+      [style.gridRowStart]="slotIndex + 2"
+    >
+      <ng-container *ngFor="let event of schedule">
+        <div
+          *ngIf="event.day === day && event.gridRowStart === slotIndex + 2"
+          class="event"
+          [style.gridColumnStart]="event.gridColumnStart"
+          [style.gridColumnEnd]="event.gridColumnEnd"
+          [style.gridRowStart]="event.gridRowStart"
+          [style.gridRowEnd]="event.gridRowEnd"
+        >
+          <div>{{ event.roomNumber + "- Students" + event.capacity }}</div>
+          <div>{{ event.class }}</div>
+          <div>{{ "Lecturer: " + event.lecturer }}</div>
+          <div>{{ "Tutors: " + event.tutors.length }}</div>
+        </div>
       </ng-container>
-    </tbody>
-  </table>
-</mat-card>
+    </div>
+  </ng-container>
+</div>
