@@ -399,48 +399,60 @@ export class CourseScheduleComponent {
       },
     ];
 
-    type BookingMap = {
-      [timeSlot: string]: {
-        timeSlot: string;
+    const bookingsByDay: { [key: string]: CourseBooking[] } = {};
+
+    // Initialize the bookings for each day of the week
+    this.weekDays.forEach((day) => {
+      bookingsByDay[day] = [];
+    });
+
+    // Go through each roomData item and add it to the corresponding day and time slot
+    roomData.forEach((room) => {
+      const durationSlots = this.calculateDurationSlots(
+        room.timeSlot.split(' - ')[0],
+        room.timeSlot.split(' - ')[1]
+      );
+      const booking: CourseBooking = {
+        timeSlot: room.timeSlot,
         bookings: {
-          [day: string]: {
-            roomNumber: string;
-            class: string;
-            lecturer: string;
-            capacity: number;
-            tutors: string[];
-          }[];
-        };
+          [room.day]: [
+            {
+              roomNumber: room.roomNumber,
+              class: room.class,
+              lecturer: room.lecturer,
+              capacity: room.capacity,
+              tutors: this.generateTutors(room.capacity),
+            },
+          ],
+        },
       };
-    };
 
-    // Create a structure for bookings by time slot
-    const bookingsByTimeSlot = roomData.reduce<BookingMap>((acc, room) => {
-      const timeSlotKey = room.timeSlot;
-      if (!acc[timeSlotKey]) {
-        acc[timeSlotKey] = {
-          timeSlot: room.timeSlot,
-          bookings: this.weekDays.reduce((days, day) => {
-            days[day] = [];
-            return days;
-          }, {} as { [day: string]: any[] }),
-        };
+      // Add the booking to the corresponding day
+      if (!bookingsByDay[room.day].some((b) => b.timeSlot === room.timeSlot)) {
+        // If no booking at this timeslot exists, add a new one
+        bookingsByDay[room.day].push(booking);
+      } else {
+        // If a booking already exists at this timeslot, add this room to it
+        const existingBooking = bookingsByDay[room.day].find(
+          (b) => b.timeSlot === room.timeSlot
+        );
+        existingBooking.bookings[room.day].push({
+          roomNumber: room.roomNumber,
+          class: room.class,
+          lecturer: room.lecturer,
+          capacity: room.capacity,
+          tutors: this.generateTutors(room.capacity),
+        });
       }
-      acc[timeSlotKey].bookings[room.day].push({
-        roomNumber: room.roomNumber,
-        class: room.class,
-        lecturer: room.lecturer,
-        capacity: room.capacity,
-        tutors: this.generateTutors(room.capacity),
-      });
-      return acc;
-    }, {});
+    });
 
-    // Generate the CourseBooking array from the bookingsByTimeSlot object
-    return Object.values(bookingsByTimeSlot).map(({ timeSlot, bookings }) => ({
-      timeSlot,
-      bookings,
-    }));
+    // Flatten the bookings by day into a single array
+    const allBookings: CourseBooking[] = [];
+    this.weekDays.forEach((day) => {
+      allBookings.push(...bookingsByDay[day]);
+    });
+
+    return allBookings;
   }
 
   public generateTutors(capacity: number): string[] {
@@ -487,21 +499,42 @@ export class CourseScheduleComponent {
   getBookingsForTimeSlot(timeSlot: string, day: string): any[] {
     const matchingBookings: any[] = [];
 
-    const startTime = timeSlot.split(' - ')[0];
-
     this.bookings.forEach((booking) => {
-      const bookingStartTime = booking.timeSlot.split(' - ')[0];
-
+      const [bookingStartTime, bookingEndTime] = booking.timeSlot.split(' - ');
       if (
-        bookingStartTime.trim() === startTime.trim() &&
+        timeSlot.startsWith(bookingStartTime.trim()) &&
         booking.bookings[day]?.length > 0
       ) {
-        // Add all bookings for the day and time slot
-        matchingBookings.push(...booking.bookings[day]);
+        const durationSlots = this.calculateDurationSlots(
+          bookingStartTime,
+          bookingEndTime
+        );
+        const bookingWithColspan = {
+          ...booking.bookings[day][0],
+          colspan: durationSlots,
+        };
+        matchingBookings.push(bookingWithColspan);
       }
     });
 
-    console.log(matchingBookings);
     return matchingBookings;
+  }
+
+  private calculateDurationSlots(startTime: string, endTime: string): number {
+    const [startHr, startMin] = startTime.split(':').map(Number);
+    const [endHr, endMin] = endTime.split(':').map(Number);
+    const duration = endHr * 60 + endMin - (startHr * 60 + startMin);
+    return duration / 30; // since each slot is 30 minutes
+  }
+
+  private calculateGridRow(timeSlot: string): { start: number; end: number } {
+    const [startTime, endTime] = timeSlot.split(' - ').map(this.timeToGridLine);
+    return { start: startTime, end: endTime };
+  }
+
+  private timeToGridLine(time: string): number {
+    const [hours, minutes] = time.split(':').map(Number);
+    // Assuming the grid starts at 8:30 am and each row represents 30 minutes
+    return (hours - 8) * 2 + (minutes === 30 ? 2 : 1);
   }
 }

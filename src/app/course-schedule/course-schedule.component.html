@@ -11,12 +11,19 @@
       <ng-container *ngFor="let timeSlot of timeSlots; let i = index">
         <tr>
           <td>{{ timeSlot }}</td>
-          <td *ngFor="let day of weekDays">
-            <div class="booking-container">
-              <ng-container
+          <td *ngFor="let day of weekDays; let di = index">
+            <ng-container
+              *ngIf="
+                getBookingsForTimeSlot(timeSlot, day).length;
+                else emptyCell
+              "
+            >
+              <td
+                [attr.colspan]="booking.colspan"
                 *ngFor="let booking of getBookingsForTimeSlot(timeSlot, day)"
               >
                 <div class="booking-chip">
+                  <!-- Booking details here -->
                   <span
                     >Room: {{ booking.roomNumber }} -
                     {{ booking.capacity }} Students</span
@@ -25,8 +32,9 @@
                   <span>Lecturer: {{ booking.lecturer }}</span>
                   <span>Tutors: {{ booking.tutors.join(", ") }}</span>
                 </div>
-              </ng-container>
-            </div>
+              </td>
+            </ng-container>
+            <ng-template #emptyCell><td></td></ng-template>
           </td>
         </tr>
       </ng-container>

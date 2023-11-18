@@ -48,3 +48,23 @@ span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: [times] auto repeat(5, 1fr);
+  grid-auto-rows: 1fr; /* Each row takes an equal fraction of the available space */
+  gap: 4px; /* Adjust the gap between grid items */
+}
+
+.time-slot {
+  grid-column: times;
+  /* Additional styling */
+}
+
+.booking-chip {
+  display: flex;
+  flex-direction: column;
+  /* Additional styling */
+  z-index: 1; /* Ensure this is above the grid background but below popups */
+  /* Use background, padding, etc., to style the booking chip */
+}
