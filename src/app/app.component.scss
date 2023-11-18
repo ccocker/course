@@ -1,0 +1,84 @@
+/* app-booking-calendar.component.css */
+
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th,
+.calendar td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+/* Set width for the 'Time' column */
+.calendar th:first-child,
+.calendar td:first-child {
+  width: 15%; /* Adjust this value as needed */
+}
+
+/* Set equal width for each day column */
+.calendar th:not(:first-child),
+.calendar td:not(:first-child) {
+  width: calc(
+    85% / 7
+  ); /* Distribute remaining width equally among day columns */
+}
+
+/* Add CSS to make classes appear side by side */
+.mat-chip-listbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Allow classes to wrap to the next line if needed */
+  align-items: center; /* Vertically align classes in the middle */
+}
+
+.mat-chip {
+  margin: 2px;
+  padding: 8px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  flex-grow: 1; /* Allow classes to grow and fill the available space */
+}
+
+/* Adjust font size within mat-chip elements */
+.mat-chip div,
+.mat-chip ul {
+  font-size: 10px; /* Adjust the font size as needed */
+}
+
+/* Add ellipsis and overflow to the contents of the mat-chip */
+.overflow-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Set a tooltip for the ellipsis content */
+.ellipsis {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  line-height: 1.1;
+}
+
+/* Show the tooltip on hover */
+.ellipsis:hover::after {
+  content: attr(title);
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  top: 100%;
+  left: 0;
+  white-space: normal;
+  z-index: 999;
+}
