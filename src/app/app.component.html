@@ -17,9 +17,11 @@
             ? appConfig.loggedInItems
             : appConfig.loggedOutItems
         "
-        href="#"
-        >{{ item }}</a
+        href="javascript:void(0)"
+        (click)="onItemClick(item)"
       >
+        {{ item }}
+      </a>
     </span>
   </mat-toolbar>
   <mat-sidenav-container

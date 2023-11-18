@@ -67,4 +67,16 @@ export class AppComponent {
       this.sidenav.toggle();
     }
   }
+
+  onItemClick(item: string) {
+    if (item === 'Logout') {
+      this.appConfig.isLoggedIn = false;
+    }
+    if (item === 'Login') {
+      this.appConfig.isLoggedIn = true;
+    }
+    // Add your logic here based on the clicked menu item
+    console.log(`Clicked on menu item: ${item}`);
+    // You can navigate to different routes or perform other actions here
+  }
 }
