@@ -43,4 +43,12 @@ export class CourseScheduleComponent {
     this.timeSlots = this.scheduleService.getTimeSlots();
     console.log(this.timeSlots);
   }
+
+  calculateEventStyles(event: any) {
+    return {
+      'grid-row': 'span ' + (event.gridRowEnd - event.gridRowStart + 1),
+      'grid-column':
+        'span ' + (event.gridColumnEnd - event.gridColumnStart + 1),
+    };
+  }
 }
