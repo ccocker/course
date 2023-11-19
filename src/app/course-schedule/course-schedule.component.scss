@@ -34,8 +34,11 @@
   border: 1px solid red;
   background-color: #e0e0e0;
   text-align: center;
-  margin: 1px; /* Space between events */
+  margin: 1px;
 
-  /* Ensure the event takes the full cell width and can span multiple rows */
-  width: 100%;
+  /* Make the event take full height of the cell */
+  height: 50px;
+
+  /* Allow events to be inline and occupy the full width */
+  display: inline-block;
 }
