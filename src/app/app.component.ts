@@ -58,7 +58,7 @@ export class AppComponent {
     showAppTitle: false,
   };
   isLoggedIn$: Observable<boolean>;
-  items = [
+  homePageLinks = [
     { title: 'Login/Register', link: 'https://angular.dev' },
     { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
     { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
