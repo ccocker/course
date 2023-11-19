@@ -9,6 +9,10 @@ export class AuthMockService implements IAuthService {
   private isAuthenticated = false;
   private loginStatus = new BehaviorSubject<boolean>(false); // Add this line
 
+  constructor() {
+    console.log('AuthMockService instance created');
+  }
+
   login(credentials: any): Observable<any> {
     this.isAuthenticated = true;
     this.loginStatus.next(true); // Update login status

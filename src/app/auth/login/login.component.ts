@@ -30,6 +30,7 @@ export class LoginComponent {
 
   constructor() {
     this.authService = authServiceFactory();
+    console.log('LoginComponent created');
   }
 
   login() {

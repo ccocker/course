@@ -70,7 +70,12 @@ export class AppComponent {
   }
 
   constructor(@Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService) {
+    console.log('AppComponent created');
     this.isLoggedIn$ = this.authService.isLoggedIn();
+    this.isLoggedIn$.subscribe((status) => {
+      console.log('Login status changed', status);
+      this.appConfig.isLoggedIn = status;
+    });
   }
 
   subscribeToLoginStatus() {
