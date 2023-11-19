@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'mi-login',
@@ -16,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
   ],
@@ -23,18 +27,18 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  username: string = '';
+  email: string = '';
   password: string = '';
 
   private authService: IAuthService;
 
-  constructor() {
+  constructor(private dialogRef: MatDialogRef<LoginComponent>) {
     this.authService = authServiceFactory();
     console.log('LoginComponent created');
   }
 
   login() {
-    const credentials = { username: this.username, password: this.password };
+    const credentials = { username: this.email, password: this.password };
     this.authService.login(credentials).subscribe(
       (data) => {
         console.log('Login successful', data);
@@ -43,5 +47,15 @@ export class LoginComponent {
         console.error('Login failed', error);
       }
     );
+  }
+
+  loginWithGoogle() {
+    // Handle Google login
+    // this.authService.googleLogin();
+  }
+
+  loginWithFacebook() {
+    // Handle Facebook login
+    // this.authService.facebookLogin();
   }
 }

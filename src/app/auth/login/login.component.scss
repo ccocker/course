@@ -3,18 +3,21 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
 
-.login-form {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-
-  mat-form-field {
-    margin-bottom: 16px;
+  .mat-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
   }
 
-  button {
-    margin-top: 8px;
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .full-width-input,
+  .full-width-button {
+    width: 100%;
   }
 }

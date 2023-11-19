@@ -14,6 +14,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { IAuthService } from './auth/auth-service.interface';
 import { AUTH_SERVICE_TOKEN } from './auth/auth.service';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 interface AppConfig {
   title: string;
@@ -57,6 +58,16 @@ export class AppComponent {
     showAppTitle: false,
   };
   isLoggedIn$: Observable<boolean>;
+  items = [
+    { title: 'Login/Register', link: 'https://angular.dev' },
+    { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
+    { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
+    {
+      title: 'Angular Language Service',
+      link: 'https://angular.dev/tools/language-service',
+    },
+    { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
+  ];
   @ViewChild('sidenav') sidenav!: MatSidenav;
   /**
    * Toggles the text direction between LTR and RTL
@@ -69,13 +80,20 @@ export class AppComponent {
     }
   }
 
-  constructor(@Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService) {
+  constructor(
+    @Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService,
+    private dialog: MatDialog
+  ) {
     console.log('AppComponent created');
     this.isLoggedIn$ = this.authService.isLoggedIn();
     this.isLoggedIn$.subscribe((status) => {
       console.log('Login status changed', status);
       this.appConfig.isLoggedIn = status;
     });
+  }
+
+  trackByTitle(index: number, item: any): string {
+    return item.title;
   }
 
   subscribeToLoginStatus() {
@@ -90,12 +108,22 @@ export class AppComponent {
     }
   }
 
-  onItemClick(item: string) {
+  openLoginDialog() {
+    this.dialog.open(LoginComponent, {
+      height: '400px',
+      width: '300px',
+    });
+  }
+
+  onItemClick(item: any) {
     if (item === 'Logout') {
       this.authService.logout();
     }
     if (item === 'Login') {
       this.appConfig.isLoggedIn = true;
+    }
+    if (item.title === 'Login/Register') {
+      this.openLoginDialog();
     }
     // Add your logic here based on the clicked menu item
     console.log(`Clicked on menu item: ${item}`);
