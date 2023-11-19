@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ScheduleService, ScheduleEvent } from './schedule.service';
+import { ScheduleService, ScheduleEvent } from './services/schedule.service';
 import { FilterEventsPipe } from './events-filter.pipe';
 import { ColorService } from './services/color.service';
 
@@ -31,17 +31,22 @@ export class CourseScheduleComponent {
 
   ngOnInit() {
     this.schedule = this.scheduleService.getSchedule();
+    this.timeSlots = this.scheduleService.getTimeSlots();
+
     const colorConfig = {
-      BC: 'orange',
-      WBC: 'green',
+      BC1: '#FFA500',
+      BC2: '#008000',
+      WBC: '#0000ff',
       // Add more mappings as needed
     };
+
+    // Call the addColorsToObjects function after getting the schedule data
     this.schedule = this.colorService.addColorsToObjects(
       this.schedule,
       colorConfig
     );
+
     console.log(this.schedule);
-    this.timeSlots = this.scheduleService.getTimeSlots();
     console.log(this.timeSlots);
   }
 

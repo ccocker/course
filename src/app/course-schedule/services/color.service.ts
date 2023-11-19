@@ -6,10 +6,28 @@ import { Injectable } from '@angular/core';
 export class ColorService {
   constructor() {}
 
-  generateRandomShadeOfColor(baseColor: string): string {
+  public addColorsToObjects(
+    objects: any[],
+    colorConfig: { [key: string]: string }
+  ): any[] {
+    return objects.map((obj) => {
+      const classValue = obj.class;
+
+      for (const key in colorConfig) {
+        if (classValue.includes(key)) {
+          obj.color = this.generateRandomShadeOfColor(colorConfig[key]);
+          break; // Stop checking after the first match
+        }
+      }
+
+      return obj;
+    });
+  }
+
+  private generateRandomShadeOfColor(baseColor: string): string {
     // Generate a random shade of the base color
-    const minLightness = 40; // Adjust this value to control the minimum lightness
-    const maxLightness = 60; // Adjust this value to control the maximum lightness
+    const minLightness = 10; // Adjust this value to control the minimum lightness
+    const maxLightness = 90; // Adjust this value to control the maximum lightness
     const randomLightness = Math.floor(
       Math.random() * (maxLightness - minLightness + 1) + minLightness
     );
@@ -29,7 +47,7 @@ export class ColorService {
     return `hsl(${hue}, ${saturation}%, ${randomLightness}%)`;
   }
 
-  rgbToHsl(r: number, g: number, b: number): number[] {
+  private rgbToHsl(r: number, g: number, b: number): number[] {
     r /= 255;
     g /= 255;
     b /= 255;
@@ -57,43 +75,5 @@ export class ColorService {
     }
 
     return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
-  }
-
-  addColorsToObjects(
-    objects: any[],
-    colorConfig: { [key: string]: string }
-  ): any[] {
-    const colorMap: { [key: string]: string } = {};
-
-    objects.forEach((obj) => {
-      const classValue = obj.class;
-      if (classValue in colorConfig) {
-        if (!(classValue in colorMap)) {
-          // Generate a random shade of the specified color for the class
-          colorMap[classValue] = this.generateRandomShadeOfColor(
-            colorConfig[classValue]
-          );
-        }
-      }
-    });
-
-    return objects.map((obj) => {
-      const classValue = obj.class;
-      const color =
-        classValue in colorMap
-          ? colorMap[classValue]
-          : this.generateRandomColor();
-      return { ...obj, color };
-    });
-  }
-
-  generateRandomColor(): string {
-    // Generate a random color in hex format
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   }
 }

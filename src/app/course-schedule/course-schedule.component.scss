@@ -18,10 +18,10 @@
 }
 
 .event {
-  /* Style for the events */
   background-color: #007bff;
   color: #fff;
   padding: 5px;
   border-radius: 5px;
   overflow: hidden; /* To hide overflowing content */
+  margin: 2px; /* Add margin to create space around the event */
 }

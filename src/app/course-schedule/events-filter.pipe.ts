@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ScheduleEvent } from './schedule.service';
+import { ScheduleEvent } from './services/schedule.service';
 
 @Pipe({
   name: 'filterEvents',
