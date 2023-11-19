@@ -2,17 +2,7 @@
   <div class="header">Time/Day</div>
   <div
     class="header"
-    *ngFor="
-      let day of [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ]
-    "
+    *ngFor="let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
   >
     {{ day }}
   </div>
@@ -27,15 +17,7 @@
 
   <ng-container
     *ngFor="
-      let day of [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ];
+      let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
       let dayIndex = index
     "
   >

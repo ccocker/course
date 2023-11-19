@@ -401,15 +401,7 @@ export class ScheduleService {
   }
 
   calculateGridPosition(event: ScheduleEvent): ScheduleEvent {
-    const days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ];
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const [startTime, endTime] = event.timeSlot.split(' - ');
 
     const dayIndex = days.indexOf(event.day) + 2; // +2 because of the header and the first column for times
