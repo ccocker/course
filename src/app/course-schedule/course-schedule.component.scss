@@ -1,44 +1,27 @@
 .calendar {
   display: grid;
-  grid-template-columns: 100px repeat(5, 1fr); // Adjust the first column width as needed
-  grid-auto-rows: minmax(50px, auto); // Adjust the row height as needed
-  gap: 1px;
-  grid-auto-flow: row;
-}
-
-.header {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  text-align: center;
-  grid-row: 1;
-}
-
-.time-slot {
-  grid-column: 1;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  text-align: right;
-  padding-right: 5px;
+  grid-template-columns: repeat(
+    6,
+    1fr
+  ); /* Adjust the number of columns as needed */
+  grid-auto-rows: 60px; /* Adjust the row height as needed */
+  grid-gap: 2px; /* Adjust the gap between cells */
 }
 
 .schedule-cell {
+  /* Style for the calendar cells */
+  grid-column: span 1;
+  grid-row: span 1;
   border: 1px solid #ccc;
-  font-size: 8px;
-}
-
-.event-group {
-  overflow: hidden; /* Keeps content within the cell */
+  position: relative;
+  overflow: hidden; /* To hide overflowing content */
 }
 
 .event {
-  border: 1px solid red;
-  background-color: #e0e0e0;
-  text-align: center;
-  margin: 1px;
-
-  /* Make the event take full height of the cell */
-  // height: 50px;
-
-  /* Allow events to be inline and occupy the full width */
-  display: inline-block;
+  /* Style for the events */
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  overflow: hidden; /* To hide overflowing content */
 }

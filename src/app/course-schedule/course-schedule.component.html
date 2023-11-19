@@ -35,7 +35,8 @@
             'grid-column-start': event.gridColumnStart,
             'grid-column-end': event.gridColumnEnd,
             'grid-row-start': event.gridRowStart,
-            'grid-row-end': event.gridRowEnd
+            'grid-row-end':
+              'span ' + (event.gridRowEnd - event.gridRowStart + 1)
           }"
         >
           {{ event.class }} - {{ event.roomNumber }}

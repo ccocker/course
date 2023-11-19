@@ -44,11 +44,16 @@ export class CourseScheduleComponent {
     console.log(this.timeSlots);
   }
 
-  calculateEventStyles(event: any) {
-    return {
-      'grid-row': 'span ' + (event.gridRowEnd - event.gridRowStart + 1),
-      'grid-column':
-        'span ' + (event.gridColumnEnd - event.gridColumnStart + 1),
-    };
+  // Calculate the row span for each event based on the time duration
+  calculateRowSpan(event: any): number {
+    const startTime = event.timeSlot.split(' - ')[0];
+    const endTime = event.timeSlot.split(' - ')[1];
+    const startHour = parseInt(startTime.split(':')[0], 10);
+    const endHour = parseInt(endTime.split(':')[0], 10);
+    const startMinute = parseInt(startTime.split(':')[1], 10);
+    const endMinute = parseInt(endTime.split(':')[1], 10);
+    const totalMinutes = (endHour - startHour) * 60 + (endMinute - startMinute);
+    const rowSpan = totalMinutes / 30; // Assuming each row represents 30 minutes
+    return rowSpan;
   }
 }
