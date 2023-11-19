@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
@@ -10,6 +10,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
+import { LoginComponent } from './auth/login/login.component';
+import { IAuthService } from './auth/auth-service.interface';
+import { AUTH_SERVICE_TOKEN } from './auth/auth.service';
+import { Observable } from 'rxjs';
 
 interface AppConfig {
   title: string;
@@ -34,6 +38,7 @@ interface AppConfig {
     MatToolbarModule,
     MatListModule,
     MatSidenavModule,
+    LoginComponent,
     CourseScheduleComponent,
   ],
   templateUrl: './app.component.html',
@@ -45,12 +50,13 @@ export class AppComponent {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
     sidenavMenuItems: ['Dashboard'],
-    isLoggedIn: true,
+    isLoggedIn: false,
     loggedInItems: ['Logout'],
     loggedOutItems: ['Home', 'About', 'Login'],
     showLogo: true,
     showAppTitle: false,
   };
+  isLoggedIn$: Observable<boolean>;
   @ViewChild('sidenav') sidenav!: MatSidenav;
   /**
    * Toggles the text direction between LTR and RTL
@@ -62,6 +68,17 @@ export class AppComponent {
       mainContainer.dir = this.appConfig.isRtl ? 'rtl' : 'ltr';
     }
   }
+
+  constructor(@Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService) {
+    this.isLoggedIn$ = this.authService.isLoggedIn();
+  }
+
+  subscribeToLoginStatus() {
+    this.authService.isLoggedIn().subscribe((status) => {
+      this.appConfig.isLoggedIn = status;
+    });
+  }
+
   toggleSidenav() {
     if (this.appConfig.isLoggedIn && this.sidenav) {
       this.sidenav.toggle();
@@ -70,7 +87,7 @@ export class AppComponent {
 
   onItemClick(item: string) {
     if (item === 'Logout') {
-      this.appConfig.isLoggedIn = false;
+      this.authService.logout();
     }
     if (item === 'Login') {
       this.appConfig.isLoggedIn = true;

@@ -2,7 +2,7 @@
   <mat-toolbar color="primary" [class.toolbar-rtl]="appConfig.isRtl">
     <button
       mat-icon-button
-      *ngIf="appConfig.isLoggedIn"
+      *ngIf="isLoggedIn$ | async"
       (click)="toggleSidenav()"
     >
       <mat-icon>menu</mat-icon>
@@ -13,7 +13,7 @@
     <span class="menu-items">
       <a
         *ngFor="
-          let item of appConfig.isLoggedIn
+          let item of (isLoggedIn$ | async)
             ? appConfig.loggedInItems
             : appConfig.loggedOutItems
         "
@@ -25,7 +25,7 @@
     </span>
   </mat-toolbar>
   <mat-sidenav-container
-    *ngIf="appConfig.isLoggedIn"
+    *ngIf="isLoggedIn$ | async"
     [class.mat-rtl]="appConfig.isRtl"
     [class.mat-ltr]="!appConfig.isRtl"
   >
@@ -218,7 +218,9 @@
     }
   </style>
   <ng-content></ng-content>
-  <main class="main">
+  <main class="main" *ngIf="!(isLoggedIn$ | async)">
+    {{ isLoggedIn$ | async | json }}
+    <mi-login></mi-login>
     <div class="content">
       <div class="left-side">
         <h1>{{ appConfig.title }}</h1>
