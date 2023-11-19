@@ -6,18 +6,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ScheduleService, ScheduleEvent } from './schedule.service';
 import { FilterEventsPipe } from './events-filter.pipe';
 
-interface CourseBooking {
-  timeSlot: string;
-  bookings: {
-    [key: string]: {
-      roomNumber: string;
-      class: string;
-      lecturer: string;
-      capacity: number;
-      tutors: string[];
-    }[];
-  };
-}
 @Component({
   selector: 'mi-course-schedule',
   standalone: true,
