@@ -34,14 +34,6 @@ export class ScheduleService {
     },
     {
       day: 'Monday',
-      roomNumber: '012.10.004',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G1-1',
-      lecturer: 'Henry Cavill',
-      capacity: 120,
-    },
-    {
-      day: 'Monday',
       roomNumber: '012.10.005',
       timeSlot: '08:30 - 10:30',
       class: 'BC1-G2-1',

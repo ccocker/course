@@ -39,6 +39,7 @@ export class CourseScheduleComponent {
 
   ngOnInit() {
     this.schedule = this.scheduleService.getSchedule();
+    console.log(this.schedule);
     this.timeSlots = this.scheduleService.getTimeSlots();
     console.log(this.timeSlots);
   }

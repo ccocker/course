@@ -31,6 +31,12 @@
         <div
           *ngFor="let event of schedule | filterEvents : day : slot"
           class="event"
+          [ngStyle]="{
+            'grid-column-start': event.gridColumnStart,
+            'grid-column-end': event.gridColumnEnd,
+            'grid-row-start': event.gridRowStart,
+            'grid-row-end': event.gridRowEnd
+          }"
         >
           {{ event.class }} - {{ event.roomNumber }}
         </div>
