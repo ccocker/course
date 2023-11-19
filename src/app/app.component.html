@@ -219,7 +219,6 @@
   </style>
   <ng-content></ng-content>
   <main class="main" *ngIf="!(isLoggedIn$ | async)">
-    {{ isLoggedIn$ | async | json }}
     <mi-login></mi-login>
     <div class="content">
       <div class="left-side">

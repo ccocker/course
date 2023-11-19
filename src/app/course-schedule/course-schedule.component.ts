@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ScheduleService, ScheduleEvent } from './schedule.service';
 import { FilterEventsPipe } from './events-filter.pipe';
+import { ColorService } from './services/color.service';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -23,10 +24,22 @@ export class CourseScheduleComponent {
   schedule: ScheduleEvent[];
   timeSlots: string[];
 
-  constructor(private scheduleService: ScheduleService) {}
+  constructor(
+    private scheduleService: ScheduleService,
+    private colorService: ColorService
+  ) {}
 
   ngOnInit() {
     this.schedule = this.scheduleService.getSchedule();
+    const colorConfig = {
+      BC: 'orange',
+      WBC: 'green',
+      // Add more mappings as needed
+    };
+    this.schedule = this.colorService.addColorsToObjects(
+      this.schedule,
+      colorConfig
+    );
     console.log(this.schedule);
     this.timeSlots = this.scheduleService.getTimeSlots();
     console.log(this.timeSlots);

@@ -8,6 +8,7 @@ export interface ScheduleEvent {
   lecturer: string;
   capacity: number;
   tutors?: string[];
+  color?: string;
   gridColumnStart?: number;
   gridColumnEnd?: number;
   gridRowStart?: number;
