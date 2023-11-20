@@ -26,8 +26,8 @@ export class ColorService {
 
   private generateRandomShadeOfColor(baseColor: string): string {
     // Generate a random shade of the base color
-    const minLightness = 10; // Adjust this value to control the minimum lightness
-    const maxLightness = 80; // Adjust this value to control the maximum lightness
+    const minLightness = 60; // Adjust this value to control the minimum lightness
+    const maxLightness = 90; // Adjust this value to control the maximum lightness
     const randomLightness = Math.floor(
       Math.random() * (maxLightness - minLightness + 1) + minLightness
     );
