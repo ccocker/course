@@ -45,17 +45,30 @@ eventsOverlap(event1: ScheduleEvent, event2: ScheduleEvent): boolean {
   return start1 < end2 && end1 > start2;
 }
 
-// Helper function to sort events by day and start time
 sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
+  // Define the order of the days
+  const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
   return schedule.sort((a, b) => {
-    if (a.day === b.day) {
-      return this.convertTimeToMinutes(a.timeSlot.split(' - ')[0]) -
-             this.convertTimeToMinutes(b.timeSlot.split(' - ')[0]);
+    // Compare the index of the days in the daysOrder array
+    const dayIndexA = daysOrder.indexOf(a.day);
+    const dayIndexB = daysOrder.indexOf(b.day);
+
+    if (dayIndexA !== dayIndexB) {
+      return dayIndexA - dayIndexB; // Sort by the index of the day
     }
-    return a.day.localeCompare(b.day);
+
+    // If the days are the same, compare the start times
+    const startA = this.convertTimeToMinutes(a.timeSlot.split(' - ')[0]);
+    const startB = this.convertTimeToMinutes(b.timeSlot.split(' - ')[0]);
+    return startA - startB; // Sort by start time if the days are the same
   });
 }
 
+
+
+
+// Helper function to sort events by day and start time
 
 assignColumnsToEvents() {
   // Sort events by day and start time to compare overlapping times
@@ -69,6 +82,12 @@ assignColumnsToEvents() {
 
   sortedSchedule.forEach((event, index) => {
     const currentEventDay = event.day;
+
+    if (currentEventDay === "Thursday") {
+    // It's Thursday, you can perform your logic here
+    console.log("This event is on Thursday:", event);
+  }
+
     const currentEventStart = this.convertTimeToMinutes(event.timeSlot.split(' - ')[0]);
     const currentEventEnd = this.convertTimeToMinutes(event.timeSlot.split(' - ')[1]);
 
@@ -104,10 +123,6 @@ assignColumnsToEvents() {
     event.gridColumnEnd = currentColumn; // Assuming events take up only one column
   });
 }
-
-// ... (Other methods like convertTimeToMinutes and sortEventsByDayAndTime remain unchanged)
-
-
 
 assignRowsToEvents() {
   // Sort events by day and start time to compare overlapping times

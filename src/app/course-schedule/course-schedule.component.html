@@ -1,3 +1,5 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <body>
   <div class="timetable">
     <!-- Timeslots -->
@@ -33,11 +35,12 @@
     'background-color': event.color
   }"
 >
+
+   <div><br />
+      {{ event.class }}<br />
+      {{ event.roomNumber }} ({{ event.capacity }})<br /><br />
+      {{ event.lecturer }}<br />
+  </div>
   <!-- Event details -->
-  <div>{{ event.class }}</div>
-  <div>{{ event.roomNumber }}</div>
-  <div>{{ event.timeSlot }}</div>
-  <div>{{ event.lecturer }}</div>
-  <div>{{ event.capacity }}</div>
 </div>
 

@@ -7,8 +7,9 @@ body {
 }
 
 .timetable {
+  width:1500px;
   display: grid;
-  grid-template-columns: 60px repeat(13, 1fr);
+  grid-template-columns: 60px repeat(13, minmax(0, 1fr));
   grid-auto-rows: 30px;
   gap: 2px;
 }
