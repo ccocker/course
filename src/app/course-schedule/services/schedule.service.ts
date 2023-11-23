@@ -24,40 +24,106 @@ interface TimeSlotEventGroup {
 	providedIn: 'root'
 })
 export class ScheduleService {
-	private scheduleData: ScheduleEvent[] = [
-		{
-			day: 'Monday',
-			roomNumber: '012.10.004',
-			timeSlot: '08:30 - 10:30',
-			class: 'BC1-G1-1',
-			lecturer: 'Henry Cavill',
-			capacity: 120
-		},
-		{
-			day: 'Monday',
-			roomNumber: '012.10.005',
-			timeSlot: '08:30 - 10:30',
-			class: 'BC1-G2-1',
-			lecturer: 'Henry Cavill',
-			capacity: 150
-		},
-		{
-			day: 'Monday',
-			roomNumber: '014.09.023',
-			timeSlot: '09:30 - 11:30',
-			class: 'WBC-G2-1',
-			lecturer: 'Henry Cavill',
-			capacity: 60
-		},
-		{
-			day: 'Monday',
-			roomNumber: '014.09.023',
-			timeSlot: '11:30 - 12:00',
-			class: 'WBC-G2-1',
-			lecturer: 'Henry Cavill',
-			capacity: 60
-		},
+    private scheduleData: ScheduleEvent[] = [
+    {
+      day: 'Monday',
+      roomNumber: '012.10.004',
+      timeSlot: '08:30 - 10:30',
+      class: 'BC1-G1-1',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.005',
+      timeSlot: '08:30 - 10:30',
+      class: 'BC1-G2-1',
+      lecturer: 'Henry Cavill',
+      capacity: 150,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.004',
+      timeSlot: '09:30 - 11:30',
+      class: 'WBC-G1-1',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.004',
+      timeSlot: '10:30 - 12:30',
+      class: 'BC1-G3-1',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.005',
+      timeSlot: '10:30 - 12:30',
+      class: 'BC1-G4-1',
+      lecturer: 'Henry Cavill',
+      capacity: 150,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.004',
+      timeSlot: '12:30 - 14:30',
+      class: 'BC1-G5-1',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.005',
+      timeSlot: '12:30 - 14:30',
+      class: 'BC1-G6-1',
+      lecturer: 'Henry Cavill',
+      capacity: 150,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.004',
+      timeSlot: '14:30 - 16:30',
+      class: 'WBC-G1-1',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.005',
+      timeSlot: '14:30 - 16:30',
+      class: 'BC2-G2-1',
+      lecturer: 'Henry Cavill',
+      capacity: 150,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.004',
+      timeSlot: '16:30 - 18:30',
+      class: 'BC1-7-1',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
+    {
+      day: 'Monday',
+      roomNumber: '012.10.005',
+      timeSlot: '16:30 - 18:30',
+      class: 'BC2-G2-1',
+      lecturer: 'Henry Cavill',
+      capacity: 150,
+    },
+    {
+      day: 'Tuesday',
+      roomNumber: '012.10.004',
+      timeSlot: '08:30 - 10:30',
+      class: 'BC1-G1-2',
+      lecturer: 'Henry Cavill',
+      capacity: 120,
+    },
   ];
+
+
 	constructor() {}
 
 	getEventsByTimeSlot(): TimeSlotEventGroup[] {

@@ -25,7 +25,7 @@ export class CourseScheduleComponent {
   timeSlots: { start: string, end: string }[] = [];
   private occupiedColumnsByTime: Record<string, number> = {};
 
-
+  maxDailyColumn = 2;
   currentColumn: number = 2;
 
   constructor(
@@ -56,32 +56,58 @@ sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
   });
 }
 
+
 assignColumnsToEvents() {
   // Sort events by day and start time to compare overlapping times
   const sortedSchedule = this.sortEventsByDayAndTime(this.schedule);
   let currentColumn = 2;
+  let maxDailyColumn = 1;
+  let currentDay = sortedSchedule[0].day;
 
-  sortedSchedule.forEach((event, index, sortedSchedule) => {
-    if (index > 0) { // Skip the first event as it has nothing to compare with
-      const previousEvent = sortedSchedule[index - 1];
-      const previousEventEnd = this.convertTimeToMinutes(previousEvent.timeSlot.split(' - ')[1]);
-      const currentEventStart = this.convertTimeToMinutes(event.timeSlot.split(' - ')[0]);
+  // Keep track of the last end time for each column to check for overlaps
+  const lastEndTimeByColumn: Record<string, Record<number, number>> = {};
 
-      // Check for overlap
-      if (currentEventStart < previousEventEnd) {
-        // If overlapping, increment the column
-        currentColumn++;
+  sortedSchedule.forEach((event, index) => {
+    const currentEventDay = event.day;
+    const currentEventStart = this.convertTimeToMinutes(event.timeSlot.split(' - ')[0]);
+    const currentEventEnd = this.convertTimeToMinutes(event.timeSlot.split(' - ')[1]);
+
+    // Initialize tracking for the new day
+    if (!lastEndTimeByColumn[currentEventDay]) {
+      lastEndTimeByColumn[currentEventDay] = {};
+    }
+
+    if (currentDay !== currentEventDay) {
+      currentDay = currentEventDay;
+      currentColumn = maxDailyColumn + 1;
+      maxDailyColumn = currentColumn;
+    } else if (index > 0) {
+      // Find a column where the event does not overlap with the previous ones
+      const availableColumn = Object.keys(lastEndTimeByColumn[currentEventDay]).find(column =>
+        lastEndTimeByColumn[currentEventDay][column] <= currentEventStart
+      );
+
+      if (availableColumn) {
+        // If an available column is found, use it
+        currentColumn = parseInt(availableColumn);
       } else {
-        // If not overlapping, reset the column to 2
-        currentColumn = 2;
+        // Otherwise, increment the column
+        currentColumn = maxDailyColumn + 1;
       }
     }
+
+    maxDailyColumn = Math.max(maxDailyColumn, currentColumn);
+    lastEndTimeByColumn[currentEventDay][currentColumn] = currentEventEnd;
 
     // Assign the current column to the event
     event.gridColumnStart = currentColumn;
     event.gridColumnEnd = currentColumn; // Assuming events take up only one column
   });
 }
+
+// ... (Other methods like convertTimeToMinutes and sortEventsByDayAndTime remain unchanged)
+
+
 
 assignRowsToEvents() {
   // Sort events by day and start time to compare overlapping times
@@ -135,28 +161,6 @@ sortEventsByStartTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
   });
 }
 
-calculateColumnForEvent(event: ScheduleEvent, schedule: ScheduleEvent[]): number {
-  // Start with column 2 as per the previous logic
-  let column = 2;
-
-  // Keep checking and incrementing the column until you find one where the event doesn't overlap with any other event
-  let overlapExists;
-  do {
-    overlapExists = schedule.some(e => {
-      return e.day === event.day &&
-             e.gridColumnStart === column &&
-             this.eventsOverlap(event, e);
-    });
-
-    if (overlapExists) {
-      // If an overlap is found, try the next column
-      column++;
-    }
-  } while (overlapExists);
-
-  // Return the column where no overlap exists
-  return column;
-}
 
   // Calculate the row span for each event based on the time duration
   calculateRowSpan(event: any): number {
