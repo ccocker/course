@@ -28,6 +28,27 @@ export class CourseScheduleComponent {
   maxDailyColumn = 2;
   currentColumn: number = 2;
 
+  groupColours = {
+  BC1: {
+    G1: '#FFF2E6',
+    G2: '#FFDFCC',
+    G3: '#FFCCB3',
+    G4: '#FFB899',
+    G5: '#FFA380',
+    G6: '#FF8F66',
+    G7: '#FF7A4D',
+  },
+  BC2: {
+    G1: '#c8e6c9',
+    G2: '#e9f5db',
+  },
+  WBC: {
+    G1: '#e6f0ff',
+    G2: '#cce0ff',
+  },
+};
+
+
   constructor(
     private scheduleService: ScheduleService,
     private colorService: ColorService
@@ -65,28 +86,17 @@ sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
   });
 }
 
-
-
-
-// Helper function to sort events by day and start time
-
 assignColumnsToEvents() {
   // Sort events by day and start time to compare overlapping times
   const sortedSchedule = this.sortEventsByDayAndTime(this.schedule);
   let currentColumn = 2;
   let maxDailyColumn = 1;
   let currentDay = sortedSchedule[0].day;
-
   // Keep track of the last end time for each column to check for overlaps
   const lastEndTimeByColumn: Record<string, Record<number, number>> = {};
 
   sortedSchedule.forEach((event, index) => {
     const currentEventDay = event.day;
-
-    if (currentEventDay === "Thursday") {
-    // It's Thursday, you can perform your logic here
-    console.log("This event is on Thursday:", event);
-  }
 
     const currentEventStart = this.convertTimeToMinutes(event.timeSlot.split(' - ')[0]);
     const currentEventEnd = this.convertTimeToMinutes(event.timeSlot.split(' - ')[1]);
@@ -161,7 +171,9 @@ convertTimeToGridRow(time: string): number {
   };
 
   // Apply color configuration
-  this.schedule = this.colorService.addColorsToObjects(this.schedule, colorConfig);
+  //this.schedule = this.colorService.addColorsToObjects(this.schedule, colorConfig);
+  // this.groupColours = this.scheduleService.assignColorsToGroups();
+
 
   console.log(this.schedule);
   console.log(this.timeSlots);
@@ -236,6 +248,13 @@ findIndexOfCurrentEvent(currentEvent: ScheduleEvent): number {
   return this.schedule.findIndex(event => event.class === currentEvent.class);
 }
 
+// Add a method to get the color based on the event's class and group number
+getEventColor(event: ScheduleEvent): string {
+  const [course, group] = event.class.split('-');
+  // Assuming groupColours is a property with the correct structure
+  // e.g., groupColours = { 'BC1': { 'G1': '#color', ... }, ... }
+  return this.groupColours[course][group];
+}
 
 
 

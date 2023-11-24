@@ -20,6 +20,14 @@ interface TimeSlotEventGroup {
 	events: ScheduleEvent[];
 }
 
+interface GroupColor {
+  [group: string]: string;
+}
+
+interface CourseGroupColors {
+  [course: string]: GroupColor;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -101,7 +109,7 @@ export class ScheduleService {
       day: 'Monday',
       roomNumber: '012.10.004',
       timeSlot: '16:30 - 18:30',
-      class: 'BC1-7-1',
+      class: 'BC1-G7-1',
       lecturer: 'Lead',
       capacity: 120,
     },
@@ -333,7 +341,7 @@ export class ScheduleService {
       day: 'Friday',
       roomNumber: '012.10.004',
       timeSlot: '10:30 - 12:30',
-      class: 'BC3-G1-3',
+      class: 'BC1-G1-3',
       lecturer: 'Lead',
       capacity: 120,
     },
@@ -372,6 +380,52 @@ export class ScheduleService {
   ];
 
 	constructor() {}
+
+generateColorVariations(baseColor: string, numVariations: number): string[] {
+  const variations: string[] = [];
+  const [hue, saturation, lightness] = baseColor.match(/\d+/g)!.map(Number); // Extract HSL values
+  const step = (90 - lightness) / numVariations; // Calculate step for lightness
+
+  for (let i = 0; i < numVariations; i++) {
+    const newLightness = lightness + step * i;
+    variations.push(`hsl(${hue}, ${saturation}%, ${newLightness}%)`);
+  }
+
+  return variations;
+}
+
+assignColorsToGroups(): CourseGroupColors {
+  // Count groups for each course
+  const courseGroups: Record<string, Set<string>> = {};
+  this.scheduleData.forEach(event => {
+    const [course, group] = event.class.split('-');
+    if (!courseGroups[course]) courseGroups[course] = new Set<string>();
+    courseGroups[course].add(group);
+  });
+
+  // Base color configuration for each course
+  const baseColors: Record<string, string> = {
+    BC1: 'hsl(39, 100%, 50%)', // Orange
+    BC2: 'hsl(120, 100%, 25%)', // Green
+    WBC: 'hsl(240, 100%, 50%)', // Blue
+  };
+
+  // Generate color variations for each group
+  const groupColors: CourseGroupColors = {};
+  for (const course of Object.keys(courseGroups)) {
+    const numVariations = courseGroups[course].size;
+    const colors = this.generateColorVariations(baseColors[course], numVariations);
+    let i = 0;
+    groupColors[course] = {};
+    courseGroups[course].forEach(group => {
+      groupColors[course][group] = colors[i++];
+    });
+  }
+
+  return groupColors;
+}
+
+
 
 	getEventsByTimeSlot(): TimeSlotEventGroup[] {
 		const groups = new Map<string, ScheduleEvent[]>();
