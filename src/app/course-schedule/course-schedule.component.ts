@@ -23,11 +23,7 @@ import { ColorService } from './services/color.service'
 export class CourseScheduleComponent {
   schedule: ScheduleEvent[]
   timeSlots: { start: string; end: string }[] = []
-  private occupiedColumnsByTime: Record<string, number> = {}
   headerColumns: Record<string, { start: number; span: number }> = {}
-
-  maxDailyColumn = 2
-  currentColumn: number = 2
 
   groupColours = {
     BC1: {
@@ -53,16 +49,6 @@ export class CourseScheduleComponent {
     private scheduleService: ScheduleService,
     private colorService: ColorService,
   ) {}
-
-  // Helper function to check if two events overlap
-  eventsOverlap(event1: ScheduleEvent, event2: ScheduleEvent): boolean {
-    const start1 = this.convertTimeToMinutes(event1.timeSlot.split(' - ')[0])
-    const end1 = this.convertTimeToMinutes(event1.timeSlot.split(' - ')[1])
-    const start2 = this.convertTimeToMinutes(event2.timeSlot.split(' - ')[0])
-    const end2 = this.convertTimeToMinutes(event2.timeSlot.split(' - ')[1])
-
-    return start1 < end2 && end1 > start2
-  }
 
   sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
     // Define the order of the days
@@ -181,22 +167,6 @@ export class CourseScheduleComponent {
       WBC: '#0000ff',
       // Add more mappings as needed
     }
-
-    // Apply color configuration
-    //this.schedule = this.colorService.addColorsToObjects(this.schedule, colorConfig);
-    // this.groupColours = this.scheduleService.assignColorsToGroups();
-
-    console.log(this.schedule)
-    console.log(this.timeSlots)
-  }
-
-  sortEventsByStartTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
-    return schedule.sort((a, b) => {
-      return (
-        this.convertTimeToMinutes(a.timeSlot.split(' - ')[0]) -
-        this.convertTimeToMinutes(b.timeSlot.split(' - ')[0])
-      )
-    })
   }
 
   calculateHeaderColumns() {
@@ -215,19 +185,6 @@ export class CourseScheduleComponent {
       }
       currentStartColumn = maxColumnForDay + 1 // Prepare for the next day
     })
-  }
-
-  // Calculate the row span for each event based on the time duration
-  calculateRowSpan(event: any): number {
-    const startTime = event.timeSlot.split(' - ')[0]
-    const endTime = event.timeSlot.split(' - ')[1]
-    const startHour = parseInt(startTime.split(':')[0], 10)
-    const endHour = parseInt(endTime.split(':')[0], 10)
-    const startMinute = parseInt(startTime.split(':')[1], 10)
-    const endMinute = parseInt(endTime.split(':')[1], 10)
-    const totalMinutes = (endHour - startHour) * 60 + (endMinute - startMinute)
-    const rowSpan = totalMinutes / 30 // Assuming each row represents 30 minutes
-    return rowSpan
   }
 
   generateTimeSlots() {
@@ -258,30 +215,6 @@ export class CourseScheduleComponent {
     return hours * 60 + minutes
   }
 
-  getGridRow(eventTime: string, isStart: boolean): number {
-    const eventTimeMinutes = this.convertTimeToMinutes(eventTime)
-
-    // Find the timeslot index for either the start time or the end time
-    const slotIndex = this.timeSlots.findIndex((slot) => {
-      const startTimeMinutes = this.convertTimeToMinutes(slot.start)
-      const endTimeMinutes = this.convertTimeToMinutes(slot.end)
-      return isStart
-        ? eventTimeMinutes >= startTimeMinutes
-        : eventTimeMinutes < endTimeMinutes
-    })
-
-    // Adjust for the header row and the fact that grid rows are 1-based
-    return slotIndex + 2
-  }
-
-  findIndexOfCurrentEvent(currentEvent: ScheduleEvent): number {
-    // Assuming 'schedule' is the array of ScheduleEvent objects
-    return this.schedule.findIndex(
-      (event) => event.class === currentEvent.class,
-    )
-  }
-
-  // Add a method to get the color based on the event's class and group number
   getEventColor(event: ScheduleEvent): string {
     const [course, group] = event.class.split('-')
     // Assuming groupColours is a property with the correct structure
