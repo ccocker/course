@@ -1,48 +1,52 @@
-
 <body>
   <div class="timetable">
-    <!-- Timeslots -->
     <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
-    <div class="header" style="grid-column: 2 / span 3; grid-row: 1">
-      Monday
+    <!-- Dynamic headers for each day -->
+    <div
+      *ngFor="
+        let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+      "
+      class="header"
+      [style.gridColumn]="
+        headerColumns[day].start + ' / span ' + headerColumns[day].span
+      "
+      style="grid-row: 1"
+    >
+      {{ day }}
     </div>
-    <div class="header" style="grid-column: 5 / span 3; grid-row: 1">
-      Tuesday
+    <!-- Timeslots -->
+    <div
+      *ngFor="let timeSlot of timeSlots; let i = index"
+      class="timeslot"
+      [style.gridColumnStart]="1"
+      [style.gridRow]="i + 2"
+    >
+      {{ timeSlot.start }} - {{ timeSlot.end }}
     </div>
-    <div class="header" style="grid-column: 8 / span 2; grid-row: 1">
-      Wednesday
-    </div>
-    <div class="header" style="grid-column: 10 / span 2; grid-row: 1">
-      Thursday
-    </div>
-    <div class="header" style="grid-column: 12 / span 3; grid-row: 1">
-      Friday
-    </div>
-<div *ngFor="let timeSlot of timeSlots; let i = index" class="timeslot" [style.gridColumnStart]="1" [style.gridRow]="i + 2">
-  {{ timeSlot.start }} - {{ timeSlot.end }}
-</div>
 
-<!-- Events -->
-<div
-  *ngFor="let event of schedule"
-  class="event"
-  [ngStyle]="{
-    'grid-column-start': event.gridColumnStart,
-    'grid-column-end': event.gridColumnEnd,
-    'grid-row-start': event.gridRowStart,
-    'grid-row-end': event.gridRowEnd,
-    'background-color': getEventColor(event)
-  }"
->
-
-   <div><br />
-      {{ event.class }}<br />
-      {{ event.roomNumber }} ({{ event.capacity }})<br /><br />
-      <b>{{ event.lecturer }}</b><br />
-      Tutor 1<br />
-      Tutor 2<br />
-      Tutor 3
+    <!-- Events -->
+    <div
+      *ngFor="let event of schedule"
+      class="event"
+      [ngStyle]="{
+        'grid-column-start': event.gridColumnStart,
+        'grid-column-end': event.gridColumnEnd,
+        'grid-row-start': event.gridRowStart,
+        'grid-row-end': event.gridRowEnd,
+        'background-color': getEventColor(event)
+      }"
+    >
+      <div>
+        <br />
+        {{ event.class }}<br />
+        {{ event.roomNumber }} ({{ event.capacity }})<br /><br />
+        <b>{{ event.lecturer }}</b
+        ><br />
+        Tutor 1<br />
+        Tutor 2<br />
+        Tutor 3
+      </div>
+      <!-- Event details -->
+    </div>
   </div>
-  <!-- Event details -->
-</div>
-
+</body>
