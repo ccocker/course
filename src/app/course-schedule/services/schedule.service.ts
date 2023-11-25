@@ -1,31 +1,31 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 
 export interface ScheduleEvent {
-  day: string
-  roomNumber: string
-  timeSlot: string
-  class: string
-  lecturer: string
-  capacity: number
-  tutors?: string[]
-  color?: string
-  gridColumnStart?: number
-  gridColumnEnd?: number
-  gridRowStart?: number
-  gridRowEnd?: number
+  day: string;
+  roomNumber: string;
+  timeSlot: string;
+  class: string;
+  lecturer: string;
+  capacity: number;
+  tutors?: string[];
+  color?: string;
+  gridColumnStart?: number;
+  gridColumnEnd?: number;
+  gridRowStart?: number;
+  gridRowEnd?: number;
 }
 
 interface TimeSlotEventGroup {
-  timeSlot: string
-  events: ScheduleEvent[]
+  timeSlot: string;
+  events: ScheduleEvent[];
 }
 
 interface GroupColor {
-  [group: string]: string
+  [group: string]: string;
 }
 
 interface CourseGroupColors {
-  [course: string]: GroupColor
+  [course: string]: GroupColor;
 }
 
 @Injectable({
@@ -377,76 +377,76 @@ export class ScheduleService {
       lecturer: 'Lead',
       capacity: 120,
     },
-  ]
+  ];
 
   constructor() {}
 
   generateColorVariations(baseColor: string, numVariations: number): string[] {
-    const variations: string[] = []
-    const [hue, saturation, lightness] = baseColor.match(/\d+/g)!.map(Number) // Extract HSL values
-    const step = (90 - lightness) / numVariations // Calculate step for lightness
+    const variations: string[] = [];
+    const [hue, saturation, lightness] = baseColor.match(/\d+/g)!.map(Number); // Extract HSL values
+    const step = (90 - lightness) / numVariations; // Calculate step for lightness
 
     for (let i = 0; i < numVariations; i++) {
-      const newLightness = lightness + step * i
-      variations.push(`hsl(${hue}, ${saturation}%, ${newLightness}%)`)
+      const newLightness = lightness + step * i;
+      variations.push(`hsl(${hue}, ${saturation}%, ${newLightness}%)`);
     }
 
-    return variations
+    return variations;
   }
 
   assignColorsToGroups(): CourseGroupColors {
     // Count groups for each course
-    const courseGroups: Record<string, Set<string>> = {}
+    const courseGroups: Record<string, Set<string>> = {};
     this.scheduleData.forEach((event) => {
-      const [course, group] = event.class.split('-')
-      if (!courseGroups[course]) courseGroups[course] = new Set<string>()
-      courseGroups[course].add(group)
-    })
+      const [course, group] = event.class.split('-');
+      if (!courseGroups[course]) courseGroups[course] = new Set<string>();
+      courseGroups[course].add(group);
+    });
 
     // Base color configuration for each course
     const baseColors: Record<string, string> = {
       BC1: 'hsl(39, 100%, 50%)', // Orange
       BC2: 'hsl(120, 100%, 25%)', // Green
       WBC: 'hsl(240, 100%, 50%)', // Blue
-    }
+    };
 
     // Generate color variations for each group
-    const groupColors: CourseGroupColors = {}
+    const groupColors: CourseGroupColors = {};
     for (const course of Object.keys(courseGroups)) {
-      const numVariations = courseGroups[course].size
+      const numVariations = courseGroups[course].size;
       const colors = this.generateColorVariations(
         baseColors[course],
-        numVariations,
-      )
-      let i = 0
-      groupColors[course] = {}
+        numVariations
+      );
+      let i = 0;
+      groupColors[course] = {};
       courseGroups[course].forEach((group) => {
-        groupColors[course][group] = colors[i++]
-      })
+        groupColors[course][group] = colors[i++];
+      });
     }
 
-    return groupColors
+    return groupColors;
   }
 
   getEventsByTimeSlot(): TimeSlotEventGroup[] {
-    const groups = new Map<string, ScheduleEvent[]>()
+    const groups = new Map<string, ScheduleEvent[]>();
 
     this.scheduleData.forEach((event) => {
-      const group = groups.get(event.timeSlot) || []
-      group.push(event)
-      groups.set(event.timeSlot, group)
-    })
+      const group = groups.get(event.timeSlot) || [];
+      group.push(event);
+      groups.set(event.timeSlot, group);
+    });
 
-    return Array.from(groups, ([timeSlot, events]) => ({ timeSlot, events }))
+    return Array.from(groups, ([timeSlot, events]) => ({ timeSlot, events }));
   }
 
   calculateGridPosition(event: ScheduleEvent): ScheduleEvent {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    const [startTime, endTime] = event.timeSlot.split(' - ')
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const [startTime, endTime] = event.timeSlot.split(' - ');
 
-    const dayIndex = days.indexOf(event.day) + 2 // +2 because of the header and the first column for times
-    const startRow = this.calculateRow(startTime)
-    const endRow = this.calculateRow(endTime)
+    const dayIndex = days.indexOf(event.day) + 2; // +2 because of the header and the first column for times
+    const startRow = this.calculateRow(startTime);
+    const endRow = this.calculateRow(endTime);
 
     return {
       ...event,
@@ -454,35 +454,35 @@ export class ScheduleService {
       gridColumnEnd: dayIndex + 1,
       gridRowStart: startRow,
       gridRowEnd: endRow,
-    }
+    };
   }
 
   private calculateRow(time: string): number {
-    const [hours, minutes] = time.split(':').map(Number)
+    const [hours, minutes] = time.split(':').map(Number);
     // This calculates the correct row, starting at 2 for the first time slot (8:00 AM)
-    return (hours - 8) * 2 + (minutes === 30 ? 1 : 0) + 2
+    return (hours - 8) * 2 + (minutes === 30 ? 1 : 0) + 2;
   }
 
   private calculateTutors(capacity: number): string[] {
     // Subtract 30 from the capacity, divide by 30, and round up
-    const numberOfTutors = Math.ceil((capacity - 30) / 30)
+    const numberOfTutors = Math.ceil((capacity - 30) / 30);
     // Create an array of tutor names based on the number calculated
     return Array.from(
       { length: numberOfTutors },
-      (_, index) => `Tutor ${index + 1}`,
-    )
+      (_, index) => `Tutor ${index + 1}`
+    );
   }
 
   getSchedule() {
-    return this.scheduleData
+    return this.scheduleData;
   }
 
   getTimeSlots() {
-    const slots = []
+    const slots = [];
     for (let hour = 8; hour <= 18; hour++) {
-      slots.push(`${hour.toString().padStart(2, '0')}:00`)
-      slots.push(`${hour.toString().padStart(2, '0')}:30`)
+      slots.push(`${hour.toString().padStart(2, '0')}:00`);
+      slots.push(`${hour.toString().padStart(2, '0')}:30`);
     }
-    return slots
+    return slots;
   }
 }
