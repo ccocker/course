@@ -25,6 +25,8 @@ export class CourseScheduleComponent {
   timeSlots: { start: string; end: string }[] = []
   headerColumns: Record<string, { start: number; span: number }> = {}
 
+  groupColours: { [key: string]: { [shade: string]: string } } = {}
+  /**
   groupColours = {
     BC1: {
       G1: '#FFF2E6',
@@ -44,7 +46,7 @@ export class CourseScheduleComponent {
       G2: '#cce0ff',
     },
   }
-
+*/
   constructor(
     private scheduleService: ScheduleService,
     private colorService: ColorService,
@@ -160,13 +162,9 @@ export class CourseScheduleComponent {
     this.assignRowsToEvents()
     this.generateTimeSlots()
     this.calculateHeaderColumns()
-
-    const colorConfig = {
-      BC1: '#FFA500',
-      BC2: '#008000',
-      WBC: '#0000ff',
-      // Add more mappings as needed
-    }
+    const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '##CFA0E9'] // Orange, Blue, Green, Purple in hex
+    this.groupColours = this.scheduleService.generateColorShades(baseColors)
+    console.log()
   }
 
   calculateHeaderColumns() {
