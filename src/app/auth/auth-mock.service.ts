@@ -7,7 +7,7 @@ import { IAuthService } from './auth-service.interface';
 })
 export class AuthMockService implements IAuthService {
   private isAuthenticated = false;
-  private loginStatus = new BehaviorSubject<boolean>(true); // Add this line
+  private loginStatus = new BehaviorSubject<boolean>(false); // Add this line
 
   constructor() {
     console.log('AuthMockService instance created');

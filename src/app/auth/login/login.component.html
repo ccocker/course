@@ -4,32 +4,26 @@
       <mat-card-title>Login / Register</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form (ngSubmit)="login()" class="login-form">
-        <!-- Email Input -->
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Email</mat-label>
-          <input
-            matInput
-            [(ngModel)]="email"
-            name="email"
-            required
-            type="email"
-          />
+          <input matInput formControlName="email" type="email" />
+          <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.errors?.['email']">
+            Enter a valid email
+          </mat-error>
         </mat-form-field>
 
-        <!-- Password Input -->
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Password</mat-label>
-          <input
-            matInput
-            [(ngModel)]="password"
-            name="password"
-            required
-            type="password"
-          />
+          <input matInput formControlName="password" type="password" />
+          <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">
+            Password is required
+          </mat-error>
         </mat-form-field>
 
-        <!-- Submit Button -->
         <button
           mat-raised-button
           color="primary"
@@ -37,24 +31,6 @@
           class="full-width-button"
         >
           Login
-        </button>
-
-        <!-- Social Login Buttons -->
-        <button
-          mat-raised-button
-          color="accent"
-          class="full-width-button"
-          (click)="loginWithGoogle()"
-        >
-          Login with Google
-        </button>
-        <button
-          mat-raised-button
-          color="warn"
-          class="full-width-button"
-          (click)="loginWithFacebook()"
-        >
-          Login with Facebook
         </button>
       </form>
     </mat-card-content>

@@ -1,5 +1,9 @@
 <div id="main-container" [attr.dir]="appConfig.isRtl ? 'rtl' : 'ltr'">
-  <mat-toolbar color="primary" [class.toolbar-rtl]="appConfig.isRtl">
+  <mat-toolbar
+    color="primary"
+    [class.toolbar-rtl]="appConfig.isRtl"
+    *ngIf="appConfig.showTopNav"
+  >
     <button
       mat-icon-button
       *ngIf="isLoggedIn$ | async"
