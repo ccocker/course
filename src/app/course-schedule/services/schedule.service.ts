@@ -377,6 +377,14 @@ export class ScheduleService {
       lecturer: 'Lead',
       capacity: 120,
     },
+    {
+      day: 'Friday',
+      roomNumber: '014.09.023',
+      timeSlot: '14:30 - 16:30',
+      class: 'WBC-G1-A',
+      lecturer: 'Lead',
+      capacity: 60,
+    },
   ]
 
   constructor() {}
