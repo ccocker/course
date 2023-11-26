@@ -1,4 +1,4 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
@@ -14,7 +14,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { IAuthService } from './auth/auth-service.interface';
 import { AUTH_SERVICE_TOKEN } from './auth/auth.service';
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 interface AppConfig {
   title: string;
@@ -23,6 +23,7 @@ interface AppConfig {
   isLoggedIn: boolean;
   loggedInItems: string[];
   loggedOutItems: string[];
+  showTopNav: boolean;
   showLogo: boolean;
   showAppTitle: boolean;
 }
@@ -45,7 +46,7 @@ interface AppConfig {
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'henry';
   appConfig: AppConfig = {
     title: 'RMIT COURSE SCHEDULER',
@@ -54,6 +55,7 @@ export class AppComponent {
     isLoggedIn: false,
     loggedInItems: ['Logout'],
     loggedOutItems: ['Home', 'About', 'Login'],
+    showTopNav: false,
     showLogo: true,
     showAppTitle: false,
   };
@@ -79,16 +81,27 @@ export class AppComponent {
       mainContainer.dir = this.appConfig.isRtl ? 'rtl' : 'ltr';
     }
   }
+  private loginDialogRef: MatDialogRef<LoginComponent> | null = null;
 
   constructor(
     @Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService,
     private dialog: MatDialog
-  ) {
-    console.log('AppComponent created');
+  ) {}
+
+  ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn();
     this.isLoggedIn$.subscribe((status) => {
-      console.log('Login status changed', status);
       this.appConfig.isLoggedIn = status;
+      if (status) {
+        this.appConfig.showTopNav = true;
+      } else {
+        this.appConfig.showTopNav = false;
+      }
+
+      if (status && this.loginDialogRef) {
+        this.loginDialogRef.close();
+        this.loginDialogRef = null; // Reset the reference
+      }
     });
   }
 
@@ -109,9 +122,18 @@ export class AppComponent {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginComponent, {
+    // Assign the reference to the opened dialog
+    this.loginDialogRef = this.dialog.open(LoginComponent, {
       height: '400px',
       width: '300px',
+    });
+
+    const sub = this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.loginDialogRef.close();
+        this.loginDialogRef = null; // Reset the reference
+        sub.unsubscribe(); // Unsubscribe to avoid memory leaks
+      }
     });
   }
 
