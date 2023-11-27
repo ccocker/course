@@ -1,0 +1,42 @@
+PERSON
+FirstName
+LastName
+PersonalEmail
+RMITEmail
+Phone
+HighestQual (B.A, B.A. Hons, Masters, Phd)
+Skills (Java, C++, UCD, SQL, Php, HTML, CSS, Javascript)
+E-Number
+Type (Lead/Tutor)
+Active (Yes/No)
+Resume
+
+COURSE
+Name
+Code
+BaseColour
+
+OFFERING
+CourseCode
+StartDate
+EndDate
+Groups (G1, G2, G3, G4, G5, G6, G7)
+
+GROUPS
+  shade - based on course base colour
+  class []
+
+ROOM
+  roomNumber: string
+  class: string
+  capacity: number
+
+CLASS
+  coursecode + group number
+  class number (1,2,3)
+  day: string
+  startTime
+  endTime
+  lead
+  tutors?: string[]
+
