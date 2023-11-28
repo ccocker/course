@@ -162,7 +162,7 @@ export class CourseScheduleComponent {
     this.assignRowsToEvents()
     this.generateTimeSlots()
     this.calculateHeaderColumns()
-    const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '##CFA0E9'] // Orange, Blue, Green, Purple in hex
+    const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '#CFA0E9'] // Orange, Blue, Green, Purple in hex
     this.groupColours = this.scheduleService.generateColorShades(baseColors)
     console.log()
   }
