@@ -25,6 +25,7 @@ export class CourseScheduleComponent {
   DayOfWeek = DayOfWeek
   weekdays: string[] = []
   schedule: ScheduleEvent[]
+  selectedCourses: Set<string> = new Set()
   timeSlots: { startTime: string; endTime: string }[] = []
   headerColumns: Record<string, { start: number; span: number }> = {}
 
@@ -50,7 +51,7 @@ export class CourseScheduleComponent {
     },
   }
 */
-  constructor(private scheduleService: ScheduleService) {}
+  constructor(public scheduleService: ScheduleService) {}
 
   sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
     // Define the order of the days
@@ -164,6 +165,9 @@ export class CourseScheduleComponent {
   }
   ngOnInit() {
     this.schedule = this.scheduleService.getSchedule()
+    this.selectedCourses = new Set(
+      this.scheduleService.getCourses().map((course) => course.code),
+    )
     this.assignColumnsToEvents()
     this.assignRowsToEvents()
     this.generateTimeSlots()
@@ -178,6 +182,17 @@ export class CourseScheduleComponent {
     const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '#CFA0E9'] // Orange, Blue, Green, Purple in hex
     this.groupColours = this.scheduleService.generateColorShades(baseColors)
     console.log()
+  }
+  toggleCourseSelection(courseCode: string) {
+    if (this.selectedCourses.has(courseCode)) {
+      this.selectedCourses.delete(courseCode)
+    } else {
+      this.selectedCourses.add(courseCode)
+    }
+  }
+
+  isCourseSelected(courseCode: string): boolean {
+    return this.selectedCourses.has(courseCode)
   }
 
   calculateHeaderColumns() {

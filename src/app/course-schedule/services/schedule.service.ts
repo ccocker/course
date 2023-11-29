@@ -267,7 +267,7 @@ export class ScheduleService {
     return staff
   }
 
-  private getCourses(): Course[] {
+  getCourses(): Course[] {
     const classes: Course[] = [
       {
         code: 'BC1',

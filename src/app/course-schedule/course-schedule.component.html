@@ -1,4 +1,13 @@
 <body>
+  <div *ngFor="let course of scheduleService.getCourses()">
+    <input
+      type="checkbox"
+      [id]="course.code"
+      [checked]="isCourseSelected(course.code)"
+      (change)="toggleCourseSelection(course.code)"
+    />
+    <label [for]="course.code">{{ course.name }}</label>
+  </div>
   <div class="timetable">
     <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
     <!-- Dynamic headers for each day -->
@@ -31,7 +40,8 @@
         'grid-column-end': event.gridColumnEnd,
         'grid-row-start': event.gridRowStart,
         'grid-row-end': event.gridRowEnd,
-        'background-color': getEventColor(event)
+        'background-color': getEventColor(event),
+        display: isCourseSelected(event.course.code) ? 'block' : 'none'
       }"
     >
       <div>
