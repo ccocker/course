@@ -38,16 +38,20 @@
         <br />
         {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
         {{ event.class.classNumber }}<br />
-        {{ event.class.room.buildingNo }}.{{ event.class.room.floor }}.{{
-          event.class.room.roomNumber
-        }}
-        ({{ event.class.room.capacity }})<br />
+        {{ formatNumber(event.class.room.buildingNo, 3, '0') }}.{{
+          event.class.room.floor
+        }}.{{ formatNumber(event.class.room.roomNumber, 3, '0') }} ({{
+          event.class.room.capacity
+        }})<br />
         {{ event.class.timeslot.startTime }} - {{ event.class.timeslot.endTime
         }}<br /><br />
         <b
-          >{{ event.class.staff[0].firstName }}
-          {{ event.class.staff[0].lastName }}</b
+          >{{ event.class.offeringGroup.lead.firstName }}
+          {{ event.class.offeringGroup.lead.lastName }}</b
         ><br />
+        <div *ngFor="let tutor of event.class.staff">
+          {{ tutor.firstName }} {{ tutor.lastName }}<br />
+        </div>
       </div>
       <!-- Event details -->
     </div>

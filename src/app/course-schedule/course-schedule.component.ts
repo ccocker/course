@@ -250,4 +250,8 @@ export class CourseScheduleComponent {
     // Fallback color if no specific shade is found
     return '#FFFFFF' // White or any default color
   }
+
+  formatNumber(num: number, pad: number, padChar: string): string {
+    return num.toString().padStart(pad, padChar)
+  }
 }

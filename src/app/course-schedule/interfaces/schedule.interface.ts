@@ -65,7 +65,6 @@ export interface GroupClasses {
 export interface ScheduleEvent {
   class: GroupClasses // Link directly to a specific class
   course: Course // Link directly to a specific course
-  staff: Staff[]
   // UI-specific properties
   gridColumnStart?: number
   gridColumnEnd?: number
