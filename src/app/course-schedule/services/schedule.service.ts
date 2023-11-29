@@ -1,393 +1,818 @@
 import { Injectable } from '@angular/core'
 
-export interface ScheduleEvent {
-  day: string
-  roomNumber: string
-  timeSlot: string
-  class: string
-  lecturer: string
+export enum DayOfWeek {
+  Monday = 'MONDAY',
+  Tuesday = 'TUESDAY',
+  Wednesday = 'WEDNESDAY',
+  Thursday = 'THURSDAY',
+  Friday = 'FRIDAY',
+  Saturday = 'SATURDAY',
+  Sunday = 'SUNDAY',
+}
+
+export interface Timeslot {
+  startTime: string
+  endTime: string
+}
+
+export interface Staff {
+  enumber: string
+  firstName: string
+  lastName: string
+  pEmail: string
+  rEmail: string
+  phone: string
+  qualification: string
+  type: string
+  isAvailable: boolean
+}
+
+export interface Course {
+  code: string
+  name: string
+  description: string
+  baseColour: string
+  offerings: Offering[]
+}
+
+export interface Offering {
+  startDate: Date
+  finishDate: Date
+  teachStartDate: Date
+  teachFinishDate: Date
+}
+
+export interface OfferingGroup {
+  lead: Staff
+  group: number
+  offering: Offering
+}
+
+export interface Room {
+  buildingNo: number
+  floor: number
+  roomNumber: number
   capacity: number
-  tutors?: string[]
-  color?: string
+}
+
+export interface GroupClasses {
+  classNumber: number
+  day: DayOfWeek
+  timeslot: Timeslot
+  room: Room
+  staff: Staff[]
+  offeringGroup: OfferingGroup
+}
+
+export interface ScheduleEvent {
+  class: GroupClasses // Link directly to a specific class
+  course: Course // Link directly to a specific course
+  staff: Staff[]
+  // UI-specific properties
   gridColumnStart?: number
   gridColumnEnd?: number
   gridRowStart?: number
   gridRowEnd?: number
-}
-
-interface TimeSlotEventGroup {
-  timeSlot: string
-  events: ScheduleEvent[]
-}
-
-interface GroupColor {
-  [group: string]: string
-}
-
-interface CourseGroupColors {
-  [course: string]: GroupColor
+  color?: string // Optional color for UI purposes
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
+  private rooms: Room[] = this.getRooms()
   private scheduleData: ScheduleEvent[] = [
     {
-      day: 'Monday',
-      roomNumber: '012.10.005',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G1-1',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[0],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.006',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G2-1',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[1],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.005',
-      timeSlot: '09:30 - 11:30',
-      class: 'WBC-G2-1',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[2],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.005',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G3-1',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[3],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.006',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G4-1',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[4],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.005',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G5-1',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[5],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.006',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G6-1',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[6],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.005',
-      timeSlot: '14:30 - 16:30',
-      class: 'WBC-G1-1',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[7],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.006',
-      timeSlot: '14:30 - 16:30',
-      class: 'BC2-G1-1',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[8],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.005',
-      timeSlot: '16:30 - 18:30',
-      class: 'BC1-G7-1',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[9],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Monday',
-      roomNumber: '012.10.006',
-      timeSlot: '16:30 - 18:30',
-      class: 'BC2-G2-1',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[10],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.005',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G1-2',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[11],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.006',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G2-2',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[12],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.005',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G3-2',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[13],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.006',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G4-2',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[14],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.005',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G5-2',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[15],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.006',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G6-2',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[16],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.005',
-      timeSlot: '14:30 - 16:30',
-      class: 'WBC-G1-2',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[17],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.006',
-      timeSlot: '14:30 - 16:30',
-      class: 'BC2-G1-2',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[18],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '014.09.023',
-      timeSlot: '14:30 - 16:30',
-      class: 'WBC-G2-2',
-      lecturer: 'Lead',
-      capacity: 60,
+      class: this.getGroupClasses()[19],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.005',
-      timeSlot: '16:30 - 18:30',
-      class: 'BC1-G7-2',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[20],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Tuesday',
-      roomNumber: '012.10.006',
-      timeSlot: '16:30 - 18:30',
-      class: 'BC2-G2-2',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[21],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.005',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G1-A',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[22],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.006',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G2-A',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[23],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.005',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G3-A',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[24],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.006',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G4-A',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[25],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.005',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G5-A',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[26],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.006',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G6-A',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[27],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.005',
-      timeSlot: '14:30 - 16:30',
-      class: 'BC2-G1-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[28],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.006',
-      timeSlot: '14:30 - 16:30',
-      class: 'BC1-G7-A',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[29],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Wednesday',
-      roomNumber: '012.10.005',
-      timeSlot: '16:30 - 18:30',
-      class: 'BC2-G2-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[30],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Thursday',
-      roomNumber: '012.10.005',
-      timeSlot: '09:00 - 11:00',
-      class: 'WBC-G2-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[31],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Thursday',
-      roomNumber: '012.10.005',
-      timeSlot: '14:30 - 16:30',
-      class: 'BC2-G1-A',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[32],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Thursday',
-      roomNumber: '012.10.006',
-      timeSlot: '14:30 - 16:30',
-      class: 'WBC-G1-3',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[33],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Thursday',
-      roomNumber: '012.10.005',
-      timeSlot: '16:30 - 18:30',
-      class: 'BC2-G2-A',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[34],
+      course: this.getCourses()[1],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.005',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G1-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[35],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.006',
-      timeSlot: '08:30 - 10:30',
-      class: 'BC1-G2-3',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[36],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '014.09.023',
-      timeSlot: '08:30 - 10:30',
-      class: 'WBC-G2-A',
-      lecturer: 'Lead',
-      capacity: 60,
+      class: this.getGroupClasses()[37],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.005',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G1-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[38],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.006',
-      timeSlot: '10:30 - 12:30',
-      class: 'BC1-G4-3',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[39],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.005',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G5-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[40],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.006',
-      timeSlot: '12:30 - 14:30',
-      class: 'BC1-G6-3',
-      lecturer: 'Lead',
-      capacity: 150,
+      class: this.getGroupClasses()[41],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '012.10.005',
-      timeSlot: '14:30 - 16:30',
-      class: 'BC1-G7-3',
-      lecturer: 'Lead',
-      capacity: 120,
+      class: this.getGroupClasses()[42],
+      course: this.getCourses()[0],
+      staff: this.getStaff(),
     },
     {
-      day: 'Friday',
-      roomNumber: '014.09.023',
-      timeSlot: '14:30 - 16:30',
-      class: 'WBC-G1-A',
-      lecturer: 'Lead',
-      capacity: 60,
+      class: this.getGroupClasses()[43],
+      course: this.getCourses()[2],
+      staff: this.getStaff(),
     },
   ]
 
   constructor() {}
+
+  private getRooms(): Room[] {
+    const existingRooms: Room[] = [
+      { buildingNo: 12, floor: 10, roomNumber: 5, capacity: 120 },
+      { buildingNo: 12, floor: 10, roomNumber: 6, capacity: 150 },
+      { buildingNo: 14, floor: 9, roomNumber: 23, capacity: 60 },
+    ]
+    return existingRooms
+  }
+
+  private getTimeSlots(): Timeslot[] {
+    const slots: Timeslot[] = [
+      { startTime: '08:30', endTime: '10:30' },
+      { startTime: '09:00', endTime: '11:00' },
+      { startTime: '10:30', endTime: '12:30' },
+      { startTime: '12:30', endTime: '14:30' },
+      { startTime: '14:30', endTime: '16:30' },
+      { startTime: '16:30', endTime: '18:30' },
+    ]
+    return slots
+  }
+
+  private getStaff(): Staff[] {
+    const staff: Staff[] = [
+      {
+        enumber: 'E07582',
+        firstName: 'Rodney',
+        lastName: 'Cocker',
+        pEmail: 'simba@thepridelands.za',
+        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        phone: '0411 123 123',
+        qualification: 'Masters',
+        type: 'Lead',
+        isAvailable: true,
+      },
+      {
+        enumber: 'E07581',
+        firstName: 'Henry',
+        lastName: 'Cavill',
+        pEmail: 'simba@thepridelands.za',
+        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        phone: '0411 123 123',
+        qualification: 'Masters',
+        type: 'Lead',
+        isAvailable: true,
+      },
+    ]
+    return staff
+  }
+
+  private getCourses(): Course[] {
+    const classes: Course[] = [
+      {
+        code: 'BC1',
+        name: 'Programming Bootcamp 1',
+        description:
+          'Learn algorithmic thinkng in the context of object oriented programming',
+        baseColour: '#FF8C00',
+        offerings: this.getOfferings(),
+      },
+      {
+        code: 'BC2',
+        name: 'Programming Bootcamp 2',
+        description: 'Develop your understanding of OO programming through C++',
+        baseColour: '#3399FF',
+        offerings: this.getOfferings(),
+      },
+      {
+        code: 'WBC',
+        name: 'Web Bootcamp',
+        description: 'Learn HTML, CSS and Javascript',
+        baseColour: '#3CB371',
+        offerings: this.getOfferings(),
+      },
+    ]
+    return classes
+  }
+
+  private getOfferings(): Offering[] {
+    const offerings: Offering[] = [
+      {
+        startDate: new Date('2024-03-04T08:30:00'),
+        finishDate: new Date('2024-06-30T23:59:00'),
+        teachStartDate: new Date('2024-03-04T08:30:00'),
+        teachFinishDate: new Date('2024-04-30T08:30:00'),
+      },
+    ]
+    return offerings
+  }
+
+  private getOfferingGroups(): OfferingGroup[] {
+    const group: OfferingGroup[] = [
+      {
+        lead: this.getStaff()[0],
+        group: 1,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 2,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 3,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 4,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 5,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 6,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 7,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 1,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 2,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 1,
+        offering: this.getOfferings()[0],
+      },
+      {
+        lead: this.getStaff()[0],
+        group: 2,
+        offering: this.getOfferings()[0],
+      },
+    ]
+    return group
+  }
+
+  private getGroupClasses(): GroupClasses[] {
+    const classes: GroupClasses[] = [
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[0],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[1],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[1],
+        room: this.getRooms()[2],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[10],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[2],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[3],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[4],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[5],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[9],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[7],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[6],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[10],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[0],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[1],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[2],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[3],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[4],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[5],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[9],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[7],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[2],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[10],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[6],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[8],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[0],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[1],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[2],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[3],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[4],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[5],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[7],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[6],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Wednesday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[8],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Thursday,
+        timeslot: this.getTimeSlots()[1],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[10],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Thursday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[8],
+      },
+      {
+        classNumber: 3,
+        day: DayOfWeek.Thursday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[9],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Thursday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[8],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[0],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[1],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[2],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[10],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[2],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[3],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[4],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[5],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[6],
+      },
+      {
+        classNumber: 4,
+        day: DayOfWeek.Friday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        staff: this.getStaff(),
+        offeringGroup: this.getOfferingGroups()[9],
+      },
+    ]
+    return classes
+  }
 
   private calculateTutors(capacity: number): string[] {
     // Subtract 30 from the capacity, divide by 30, and round up
@@ -406,7 +831,7 @@ export class ScheduleService {
   private extractCourseIdentifiers(): string[] {
     const courseSet = new Set<string>()
     this.scheduleData.forEach((event) => {
-      const courseIdentifier = event.class.split('-')[0]
+      const courseIdentifier = event.course.code
       courseSet.add(courseIdentifier)
     })
     return Array.from(courseSet)
@@ -487,29 +912,5 @@ export class ScheduleService {
       .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {})
 
     return shades
-  }
-
-  private hexToRgb(hex: string): [number, number, number] {
-    const normalizedHex = hex.replace('#', '')
-    const r = parseInt(normalizedHex.slice(0, 2), 16)
-    const g = parseInt(normalizedHex.slice(2, 4), 16)
-    const b = parseInt(normalizedHex.slice(4, 6), 16)
-    return [r, g, b]
-  }
-
-  private rgbToHex(r: number, g: number, b: number): string {
-    return `#${[r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('')}`
-  }
-
-  private lightenColor(
-    color: { r: number; g: number; b: number },
-    lightness: number,
-  ): { r: number; g: number; b: number } {
-    const { r, g, b } = color
-    return {
-      r: Math.round((255 - r) * lightness + r),
-      g: Math.round((255 - g) * lightness + g),
-      b: Math.round((255 - b) * lightness + b),
-    }
   }
 }

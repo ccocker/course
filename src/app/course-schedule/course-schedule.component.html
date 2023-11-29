@@ -4,7 +4,7 @@
     <!-- Dynamic headers for each day -->
     <div
       *ngFor="
-        let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        let day of ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
       "
       class="header"
       [style.gridColumn]="
@@ -21,7 +21,7 @@
       [style.gridColumnStart]="1"
       [style.gridRow]="i + 2"
     >
-      {{ timeSlot.start }} - {{ timeSlot.end }}
+      {{ timeSlot.startTime }} - {{ timeSlot.endTime }}
     </div>
 
     <!-- Events -->
@@ -38,13 +38,18 @@
     >
       <div>
         <br />
-        {{ event.class }}<br />
-        {{ event.roomNumber }} ({{ event.capacity }})<br /><br />
-        <b>{{ event.lecturer }}</b
+        {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
+        {{ event.class.classNumber }}<br />
+        {{ event.class.room.buildingNo }}.{{ event.class.room.floor }}.{{
+          event.class.room.roomNumber
+        }}
+        ({{ event.class.room.capacity }})<br />
+        {{ event.class.timeslot.startTime }} - {{ event.class.timeslot.endTime
+        }}<br /><br />
+        <b
+          >{{ event.class.staff[0].firstName }}
+          {{ event.class.staff[0].lastName }}</b
         ><br />
-        Tutor 1<br />
-        Tutor 2<br />
-        Tutor 3
       </div>
       <!-- Event details -->
     </div>

@@ -22,7 +22,7 @@ import { ColorService } from './services/color.service'
 })
 export class CourseScheduleComponent {
   schedule: ScheduleEvent[]
-  timeSlots: { start: string; end: string }[] = []
+  timeSlots: { startTime: string; endTime: string }[] = []
   headerColumns: Record<string, { start: number; span: number }> = {}
 
   groupColours: { [key: string]: { [shade: string]: string } } = {}
@@ -54,20 +54,20 @@ export class CourseScheduleComponent {
 
   sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
     // Define the order of the days
-    const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
 
     return schedule.sort((a, b) => {
       // Compare the index of the days in the daysOrder array
-      const dayIndexA = daysOrder.indexOf(a.day)
-      const dayIndexB = daysOrder.indexOf(b.day)
+      const dayIndexA = daysOrder.indexOf(a.class.day)
+      const dayIndexB = daysOrder.indexOf(b.class.day)
 
       if (dayIndexA !== dayIndexB) {
         return dayIndexA - dayIndexB // Sort by the index of the day
       }
 
       // If the days are the same, compare the start times
-      const startA = this.convertTimeToMinutes(a.timeSlot.split(' - ')[0])
-      const startB = this.convertTimeToMinutes(b.timeSlot.split(' - ')[0])
+      const startA = this.convertTimeToMinutes(a.class.timeslot.startTime)
+      const startB = this.convertTimeToMinutes(b.class.timeslot.startTime) // Corrected to compare start times
       return startA - startB // Sort by start time if the days are the same
     })
   }
@@ -77,18 +77,18 @@ export class CourseScheduleComponent {
     const sortedSchedule = this.sortEventsByDayAndTime(this.schedule)
     let currentColumn = 2
     let maxDailyColumn = 1
-    let currentDay = sortedSchedule[0].day
+    let currentDay = sortedSchedule[0].class.day
     // Keep track of the last end time for each column to check for overlaps
     const lastEndTimeByColumn: Record<string, Record<number, number>> = {}
 
     sortedSchedule.forEach((event, index) => {
-      const currentEventDay = event.day
+      const currentEventDay = event.class.day
 
       const currentEventStart = this.convertTimeToMinutes(
-        event.timeSlot.split(' - ')[0],
+        event.class.timeslot.startTime,
       )
       const currentEventEnd = this.convertTimeToMinutes(
-        event.timeSlot.split(' - ')[1],
+        event.class.timeslot.endTime,
       )
 
       // Initialize tracking for the new day
@@ -133,8 +133,8 @@ export class CourseScheduleComponent {
 
     sortedSchedule.forEach((event) => {
       // Convert start and end times to grid rows
-      const startRow = this.convertTimeToGridRow(event.timeSlot.split(' - ')[0])
-      const endRow = this.convertTimeToGridRow(event.timeSlot.split(' - ')[1])
+      const startRow = this.convertTimeToGridRow(event.class.timeslot.startTime)
+      const endRow = this.convertTimeToGridRow(event.class.timeslot.endTime)
 
       // Assign the start and end rows to the event
       event.gridRowStart = startRow
@@ -168,11 +168,13 @@ export class CourseScheduleComponent {
   }
 
   calculateHeaderColumns() {
-    const daysOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
     let currentStartColumn = 2 // Assuming the first column is for time slots
 
     daysOrder.forEach((day) => {
-      const eventsForDay = this.schedule.filter((event) => event.day === day)
+      const eventsForDay = this.schedule.filter(
+        (event) => event.class.day === day,
+      )
       const maxColumnForDay = eventsForDay.reduce(
         (max, event) => Math.max(max, event.gridColumnEnd),
         1,
@@ -191,8 +193,8 @@ export class CourseScheduleComponent {
       // Assuming you want 20 slots of 30 minutes
       let endTime = new Date(startTime.getTime() + 30 * 60000) // 30 minutes later
       this.timeSlots.push({
-        start: this.formatTime(startTime),
-        end: this.formatTime(endTime),
+        startTime: this.formatTime(startTime),
+        endTime: this.formatTime(endTime),
       })
       startTime = endTime // Set start time for the next slot
     }
@@ -214,9 +216,19 @@ export class CourseScheduleComponent {
   }
 
   getEventColor(event: ScheduleEvent): string {
-    const [course, group] = event.class.split('-')
-    // Assuming groupColours is a property with the correct structure
-    // e.g., groupColours = { 'BC1': { 'G1': '#color', ... }, ... }
-    return this.groupColours[course][group]
+    const courseCode = event.course.code
+    const groupNumber = event.class.offeringGroup.group
+
+    // Access the specific shade for the group.
+    // The group number is used to directly access the correct shade.
+    const shadeKey = `G${groupNumber}`
+    const colorShades = this.groupColours[courseCode]
+
+    if (colorShades && colorShades[shadeKey]) {
+      return colorShades[shadeKey]
+    }
+
+    // Fallback color if no specific shade is found
+    return '#FFFFFF' // White or any default color
   }
 }
