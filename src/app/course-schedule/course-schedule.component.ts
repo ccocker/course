@@ -4,9 +4,8 @@ import { MatCardModule } from '@angular/material/card'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { ScheduleService } from './services/schedule.service'
-import { FilterEventsPipe } from './events-filter.pipe'
-import { ColorService } from './services/color.service'
-import { ScheduleEvent } from './interfaces/schedule.interface'
+import { FilterEventsPipe, EnumToArrayPipe } from './events-filter.pipe'
+import { DayOfWeek, ScheduleEvent } from './interfaces/schedule.interface'
 
 @Component({
   selector: 'mi-course-schedule',
@@ -17,11 +16,14 @@ import { ScheduleEvent } from './interfaces/schedule.interface'
     MatChipsModule,
     MatGridListModule,
     FilterEventsPipe,
+    EnumToArrayPipe,
   ],
   templateUrl: './course-schedule.component.html',
   styleUrl: './course-schedule.component.scss',
 })
 export class CourseScheduleComponent {
+  DayOfWeek = DayOfWeek
+  weekdays: string[] = []
   schedule: ScheduleEvent[]
   timeSlots: { startTime: string; endTime: string }[] = []
   headerColumns: Record<string, { start: number; span: number }> = {}
@@ -48,14 +50,17 @@ export class CourseScheduleComponent {
     },
   }
 */
-  constructor(
-    private scheduleService: ScheduleService,
-    private colorService: ColorService,
-  ) {}
+  constructor(private scheduleService: ScheduleService) {}
 
   sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
     // Define the order of the days
-    const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
+    const daysOrder = [
+      DayOfWeek.Monday,
+      DayOfWeek.Tuesday,
+      DayOfWeek.Wednesday,
+      DayOfWeek.Thursday,
+      DayOfWeek.Friday,
+    ]
 
     return schedule.sort((a, b) => {
       // Compare the index of the days in the daysOrder array
@@ -163,13 +168,26 @@ export class CourseScheduleComponent {
     this.assignRowsToEvents()
     this.generateTimeSlots()
     this.calculateHeaderColumns()
+    this.weekdays.push(DayOfWeek.Monday)
+    this.weekdays.push(DayOfWeek.Tuesday)
+    this.weekdays.push(DayOfWeek.Wednesday)
+    this.weekdays.push(DayOfWeek.Thursday)
+    this.weekdays.push(DayOfWeek.Friday)
+    console.log()
+
     const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '#CFA0E9'] // Orange, Blue, Green, Purple in hex
     this.groupColours = this.scheduleService.generateColorShades(baseColors)
     console.log()
   }
 
   calculateHeaderColumns() {
-    const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
+    const daysOrder = [
+      DayOfWeek.Monday,
+      DayOfWeek.Tuesday,
+      DayOfWeek.Wednesday,
+      DayOfWeek.Thursday,
+      DayOfWeek.Friday,
+    ]
     let currentStartColumn = 2 // Assuming the first column is for time slots
 
     daysOrder.forEach((day) => {
@@ -180,7 +198,7 @@ export class CourseScheduleComponent {
         (max, event) => Math.max(max, event.gridColumnEnd),
         1,
       )
-      this.headerColumns[day] = {
+      this.headerColumns[day.toUpperCase()] = {
         start: currentStartColumn,
         span: maxColumnForDay - currentStartColumn + 1,
       }

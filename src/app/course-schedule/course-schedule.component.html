@@ -3,9 +3,7 @@
     <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
     <!-- Dynamic headers for each day -->
     <div
-      *ngFor="
-        let day of ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY']
-      "
+      *ngFor="let day of weekdays"
       class="header"
       [style.gridColumn]="
         headerColumns[day].start + ' / span ' + headerColumns[day].span

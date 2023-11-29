@@ -17,3 +17,12 @@ export class FilterEventsPipe implements PipeTransform {
     })
   }
 }
+
+@Pipe({ name: 'enumToArray', standalone: true })
+export class EnumToArrayPipe implements PipeTransform {
+  transform(data: Object) {
+    return Object.keys(data)
+      .filter((key) => isNaN(+key))
+      .map((key) => key.toUpperCase())
+  }
+}
