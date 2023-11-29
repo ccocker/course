@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common'
 import { MatCardModule } from '@angular/material/card'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatGridListModule } from '@angular/material/grid-list'
-import { ScheduleService, ScheduleEvent } from './services/schedule.service'
+import { ScheduleService } from './services/schedule.service'
 import { FilterEventsPipe } from './events-filter.pipe'
 import { ColorService } from './services/color.service'
+import { ScheduleEvent } from './interfaces/schedule.interface'
 
 @Component({
   selector: 'mi-course-schedule',
