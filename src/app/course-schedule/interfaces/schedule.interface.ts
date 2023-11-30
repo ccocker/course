@@ -43,6 +43,7 @@ export interface Offering {
 export interface OfferingGroup {
   lead: Staff
   group: number
+  groupCapacity: number
   offering: Offering
 }
 
