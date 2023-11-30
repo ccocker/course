@@ -2,7 +2,11 @@
   <div class="filter-panels">
     <!-- Courses Panel -->
     <div class="panel courses-panel">
-      <h3>Courses</h3>
+      <div class="panel-header">
+        <h3>Courses</h3>
+        <button (click)="selectAllCourses()">Select All</button>
+        <button (click)="deselectAllCourses()">Deselect All</button>
+      </div>
       <div *ngFor="let course of scheduleService.getCourses()">
         <input
           type="checkbox"
@@ -16,7 +20,11 @@
 
     <!-- Staff Panel -->
     <div class="panel staff-panel">
-      <h3>Staff</h3>
+      <div class="panel-header">
+        <h3>Staff</h3>
+        <button (click)="selectAllStaff()">Select All</button>
+        <button (click)="deselectAllStaff()">Deselect All</button>
+      </div>
       <div *ngFor="let staff of scheduleService.getStaff()">
         <input
           type="checkbox"

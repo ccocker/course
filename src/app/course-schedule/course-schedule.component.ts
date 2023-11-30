@@ -220,6 +220,26 @@ export class CourseScheduleComponent {
     return isCourseSelected && isAnyStaffSelected
   }
 
+  selectAllCourses() {
+    this.scheduleService.getCourses().forEach((course) => {
+      this.selectedCourses.add(course.code)
+    })
+  }
+
+  deselectAllCourses() {
+    this.selectedCourses.clear()
+  }
+
+  selectAllStaff() {
+    this.scheduleService.getStaff().forEach((staff) => {
+      this.selectedStaff.add(staff.enumber)
+    })
+  }
+
+  deselectAllStaff() {
+    this.selectedStaff.clear()
+  }
+
   toggleCourseSelection(courseCode: string) {
     if (this.selectedCourses.has(courseCode)) {
       this.selectedCourses.delete(courseCode)

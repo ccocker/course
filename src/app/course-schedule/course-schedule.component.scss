@@ -36,6 +36,38 @@ body {
   .staff-panel {
     // Additional styling for staff panel, if needed
   }
+
+  /* Style for the buttons */
+  .panel button {
+    background-color: #f5f5f7; /* Light grey color */
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: #333;
+    cursor: pointer;
+    font-size: 8px;
+    margin: 5px;
+    padding: 5px 10px;
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .panel button:hover {
+    background-color: #e4e4e6; /* Slightly darker on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px; /* Adjust spacing between elements */
+}
+
+.panel-header h3 {
+  margin: 0;
+  flex-grow: 1; /* Allows the title to take up available space */
 }
 
 .timetable {
