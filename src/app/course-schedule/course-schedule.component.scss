@@ -6,8 +6,40 @@ body {
   box-sizing: border-box;
 }
 
+.filter-panels {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px; // Space between panels
+  margin-bottom: 20px;
+
+  .panel {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 200px;
+    margin-top: 10px;
+    flex: 1; // Make panels flexible in size
+
+    h3 {
+      margin-top: 0;
+    }
+
+    input[type='checkbox'] {
+      margin-right: 5px;
+    }
+  }
+
+  .courses-panel {
+    // Additional styling for courses panel, if needed
+  }
+
+  .staff-panel {
+    // Additional styling for staff panel, if needed
+  }
+}
+
 .timetable {
-  width:1500px;
+  width: 1500px;
   display: grid;
   grid-template-columns: 60px repeat(13, minmax(0, 1fr));
   grid-auto-rows: 30px;

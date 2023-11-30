@@ -26,6 +26,7 @@ export class CourseScheduleComponent {
   weekdays: string[] = []
   schedule: ScheduleEvent[]
   selectedCourses: Set<string> = new Set()
+  selectedStaff: Set<string> = new Set()
   timeSlots: { startTime: string; endTime: string }[] = []
   headerColumns: Record<string, { start: number; span: number }> = {}
 
@@ -52,6 +53,31 @@ export class CourseScheduleComponent {
   }
 */
   constructor(public scheduleService: ScheduleService) {}
+
+  ngOnInit() {
+    this.schedule = this.scheduleService.getSchedule()
+    this.selectedCourses = new Set(
+      this.scheduleService.getCourses().map((course) => course.code),
+    )
+    this.selectedStaff = new Set(
+      this.scheduleService.getStaff().map((staff) => staff.enumber),
+    )
+
+    this.assignColumnsToEvents()
+    this.assignRowsToEvents()
+    this.generateTimeSlots()
+    this.calculateHeaderColumns()
+    this.weekdays.push(DayOfWeek.Monday)
+    this.weekdays.push(DayOfWeek.Tuesday)
+    this.weekdays.push(DayOfWeek.Wednesday)
+    this.weekdays.push(DayOfWeek.Thursday)
+    this.weekdays.push(DayOfWeek.Friday)
+    console.log()
+
+    const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '#CFA0E9'] // Orange, Blue, Green, Purple in hex
+    this.groupColours = this.scheduleService.generateColorShades(baseColors)
+    console.log()
+  }
 
   sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
     // Define the order of the days
@@ -163,26 +189,37 @@ export class CourseScheduleComponent {
     const diffMinutes = (eventTime.getTime() - baseTime.getTime()) / (1000 * 60)
     return 1 + diffMinutes / 30 // Calculate row based on 30-minute increments
   }
-  ngOnInit() {
-    this.schedule = this.scheduleService.getSchedule()
-    this.selectedCourses = new Set(
-      this.scheduleService.getCourses().map((course) => course.code),
-    )
-    this.assignColumnsToEvents()
-    this.assignRowsToEvents()
-    this.generateTimeSlots()
-    this.calculateHeaderColumns()
-    this.weekdays.push(DayOfWeek.Monday)
-    this.weekdays.push(DayOfWeek.Tuesday)
-    this.weekdays.push(DayOfWeek.Wednesday)
-    this.weekdays.push(DayOfWeek.Thursday)
-    this.weekdays.push(DayOfWeek.Friday)
-    console.log()
 
-    const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '#CFA0E9'] // Orange, Blue, Green, Purple in hex
-    this.groupColours = this.scheduleService.generateColorShades(baseColors)
-    console.log()
+  toggleStaffSelection(enumber: string) {
+    if (this.selectedStaff.has(enumber)) {
+      this.selectedStaff.delete(enumber)
+    } else {
+      this.selectedStaff.add(enumber)
+    }
   }
+
+  isStaffSelected(enumber: string): boolean {
+    return this.selectedStaff.has(enumber)
+  }
+
+  shouldDisplayEvent(event: ScheduleEvent): boolean {
+    const isCourseSelected = this.selectedCourses.has(event.course.code)
+
+    // Check if any of the class staff or the lead staff member is selected
+    const isAnyStaffSelected =
+      event.class.staff.some((staff) =>
+        this.selectedStaff.has(staff.enumber),
+      ) || this.selectedStaff.has(event.class.offeringGroup.lead.enumber)
+
+    // If no courses or no staff are selected, return false.
+    if (this.selectedCourses.size === 0 || this.selectedStaff.size === 0) {
+      return false
+    }
+
+    // Event is displayed if its course is selected and any of its staff (including lead) is selected.
+    return isCourseSelected && isAnyStaffSelected
+  }
+
   toggleCourseSelection(courseCode: string) {
     if (this.selectedCourses.has(courseCode)) {
       this.selectedCourses.delete(courseCode)

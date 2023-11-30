@@ -217,7 +217,7 @@ export class ScheduleService {
     return slots
   }
 
-  private getStaff(): Staff[] {
+  getStaff(): Staff[] {
     const staff: Staff[] = [
       {
         enumber: 'E07581',
