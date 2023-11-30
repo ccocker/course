@@ -279,16 +279,50 @@ export class CourseScheduleComponent {
   }
 
   generateTimeSlots() {
-    let startTime = new Date(2023, 0, 1, 8, 30) // Starting at 8:30
-    for (let i = 0; i < 20; i++) {
-      // Assuming you want 20 slots of 30 minutes
-      let endTime = new Date(startTime.getTime() + 30 * 60000) // 30 minutes later
-      this.timeSlots.push({
-        startTime: this.formatTime(startTime),
-        endTime: this.formatTime(endTime),
-      })
-      startTime = endTime // Set start time for the next slot
+    // Initialize variables to store the earliest start time and the latest end time
+    let earliestStart = 24 * 60 // Represented in minutes, initialized to the latest possible time in a day
+    let latestEnd = 0 // Represented in minutes, initialized to the earliest possible time in a day
+
+    // Iterate through all the events to update earliestStart and latestEnd
+    this.schedule.forEach((event) => {
+      const startTimeInMinutes = this.convertTimeToMinutes(
+        event.class.timeslot.startTime,
+      )
+      const endTimeInMinutes = this.convertTimeToMinutes(
+        event.class.timeslot.endTime,
+      )
+
+      if (startTimeInMinutes < earliestStart) {
+        earliestStart = startTimeInMinutes
+      }
+
+      if (endTimeInMinutes > latestEnd) {
+        latestEnd = endTimeInMinutes
+      }
+    })
+
+    // Clear existing timeslots
+    this.timeSlots = []
+
+    // Generate new timeslots based on the range from earliestStart to latestEnd
+    for (
+      let currentTime = earliestStart;
+      currentTime < latestEnd;
+      currentTime += 30
+    ) {
+      const startTime = this.minutesToTime(currentTime)
+      const endTime = this.minutesToTime(currentTime + 30)
+      this.timeSlots.push({ startTime, endTime })
     }
+  }
+
+  // Helper function to convert minutes to time string format
+  minutesToTime(minutes: number): string {
+    const hours = Math.floor(minutes / 60)
+    const mins = minutes % 60
+    return `${hours.toString().padStart(2, '0')}:${mins
+      .toString()
+      .padStart(2, '0')}`
   }
 
   formatTime(date: Date): string {

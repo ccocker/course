@@ -213,6 +213,8 @@ export class ScheduleService {
       { startTime: '12:30', endTime: '14:30' },
       { startTime: '14:30', endTime: '16:30' },
       { startTime: '16:30', endTime: '18:30' },
+      { startTime: '18:30', endTime: '20:30' },
+      { startTime: '06:30', endTime: '08:30' },
     ]
     return slots
   }
