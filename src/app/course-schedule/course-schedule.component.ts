@@ -23,6 +23,7 @@ import { DayOfWeek, ScheduleEvent } from './interfaces/schedule.interface'
 })
 export class CourseScheduleComponent {
   DayOfWeek = DayOfWeek
+  private earliestStartTime: Date
   weekdays: string[] = []
   schedule: ScheduleEvent[]
   selectedCourses: Set<string> = new Set()
@@ -62,6 +63,7 @@ export class CourseScheduleComponent {
     this.selectedStaff = new Set(
       this.scheduleService.getStaff().map((staff) => staff.enumber),
     )
+    this.determineEarliestStartTime()
 
     this.assignColumnsToEvents()
     this.assignRowsToEvents()
@@ -74,9 +76,24 @@ export class CourseScheduleComponent {
     this.weekdays.push(DayOfWeek.Friday)
     console.log()
 
-    const baseColors = ['#FF8C00', '#3399FF', '#3CB371', '#CFA0E9'] // Orange, Blue, Green, Purple in hex
-    this.groupColours = this.scheduleService.generateColorShades(baseColors)
+    this.groupColours = this.scheduleService.generateColorShades()
     console.log()
+  }
+
+  private determineEarliestStartTime() {
+    let earliestTime = new Date(0, 0, 0, 23, 59) // Initialize to latest possible time
+    this.schedule.forEach((event) => {
+      const eventStartTime = new Date(
+        0,
+        0,
+        0,
+        ...event.class.timeslot.startTime.split(':').map(Number),
+      )
+      if (eventStartTime < earliestTime) {
+        earliestTime = eventStartTime
+      }
+    })
+    this.earliestStartTime = earliestTime
   }
 
   sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
@@ -176,18 +193,11 @@ export class CourseScheduleComponent {
   }
 
   convertTimeToGridRow(time: string): number {
-    // Assuming grid starts at 08:00 as row 2, each half-hour block is a new row
-    const baseTime = new Date(0, 0, 0, 8, 0) // Base time corresponding to row 2
-    const timeParts = time.split(':')
-    const eventTime = new Date(
-      0,
-      0,
-      0,
-      parseInt(timeParts[0]),
-      parseInt(timeParts[1]),
-    )
-    const diffMinutes = (eventTime.getTime() - baseTime.getTime()) / (1000 * 60)
-    return 1 + diffMinutes / 30 // Calculate row based on 30-minute increments
+    const timeParts = time.split(':').map(Number)
+    const eventTime = new Date(0, 0, 0, timeParts[0], timeParts[1])
+    const diffMinutes =
+      (eventTime.getTime() - this.earliestStartTime.getTime()) / (1000 * 60)
+    return 2 + diffMinutes / 30 // Assuming header row is 1 and time slots start from row 2
   }
 
   toggleStaffSelection(enumber: string) {

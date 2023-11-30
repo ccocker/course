@@ -764,15 +764,13 @@ export class ScheduleService {
     return Array.from(courseSet)
   }
 
-  public generateColorShades(
-    baseColors: string[],
-  ): Record<string, Record<string, string>> {
-    const courseIdentifiers = this.extractCourseIdentifiers()
+  public generateColorShades(): Record<string, Record<string, string>> {
+    const courses = this.getCourses()
     const groupColours: Record<string, Record<string, string>> = {}
 
-    baseColors.forEach((color, index) => {
-      const colorKey = courseIdentifiers[index] || color.replace('#', '')
-      groupColours[colorKey] = this.generateShadesForColor(color)
+    courses.forEach((course) => {
+      // Use course's code as key and generate shades for its base color
+      groupColours[course.code] = this.generateShadesForColor(course.baseColour)
     })
 
     return groupColours
