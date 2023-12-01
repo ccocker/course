@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core'
+import { ISkill } from '../interfaces/schedule.interface'
 import {
-  Room,
-  Timeslot,
-  Staff,
-  Course,
-  Offering,
-  OfferingGroup,
-  GroupClasses,
+  IRoom,
+  ITimeslot,
+  IStaff,
+  ICourse,
+  IOffering,
+  IOfferingGroup,
+  IGroupClasses,
   DayOfWeek,
-  ScheduleEvent,
+  IScheduleEvent,
 } from '../interfaces/schedule.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
-  private scheduleData: ScheduleEvent[] = [
+  private scheduleData: IScheduleEvent[] = [
     {
       class: this.getGroupClasses()[0],
       course: this.getCourses()[0],
@@ -196,8 +197,8 @@ export class ScheduleService {
 
   constructor() {}
 
-  private getRooms(): Room[] {
-    const existingRooms: Room[] = [
+  private getRooms(): IRoom[] {
+    const existingRooms: IRoom[] = [
       { buildingNo: 12, floor: 10, roomNumber: 5, capacity: 120 },
       { buildingNo: 12, floor: 10, roomNumber: 6, capacity: 150 },
       { buildingNo: 14, floor: 9, roomNumber: 23, capacity: 60 },
@@ -205,8 +206,8 @@ export class ScheduleService {
     return existingRooms
   }
 
-  private getTimeSlots(): Timeslot[] {
-    const slots: Timeslot[] = [
+  private getTimeSlots(): ITimeslot[] {
+    const slots: ITimeslot[] = [
       { startTime: '08:30', endTime: '10:30' },
       { startTime: '09:00', endTime: '11:00' },
       { startTime: '10:30', endTime: '12:30' },
@@ -219,12 +220,12 @@ export class ScheduleService {
     return slots
   }
 
-  getStaff(): Staff[] {
-    const staff: Staff[] = [
+  getStaff(): IStaff[] {
+    const staff: IStaff[] = [
       {
         enumber: 'E07581',
-        firstName: 'Henry',
-        lastName: 'Cavill',
+        firstName: 'Lead',
+        lastName: '1',
         pEmail: 'simba@thepridelands.za',
         rEmail: 'rodneyian.cocker@rmit.edu.a',
         phone: '0411 123 123',
@@ -234,8 +235,8 @@ export class ScheduleService {
       },
       {
         enumber: 'E07582',
-        firstName: 'Rodney',
-        lastName: 'Cocker',
+        firstName: 'Tutor',
+        lastName: '1',
         pEmail: 'simba@thepridelands.za',
         rEmail: 'rodneyian.cocker@rmit.edu.a',
         phone: '0411 123 123',
@@ -245,8 +246,8 @@ export class ScheduleService {
       },
       {
         enumber: 'E07583',
-        firstName: 'Matt',
-        lastName: 'Bomer',
+        firstName: 'Tutor',
+        lastName: '2',
         pEmail: 'simba@thepridelands.za',
         rEmail: 'rodneyian.cocker@rmit.edu.a',
         phone: '0411 123 123',
@@ -256,8 +257,8 @@ export class ScheduleService {
       },
       {
         enumber: 'E07584',
-        firstName: 'David',
-        lastName: 'Leon',
+        firstName: 'Tutor',
+        lastName: '2',
         pEmail: 'simba@thepridelands.za',
         rEmail: 'rodneyian.cocker@rmit.edu.a',
         phone: '0411 123 123',
@@ -267,8 +268,8 @@ export class ScheduleService {
       },
       {
         enumber: 'E07585',
-        firstName: 'Theo',
-        lastName: 'James',
+        firstName: 'Tutor',
+        lastName: '2',
         pEmail: 'simba@thepridelands.za',
         rEmail: 'rodneyian.cocker@rmit.edu.a',
         phone: '0411 123 123',
@@ -278,8 +279,8 @@ export class ScheduleService {
       },
       {
         enumber: 'E07586',
-        firstName: 'Ryan',
-        lastName: 'Gosling',
+        firstName: 'Lead',
+        lastName: '2',
         pEmail: 'simba@thepridelands.za',
         rEmail: 'rodneyian.cocker@rmit.edu.a',
         phone: '0411 123 123',
@@ -290,37 +291,48 @@ export class ScheduleService {
     ]
     return staff
   }
+  skills: ISkill[] = [
+    {
+      id: 'skill1',
+      name: 'Problem Solving',
+      description: 'Ability to solve problems',
+    },
+    // Add more skills as needed
+  ]
 
-  getCourses(): Course[] {
-    const classes: Course[] = [
+  getCourses(): ICourse[] {
+    const classes: ICourse[] = [
       {
         code: 'BC1',
         name: 'Programming Bootcamp 1',
         description:
           'Learn algorithmic thinkng in the context of object oriented programming',
         baseColour: '#FF8C00',
-        offerings: this.getOfferings(),
+        teachingSkills: this.skills,
+        coordinator: this.getStaff()[0],
       },
       {
         code: 'BC2',
         name: 'Programming Bootcamp 2',
         description: 'Develop your understanding of OO programming through C++',
         baseColour: '#3399FF',
-        offerings: this.getOfferings(),
+        teachingSkills: this.skills,
+        coordinator: this.getStaff()[0],
       },
       {
         code: 'WBC',
         name: 'Web Bootcamp',
         description: 'Learn HTML, CSS and Javascript',
         baseColour: '#3CB371',
-        offerings: this.getOfferings(),
+        teachingSkills: this.skills,
+        coordinator: this.getStaff()[0],
       },
     ]
     return classes
   }
 
-  private getOfferings(): Offering[] {
-    const offerings: Offering[] = [
+  private getOfferings(): IOffering[] {
+    const offerings: IOffering[] = [
       {
         startDate: new Date('2024-03-04T08:30:00'),
         finishDate: new Date('2024-06-30T23:59:00'),
@@ -331,8 +343,8 @@ export class ScheduleService {
     return offerings
   }
 
-  private getOfferingGroups(): OfferingGroup[] {
-    const group: OfferingGroup[] = [
+  private getOfferingGroups(): IOfferingGroup[] {
+    const group: IOfferingGroup[] = [
       {
         lead: this.getStaff()[0],
         group: 1,
@@ -403,8 +415,8 @@ export class ScheduleService {
     return group
   }
 
-  private getTutors(): Staff[] {
-    const tutors: Staff[] = []
+  private getTutors(): IStaff[] {
+    const tutors: IStaff[] = []
     const staffMembers = this.getStaff()
 
     for (let staff of staffMembers) {
@@ -416,8 +428,8 @@ export class ScheduleService {
     return tutors
   }
 
-  private getGroupClasses(): GroupClasses[] {
-    const classes: GroupClasses[] = [
+  private getGroupClasses(): IGroupClasses[] {
+    const classes: IGroupClasses[] = [
       {
         classNumber: 1,
         day: DayOfWeek.Monday,
@@ -862,7 +874,7 @@ export class ScheduleService {
     return classes
   }
 
-  private assignTutorsToClass(capacity: number): Staff[] {
+  private assignTutorsToClass(capacity: number): IStaff[] {
     // Calculate the number of tutors needed for the given capacity
     const numberOfTutors = this.calculateTutors(capacity)
 

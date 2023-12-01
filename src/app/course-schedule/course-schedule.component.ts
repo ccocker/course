@@ -5,7 +5,7 @@ import { MatChipsModule } from '@angular/material/chips'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { ScheduleService } from './services/schedule.service'
 import { FilterEventsPipe, EnumToArrayPipe } from './events-filter.pipe'
-import { DayOfWeek, ScheduleEvent } from './interfaces/schedule.interface'
+import { DayOfWeek, IScheduleEvent } from './interfaces/schedule.interface'
 
 @Component({
   selector: 'mi-course-schedule',
@@ -25,7 +25,7 @@ export class CourseScheduleComponent {
   DayOfWeek = DayOfWeek
   private earliestStartTime: Date
   weekdays: string[] = []
-  schedule: ScheduleEvent[]
+  schedule: IScheduleEvent[]
   selectedCourses: Set<string> = new Set()
   selectedStaff: Set<string> = new Set()
   timeSlots: { startTime: string; endTime: string }[] = []
@@ -96,7 +96,7 @@ export class CourseScheduleComponent {
     this.earliestStartTime = earliestTime
   }
 
-  sortEventsByDayAndTime(schedule: ScheduleEvent[]): ScheduleEvent[] {
+  sortEventsByDayAndTime(schedule: IScheduleEvent[]): IScheduleEvent[] {
     // Define the order of the days
     const daysOrder = [
       DayOfWeek.Monday,
@@ -212,7 +212,7 @@ export class CourseScheduleComponent {
     return this.selectedStaff.has(enumber)
   }
 
-  shouldDisplayEvent(event: ScheduleEvent): boolean {
+  shouldDisplayEvent(event: IScheduleEvent): boolean {
     const isCourseSelected = this.selectedCourses.has(event.course.code)
 
     // Check if any of the class staff or the lead staff member is selected
@@ -350,7 +350,7 @@ export class CourseScheduleComponent {
     return hours * 60 + minutes
   }
 
-  getEventColor(event: ScheduleEvent): string {
+  getEventColor(event: IScheduleEvent): string {
     const courseCode = event.course.code
     const groupNumber = event.class.offeringGroup.group
 

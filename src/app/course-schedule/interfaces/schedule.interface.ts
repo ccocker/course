@@ -8,12 +8,28 @@ export enum DayOfWeek {
   Sunday = 'SUNDAY',
 }
 
-export interface Timeslot {
+/**
+ * Skill interface representing the required teaching skills for a class.
+ */
+export interface ISkill {
+  id: string
+  name: string
+  description: string
+}
+
+/**
+ * TeachingSkills interface representing an array of required skills for a class.
+ */
+export interface ITeachingSkills {
+  skills: ISkill[]
+}
+
+export interface ITimeslot {
   startTime: string
   endTime: string
 }
 
-export interface Staff {
+export interface IStaff {
   enumber: string
   firstName: string
   lastName: string
@@ -25,47 +41,48 @@ export interface Staff {
   isAvailable: boolean
 }
 
-export interface Course {
+export interface ICourse {
   code: string
   name: string
   description: string
+  teachingSkills: ISkill[]
   baseColour: string
-  offerings: Offering[]
+  coordinator: IStaff
 }
 
-export interface Offering {
+export interface IOffering {
   startDate: Date
   finishDate: Date
   teachStartDate: Date
   teachFinishDate: Date
 }
 
-export interface OfferingGroup {
-  lead: Staff
+export interface IOfferingGroup {
+  lead: IStaff
   group: number
   groupCapacity: number
-  offering: Offering
+  offering: IOffering
 }
 
-export interface Room {
+export interface IRoom {
   buildingNo: number
   floor: number
   roomNumber: number
   capacity: number
 }
 
-export interface GroupClasses {
+export interface IGroupClasses {
   classNumber: number
   day: DayOfWeek
-  timeslot: Timeslot
-  room: Room
-  staff: Staff[]
-  offeringGroup: OfferingGroup
+  timeslot: ITimeslot
+  room: IRoom
+  staff: IStaff[]
+  offeringGroup: IOfferingGroup
 }
 
-export interface ScheduleEvent {
-  class: GroupClasses // Link directly to a specific class
-  course: Course // Link directly to a specific course
+export interface IScheduleEvent {
+  class: IGroupClasses // Link directly to a specific class
+  course: ICourse // Link directly to a specific course
   // UI-specific properties
   gridColumnStart?: number
   gridColumnEnd?: number

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core'
-import { ScheduleEvent } from './interfaces/schedule.interface'
+import { IScheduleEvent } from './interfaces/schedule.interface'
 
 @Pipe({
   name: 'filterEvents',
@@ -7,10 +7,10 @@ import { ScheduleEvent } from './interfaces/schedule.interface'
 })
 export class FilterEventsPipe implements PipeTransform {
   transform(
-    events: ScheduleEvent[],
+    events: IScheduleEvent[],
     day: string,
     timeslot: string,
-  ): ScheduleEvent[] {
+  ): IScheduleEvent[] {
     return events.filter((event) => {
       const eventStartTime = event.class.timeslot.startTime // Extracts the start time
       return event.class.day === day && eventStartTime === timeslot
