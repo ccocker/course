@@ -227,6 +227,7 @@
   </style>
 
   <ng-content></ng-content>
+  {{ appConfig.isLoggedIn }}
   <main class="main" *ngIf="!appConfig.isLoggedIn">
     <div class="content">
       <div class="left-side">

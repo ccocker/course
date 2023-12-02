@@ -19,6 +19,18 @@ export class FirebaseAuthService implements IAuthService {
       firebase.initializeApp(environment.firebaseConfig);
     }
     this.firebaseAuth = firebase.auth();
+
+    this.firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        this.isAuthenticated.next(true);
+        localStorage.setItem('isLoggedIn', 'true');
+      } else {
+        // No user is signed in.
+        this.isAuthenticated.next(false);
+        localStorage.removeItem('isLoggedIn');
+      }
+    });
   }
 
   login(credentials: any): Observable<any> {

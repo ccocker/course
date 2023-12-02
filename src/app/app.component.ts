@@ -1,4 +1,11 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
@@ -72,9 +79,10 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   constructor(
-    @Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService,
+    @Inject(AUTH_SERVICE_TOKEN) public authService: IAuthService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -83,7 +91,8 @@ export class AppComponent implements OnInit {
       .isLoggedIn()
       .subscribe((status) => {
         this.appConfig.isLoggedIn = status;
-        localStorage.setItem('isLoggedIn', status.toString());
+        this.appConfig.showTopNav = status;
+        this.changeDetectorRef.detectChanges();
       });
   }
 
