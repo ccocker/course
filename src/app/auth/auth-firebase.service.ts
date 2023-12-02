@@ -3,7 +3,7 @@ import { IAuthService } from './auth-service.interface';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { environment } from '../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 
 import { Observable, catchError, from, tap } from 'rxjs';
 
@@ -15,7 +15,6 @@ export class FirebaseAuthService implements IAuthService {
   private isAuthenticated = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    // Initialize Firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(environment.firebaseConfig);
     }
@@ -23,24 +22,29 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   login(credentials: any): Observable<any> {
-    console.log('login', credentials);
     return from(
       this.firebaseAuth.signInWithEmailAndPassword(
         credentials.email,
         credentials.password
       )
     ).pipe(
-      tap((result) => {
-        // Here you can extract and return the token and user information if needed
-        // For example:
-        // const token = await result.user.getIdToken();
-        // const user = result.user;
-        this.isAuthenticated.next(true);
-        return { token: 'firebase-token', user: 'FirebaseUser' }; // Replace with actual token and user
-      }),
+      switchMap((result) =>
+        from(result.user.getIdToken()).pipe(
+          map((token) => {
+            this.isAuthenticated.next(true);
+            return { token, user: result.user };
+          })
+        )
+      ),
       catchError((error) => {
-        // Handle authentication errors
-        // ...
+        throw error;
+      })
+    );
+  }
+
+  resetPassword(email: string): Observable<void> {
+    return from(this.firebaseAuth.sendPasswordResetEmail(email)).pipe(
+      catchError((error) => {
         throw error;
       })
     );

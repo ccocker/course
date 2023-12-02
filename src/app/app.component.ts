@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -85,7 +85,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     @Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -143,10 +144,12 @@ export class AppComponent implements OnInit {
     }
     if (item === 'Login') {
       this.appConfig.isLoggedIn = true;
+      this.router.navigate(['course-schedule']);
     }
     if (item.title === 'Login/Register') {
       this.openLoginDialog();
     }
+
     // Add your logic here based on the clicked menu item
     console.log(`Clicked on menu item: ${item}`);
     // You can navigate to different routes or perform other actions here
