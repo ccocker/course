@@ -3,6 +3,6 @@ import { ResetPasswordComponent } from '../app/auth/reset-password/reset-passwor
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 
 export const routes: Routes = [
-  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'course-schedule', component: CourseScheduleComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
 ];
