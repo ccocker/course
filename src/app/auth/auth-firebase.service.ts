@@ -1,30 +1,64 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IAuthService } from './auth-service.interface';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import { environment } from '../environments/environment';
+import { BehaviorSubject } from 'rxjs';
+
+import { Observable, catchError, from, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthFirebaseService implements IAuthService {
-  private isAuthenticated = false;
-  private loginStatus = new BehaviorSubject<boolean>(true); // Add this line
+export class FirebaseAuthService implements IAuthService {
+  private firebaseAuth: firebase.auth.Auth;
+  private isAuthenticated = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    console.log('AuthFirebaseService instance created');
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(environment.firebaseConfig);
+    }
+    this.firebaseAuth = firebase.auth();
   }
 
   login(credentials: any): Observable<any> {
-    this.isAuthenticated = true;
-    this.loginStatus.next(true); // Update login status
-    return of({ token: 'firebase-token', user: 'FirebaseUser' });
+    console.log('login', credentials);
+    return from(
+      this.firebaseAuth.signInWithEmailAndPassword(
+        credentials.email,
+        credentials.password
+      )
+    ).pipe(
+      tap((result) => {
+        // Here you can extract and return the token and user information if needed
+        // For example:
+        // const token = await result.user.getIdToken();
+        // const user = result.user;
+        this.isAuthenticated.next(true);
+        return { token: 'firebase-token', user: 'FirebaseUser' }; // Replace with actual token and user
+      }),
+      catchError((error) => {
+        // Handle authentication errors
+        // ...
+        throw error;
+      })
+    );
   }
 
   logout(): void {
-    this.isAuthenticated = false;
-    this.loginStatus.next(false); // Update login status
+    this.firebaseAuth
+      .signOut()
+      .then(() => {
+        this.isAuthenticated.next(false);
+      })
+      .catch((error) => {
+        // Handle logout errors
+        // ...
+      });
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.loginStatus.asObservable();
+    return this.isAuthenticated.asObservable();
   }
 }

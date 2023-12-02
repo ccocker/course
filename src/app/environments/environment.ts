@@ -2,7 +2,7 @@ import { AuthServiceType } from '../auth/auth-service.enum';
 
 export const environment = {
   production: false,
-  authServiceType: AuthServiceType.Firebase,
+  authServiceType: AuthServiceType.Mock,
   firebaseConfig: {
     apiKey: 'AIzaSyDLaPfghjaxecZM3mY37Kj-FTw7e88sayg',
     authDomain: 'rmit-scheduler.firebaseapp.com',
