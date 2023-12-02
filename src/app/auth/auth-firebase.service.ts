@@ -32,6 +32,7 @@ export class FirebaseAuthService implements IAuthService {
         from(result.user.getIdToken()).pipe(
           map((token) => {
             this.isAuthenticated.next(true);
+            localStorage.setItem('isLoggedIn', 'true');
             return { token, user: result.user };
           })
         )
@@ -55,6 +56,7 @@ export class FirebaseAuthService implements IAuthService {
       .signOut()
       .then(() => {
         this.isAuthenticated.next(false);
+        localStorage.removeItem('isLoggedIn');
       })
       .catch((error) => {
         // Handle logout errors

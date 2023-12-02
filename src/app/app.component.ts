@@ -78,11 +78,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.appConfig.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     this.loginStatusSubscription = this.authService
       .isLoggedIn()
       .subscribe((status) => {
         this.appConfig.isLoggedIn = status;
-        this.appConfig.showTopNav = status;
+        localStorage.setItem('isLoggedIn', status.toString());
       });
   }
 
