@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core'
 import { ISkill } from '../interfaces/schedule.interface'
+import { ColorService } from './color.service'
+
 import {
   IRoom,
   ITimeslot,
@@ -16,6 +18,7 @@ import {
   providedIn: 'root',
 })
 export class ScheduleService {
+  private colorService: ColorService = new ColorService()
   private scheduleData: IScheduleEvent[] = [
     {
       class: this.getGroupClasses()[0],
@@ -311,7 +314,7 @@ export class ScheduleService {
         isAvailable: true,
       },
       {
-        enumber: 'E07586',
+        enumber: 'E07589',
         firstName: 'David James',
         lastName: 'Elliot',
         pEmail: 'david.james.elliot@thepridelands.za',
@@ -322,7 +325,7 @@ export class ScheduleService {
         isAvailable: true,
       },
       {
-        enumber: 'E07586',
+        enumber: 'E07590',
         firstName: 'Oleg',
         lastName: 'Zagorodnii',
         pEmail: 'oleg.zagorodnii@thepridelands.za',
@@ -530,9 +533,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[1],
         room: this.getRooms()[2],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
-        ),
+        staff: this.assignSpecificTutorsToClass(['']),
         offeringGroup: this.getOfferingGroups()[10],
       },
       {
@@ -670,9 +671,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
-        ),
+        staff: this.assignSpecificTutorsToClass(['E07582', 'E07584', 'E07585']),
         offeringGroup: this.getOfferingGroups()[5],
       },
       {
@@ -1000,72 +999,11 @@ export class ScheduleService {
 
     courses.forEach((course) => {
       // Use course's code as key and generate shades for its base color
-      groupColours[course.code] = this.generateShadesForColor(course.baseColour)
+      groupColours[course.code] = this.colorService.generateShadesForColor(
+        course.baseColour,
+      )
     })
 
     return groupColours
-  }
-
-  private generateShadesForColor(
-    color: string,
-    shadesCount: number = 7,
-  ): Record<string, string> {
-    const hexToRgb = (hex: string): [number, number, number] => {
-      const parsedHex = parseInt(hex.slice(1), 16)
-      return [(parsedHex >> 16) & 255, (parsedHex >> 8) & 255, parsedHex & 255]
-    }
-
-    const rgbToHex = (r: number, g: number, b: number): string => {
-      return `#${[r, g, b]
-        .map((x) => x.toString(16).padStart(2, '0'))
-        .join('')}`
-    }
-
-    const adjustShade = (colorComponent: number, factor: number): number => {
-      // Ensuring that the color component is between 0 and 255
-      return Math.min(
-        255,
-        Math.max(
-          0,
-          Math.round(colorComponent + factor * (255 - colorComponent)),
-        ),
-      )
-    }
-
-    const createShade = (
-      rgb: [number, number, number],
-      factor: number,
-    ): string => {
-      return rgbToHex(
-        adjustShade(rgb[0], factor),
-        adjustShade(rgb[1], factor),
-        adjustShade(rgb[2], factor),
-      )
-    }
-
-    const baseRgb = hexToRgb(color)
-    let shades: Record<string, string> = {}
-
-    // Calculate the increment for lightening/darkening each shade
-    const increment = 1 / (shadesCount + 1)
-
-    // Generate shades
-    for (let i = 0; i < shadesCount; i++) {
-      // Alternate the factor for lightening and darkening
-      const factor =
-        i % 2 === 0 ? increment * (i / 2 + 1) : -increment * (i / 2 + 1)
-      shades[`G${i + 1}`] = createShade(baseRgb, factor)
-    }
-
-    // Sort the shades by their luminance value
-    shades = Object.entries(shades)
-      .sort((a, b) => {
-        const sumLuminance = (rgb: string) =>
-          hexToRgb(rgb).reduce((acc, val) => acc + val, 0)
-        return sumLuminance(a[1]) - sumLuminance(b[1])
-      })
-      .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {})
-
-    return shades
   }
 }
