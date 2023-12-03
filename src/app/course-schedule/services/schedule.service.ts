@@ -984,15 +984,6 @@ export class ScheduleService {
     return null
   }
 
-  private extractCourseIdentifiers(): string[] {
-    const courseSet = new Set<string>()
-    this.scheduleData.forEach((event) => {
-      const courseIdentifier = event.course.code
-      courseSet.add(courseIdentifier)
-    })
-    return Array.from(courseSet)
-  }
-
   public generateColorShades(): Record<string, Record<string, string>> {
     const courses = this.getAllCourses()
     const groupColours: Record<string, Record<string, string>> = {}

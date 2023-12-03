@@ -81,7 +81,9 @@
         'grid-row-start': event.gridRowStart,
         'grid-row-end': event.gridRowEnd,
         border: isUnderstaffed(event) ? '3px solid red' : '1px solid #dddddd',
-        'background-color': getEventColor(event),
+        'background-color': isUnderstaffed(event)
+          ? '#CCCCCC'
+          : getEventColor(event),
         display: shouldDisplayEvent(event) ? 'block' : 'none'
       }"
     >
