@@ -24,6 +24,7 @@ import { DayOfWeek, IScheduleEvent } from './interfaces/schedule.interface'
 export class CourseScheduleComponent {
   DayOfWeek = DayOfWeek
   private earliestStartTime: Date
+  showOnlyUnderstaffed: boolean = false
   weekdays: string[] = []
   schedule: IScheduleEvent[]
   selectedCourses: Set<string> = new Set()
@@ -58,7 +59,7 @@ export class CourseScheduleComponent {
   ngOnInit() {
     this.schedule = this.scheduleService.getSchedule()
     this.selectedCourses = new Set(
-      this.scheduleService.getCourses().map((course) => course.code),
+      this.scheduleService.getAllCourses().map((course) => course.code),
     )
     this.selectedStaff = new Set(
       this.scheduleService.getStaff().map((staff) => staff.enumber),
@@ -78,6 +79,10 @@ export class CourseScheduleComponent {
 
     this.groupColours = this.scheduleService.generateColorShades()
     console.log()
+  }
+
+  toggleUnderstaffedFilter() {
+    this.showOnlyUnderstaffed = !this.showOnlyUnderstaffed
   }
 
   private determineEarliestStartTime() {
@@ -177,6 +182,14 @@ export class CourseScheduleComponent {
     })
   }
 
+  isUnderstaffed(event: IScheduleEvent): boolean {
+    const requiredStaff = this.scheduleService.calculateTutors(
+      event.class.offeringGroup.groupCapacity,
+    )
+    const assignedStaff = event.class.staff.length
+    return assignedStaff < requiredStaff
+  }
+
   assignRowsToEvents() {
     // Sort events by day and start time to compare overlapping times
     const sortedSchedule = this.sortEventsByDayAndTime(this.schedule)
@@ -214,6 +227,28 @@ export class CourseScheduleComponent {
 
   shouldDisplayEvent(event: IScheduleEvent): boolean {
     const isCourseSelected = this.selectedCourses.has(event.course.code)
+    const isAnyStaffSelected =
+      event.class.staff.some((staff) =>
+        this.selectedStaff.has(staff.enumber),
+      ) || this.selectedStaff.has(event.class.offeringGroup.lead.enumber)
+
+    if (this.selectedCourses.size === 0 || this.selectedStaff.size === 0) {
+      return false
+    }
+
+    const isUnderstaffed = this.isUnderstaffed(event)
+
+    // Show event only if it's understaffed when the filter is active
+    return (
+      isCourseSelected &&
+      isAnyStaffSelected &&
+      (!this.showOnlyUnderstaffed || isUnderstaffed)
+    )
+  }
+  /*
+
+  shouldDisplayEvent(event: IScheduleEvent): boolean {
+    const isCourseSelected = this.selectedCourses.has(event.course.code)
 
     // Check if any of the class staff or the lead staff member is selected
     const isAnyStaffSelected =
@@ -229,9 +264,9 @@ export class CourseScheduleComponent {
     // Event is displayed if its course is selected and any of its staff (including lead) is selected.
     return isCourseSelected && isAnyStaffSelected
   }
-
+*/
   selectAllCourses() {
-    this.scheduleService.getCourses().forEach((course) => {
+    this.scheduleService.getAllCourses().forEach((course) => {
       this.selectedCourses.add(course.code)
     })
   }

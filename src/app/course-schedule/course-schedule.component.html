@@ -7,7 +7,7 @@
         <button (click)="selectAllCourses()">Select All</button>
         <button (click)="deselectAllCourses()">Deselect All</button>
       </div>
-      <div *ngFor="let course of scheduleService.getCourses()">
+      <div *ngFor="let course of scheduleService.getAllCourses()">
         <input
           type="checkbox"
           [id]="course.code"
@@ -37,6 +37,14 @@
         >
       </div>
     </div>
+  </div>
+
+  <div class="filter-toggle">
+    <button (click)="toggleUnderstaffedFilter()">
+      {{
+        showOnlyUnderstaffed ? 'Show All Classes' : 'Show Classes Needing Staff'
+      }}
+    </button>
   </div>
 
   <div class="timetable">
@@ -72,6 +80,7 @@
         'grid-column-end': event.gridColumnEnd,
         'grid-row-start': event.gridRowStart,
         'grid-row-end': event.gridRowEnd,
+        border: isUnderstaffed(event) ? '3px solid red' : '1px solid #dddddd',
         'background-color': getEventColor(event),
         display: shouldDisplayEvent(event) ? 'block' : 'none'
       }"

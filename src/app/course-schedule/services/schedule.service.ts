@@ -19,179 +19,179 @@ export class ScheduleService {
   private scheduleData: IScheduleEvent[] = [
     {
       class: this.getGroupClasses()[0],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[1],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[2],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[3],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[4],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[5],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[6],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[7],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[8],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[9],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[10],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[11],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[12],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[13],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[14],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[15],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[16],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[17],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[18],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[19],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[20],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[21],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[22],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[23],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[24],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[25],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[26],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[27],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[28],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[29],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[30],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[31],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[32],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[33],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[34],
-      course: this.getCourses()[1],
+      course: this.getAllCourses()[1],
     },
     {
       class: this.getGroupClasses()[35],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[36],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[37],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
     {
       class: this.getGroupClasses()[38],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[39],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[40],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[41],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[42],
-      course: this.getCourses()[0],
+      course: this.getAllCourses()[0],
     },
     {
       class: this.getGroupClasses()[43],
-      course: this.getCourses()[2],
+      course: this.getAllCourses()[2],
     },
   ]
 
@@ -226,8 +226,8 @@ export class ScheduleService {
         enumber: 'E07581',
         firstName: 'Henry',
         lastName: 'Cavill',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'henry.cavill@thepridelands.za',
+        rEmail: 'henry.cavill@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Lead',
@@ -237,8 +237,8 @@ export class ScheduleService {
         enumber: 'E07583',
         firstName: 'Matt',
         lastName: 'Bomer',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'matt.bomer@thepridelands.za',
+        rEmail: 'matt.bomer@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Lead',
@@ -259,8 +259,8 @@ export class ScheduleService {
         enumber: 'E07584',
         firstName: 'David',
         lastName: 'Leon',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'david.leon@thepridelands.za',
+        rEmail: 'david.leon@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -270,8 +270,8 @@ export class ScheduleService {
         enumber: 'E07585',
         firstName: 'Paul',
         lastName: 'Walker',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'paul.walker@thepridelands.za',
+        rEmail: 'paul.walker@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -281,8 +281,8 @@ export class ScheduleService {
         enumber: 'E07586',
         firstName: 'Ian',
         lastName: 'Somerhalder',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'ian.somerhalder@thepridelands.za',
+        rEmail: 'ian.somerhalder@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -292,8 +292,8 @@ export class ScheduleService {
         enumber: 'E07587',
         firstName: 'Alex',
         lastName: "O'Laoughlin",
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'alex.olaoughlin@thepridelands.za',
+        rEmail: 'alex.aolaoughlin@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -303,8 +303,8 @@ export class ScheduleService {
         enumber: 'E07588',
         firstName: 'Nick',
         lastName: 'Henrix',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'nick.henrix@thepridelands.za',
+        rEmail: 'nick.henrix@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -314,8 +314,8 @@ export class ScheduleService {
         enumber: 'E07586',
         firstName: 'David James',
         lastName: 'Elliot',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        pEmail: 'david.james.elliot@thepridelands.za',
+        rEmail: 'david.james.elliot@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -323,10 +323,10 @@ export class ScheduleService {
       },
       {
         enumber: 'E07586',
-        firstName: 'Ryan',
-        lastName: 'Gosling',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
+        firstName: 'Oleg',
+        lastName: 'Zagorodnii',
+        pEmail: 'oleg.zagorodnii@thepridelands.za',
+        rEmail: 'oleg.zagorodnii@rmit.edu.au',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Tutor',
@@ -337,14 +337,38 @@ export class ScheduleService {
   }
   skills: ISkill[] = [
     {
-      id: 'skill1',
+      id: 'probsolve',
       name: 'Problem Solving',
       description: 'Ability to solve problems',
     },
-    // Add more skills as needed
+    {
+      id: 'oodesign',
+      name: 'Object Oriented Design',
+      description: 'Ability to model data in an objected oriented framework',
+    },
   ]
 
-  getCourses(): ICourse[] {
+  private getCourseById(id: string): ICourse | null {
+    const allCourses: ICourse[] = this.getAllCourses()
+    for (const course of allCourses) {
+      if (id === course.code) {
+        return course
+      }
+    }
+    return null
+  }
+
+  private getTutorById(id: string): IStaff | null {
+    const allStaff: IStaff[] = this.getStaff()
+    for (const staff of allStaff) {
+      if (id === staff.enumber) {
+        return staff
+      }
+    }
+    return null
+  }
+
+  getAllCourses(): ICourse[] {
     const classes: ICourse[] = [
       {
         code: 'BC1',
@@ -367,6 +391,15 @@ export class ScheduleService {
         code: 'WBC',
         name: 'Web Bootcamp',
         description: 'Learn HTML, CSS and Javascript',
+        baseColour: '#3CB371',
+        teachingSkills: this.skills,
+        coordinator: this.getStaff()[0],
+      },
+      {
+        code: 'PS1',
+        name: 'Programming Studio 1',
+        description:
+          'Learn to develop a technology product for a target market that focusses on solving an aspect of a social challenge.',
         baseColour: '#3CB371',
         teachingSkills: this.skills,
         coordinator: this.getStaff()[0],
@@ -479,9 +512,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
-        ),
+        staff: this.assignSpecificTutorsToClass(['E07582', 'E07584']),
         offeringGroup: this.getOfferingGroups()[0],
       },
       {
@@ -931,13 +962,27 @@ export class ScheduleService {
     return assignedTutors
   }
 
-  private calculateTutors(capacity: number): number {
+  calculateTutors(capacity: number): number {
     // Subtract 30 from the capacity, divide by 30, and round up
     return Math.ceil((capacity - 30) / 30)
   }
 
   getSchedule() {
     return this.scheduleData
+  }
+
+  private assignSpecificTutorsToClass(
+    specificStaffIds?: string[],
+  ): IStaff[] | null {
+    // If specific staff IDs are provided, use them to assign staff
+    if (specificStaffIds && specificStaffIds.length > 0) {
+      const allStaff = this.getStaff()
+      return allStaff.filter(
+        (staff) =>
+          specificStaffIds.includes(staff.enumber) && staff.type !== 'Lead',
+      )
+    }
+    return null
   }
 
   private extractCourseIdentifiers(): string[] {
@@ -950,7 +995,7 @@ export class ScheduleService {
   }
 
   public generateColorShades(): Record<string, Record<string, string>> {
-    const courses = this.getCourses()
+    const courses = this.getAllCourses()
     const groupColours: Record<string, Record<string, string>> = {}
 
     courses.forEach((course) => {

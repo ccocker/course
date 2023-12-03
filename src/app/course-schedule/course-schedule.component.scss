@@ -123,31 +123,3 @@ body {
   align-items: flex-start; /* Aligns content to the start vertically */
   padding: 5px;
 }
-
-// .calendar {
-//   display: grid;
-//   grid-template-columns: repeat(
-//     6,
-//     1fr
-//   ); /* Adjust the number of columns as needed */
-//   grid-auto-rows: 60px; /* Adjust the row height as needed */
-//   grid-gap: 2px; /* Adjust the gap between cells */
-// }
-
-// .schedule-cell {
-//   /* Style for the calendar cells */
-//   grid-column: span 1;
-//   grid-row: span 1;
-//   border: 1px solid #ccc;
-//   position: relative;
-//   overflow: hidden; /* To hide overflowing content */
-// }
-
-// .event {
-//   background-color: #007bff;
-//   color: #fff;
-//   padding: 5px;
-//   border-radius: 5px;
-//   overflow: hidden; /* To hide overflowing content */
-//   margin: 2px; /* Add margin to create space around the event */
-// }
