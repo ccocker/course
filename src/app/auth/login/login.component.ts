@@ -35,6 +35,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   private authService: IAuthService;
+  loginError: string | null = null;
 
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
@@ -45,10 +46,10 @@ export class LoginComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
-    console.log('LoginComponent created');
   }
 
-  login() {
+  public login() {
+    this.loginError = null;
     if (this.loginForm.valid) {
       const credentials = {
         email: this.loginForm.value.email,
@@ -61,11 +62,18 @@ export class LoginComponent {
           this.router.navigate(['/course-schedule']);
         },
         (error) => {
-          console.error('Login failed', error);
+          if (error && error.code) {
+            this.loginError = error.message
+              .split('Firebase: ')[1]
+              .split(' (')[0];
+          } else {
+            this.loginError = 'An unexpected error occurred. Please try again.';
+          }
         }
       );
     } else {
       console.error('Form is not valid');
+      this.loginError = 'Form is not valid';
     }
   }
 

@@ -3,8 +3,9 @@ import { IAuthService } from './auth-service.interface';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/functions';
 import { environment } from '../environments/environment';
-import { BehaviorSubject, map, switchMap } from 'rxjs';
+import { BehaviorSubject, map, switchMap, throwError } from 'rxjs';
 
 import { Observable, catchError, from, tap } from 'rxjs';
 
@@ -34,20 +35,34 @@ export class FirebaseAuthService implements IAuthService {
     });
   }
 
-  login(credentials: any): Observable<any> {
-    return from(
-      this.firebaseAuth.signInWithEmailAndPassword(
-        credentials.email,
-        credentials.password
-      )
-    ).pipe(
-      tap((result) => {
-        this.isAuthenticated.next(true);
-        localStorage.setItem('isLoggedIn', 'true');
-        return { token: result.user.refreshToken, user: result.user };
+  public login(credentials: any): Observable<any> {
+    const checkUserExists = firebase
+      .functions()
+      .httpsCallable('checkUserExists');
+
+    return from(checkUserExists({ email: credentials.email })).pipe(
+      switchMap((result) => {
+        if (result.data.exists) {
+          // Convert signInWithEmailAndPassword promise to an Observable
+          return from(
+            this.firebaseAuth.signInWithEmailAndPassword(
+              credentials.email,
+              credentials.password
+            )
+          ).pipe(
+            tap(() => {
+              this.isAuthenticated.next(true);
+              localStorage.setItem('isLoggedIn', 'true');
+            })
+          );
+        } else {
+          // Create account and convert the promise to an Observable
+          return from(this.createAccount(credentials));
+        }
       }),
       catchError((error) => {
-        return this.createAccount(credentials);
+        // Handle errors
+        return throwError(error);
       })
     );
   }
