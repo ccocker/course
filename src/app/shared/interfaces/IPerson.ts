@@ -16,7 +16,7 @@ export interface IPerson extends BaseModel {
   phoneNumbers: IPhone[];
   emails: IEmail[];
   dates: IDate[];
-  company: string;
-  notes: string;
+  tags: string[];
+  notes: string[];
   gender: Gender;
 }

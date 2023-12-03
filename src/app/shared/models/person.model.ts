@@ -7,7 +7,6 @@ import { IFormConfiguration } from '../helpers/form-configuration';
  * This class extends the BaseModel and implements the IPerson interface.
  */
 export class Person extends BaseModel implements IPerson {
-  // Initialize Person class properties with default values
   firstName: string = '';
   lastName: string = '';
   age: number = 0;
@@ -18,8 +17,8 @@ export class Person extends BaseModel implements IPerson {
   phoneNumbers: IPhone[] = [{ label: '', country: '', number: '' }];
   emails: IEmail[] = [{ label: '', address: '' }];
   dates: IDate[] = [{ label: '', date: new Date() }];
-  company: string = '';
-  notes: string = '';
+  tags: string[] = [''];
+  notes: string[] = [''];
   gender: Gender = Gender.PreferNotToSay;
 
   /**
@@ -56,7 +55,6 @@ export class Person extends BaseModel implements IPerson {
   private configureProperties(): void {
     this.listProperties = ['firstName', 'lastName', 'age', 'gender', 'active'];
     this.formProperties = [
-      'id',
       'firstName',
       'lastName',
       'age',
@@ -66,8 +64,8 @@ export class Person extends BaseModel implements IPerson {
       'phoneNumbers',
       'emails',
       'dates',
-      'company',
       'notes',
+      'tags',
     ];
   }
 
@@ -125,8 +123,24 @@ export class Person extends BaseModel implements IPerson {
           date: { required: false, label: 'Date', type: 'date' },
         },
       },
-      company: { required: false, label: 'Company', type: 'text' },
-      notes: { required: false, label: 'Notes', type: 'text' },
+      notes: {
+        required: false,
+        label: 'Notes',
+        type: 'array',
+        default: { label: '' },
+        fields: {
+          label: { required: false, label: 'Label', type: 'text' },
+        },
+      },
+      tags: {
+        required: false,
+        label: 'Tags',
+        type: 'array',
+        default: { label: '' },
+        fields: {
+          label: { required: false, label: 'Label', type: 'text' },
+        },
+      },
     };
   }
 }

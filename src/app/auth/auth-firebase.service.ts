@@ -78,25 +78,23 @@ export class FirebaseAuthService implements IAuthService {
         const user = result.user;
         const db = firebase.firestore();
 
-        // Create a new organization
-        const orgRef = db.collection('organization').doc(); // Create a new document
+        const orgRef = db.collection('organization').doc();
         return from(
           orgRef.set({
-            name: user.email, // Use the user's email for organization name
+            name: user.email,
           })
         ).pipe(
           switchMap(() => {
-            // Create a user-profile with the user's auth ID and organization ID
             return from(
-              db.collection('user-profile').doc(user.uid).set({
-                organizationId: orgRef.id,
+              db.collection('people').doc(user.uid).set({
+                miId: orgRef.id,
               })
             );
           }),
           map(() => ({
             token: user.refreshToken,
             user: user,
-            organizationId: orgRef.id,
+            miId: orgRef.id,
           }))
         );
       }),

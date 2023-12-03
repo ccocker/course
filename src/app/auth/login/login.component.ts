@@ -22,7 +22,6 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
@@ -57,7 +56,6 @@ export class LoginComponent {
       };
       this.authService.login(credentials).subscribe(
         (data) => {
-          console.log('Login successful', data);
           this.dialogRef.close();
           this.router.navigate(['/course-schedule']);
         },

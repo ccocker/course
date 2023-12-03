@@ -1,7 +1,7 @@
 import { BaseModel } from './base.model';
 import { IAddress, IPhone, IEmail, IDate } from '../interfaces/';
 import { IFormConfiguration } from '../helpers/form-configuration';
-import { IOrganisation } from '../interfaces/ICustomer';
+import { IOrganisation } from '../interfaces/IOrganization';
 
 /**
  * Organisation class representing an organisation and their related information.
@@ -9,13 +9,12 @@ import { IOrganisation } from '../interfaces/ICustomer';
  */
 export class Organisation extends BaseModel implements IOrganisation {
   name: string = '';
-  customerCode: string = '';
   active: boolean = true;
   addresses: IAddress[] = [{ label: '', address: '' }];
   phoneNumbers: IPhone[] = [{ label: '', country: '', number: '' }];
   emails: IEmail[] = [{ label: '', address: '' }];
   dates: IDate[] = [];
-  notes: string = '';
+  notes: string[] = [];
   tags: string[] = [];
 
   /**
@@ -53,7 +52,7 @@ export class Organisation extends BaseModel implements IOrganisation {
    * Configure listProperties and formProperties arrays.
    */
   private configureProperties(): void {
-    this.listProperties = ['id', 'name', 'customerCode', 'active', 'tags'];
+    this.listProperties = ['id', 'name', 'active', 'tags'];
     this.formProperties = [
       'id',
       'name',
