@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { ScheduleEvent } from './services/schedule.service';
+import { Pipe, PipeTransform } from '@angular/core'
+import { IScheduleEvent } from './interfaces/schedule.interface'
 
 @Pipe({
   name: 'filterEvents',
@@ -7,13 +7,22 @@ import { ScheduleEvent } from './services/schedule.service';
 })
 export class FilterEventsPipe implements PipeTransform {
   transform(
-    events: ScheduleEvent[],
+    events: IScheduleEvent[],
     day: string,
-    timeslot: string
-  ): ScheduleEvent[] {
+    timeslot: string,
+  ): IScheduleEvent[] {
     return events.filter((event) => {
-      const eventStartTime = event.timeSlot.split(' - ')[0]; // Extracts the start time
-      return event.day === day && eventStartTime === timeslot;
-    });
+      const eventStartTime = event.class.timeslot.startTime // Extracts the start time
+      return event.class.day === day && eventStartTime === timeslot
+    })
+  }
+}
+
+@Pipe({ name: 'enumToArray', standalone: true })
+export class EnumToArrayPipe implements PipeTransform {
+  transform(data: Object) {
+    return Object.keys(data)
+      .filter((key) => isNaN(+key))
+      .map((key) => key.toUpperCase())
   }
 }

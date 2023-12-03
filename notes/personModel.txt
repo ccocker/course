@@ -1,0 +1,46 @@
+PERSON
+  e-Number
+  firstName
+  lastName
+  emailPersonal
+  emailRMIT
+  phone
+  highestQual[B.A, B.A. Hons, Masters, Phd]
+  skills[Java, C++, UCD, UX, SQL, Php, HTML, CSS, Javascript, ADT, A*, Search Algorithms, Python, Discrete Mathematics, Machine Learning, Database Design, Security, Network Design, TCP/IP]
+  type (Lead/Tutor)
+  active (Yes/No)
+  resume
+
+COURSE
+  code
+  name
+  description
+  topics[OO, Java, Algorithm Development, Search Algorithms, Web Development]
+  baseColour
+
+OFFERING
+  courseCode
+  startDate
+  endDate
+  teachStart
+  teachFinish
+  groups [G1, G2, G3, G4, G5, G6, G7]
+
+GROUPS
+  lead
+  shade - based on course base colour
+  classes[]
+
+ROOM
+  roomNumber: string
+  class: string
+  capacity: number
+
+CLASS
+  coursecode + group number
+  class number[1,2,3]
+  day: string
+  startTime
+  endTime
+  tutors[]
+

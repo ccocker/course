@@ -1,11 +1,57 @@
 <body>
+  <div class="filter-panels">
+    <!-- Courses Panel -->
+    <div class="panel courses-panel">
+      <div class="panel-header">
+        <h3>Courses</h3>
+        <button (click)="selectAllCourses()">Select All</button>
+        <button (click)="deselectAllCourses()">Deselect All</button>
+      </div>
+      <div *ngFor="let course of scheduleService.getAllCourses()">
+        <input
+          type="checkbox"
+          [id]="course.code"
+          [checked]="isCourseSelected(course.code)"
+          (change)="toggleCourseSelection(course.code)"
+        />
+        <label [for]="course.code">{{ course.name }}</label>
+      </div>
+    </div>
+
+    <!-- Staff Panel -->
+    <div class="panel staff-panel">
+      <div class="panel-header">
+        <h3>Staff</h3>
+        <button (click)="selectAllStaff()">Select All</button>
+        <button (click)="deselectAllStaff()">Deselect All</button>
+      </div>
+      <div *ngFor="let staff of scheduleService.getStaff()">
+        <input
+          type="checkbox"
+          [id]="'staff-' + staff.enumber"
+          [checked]="isStaffSelected(staff.enumber)"
+          (change)="toggleStaffSelection(staff.enumber)"
+        />
+        <label [for]="'staff-' + staff.enumber"
+          >{{ staff.firstName }} {{ staff.lastName }}</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-toggle">
+    <button (click)="toggleUnderstaffedFilter()">
+      {{
+        showOnlyUnderstaffed ? 'Show All Classes' : 'Show Classes Needing Staff'
+      }}
+    </button>
+  </div>
+
   <div class="timetable">
     <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
     <!-- Dynamic headers for each day -->
     <div
-      *ngFor="
-        let day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-      "
+      *ngFor="let day of weekdays"
       class="header"
       [style.gridColumn]="
         headerColumns[day].start + ' / span ' + headerColumns[day].span
@@ -14,6 +60,7 @@
     >
       {{ day }}
     </div>
+
     <!-- Timeslots -->
     <div
       *ngFor="let timeSlot of timeSlots; let i = index"
@@ -21,7 +68,7 @@
       [style.gridColumnStart]="1"
       [style.gridRow]="i + 2"
     >
-      {{ timeSlot.start }} - {{ timeSlot.end }}
+      {{ timeSlot.startTime }} - {{ timeSlot.endTime }}
     </div>
 
     <!-- Events -->
@@ -33,18 +80,31 @@
         'grid-column-end': event.gridColumnEnd,
         'grid-row-start': event.gridRowStart,
         'grid-row-end': event.gridRowEnd,
-        'background-color': getEventColor(event)
+        border: isUnderstaffed(event) ? '3px solid red' : '1px solid #dddddd',
+        'background-color': isUnderstaffed(event)
+          ? '#CCCCCC'
+          : getEventColor(event),
+        display: shouldDisplayEvent(event) ? 'block' : 'none'
       }"
     >
       <div>
         <br />
-        {{ event.class }}<br />
-        {{ event.roomNumber }} ({{ event.capacity }})<br /><br />
-        <b>{{ event.lecturer }}</b
+        {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
+        {{ event.class.classNumber }}<br />
+        {{ formatNumber(event.class.room.buildingNo, 3, '0') }}.{{
+          event.class.room.floor
+        }}.{{ formatNumber(event.class.room.roomNumber, 3, '0') }} ({{
+          event.class.room.capacity
+        }})<br />
+        {{ event.class.timeslot.startTime }} - {{ event.class.timeslot.endTime
+        }}<br /><br />
+        <b
+          >{{ event.class.offeringGroup.lead.firstName }}
+          {{ event.class.offeringGroup.lead.lastName }}</b
         ><br />
-        Tutor 1<br />
-        Tutor 2<br />
-        Tutor 3
+        <div *ngFor="let tutor of event.class.staff">
+          {{ tutor.firstName }} {{ tutor.lastName }}<br />
+        </div>
       </div>
       <!-- Event details -->
     </div>
