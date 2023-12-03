@@ -40,15 +40,30 @@ export class FirebaseAuthService implements IAuthService {
         credentials.password
       )
     ).pipe(
-      switchMap((result) =>
-        from(result.user.getIdToken()).pipe(
-          map((token) => {
-            this.isAuthenticated.next(true);
-            localStorage.setItem('isLoggedIn', 'true');
-            return { token, user: result.user };
-          })
-        )
-      ),
+      tap((result) => {
+        this.isAuthenticated.next(true);
+        localStorage.setItem('isLoggedIn', 'true');
+        return { token: result.user.refreshToken, user: result.user };
+      }),
+      catchError((error) => {
+        return this.createAccount(credentials);
+      })
+    );
+  }
+
+  private createAccount(credentials: any): Observable<any> {
+    debugger;
+    return from(
+      this.firebaseAuth.createUserWithEmailAndPassword(
+        credentials.email,
+        credentials.password
+      )
+    ).pipe(
+      tap((result) => {
+        this.isAuthenticated.next(true);
+        localStorage.setItem('isLoggedIn', 'true');
+        return { token: result.user.refreshToken, user: result.user };
+      }),
       catchError((error) => {
         throw error;
       })
