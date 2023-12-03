@@ -5,9 +5,18 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/functions';
 import { environment } from '../environments/environment';
-import { BehaviorSubject, map, switchMap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  switchMap,
+  throwError,
+} from 'rxjs';
 
 import { Observable, catchError, from, tap } from 'rxjs';
+import { IOrganisation } from '../shared/interfaces/IOrganization';
+import { IPerson } from '../shared/interfaces';
+import { Gender } from '../shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -78,23 +87,17 @@ export class FirebaseAuthService implements IAuthService {
         const user = result.user;
         const db = firebase.firestore();
 
-        const orgRef = db.collection('organization').doc();
-        return from(
-          orgRef.set({
-            name: user.email,
-          })
-        ).pipe(
-          switchMap(() => {
-            return from(
-              db.collection('people').doc(user.uid).set({
-                miId: orgRef.id,
-              })
-            );
-          }),
+        // Creating an organization
+        const orgRef = this.createOrganization(db, user);
+
+        // Creating a person
+        const personRef = this.createPerson(db, user);
+
+        return combineLatest([orgRef, personRef]).pipe(
           map(() => ({
             token: user.refreshToken,
             user: user,
-            miId: orgRef.id,
+            miId: orgRef['uid'],
           }))
         );
       }),
@@ -106,6 +109,62 @@ export class FirebaseAuthService implements IAuthService {
         throw error;
       })
     );
+  }
+
+  private createOrganization(
+    db: firebase.firestore.Firestore,
+    user: firebase.User
+  ): Observable<any> {
+    const orgRef = db.collection('organization').doc(); // Assuming the document ID is generated automatically
+    const defaultOrgData = this.getDefaultOrganizationData(user);
+
+    // Using { merge: true } to either create or update the organization with default data
+    return from(orgRef.set(defaultOrgData, { merge: true }));
+  }
+
+  private createPerson(
+    db: firebase.firestore.Firestore,
+    user: firebase.User
+  ): Observable<any> {
+    const personRef = db.collection('people').doc(user.uid);
+    const defaultPersonData = this.getDefaultPersonData(user);
+
+    // The { merge: true } option will create or update the record with the default data
+    return from(personRef.set(defaultPersonData, { merge: true }));
+  }
+
+  private getDefaultOrganizationData(user: firebase.User): IOrganisation {
+    return {
+      id: user.uid,
+      active: true,
+      addresses: [{ label: '', address: '' }],
+      phoneNumbers: [{ label: '', country: '', number: '' }],
+      emails: [{ label: '', address: '' }],
+      dates: [{ label: '', date: new Date() }],
+      notes: [''],
+      tags: [''],
+      name: user.email,
+    };
+  }
+
+  private getDefaultPersonData(user: firebase.User): Partial<IPerson> {
+    return {
+      id: user.uid,
+      miId: user.uid,
+      firstName: user.displayName,
+      lastName: '',
+      age: 0,
+      avatar: '',
+      banner: '',
+      active: true,
+      addresses: [{ label: '', address: '' }],
+      phoneNumbers: [{ label: '', country: '', number: '' }],
+      emails: [{ label: '', address: '' }],
+      dates: [{ label: 'Created Date', date: new Date() }],
+      notes: [''],
+      tags: ['user'],
+      gender: Gender.PreferNotToSay,
+    };
   }
 
   resetPassword(email: string): Observable<void> {

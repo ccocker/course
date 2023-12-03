@@ -1,4 +1,4 @@
-import { getPropertyType, toSentenceCase } from '@miStarter/helpers/utils';
+import { getPropertyType, toSentenceCase } from '../helpers/utils';
 
 export interface IFormConfiguration {
   required?: boolean;

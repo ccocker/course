@@ -61,6 +61,7 @@ export class LoginComponent {
         },
         (error) => {
           if (error && error.code) {
+            console.error(error, error.code);
             this.loginError = error.message
               .split('Firebase: ')[1]
               .split(' (')[0];
