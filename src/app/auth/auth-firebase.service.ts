@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IAuthService } from './auth-service.interface';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 import { environment } from '../environments/environment';
 import { BehaviorSubject, map, switchMap } from 'rxjs';
 
@@ -52,17 +53,41 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   private createAccount(credentials: any): Observable<any> {
-    debugger;
     return from(
       this.firebaseAuth.createUserWithEmailAndPassword(
         credentials.email,
         credentials.password
       )
     ).pipe(
+      switchMap((result) => {
+        const user = result.user;
+        const db = firebase.firestore();
+
+        // Create a new organization
+        const orgRef = db.collection('organization').doc(); // Create a new document
+        return from(
+          orgRef.set({
+            name: user.email, // Use the user's email for organization name
+          })
+        ).pipe(
+          switchMap(() => {
+            // Create a user-profile with the user's auth ID and organization ID
+            return from(
+              db.collection('user-profile').doc(user.uid).set({
+                organizationId: orgRef.id,
+              })
+            );
+          }),
+          map(() => ({
+            token: user.refreshToken,
+            user: user,
+            organizationId: orgRef.id,
+          }))
+        );
+      }),
       tap((result) => {
         this.isAuthenticated.next(true);
         localStorage.setItem('isLoggedIn', 'true');
-        return { token: result.user.refreshToken, user: result.user };
       }),
       catchError((error) => {
         throw error;
