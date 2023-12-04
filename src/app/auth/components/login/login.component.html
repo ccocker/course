@@ -1,5 +1,5 @@
 <div class="login-container">
-  <mat-card>
+  <mat-card *ngIf="resetPassword === false">
     <mat-card-header>
       <mat-card-title>Login / Register</mat-card-title>
     </mat-card-header>
@@ -33,7 +33,18 @@
         >
           Submit
         </button>
+        <a (click)="onResetPassword()" class="reset-password-link">
+          Forgot password?
+        </a>
       </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="resetPassword === true">
+    <mat-card-header>
+      <mat-card-title>Reset Password</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mi-reset-password></mi-reset-password>
     </mat-card-content>
   </mat-card>
 </div>

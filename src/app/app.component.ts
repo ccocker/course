@@ -17,9 +17,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
-import { LoginComponent } from './auth/login/login.component';
-import { IAuthService } from './auth/auth-service.interface';
-import { AUTH_SERVICE_TOKEN } from './auth/auth.service';
+import { LoginComponent } from './auth/components/login/login.component';
+import { IAuthService } from './auth/interfaces/auth-service.interface';
+import { AUTH_SERVICE_TOKEN } from './auth/services/auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 

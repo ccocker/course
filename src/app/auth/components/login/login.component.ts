@@ -7,14 +7,15 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
-import { IAuthService } from '../auth-service.interface';
-import { authServiceFactory } from '../auth-factory.service';
+import { IAuthService } from '../../interfaces/auth-service.interface';
+import { authServiceFactory } from '../../services/auth-factory.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 
 @Component({
   selector: 'mi-login',
@@ -27,6 +28,7 @@ import { Router } from '@angular/router';
     MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
+    ResetPasswordComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -35,6 +37,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   private authService: IAuthService;
   loginError: string | null = null;
+  resetPassword = false;
 
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
@@ -74,6 +77,10 @@ export class LoginComponent {
       console.error('Form is not valid');
       this.loginError = 'Form is not valid';
     }
+  }
+
+  onResetPassword() {
+    this.resetPassword = true;
   }
 
   loginWithGoogle() {

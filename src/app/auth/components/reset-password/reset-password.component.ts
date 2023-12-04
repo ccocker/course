@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IAuthService } from '../auth-service.interface';
-import { authServiceFactory } from '../auth-factory.service';
+import { IAuthService } from '../../interfaces/auth-service.interface';
+import { authServiceFactory } from '../../services/auth-factory.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   selector: 'mi-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
-  standalone: true, // Marking the component as standalone
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

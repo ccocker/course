@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IAuthService } from './auth-service.interface';
+import { IAuthService } from '../interfaces/auth-service.interface';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/functions';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import {
   BehaviorSubject,
   combineLatest,
@@ -14,9 +14,9 @@ import {
 } from 'rxjs';
 
 import { Observable, catchError, from, tap } from 'rxjs';
-import { IOrganisation } from '../shared/interfaces/IOrganization';
-import { IPerson } from '../shared/interfaces';
-import { Gender } from '../shared/enums';
+import { IOrganisation } from '../../shared/interfaces/IOrganization';
+import { IPerson } from '../../shared/interfaces';
+import { Gender } from '../../shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -115,11 +115,32 @@ export class FirebaseAuthService implements IAuthService {
     db: firebase.firestore.Firestore,
     user: firebase.User
   ): Observable<any> {
-    const orgRef = db.collection('organization').doc(); // Assuming the document ID is generated automatically
+    // Initially create the organization with an auto-generated UID
+    const orgRef = db.collection('organization').doc();
     const defaultOrgData = this.getDefaultOrganizationData(user);
 
-    // Using { merge: true } to either create or update the organization with default data
-    return from(orgRef.set(defaultOrgData, { merge: true }));
+    // First, create the organization with default data
+    return from(orgRef.set(defaultOrgData)).pipe(
+      switchMap(() => {
+        // After the organization is created, update it with its own UID
+        const orgIdUpdate = { id: orgRef.id };
+        return from(orgRef.update(orgIdUpdate));
+      })
+    );
+  }
+
+  private getDefaultOrganizationData(user: firebase.User): IOrganisation {
+    // Omit the 'id' field here, as it will be set after the document is created
+    return {
+      active: true,
+      addresses: [{ label: '', address: '' }],
+      phoneNumbers: [{ label: '', country: '', number: '' }],
+      emails: [{ label: '', address: '' }],
+      dates: [{ label: '', date: new Date() }],
+      notes: [''],
+      tags: [''],
+      name: user.email,
+    };
   }
 
   private createPerson(
@@ -131,20 +152,6 @@ export class FirebaseAuthService implements IAuthService {
 
     // The { merge: true } option will create or update the record with the default data
     return from(personRef.set(defaultPersonData, { merge: true }));
-  }
-
-  private getDefaultOrganizationData(user: firebase.User): IOrganisation {
-    return {
-      id: user.uid,
-      active: true,
-      addresses: [{ label: '', address: '' }],
-      phoneNumbers: [{ label: '', country: '', number: '' }],
-      emails: [{ label: '', address: '' }],
-      dates: [{ label: '', date: new Date() }],
-      notes: [''],
-      tags: [''],
-      name: user.email,
-    };
   }
 
   private getDefaultPersonData(user: firebase.User): Partial<IPerson> {

@@ -1,8 +1,8 @@
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { FirebaseAuthService } from './auth-firebase.service';
 import { AuthMockService } from './auth-mock.service';
-import { AuthServiceType } from './auth-service.enum';
-import { IAuthService } from './auth-service.interface';
+import { AuthServiceType } from '../enums/auth-service.enum';
+import { IAuthService } from '../interfaces/auth-service.interface';
 
 // Create a singleton instance of the service
 const mockAuthServiceInstance = new AuthMockService();

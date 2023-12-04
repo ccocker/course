@@ -1,4 +1,4 @@
-import { AuthServiceType } from '../auth/auth-service.enum';
+import { AuthServiceType } from '../auth/enums/auth-service.enum';
 
 export const environment = {
   production: false,
