@@ -18,6 +18,10 @@ export class AuthService implements IAuthService {
     return of({ token: 'auth-token' });
   }
 
+  registerAccount(credentials: any): Observable<any> {
+    return null;
+  }
+
   resetPassword(credentials: any): Observable<any> {
     return null;
   }

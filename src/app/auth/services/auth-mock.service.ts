@@ -19,6 +19,10 @@ export class AuthMockService implements IAuthService {
     return of({ token: 'mock-token', user: 'MockUser' });
   }
 
+  registerAccount(credentials: any): Observable<any> {
+    return null;
+  }
+
   resetPassword(email: string): Observable<void> {
     return null;
   }

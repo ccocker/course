@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/functions';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment.development';
 import {
   BehaviorSubject,
   combineLatest,
@@ -45,6 +45,7 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   public login(credentials: any): Observable<any> {
+    console.log(credentials);
     const checkUserExists = firebase
       .functions()
       .httpsCallable('checkUserExists');
@@ -66,7 +67,7 @@ export class FirebaseAuthService implements IAuthService {
           );
         } else {
           // Create account and convert the promise to an Observable
-          return from(this.createAccount(credentials));
+          return from(this.registerAccount(credentials));
         }
       }),
       catchError((error) => {
@@ -76,7 +77,7 @@ export class FirebaseAuthService implements IAuthService {
     );
   }
 
-  private createAccount(credentials: any): Observable<any> {
+  public registerAccount(credentials: any): Observable<any> {
     return from(
       this.firebaseAuth.createUserWithEmailAndPassword(
         credentials.email,

@@ -1,4 +1,4 @@
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment.development';
 import { FirebaseAuthService } from './auth-firebase.service';
 import { AuthMockService } from './auth-mock.service';
 import { AuthServiceType } from '../enums/auth-service.enum';

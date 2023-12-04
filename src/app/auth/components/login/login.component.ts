@@ -16,6 +16,10 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+import { Store } from '@ngrx/store';
+import { RegisterAccountInterface } from '../../interfaces/register-account.interface';
+import { selectIsSubmitting } from '../../store/reducers';
+import { authActions } from '../../store/actions';
 
 @Component({
   selector: 'mi-login',
@@ -38,10 +42,11 @@ export class LoginComponent {
   private authService: IAuthService;
   loginError: string | null = null;
   resetPassword = false;
-
+  isSubmitting$ = this.store.select(selectIsSubmitting);
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {
     this.authService = authServiceFactory();
     this.loginForm = new FormGroup({
@@ -51,28 +56,37 @@ export class LoginComponent {
   }
 
   public login() {
+    const request: RegisterAccountInterface = {
+      user: {
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password,
+      },
+    };
+
+    this.store.dispatch(authActions.register({ request }));
+
     this.loginError = null;
     if (this.loginForm.valid) {
       const credentials = {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password,
       };
-      this.authService.login(credentials).subscribe(
-        (data) => {
-          this.dialogRef.close();
-          this.router.navigate(['/course-schedule']);
-        },
-        (error) => {
-          if (error && error.code) {
-            console.error(error, error.code);
-            this.loginError = error.message
-              .split('Firebase: ')[1]
-              .split(' (')[0];
-          } else {
-            this.loginError = 'An unexpected error occurred. Please try again.';
-          }
-        }
-      );
+      // this.authService.login(credentials).subscribe(
+      //   (data) => {
+      //     this.dialogRef.close();
+      //     this.router.navigate(['/course-schedule']);
+      //   },
+      //   (error) => {
+      //     if (error && error.code) {
+      //       console.error(error, error.code);
+      //       this.loginError = error.message
+      //         .split('Firebase: ')[1]
+      //         .split(' (')[0];
+      //     } else {
+      //       this.loginError = 'An unexpected error occurred. Please try again.';
+      //     }
+      //   }
+      // );
     } else {
       console.error('Form is not valid');
       this.loginError = 'Form is not valid';
