@@ -68,7 +68,13 @@ export class FirebaseAuthService implements IAuthService {
         }
       }),
       catchError((error) => {
-        return throwError(error);
+        // Constructing a custom error object
+        const customError = {
+          message: error.message,
+          code: error.code,
+          // other properties as needed
+        };
+        return throwError(customError);
       })
     );
   }
@@ -103,7 +109,13 @@ export class FirebaseAuthService implements IAuthService {
         localStorage.setItem('isLoggedIn', 'true');
       }),
       catchError((error) => {
-        throw error;
+        // Constructing a custom error object
+        const customError = {
+          message: error.message,
+          code: error.code,
+          // other properties as needed
+        };
+        return throwError(customError);
       })
     );
   }

@@ -1,3 +1,8 @@
+export interface BackendErrorDetails {
+  code: string;
+  message: string;
+}
+
 export interface BackendErrorsInterface {
-  [key: string]: string[];
+  [key: string]: BackendErrorDetails;
 }

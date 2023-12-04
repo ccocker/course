@@ -6,6 +6,7 @@ import { AUTH_SERVICE_TOKEN } from '../services/auth.service';
 import { authActions } from './actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { BackendErrorsInterface } from '../../shared/interfaces/backendErrors.interface';
 
 export const registerEffect = createEffect(
   (actions$ = inject(Actions), authService = inject(AUTH_SERVICE_TOKEN)) => {
@@ -16,9 +17,12 @@ export const registerEffect = createEffect(
           map((currentUser: CurrentUserInterface) => {
             return authActions.registerSuccess({ currentUser });
           }),
-          catchError((errorResponse: HttpErrorResponse) => {
+          catchError((errorResponse: BackendErrorsInterface) => {
             console.log(errorResponse);
-            const errors = errorResponse.error || 'Unknown error';
+            const errors: BackendErrorsInterface =
+              typeof errorResponse === 'string'
+                ? { code: errorResponse }
+                : errorResponse;
             return of(
               authActions.registerFailure({
                 errors: errors,

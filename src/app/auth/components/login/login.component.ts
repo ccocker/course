@@ -6,9 +6,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-
-import { IAuthService } from '../../interfaces/auth-service.interface';
-import { authServiceFactory } from '../../services/auth-factory.service';
+import { take } from 'rxjs/operators';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +18,6 @@ import { RegisterAccountInterface } from '../../interfaces/register-account.inte
 import { selectIsSubmitting } from '../../store/reducers';
 import { authActions } from '../../store/actions';
 import { Actions, ofType } from '@ngrx/effects';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'mi-login',
@@ -40,7 +37,7 @@ import { take } from 'rxjs/operators';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  private authService: IAuthService;
+
   loginError: string | null = null;
   resetPassword = false;
   isSubmitting$ = this.store.select(selectIsSubmitting);
@@ -49,7 +46,6 @@ export class LoginComponent {
     private store: Store,
     private actions$: Actions
   ) {
-    this.authService = authServiceFactory();
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
@@ -63,7 +59,8 @@ export class LoginComponent {
     this.actions$
       .pipe(ofType(authActions.registerFailure), take(1))
       .subscribe((error) => {
-        this.loginError = error.errors.toString();
+        console.log(error);
+        this.loginError = error.errors['code'].toString();
       });
   }
 
@@ -78,15 +75,6 @@ export class LoginComponent {
     this.store.dispatch(authActions.register({ request }));
 
     this.loginError = null;
-    if (this.loginForm.valid) {
-      const credentials = {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password,
-      };
-    } else {
-      console.error('Form is not valid');
-      this.loginError = 'Form is not valid';
-    }
   }
 
   onResetPassword() {
