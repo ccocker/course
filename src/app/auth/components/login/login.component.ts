@@ -14,12 +14,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import { Router } from '@angular/router';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { Store } from '@ngrx/store';
 import { RegisterAccountInterface } from '../../interfaces/register-account.interface';
 import { selectIsSubmitting } from '../../store/reducers';
 import { authActions } from '../../store/actions';
+import { Actions, ofType } from '@ngrx/effects';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'mi-login',
@@ -45,14 +46,25 @@ export class LoginComponent {
   isSubmitting$ = this.store.select(selectIsSubmitting);
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
-    private router: Router,
-    private store: Store
+    private store: Store,
+    private actions$: Actions
   ) {
     this.authService = authServiceFactory();
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+
+    this.actions$
+      .pipe(ofType(authActions.registerSuccess), take(1))
+      .subscribe(() => {
+        this.dialogRef.close();
+      });
+    this.actions$
+      .pipe(ofType(authActions.registerFailure), take(1))
+      .subscribe((error) => {
+        this.loginError = error.errors.toString();
+      });
   }
 
   public login() {
@@ -71,22 +83,6 @@ export class LoginComponent {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password,
       };
-      // this.authService.login(credentials).subscribe(
-      //   (data) => {
-      //     this.dialogRef.close();
-      //     this.router.navigate(['/course-schedule']);
-      //   },
-      //   (error) => {
-      //     if (error && error.code) {
-      //       console.error(error, error.code);
-      //       this.loginError = error.message
-      //         .split('Firebase: ')[1]
-      //         .split(' (')[0];
-      //     } else {
-      //       this.loginError = 'An unexpected error occurred. Please try again.';
-      //     }
-      //   }
-      // );
     } else {
       console.error('Form is not valid');
       this.loginError = 'Form is not valid';

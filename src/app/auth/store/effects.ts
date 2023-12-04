@@ -12,15 +12,16 @@ export const registerEffect = createEffect(
     return actions$.pipe(
       ofType(authActions.register),
       switchMap(({ request }) => {
-        console.log('registerEffect', request);
         return authService.login(request.user).pipe(
           map((currentUser: CurrentUserInterface) => {
             return authActions.registerSuccess({ currentUser });
           }),
           catchError((errorResponse: HttpErrorResponse) => {
+            console.log(errorResponse);
+            const errors = errorResponse.error || 'Unknown error';
             return of(
               authActions.registerFailure({
-                errors: errorResponse.error.errors,
+                errors: errors,
               })
             );
           })

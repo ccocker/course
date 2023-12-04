@@ -45,7 +45,6 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   public login(credentials: any): Observable<any> {
-    console.log(credentials);
     const checkUserExists = firebase
       .functions()
       .httpsCallable('checkUserExists');
@@ -53,7 +52,6 @@ export class FirebaseAuthService implements IAuthService {
     return from(checkUserExists({ email: credentials.email })).pipe(
       switchMap((result) => {
         if (result.data.exists) {
-          // Convert signInWithEmailAndPassword promise to an Observable
           return from(
             this.firebaseAuth.signInWithEmailAndPassword(
               credentials.email,
@@ -66,12 +64,10 @@ export class FirebaseAuthService implements IAuthService {
             })
           );
         } else {
-          // Create account and convert the promise to an Observable
           return from(this.registerAccount(credentials));
         }
       }),
       catchError((error) => {
-        // Handle errors
         return throwError(error);
       })
     );
