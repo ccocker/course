@@ -20,8 +20,10 @@ import { CourseScheduleComponent } from './course-schedule/course-schedule.compo
 import { LoginComponent } from './auth/components/login/login.component';
 import { IAuthService } from './auth/interfaces/auth-service.interface';
 import { AUTH_SERVICE_TOKEN } from './auth/services/auth.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectCurrentUser } from './auth/store/reducers';
 
 interface AppConfig {
   title: string;
@@ -78,11 +80,16 @@ export class AppComponent implements OnInit {
   ];
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
+  data$ = combineLatest({
+    currentUser: this.store.select(selectCurrentUser),
+  });
+
   constructor(
     @Inject(AUTH_SERVICE_TOKEN) public authService: IAuthService,
     private dialog: MatDialog,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private store: Store
   ) {}
 
   ngOnInit() {

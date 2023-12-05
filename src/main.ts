@@ -10,12 +10,16 @@ import { authFeatureKey, authReducer } from './app/auth/store/reducers';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import * as authEffects from './app/auth/store/effects';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 
 const providers = [
   ...appConfig.providers,
   provideHttpClient(),
   provideRouter(routes),
-  provideStore(),
+  provideStore({
+    router: routerReducer,
+  }),
+  provideRouterStore(),
   provideState(authFeatureKey, authReducer),
   provideEffects(authEffects),
   provideStoreDevtools({

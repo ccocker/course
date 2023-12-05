@@ -1,51 +1,53 @@
-<div class="login-container">
-  <mat-card *ngIf="resetPassword === false">
-    <mat-card-header>
-      <mat-card-title>Login / Register</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" />
-          <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">
-            Email is required
-          </mat-error>
-          <mat-error *ngIf="loginForm.get('email')?.errors?.['email']">
-            Enter a valid email
-          </mat-error>
-        </mat-form-field>
+<ng-container *ngIf="data$ | async as data">
+  <div class="login-container">
+    <mat-card *ngIf="resetPassword === false">
+      <mat-card-header>
+        <mat-card-title>Login / Register</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" />
+            <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.errors?.['email']">
+              Enter a valid email
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" />
-          <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">
-            Password is required
-          </mat-error>
-        </mat-form-field>
-        <mat-error> {{ loginError }}</mat-error>
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" />
+            <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          <mat-error> {{ data.backendErrors["code"] }}</mat-error>
 
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          class="full-width-button"
-          [disabled]="isSubmitting$ | async"
-        >
-          Submit
-        </button>
-        <a (click)="onResetPassword()" class="reset-password-link">
-          Forgot password?
-        </a>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  <mat-card *ngIf="resetPassword === true">
-    <mat-card-header>
-      <mat-card-title>Reset Password</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mi-reset-password></mi-reset-password>
-    </mat-card-content>
-  </mat-card>
-</div>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="full-width-button"
+            [disabled]="data.isSubmitting"
+          >
+            Submit
+          </button>
+          <a (click)="onResetPassword()" class="reset-password-link">
+            Forgot password?
+          </a>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="resetPassword === true">
+      <mat-card-header>
+        <mat-card-title>Reset Password</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mi-reset-password></mi-reset-password>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-container>

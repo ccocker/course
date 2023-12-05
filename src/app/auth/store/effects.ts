@@ -7,14 +7,23 @@ import { authActions } from './actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BackendErrorsInterface } from '../../shared/interfaces/backendErrors.interface';
+import { PersistanceService } from '../../shared/services/persistance-service';
 
 export const registerEffect = createEffect(
-  (actions$ = inject(Actions), authService = inject(AUTH_SERVICE_TOKEN)) => {
+  (
+    actions$ = inject(Actions),
+    authService = inject(AUTH_SERVICE_TOKEN),
+    persistanceService = inject(PersistanceService)
+  ) => {
     return actions$.pipe(
       ofType(authActions.register),
       switchMap(({ request }) => {
         return authService.login(request.user).pipe(
           map((currentUser: CurrentUserInterface) => {
+            // persistanceService.set(
+            //   'accessToken',
+            //   currentUser['user']['stsTokenManager']['accessToken']
+            // );
             return authActions.registerSuccess({ currentUser });
           }),
           catchError((errorResponse: BackendErrorsInterface) => {

@@ -15,9 +15,13 @@ import { MatCardModule } from '@angular/material/card';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { Store } from '@ngrx/store';
 import { RegisterAccountInterface } from '../../interfaces/register-account.interface';
-import { selectIsSubmitting } from '../../store/reducers';
+import {
+  selectIsSubmitting,
+  selectValidationErrors,
+} from '../../store/reducers';
 import { authActions } from '../../store/actions';
 import { Actions, ofType } from '@ngrx/effects';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'mi-login',
@@ -40,7 +44,11 @@ export class LoginComponent {
 
   loginError: string | null = null;
   resetPassword = false;
-  isSubmitting$ = this.store.select(selectIsSubmitting);
+
+  data$ = combineLatest({
+    isSubmitting: this.store.select(selectIsSubmitting),
+    backendErrors: this.store.select(selectValidationErrors),
+  });
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
     private store: Store,
@@ -55,12 +63,6 @@ export class LoginComponent {
       .pipe(ofType(authActions.registerSuccess), take(1))
       .subscribe(() => {
         this.dialogRef.close();
-      });
-    this.actions$
-      .pipe(ofType(authActions.registerFailure), take(1))
-      .subscribe((error) => {
-        console.log(error);
-        this.loginError = error.errors['code'].toString();
       });
   }
 
