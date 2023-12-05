@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'mi-login',
@@ -35,7 +36,10 @@ export class LoginComponent {
   loginForm: FormGroup;
   private authService: IAuthService;
 
-  constructor(private dialogRef: MatDialogRef<LoginComponent>) {
+  constructor(
+    private dialogRef: MatDialogRef<LoginComponent>,
+    private router: Router
+  ) {
     this.authService = authServiceFactory();
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -47,12 +51,14 @@ export class LoginComponent {
   login() {
     if (this.loginForm.valid) {
       const credentials = {
-        username: this.loginForm.value.email,
+        email: this.loginForm.value.email,
         password: this.loginForm.value.password,
       };
       this.authService.login(credentials).subscribe(
         (data) => {
           console.log('Login successful', data);
+          this.dialogRef.close();
+          this.router.navigate(['/course-schedule']);
         },
         (error) => {
           console.error('Login failed', error);

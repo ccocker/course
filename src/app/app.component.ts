@@ -1,7 +1,14 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +20,7 @@ import { CourseScheduleComponent } from './course-schedule/course-schedule.compo
 import { LoginComponent } from './auth/login/login.component';
 import { IAuthService } from './auth/auth-service.interface';
 import { AUTH_SERVICE_TOKEN } from './auth/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 interface AppConfig {
@@ -47,7 +54,6 @@ interface AppConfig {
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'henry';
   appConfig: AppConfig = {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
@@ -59,7 +65,7 @@ export class AppComponent implements OnInit {
     showLogo: true,
     showAppTitle: false,
   };
-  isLoggedIn$: Observable<boolean>;
+  private loginStatusSubscription: Subscription;
   homePageLinks = [
     { title: 'Login/Register', link: 'https://angular.dev' },
     { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
@@ -71,48 +77,35 @@ export class AppComponent implements OnInit {
     { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
   ];
   @ViewChild('sidenav') sidenav!: MatSidenav;
-  /**
-   * Toggles the text direction between LTR and RTL
-   */
-  toggleDirection() {
-    this.appConfig.isRtl = !this.appConfig.isRtl;
-    const mainContainer = document.getElementById('main-container'); // Assuming you have a main container with this ID
-    if (mainContainer) {
-      mainContainer.dir = this.appConfig.isRtl ? 'rtl' : 'ltr';
-    }
-  }
-  private loginDialogRef: MatDialogRef<LoginComponent> | null = null;
 
   constructor(
-    @Inject(AUTH_SERVICE_TOKEN) private authService: IAuthService,
-    private dialog: MatDialog
+    @Inject(AUTH_SERVICE_TOKEN) public authService: IAuthService,
+    private dialog: MatDialog,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn();
-    this.isLoggedIn$.subscribe((status) => {
-      this.appConfig.isLoggedIn = status;
-      if (status) {
-        this.appConfig.showTopNav = true;
-      } else {
-        this.appConfig.showTopNav = false;
-      }
-
-      if (status && this.loginDialogRef) {
-        this.loginDialogRef.close();
-        this.loginDialogRef = null; // Reset the reference
-      }
-    });
+    this.appConfig.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    this.loginStatusSubscription = this.authService
+      .isLoggedIn()
+      .subscribe((status) => {
+        this.appConfig.isLoggedIn = status;
+        this.appConfig.showTopNav = status;
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
-  trackByTitle(index: number, item: any): string {
-    return item.title;
+  ngOnDestroy() {
+    this.loginStatusSubscription.unsubscribe();
   }
 
-  subscribeToLoginStatus() {
-    this.authService.isLoggedIn().subscribe((status) => {
-      this.appConfig.isLoggedIn = status;
-    });
+  toggleDirection() {
+    this.appConfig.isRtl = !this.appConfig.isRtl;
+    const mainContainer = document.getElementById('main-container');
+    if (mainContainer) {
+      mainContainer.dir = this.appConfig.isRtl ? 'rtl' : 'ltr';
+    }
   }
 
   toggleSidenav() {
@@ -122,33 +115,26 @@ export class AppComponent implements OnInit {
   }
 
   openLoginDialog() {
-    // Assign the reference to the opened dialog
-    this.loginDialogRef = this.dialog.open(LoginComponent, {
+    const dialogRef = this.dialog.open(LoginComponent, {
       height: '400px',
       width: '300px',
     });
 
-    const sub = this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-      if (isLoggedIn) {
-        this.loginDialogRef.close();
-        this.loginDialogRef = null; // Reset the reference
-        sub.unsubscribe(); // Unsubscribe to avoid memory leaks
-      }
-    });
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   onItemClick(item: any) {
     if (item === 'Logout') {
       this.authService.logout();
-    }
-    if (item === 'Login') {
-      this.appConfig.isLoggedIn = true;
-    }
-    if (item.title === 'Login/Register') {
+      this.router.navigate(['/']);
+    } else if (item.title === 'Login/Register') {
       this.openLoginDialog();
+    } else {
+      // Handle other items
     }
-    // Add your logic here based on the clicked menu item
-    console.log(`Clicked on menu item: ${item}`);
-    // You can navigate to different routes or perform other actions here
+  }
+
+  trackByTitle(index: number, item: any): string {
+    return item.title;
   }
 }

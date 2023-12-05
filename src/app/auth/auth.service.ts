@@ -18,6 +18,10 @@ export class AuthService implements IAuthService {
     return of({ token: 'auth-token' });
   }
 
+  resetPassword(credentials: any): Observable<any> {
+    return null;
+  }
+
   logout(): void {
     // ... logout logic
     this.loginStatus.next(false); // Emit false on logout
