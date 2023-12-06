@@ -83,3 +83,29 @@ export const redirectAfterRegisterEffect = createEffect(
   },
   { functional: true, dispatch: false }
 );
+
+export const logoutEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AUTH_SERVICE_TOKEN),
+    persistanceService = inject(PersistanceService),
+    router = inject(Router)
+  ) => {
+    return actions$.pipe(
+      ofType(authActions.logout),
+      switchMap(() => {
+        try {
+          // Perform the logout operations
+          persistanceService.remove('accessToken');
+          return of(authActions.logoutSuccess());
+        } catch (error) {
+          return of(authActions.logoutFailure());
+        }
+      }),
+      tap(() => {
+        router.navigate(['/']); // Navigate to login after successful logout
+      })
+    );
+  },
+  { functional: true, dispatch: true }
+);

@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
@@ -18,9 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 import { LoginComponent } from './auth/components/login/login.component';
-import { IAuthService } from './auth/interfaces/auth-service.interface';
-import { AUTH_SERVICE_TOKEN } from './auth/services/auth.service';
-import { Observable, Subscription, combineLatest } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from './auth/store/reducers';
@@ -30,7 +21,7 @@ interface AppConfig {
   title: string;
   isRtl: boolean;
   sidenavMenuItems: string[];
-  isLoggedIn: boolean;
+  // isLoggedIn: boolean;
   loggedInItems: string[];
   loggedOutItems: string[];
   showTopNav: boolean;
@@ -61,10 +52,10 @@ export class AppComponent implements OnInit {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
     sidenavMenuItems: ['Dashboard'],
-    isLoggedIn: false,
+    // isLoggedIn: false,
     loggedInItems: ['Logout'],
     loggedOutItems: ['Home', 'About', 'Login'],
-    showTopNav: false,
+    showTopNav: true,
     showLogo: true,
     showAppTitle: false,
   };
@@ -85,24 +76,10 @@ export class AppComponent implements OnInit {
     currentUser: this.store.select(selectCurrentUser),
   });
 
-  constructor(
-    @Inject(AUTH_SERVICE_TOKEN) public authService: IAuthService,
-    private dialog: MatDialog,
-    private router: Router,
-    private changeDetectorRef: ChangeDetectorRef,
-    private store: Store
-  ) {}
+  constructor(private dialog: MatDialog, private store: Store) {}
 
   ngOnInit() {
     this.store.dispatch(authActions.getCurrentUser());
-    this.appConfig.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    this.loginStatusSubscription = this.authService
-      .isLoggedIn()
-      .subscribe((status) => {
-        this.appConfig.isLoggedIn = status;
-        this.appConfig.showTopNav = status;
-        this.changeDetectorRef.detectChanges();
-      });
   }
 
   ngOnDestroy() {
@@ -118,7 +95,7 @@ export class AppComponent implements OnInit {
   }
 
   toggleSidenav() {
-    if (this.appConfig.isLoggedIn && this.sidenav) {
+    if (this.sidenav) {
       this.sidenav.toggle();
     }
   }
@@ -134,8 +111,7 @@ export class AppComponent implements OnInit {
 
   onItemClick(item: any) {
     if (item === 'Logout') {
-      this.authService.logout();
-      this.router.navigate(['/']);
+      this.store.dispatch(authActions.logout());
     } else if (item.title === 'Login/Register') {
       this.openLoginDialog();
     } else {

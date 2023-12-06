@@ -52,11 +52,11 @@ export class FirebaseAuthService implements IAuthService {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUserSubject.next(user); // Update currentUserSubject with the current user
       this.isAuthenticated.next(!!user);
-      if (user) {
-        localStorage.setItem('isLoggedIn', 'true');
-      } else {
-        localStorage.removeItem('isLoggedIn');
-      }
+      // if (user) {
+      //   localStorage.setItem('isLoggedIn', 'true');
+      // } else {
+      //   localStorage.removeItem('isLoggedIn');
+      // }
     });
   }
 
@@ -85,7 +85,7 @@ export class FirebaseAuthService implements IAuthService {
           ).pipe(
             tap(() => {
               this.isAuthenticated.next(true);
-              localStorage.setItem('isLoggedIn', 'true');
+              // localStorage.setItem('isLoggedIn', 'true');
             })
           );
         } else {
@@ -131,7 +131,7 @@ export class FirebaseAuthService implements IAuthService {
       }),
       tap(() => {
         this.isAuthenticated.next(true);
-        localStorage.setItem('isLoggedIn', 'true');
+        // localStorage.setItem('isLoggedIn', 'true');
       }),
       catchError((error) => throwError(() => new Error(error)))
     );
@@ -200,7 +200,7 @@ export class FirebaseAuthService implements IAuthService {
       .signOut()
       .then(() => {
         this.isAuthenticated.next(false);
-        localStorage.removeItem('isLoggedIn');
+        // localStorage.removeItem('isLoggedIn');
       })
       .catch((error) => {
         // Handle logout errors

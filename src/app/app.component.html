@@ -7,7 +7,7 @@
     >
       <button
         mat-icon-button
-        *ngIf="appConfig.isLoggedIn"
+        *ngIf="data.currentUser"
         (click)="toggleSidenav()"
       >
         <mat-icon>menu</mat-icon>
@@ -20,7 +20,7 @@
       <span class="menu-items">
         <a
           *ngFor="
-            let item of appConfig.isLoggedIn
+            let item of data.currentUser
               ? appConfig.loggedInItems
               : appConfig.loggedOutItems
           "
@@ -29,11 +29,12 @@
         >
           {{ item }}
         </a>
+        {{ data.currentUser?.email }}
       </span>
     </mat-toolbar>
 
     <mat-sidenav-container
-      *ngIf="appConfig.isLoggedIn"
+      *ngIf="data.currentUser"
       [class.mat-rtl]="appConfig.isRtl"
       [class.mat-ltr]="!appConfig.isRtl"
     >
@@ -229,7 +230,7 @@
 
     <ng-content></ng-content>
 
-    <main class="main" *ngIf="!appConfig.isLoggedIn">
+    <main class="main" *ngIf="!data.currentUser">
       <div class="content">
         <div class="left-side">
           <h1>{{ appConfig.title }}</h1>
