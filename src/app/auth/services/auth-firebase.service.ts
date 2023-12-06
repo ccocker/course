@@ -50,6 +50,7 @@ export class FirebaseAuthService implements IAuthService {
 
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
+      this.currentUserSubject.next(user); // Update currentUserSubject with the current user
       this.isAuthenticated.next(!!user);
       if (user) {
         localStorage.setItem('isLoggedIn', 'true');
@@ -60,6 +61,10 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   public getCurrentUser(): Observable<User | null> {
+    const user = this.currentUserSubject.asObservable();
+    user.subscribe((user) => {
+      console.log('user', user);
+    });
     return this.currentUserSubject.asObservable();
   }
 
