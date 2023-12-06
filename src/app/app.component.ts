@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  AfterViewInit,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
@@ -47,7 +53,7 @@ interface AppConfig {
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   appConfig: AppConfig = {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
@@ -76,10 +82,23 @@ export class AppComponent implements OnInit {
     currentUser: this.store.select(selectCurrentUser),
   });
 
-  constructor(private dialog: MatDialog, private store: Store) {}
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private dialog: MatDialog,
+    private store: Store,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(authActions.getCurrentUser());
+    this.loginStatusSubscription = this.data$.subscribe(() => {
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy() {
