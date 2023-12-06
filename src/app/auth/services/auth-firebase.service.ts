@@ -1,59 +1,79 @@
 import { Injectable } from '@angular/core';
 import { IAuthService } from '../interfaces/auth-service.interface';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import 'firebase/compat/functions';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  Auth,
+  User,
+} from 'firebase/auth';
+import {
+  getFirestore,
+  Firestore,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+
 import { environment } from '../../../environments/environment.development';
 import {
   BehaviorSubject,
+  Observable,
   combineLatest,
+  from,
   map,
-  switchMap,
   throwError,
 } from 'rxjs';
-
-import { Observable, catchError, from, tap } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs';
 import { IOrganisation } from '../../shared/interfaces/IOrganization';
 import { IPerson } from '../../shared/interfaces';
 import { Gender } from '../../shared/enums';
+
+interface CheckUserExistsResponse {
+  exists: boolean;
+  // Include other properties that your function might return
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService implements IAuthService {
-  private firebaseAuth: firebase.auth.Auth;
+  private app = initializeApp(environment.firebaseConfig);
+  private auth: Auth = getAuth(this.app);
+  private db: Firestore = getFirestore(this.app);
   private isAuthenticated = new BehaviorSubject<boolean>(false);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor() {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(environment.firebaseConfig);
-    }
-    this.firebaseAuth = firebase.auth();
-
-    this.firebaseAuth.onAuthStateChanged((user) => {
+    onAuthStateChanged(this.auth, (user) => {
+      this.isAuthenticated.next(!!user);
       if (user) {
-        // User is signed in.
-        this.isAuthenticated.next(true);
         localStorage.setItem('isLoggedIn', 'true');
       } else {
-        // No user is signed in.
-        this.isAuthenticated.next(false);
         localStorage.removeItem('isLoggedIn');
       }
     });
   }
 
-  public login(credentials: any): Observable<any> {
-    const checkUserExists = firebase
-      .functions()
-      .httpsCallable('checkUserExists');
+  public getCurrentUser(): Observable<User | null> {
+    return this.currentUserSubject.asObservable();
+  }
 
-    return from(checkUserExists({ email: credentials.email })).pipe(
+  public login(credentials: any): Observable<any> {
+    const functions = getFunctions(this.app);
+    const checkUserExistsFn = httpsCallable(functions, 'checkUserExists');
+
+    return from(checkUserExistsFn({ email: credentials.email })).pipe(
       switchMap((result) => {
-        if (result.data.exists) {
+        const data = result.data as CheckUserExistsResponse;
+        if (data.exists) {
           return from(
-            this.firebaseAuth.signInWithEmailAndPassword(
+            signInWithEmailAndPassword(
+              this.auth,
               credentials.email,
               credentials.password
             )
@@ -81,20 +101,20 @@ export class FirebaseAuthService implements IAuthService {
 
   public registerAccount(credentials: any): Observable<any> {
     return from(
-      this.firebaseAuth.createUserWithEmailAndPassword(
+      createUserWithEmailAndPassword(
+        this.auth,
         credentials.email,
         credentials.password
       )
     ).pipe(
       switchMap((result) => {
         const user = result.user;
-        const db = firebase.firestore();
 
         // Creating an organization
-        const orgRef = this.createOrganization(db, user);
+        const orgRef = this.createOrganization(user);
 
         // Creating a person
-        const personRef = this.createPerson(db, user);
+        const personRef = this.createPerson(user);
 
         return combineLatest([orgRef, personRef]).pipe(
           map(() => ({
@@ -104,42 +124,27 @@ export class FirebaseAuthService implements IAuthService {
           }))
         );
       }),
-      tap((result) => {
+      tap(() => {
         this.isAuthenticated.next(true);
         localStorage.setItem('isLoggedIn', 'true');
       }),
-      catchError((error) => {
-        // Constructing a custom error object
-        const customError = {
-          message: error.message,
-          code: error.code,
-          // other properties as needed
-        };
-        return throwError(customError);
-      })
+      catchError((error) => throwError(() => new Error(error)))
     );
   }
 
-  private createOrganization(
-    db: firebase.firestore.Firestore,
-    user: firebase.User
-  ): Observable<any> {
-    // Initially create the organization with an auto-generated UID
-    const orgRef = db.collection('organization').doc();
+  private createOrganization(user: User): Observable<any> {
+    const orgRef = doc(this.db, 'organization', user.uid);
     const defaultOrgData = this.getDefaultOrganizationData(user);
 
-    // First, create the organization with default data
-    return from(orgRef.set(defaultOrgData)).pipe(
+    return from(setDoc(orgRef, defaultOrgData)).pipe(
       switchMap(() => {
-        // After the organization is created, update it with its own UID
-        const orgIdUpdate = { id: orgRef.id };
-        return from(orgRef.update(orgIdUpdate));
+        // Update org with its own UID
+        return from(updateDoc(orgRef, { id: orgRef.id }));
       })
     );
   }
 
-  private getDefaultOrganizationData(user: firebase.User): IOrganisation {
-    // Omit the 'id' field here, as it will be set after the document is created
+  private getDefaultOrganizationData(user: User): IOrganisation {
     return {
       active: true,
       addresses: [{ label: '', address: '' }],
@@ -152,18 +157,14 @@ export class FirebaseAuthService implements IAuthService {
     };
   }
 
-  private createPerson(
-    db: firebase.firestore.Firestore,
-    user: firebase.User
-  ): Observable<any> {
-    const personRef = db.collection('people').doc(user.uid);
+  private createPerson(user: User): Observable<any> {
+    const personRef = doc(this.db, 'people', user.uid);
     const defaultPersonData = this.getDefaultPersonData(user);
 
-    // The { merge: true } option will create or update the record with the default data
-    return from(personRef.set(defaultPersonData, { merge: true }));
+    return from(setDoc(personRef, defaultPersonData, { merge: true }));
   }
 
-  private getDefaultPersonData(user: firebase.User): Partial<IPerson> {
+  private getDefaultPersonData(user: User): Partial<IPerson> {
     return {
       id: user.uid,
       miId: user.uid,
@@ -183,16 +184,14 @@ export class FirebaseAuthService implements IAuthService {
     };
   }
 
-  resetPassword(email: string): Observable<void> {
-    return from(this.firebaseAuth.sendPasswordResetEmail(email)).pipe(
-      catchError((error) => {
-        throw error;
-      })
+  public resetPassword(email: string): Observable<void> {
+    return from(sendPasswordResetEmail(this.auth, email)).pipe(
+      catchError((error) => throwError(() => new Error(error)))
     );
   }
 
-  logout(): void {
-    this.firebaseAuth
+  public logout(): void {
+    this.auth
       .signOut()
       .then(() => {
         this.isAuthenticated.next(false);
@@ -200,11 +199,11 @@ export class FirebaseAuthService implements IAuthService {
       })
       .catch((error) => {
         // Handle logout errors
-        // ...
+        console.error(error);
       });
   }
 
-  isLoggedIn(): Observable<boolean> {
+  public isLoggedIn(): Observable<boolean> {
     return this.isAuthenticated.asObservable();
   }
 }

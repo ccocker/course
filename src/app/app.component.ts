@@ -24,6 +24,7 @@ import { Observable, Subscription, combineLatest } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from './auth/store/reducers';
+import { authActions } from './auth/store/actions';
 
 interface AppConfig {
   title: string;
@@ -93,6 +94,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.store.dispatch(authActions.getCurrentUser());
     this.appConfig.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     this.loginStatusSubscription = this.authService
       .isLoggedIn()
