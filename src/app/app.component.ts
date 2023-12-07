@@ -27,7 +27,6 @@ interface AppConfig {
   title: string;
   isRtl: boolean;
   sidenavMenuItems: string[];
-  // isLoggedIn: boolean;
   loggedInItems: string[];
   loggedOutItems: string[];
   showTopNav: boolean;
@@ -58,7 +57,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
     sidenavMenuItems: ['Dashboard'],
-    // isLoggedIn: false,
     loggedInItems: ['Logout'],
     loggedOutItems: ['Home', 'About', 'Login'],
     showTopNav: true,
@@ -66,23 +64,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     showAppTitle: false,
   };
   private loginStatusSubscription: Subscription;
-  homePageLinks = [
-    { title: 'Login/Register', link: 'https://angular.dev' },
-    { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
-    { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
-    {
-      title: 'Angular Language Service',
-      link: 'https://angular.dev/tools/language-service',
-    },
-    { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
-  ];
+
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   data$ = combineLatest({
     currentUser: this.store.select(selectCurrentUser),
   });
-
-  private subscriptions: Subscription[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -119,6 +106,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onItemClick(item: any) {
+    console.log('Clicked Item', item);
+    if (item === 'Logout') {
+      this.store.dispatch(authActions.logout());
+    }
+  }
+
   openLoginDialog() {
     const dialogRef = this.dialog.open(LoginComponent, {
       height: '400px',
@@ -126,19 +120,5 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {});
-  }
-
-  onItemClick(item: any) {
-    if (item === 'Logout') {
-      this.store.dispatch(authActions.logout());
-    } else if (item.title === 'Login/Register') {
-      this.openLoginDialog();
-    } else {
-      // Handle other items
-    }
-  }
-
-  trackByTitle(index: number, item: any): string {
-    return item.title;
   }
 }
