@@ -53,7 +53,6 @@ export class HomeComponent {
   ) {}
 
   onItemClick(item: any) {
-    console.log('Clicked Item', item);
     if (item.title === 'Login/Register') {
       this.openLoginDialog();
     }

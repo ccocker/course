@@ -4,7 +4,6 @@ import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { CurrentUserInterface } from '../../shared/interfaces/current-user.interface';
 import { AUTH_SERVICE_TOKEN } from '../services/auth.service';
 import { authActions } from './actions';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BackendErrorsInterface } from '../../shared/interfaces/backendErrors.interface';
 import { PersistanceService } from '../../shared/services/persistance-service';
@@ -23,8 +22,10 @@ export const getCurrentUserEffect = createEffect(
           return of(authActions.getCurrentUserFailure());
         }
         return authService.getCurrentUser().pipe(
-          map((currentUser: CurrentUserInterface) => {
-            return authActions.getCurrentUserSuccess({ currentUser });
+          map((simplifiedUser) => {
+            return authActions.getCurrentUserSuccess({
+              currentUser: simplifiedUser,
+            });
           }),
           catchError(() => {
             return of(authActions.getCurrentUserFailure());

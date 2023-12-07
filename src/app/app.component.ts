@@ -1,13 +1,7 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ChangeDetectorRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,10 +9,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
+
 import { LoginComponent } from './auth/components/login/login.component';
-import { Subscription, combineLatest } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { combineLatest } from 'rxjs';
+
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from './auth/store/reducers';
 import { authActions } from './auth/store/actions';
@@ -47,12 +41,11 @@ interface AppConfig {
     MatListModule,
     MatSidenavModule,
     LoginComponent,
-    CourseScheduleComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   appConfig: AppConfig = {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
@@ -63,7 +56,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     showLogo: true,
     showAppTitle: false,
   };
-  private loginStatusSubscription: Subscription;
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -71,25 +63,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     currentUser: this.store.select(selectCurrentUser),
   });
 
-  constructor(
-    private dialog: MatDialog,
-    private store: Store,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
     this.store.dispatch(authActions.getCurrentUser());
-    this.loginStatusSubscription = this.data$.subscribe(() => {
-      this.changeDetectorRef.detectChanges();
-    });
-  }
-
-  ngAfterViewInit() {
-    this.changeDetectorRef.detectChanges();
-  }
-
-  ngOnDestroy() {
-    this.loginStatusSubscription.unsubscribe();
   }
 
   toggleDirection() {
@@ -111,14 +88,5 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (item === 'Logout') {
       this.store.dispatch(authActions.logout());
     }
-  }
-
-  openLoginDialog() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      height: '400px',
-      width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe(() => {});
   }
 }

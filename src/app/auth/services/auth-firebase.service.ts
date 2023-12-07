@@ -50,22 +50,27 @@ export class FirebaseAuthService implements IAuthService {
 
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
-      this.currentUserSubject.next(user); // Update currentUserSubject with the current user
-      this.isAuthenticated.next(!!user);
-      // if (user) {
-      //   localStorage.setItem('isLoggedIn', 'true');
-      // } else {
-      //   localStorage.removeItem('isLoggedIn');
-      // }
+      this.currentUserSubject.next(user);
     });
   }
 
-  public getCurrentUser(): Observable<User | null> {
-    const user = this.currentUserSubject.asObservable();
-    user.subscribe((user) => {
-      console.log('user', user);
-    });
-    return this.currentUserSubject.asObservable();
+  public getCurrentUser(): Observable<any | null> {
+    return this.currentUserSubject.asObservable().pipe(
+      map((currentUser: User | null) => {
+        if (currentUser) {
+          const { email, uid, emailVerified, displayName } = currentUser;
+          console.log('Mapped in Service:', {
+            email,
+            uid,
+            emailVerified,
+            displayName,
+          });
+          return { email, uid, emailVerified, displayName };
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
   public login(credentials: any): Observable<any> {
