@@ -6,5 +6,4 @@ export interface IAuthService {
   resetPassword(email: string): Observable<void>;
   getCurrentUser(): Observable<any>;
   logout(): void;
-  isLoggedIn(): Observable<boolean>;
 }

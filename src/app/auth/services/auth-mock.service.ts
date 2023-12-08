@@ -6,13 +6,11 @@ import { IAuthService } from '../interfaces/auth-service.interface';
   providedIn: 'root',
 })
 export class AuthMockService implements IAuthService {
-  private isAuthenticated = false;
   private loginStatus = new BehaviorSubject<boolean>(true); // Add this line
 
   constructor() {}
 
   login(credentials: any): Observable<any> {
-    this.isAuthenticated = true;
     this.loginStatus.next(true); // Update login status
     return of({ token: 'mock-token', user: 'MockUser' });
   }
@@ -29,7 +27,6 @@ export class AuthMockService implements IAuthService {
   }
 
   logout(): void {
-    this.isAuthenticated = false;
     this.loginStatus.next(false); // Update login status
   }
 

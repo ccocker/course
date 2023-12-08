@@ -45,7 +45,6 @@ export class FirebaseAuthService implements IAuthService {
   private app = initializeApp(environment.firebaseConfig);
   private auth: Auth = getAuth(this.app);
   private db: Firestore = getFirestore(this.app);
-  private isAuthenticated = new BehaviorSubject<boolean>(false);
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor() {
@@ -88,11 +87,7 @@ export class FirebaseAuthService implements IAuthService {
               credentials.password
             )
           ).pipe(
-            map((response) => response.user), // Extracting the user object
-            tap((user) => {
-              console.log('User object:', user); // Logging the user object
-              this.isAuthenticated.next(true);
-            })
+            map((response) => response.user) // Extracting the user object
           );
         } else {
           return from(this.registerAccount(credentials)).pipe(
@@ -141,10 +136,7 @@ export class FirebaseAuthService implements IAuthService {
           }))
         );
       }),
-      tap(() => {
-        this.isAuthenticated.next(true);
-        // localStorage.setItem('isLoggedIn', 'true');
-      }),
+
       catchError((error) => throwError(() => new Error(error)))
     );
   }
@@ -208,19 +200,9 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   public logout(): void {
-    this.auth
-      .signOut()
-      .then(() => {
-        this.isAuthenticated.next(false);
-        // localStorage.removeItem('isLoggedIn');
-      })
-      .catch((error) => {
-        // Handle logout errors
-        console.error(error);
-      });
-  }
-
-  public isLoggedIn(): Observable<boolean> {
-    return this.isAuthenticated.asObservable();
+    this.auth.signOut().catch((error) => {
+      // Handle logout errors
+      console.error(error);
+    });
   }
 }
