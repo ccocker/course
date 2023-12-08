@@ -7,6 +7,7 @@ import { authActions } from './actions';
 import { Router } from '@angular/router';
 import { BackendErrorsInterface } from '../../shared/interfaces/backendErrors.interface';
 import { PersistanceService } from '../../shared/services/persistance-service';
+import { Store } from '@ngrx/store';
 
 export const getCurrentUserEffect = createEffect(
   (
@@ -88,23 +89,23 @@ export const redirectAfterRegisterEffect = createEffect(
 export const logoutEffect = createEffect(
   (
     actions$ = inject(Actions),
-    authService = inject(AUTH_SERVICE_TOKEN),
     persistanceService = inject(PersistanceService),
+    store = inject(Store),
     router = inject(Router)
   ) => {
     return actions$.pipe(
       ofType(authActions.logout),
       switchMap(() => {
         try {
-          // Perform the logout operations
           persistanceService.remove('accessToken');
+          store.dispatch(authActions.clearCurrentUser());
           return of(authActions.logoutSuccess());
         } catch (error) {
           return of(authActions.logoutFailure());
         }
       }),
       tap(() => {
-        router.navigate(['/']); // Navigate to login after successful logout
+        router.navigate(['/']);
       })
     );
   },
