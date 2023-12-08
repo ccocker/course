@@ -88,13 +88,19 @@ export class FirebaseAuthService implements IAuthService {
               credentials.password
             )
           ).pipe(
-            tap(() => {
+            map((response) => response.user), // Extracting the user object
+            tap((user) => {
+              console.log('User object:', user); // Logging the user object
               this.isAuthenticated.next(true);
-              // localStorage.setItem('isLoggedIn', 'true');
             })
           );
         } else {
-          return from(this.registerAccount(credentials));
+          return from(this.registerAccount(credentials)).pipe(
+            map((response) => response.user), // Extracting the user object
+            tap((user) => {
+              console.log('User object:', user); // Logging the user object
+            })
+          );
         }
       }),
       catchError((error) => {
@@ -104,6 +110,7 @@ export class FirebaseAuthService implements IAuthService {
           code: error.code,
           // other properties as needed
         };
+        console.error('Error:', customError); // Logging the error
         return throwError(customError);
       })
     );

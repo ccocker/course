@@ -50,7 +50,7 @@ export const registerEffect = createEffect(
           map((currentUser: CurrentUserInterface) => {
             persistanceService.set(
               'accessToken',
-              currentUser['user']['stsTokenManager']['accessToken']
+              currentUser['stsTokenManager']['accessToken']
             );
             return authActions.registerSuccess({ currentUser });
           }),
