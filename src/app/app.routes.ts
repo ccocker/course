@@ -10,6 +10,11 @@ export const routes: Route[] = [
     loadChildren: () =>
       import('./common/global-feed/global-feed.routes').then((r) => r.routes),
   },
+  {
+    path: 'feed',
+    loadChildren: () =>
+      import('./common/your-feed/your-feed.routes').then((r) => r.routes),
+  },
   { path: 'course-schedule', component: CourseScheduleComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to Home
