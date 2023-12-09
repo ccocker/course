@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
-import { CurrentUserInterface } from '../../shared/interfaces/current-user.interface';
+import { CurrentUserInterface } from '../../../shared/interfaces/current-user.interface';
 import { AUTH_SERVICE_TOKEN } from '../services/auth.service';
 import { authActions } from './actions';
 import { Router } from '@angular/router';
-import { BackendErrorsInterface } from '../../shared/interfaces/backendErrors.interface';
-import { PersistanceService } from '../../shared/services/persistance-service';
+import { BackendErrorsInterface } from '../../../shared/interfaces/backendErrors.interface';
+import { PersistanceService } from '../../../shared/services/persistance-service';
 import { Store } from '@ngrx/store';
 
 export const getCurrentUserEffect = createEffect(

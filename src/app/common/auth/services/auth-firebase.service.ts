@@ -19,7 +19,7 @@ import {
 } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../../environments/environment.development';
 import {
   BehaviorSubject,
   Observable,
@@ -29,9 +29,9 @@ import {
   throwError,
 } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs';
-import { IOrganisation } from '../../shared/interfaces/IOrganization';
-import { IPerson } from '../../shared/interfaces';
-import { Gender } from '../../shared/enums';
+import { IOrganisation } from '../../../shared/interfaces/IOrganization';
+import { IPerson } from '../../../shared/interfaces';
+import { Gender } from '../../../shared/enums';
 
 interface CheckUserExistsResponse {
   exists: boolean;

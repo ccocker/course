@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { authActions } from '../auth/store/actions';
-import { LoginComponent } from '../auth/components/login/login.component';
+import { authActions } from '../common/auth/store/actions';
+import { LoginComponent } from '../common/auth/components/login/login.component';
 
 interface AppConfig {
   title: string;
