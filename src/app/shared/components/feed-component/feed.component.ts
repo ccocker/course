@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ErrorMessageComponent } from '../errorMessage/errorMessage.component';
 import { LoadingComponent } from '../loading/loading.component';
+import { TagListComponent } from '../tag-list/tag-list.component';
 
 @Component({
   selector: 'mi-feed',
@@ -19,6 +20,7 @@ import { LoadingComponent } from '../loading/loading.component';
     RouterModule,
     ErrorMessageComponent,
     LoadingComponent,
+    TagListComponent,
   ],
 })
 export class FeedComponent implements OnInit {

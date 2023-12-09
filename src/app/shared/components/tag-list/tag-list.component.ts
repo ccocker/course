@@ -5,6 +5,7 @@ import { PopularTagType } from '../../interfaces/popular-tag.type';
 @Component({
   selector: 'mi-tag-list',
   templateUrl: './tag-list.component.html',
+  styleUrls: ['./tag-list.component.scss'],
   standalone: true,
   imports: [CommonModule],
 })

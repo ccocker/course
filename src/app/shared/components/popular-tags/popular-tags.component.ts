@@ -15,6 +15,7 @@ import {
 @Component({
   selector: 'mi-popular-tags',
   templateUrl: './popular-tags.component.html',
+  styleUrls: ['./popular-tags.component.scss'],
   standalone: true,
   imports: [CommonModule, LoadingComponent, ErrorMessageComponent, RouterLink],
 })

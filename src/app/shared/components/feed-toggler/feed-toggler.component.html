@@ -1,0 +1,30 @@
+<div class="feed-toggle">
+  <ul class="custom-nav">
+    <li class="custom-nav-item" *ngIf="currentUser$ | async">
+      <a routerLink="/feed" class="custom-nav-link" routerLinkActive="active"
+        >Your feed</a
+      >
+    </li>
+    <li class="custom-nav-item">
+      <a
+        routerLink="/"
+        class="custom-nav-link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        queryParamsHandling="merge"
+      >
+        Global feed
+      </a>
+    </li>
+    <li class="custom-nav-item" *ngIf="tagName">
+      <a
+        [routerLink]="['/tags', tagName]"
+        class="custom-nav-link"
+        routerLinkActive="active"
+      >
+        <i class="ion-pound"></i>
+        {{ tagName }}
+      </a>
+    </li>
+  </ul>
+</div>
