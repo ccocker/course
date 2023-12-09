@@ -10,14 +10,11 @@ export const getFeedEffect = createEffect(
     return actions$.pipe(
       ofType(feedActions.getFeed),
       switchMap((action) => {
-        console.log('Effect received action', action);
         return dataService.getEntity<any>(action.url, action.id).pipe(
           map((feed) => {
-            console.log('Data received', feed);
             return feedActions.getFeedSuccess({ feed });
           }),
           catchError((error) => {
-            console.error('Error in fetching data', error);
             return of(feedActions.getFeedFailure());
           })
         );

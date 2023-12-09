@@ -1,0 +1,21 @@
+.banner {
+  background-color: #007bff; // You can change this to any color you prefer
+  color: white; // Text color
+  padding: 20px 0; // Add some padding to the banner
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Center align the content
+    text-align: center; // Center align the text
+
+    .logo-font {
+      font-size: 2.5rem; // Increase the size of the h1 title
+      margin-bottom: 0.5rem; // Add some space below the title
+    }
+
+    p {
+      font-size: 1.2rem; // Adjust the size of the paragraph
+    }
+  }
+}

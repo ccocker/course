@@ -6,13 +6,20 @@ import { selectIsLoading } from '../../../common/auth/store/reducers';
 import { selectError, selectFeedData } from './store/reducers';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ErrorMessageComponent } from '../errorMessage/errorMessage.component';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'mi-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ErrorMessageComponent,
+    LoadingComponent,
+  ],
 })
 export class FeedComponent implements OnInit {
   @Input() apiUrl: string = '';
@@ -30,5 +37,8 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     console.log('Dispatching feed action', { url: this.apiUrl, id: this.id });
     this.store.dispatch(feedActions.getFeed({ url: this.apiUrl, id: this.id }));
+    this.data$.subscribe((data) => {
+      console.log(data);
+    });
   }
 }
