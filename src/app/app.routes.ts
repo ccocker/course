@@ -15,6 +15,11 @@ export const routes: Route[] = [
     loadChildren: () =>
       import('./common/your-feed/your-feed.routes').then((r) => r.routes),
   },
+  {
+    path: 'tags/:slug',
+    loadChildren: () =>
+      import('./common/tag-feed/tag-feed.routes').then((m) => m.routes),
+  },
   { path: 'course-schedule', component: CourseScheduleComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to Home
