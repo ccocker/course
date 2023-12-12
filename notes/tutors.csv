@@ -1,222 +1,222 @@
-id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active
-1,Gayan,Wijesinghe,gayanw82@gmail.com,gayan.wijesinghe@rmit.edu.au,0411 372 100,Bachelor,E058140,tutor,TRUE
-2,Shuyi,Sun,yolandasunshuyi@gmail.com,shuyi.sun@rmit.edu.au,0451 578 862,Masters,E121438,tutor,FALSE
-3,Yiwei,Zhong,yi.wei.zhong@monash.edu,yiwei.zhong@rmit.edu.au,0452 661 018,Masters,E118705,tutor,TRUE
-4,Xiang,Li,martin.xl@gmail.com,xiang.li2@rmit.edu.au,0402 218 508,Phd,E046970,tutor,TRUE
-5,David,Tedjopurnomo,davidtedjopurnomo@gmail.com,david.tedjopurnomo2@rmit.edu.au,0426 491 818,Phd,E121366,tutor,TRUE
-6,Justin,Perrie,Unknown,justin.perrie@rmit.edu.au,0452 299 865,Bachelor Hons,E034546,tutor,TRUE
-7,Man,Hou,houmanbn@gmail.com,man.hou@rmit.edu.au,0424 948 079,Bachelor Hons,E121587,tutor,TRUE
-8,Arif,Jubaer,arif.jubaer@gmail.com,arif.Jubaer@rmit.edu.au,0411 215 302,Phd,E091128,tutor,FALSE
-9,Kee Chew (Peter),Huang,kchuang100100@gmail.com,kee.chew.huang@rmit.edu.au,0411 075 136,Bachelor,E119363,tutor,TRUE
-10,Khang,Vo,khang.vo@classcom.app,khang.vo@rmit.edu.au,0457 270 537,Masters,E038856,tutor,TRUE
-11,Axel,Ahmer,axelahmer@fastmail.com,axel.ahmer@rmit.edu.au,0402 337 873,Bachelor Hons,E116911,tutor,TRUE
-12,Rich,Chandrasekera,rich@greyteak.com.au,unknown,0404 672 611,Masters,unknown,tutor,FALSE
-13,Silva,Wei,silva.weiye@gmail.com,silva.wei2@rmit.edu.au,0430 311 995,Masters,E121497,tutor,TRUE
-14,Daniel,Manning,danielmanning213@gmail.com,daniel.manning@rmit.edu.au,0413 406 990,Bachelor Hons,E119563,tutor,FALSE
-15,Joy,Chen,joychen0328@gmail.com,joy.chen@rmit.edu.au,0450 691 678,Masters,E121512,tutor,TRUE
-16,Milindi,Kodikara,Unknown,milindi.kodikara2@rmit.edu.au,0452 503 667,Bachelor,E116887,tutor,TRUE
-17,Audrey,Ahmer,audrey.ahmer@gmail.com,audrey.ahmer@rmit.edu.au,0430 583 308,Masters,E119341,tutor,FALSE
-18,Milan,Tresoor,milan.tresoor@gmail.com,S3993878@student.rmit.edu.au,0421 420 950,Masters,unknown,tutor,TRUE
-19,Sheryl,Mantik,sheryl.mantik@gmail.com,sheryl.hanna.mantik@rmit.edu.au,0421 999 227,Bachelor Hons,E115886,tutor,FALSE
-20,Rodney,Cocker,rodney.cocker@gmail.com,rodneyian.cocker@rmit.edu.au,N/A,Masters,E07582,tutor,TRUE
-21,Timothy,Wiley,unknown,timothy.wiley@rmit.edu.au,N/A,Doctorate,unknown,tutor,TRUE
-22,Edouard,Amouroux,unknown,edouard.amouroux4@rmit.edu.au,N/A,N/A,unknown,tutor,TRUE
-23,Halil,Ali,unknown,halil.ali@rmit.edu.au,N/A,Doctorate,unknown,tutor,TRUE
-24,Chaminda,Bulumulla,chamindabulumulla@gmail.com,chaminda.bulumulla2@rmit.edu.au,0412 241 265,Doctorate,E117424,tutor,TRUE
-25,Saidur,Rahman,unknown,mohammadsaidur.rahman@rmit.edu.au,unknown,unknown,E025766,tutor,FALSE
-26,Michael_D,Dann,unknown,michael.dann@rmit.edu.au,unknown,Masters,unknown,tutor,TRUE
-27,Shay,Zheng,shayzheng1@gmail.com,shay.zheng@monash.edu,0460 436 317,Masters,E122329,tutor,TRUE
-28,Sunita,Rani,mailinsunita@yahoo.com.au,mailto:sunita.rani2@rmit.edu.au,unknown,Masters,unknown,tutor,TRUE
-29,Amina,Hossain,sumit2_05@yahoo.com,amina.hossain@rmit.edu.au,0452 515 624,Masters,E116198,tutor,TRUE
-30,Renan,Luigi,renanghp@gmail.com,renan.guarese@rmit.edu.au,0452 515 624,Masters,E118782,tutor,TRUE
-31,Waqar,Ali Khan,wkhan@swin.edu.au,N/A,0414 476 223,PhD,unknown,tutor,TRUE
-32,Pubudu,Sanjeewani,pubudusanjeewani91@gmail.com,N/A,0451 607 836,PhD,unknown,tutor,TRUE
-33,Jyoti,Kundu,jyotikundu@gmail.com,jyoti.kundu@rmit.edu.au,0405 871 176,Masters,E121037,tutor,TRUE
-34,Ghazia,Qaiser,ghaziaqaiser@gmail.com,ghazia.qaiser@rmit.edu.au,0478 530 722,Masters,E123590,tutor,TRUE
-35,John,Thangarajah,unknown,john.thangarajah@rmit.edu.au,unknown,PhD,E21854,tutor,TRUE
-36,Jessica,Villicana,unknown,jessica.rivera.villicana@rmit.edu.au,unknown,unknown,unknown,tutor,TRUE
-37,Julie,Porteous,unknown,julie.porteous@rmit.edu.au,unknown,Phd,E75041,tutor,TRUE
-38,Azadeh,Alavi,unknown,azadeh.alavi@rmit.edu.au,unknown,Phd,E106570,tutor,TRUE
-39,Falk,Scholer,unknown,falk.scholer@rmit.edu.au,unknown,Phd,E57478,tutor,TRUE
-40,Palash,Uddin,palash.cse.hstu@gmail.com,md.palash.uddin@rmit.edu.au,0480 176 818,Phd,E123236,tutor,TRUE
-41,Rejoy,Benjamin,rejoybenji@gmail.com,rejoy.benjamin@rmit.edu.au,0402 305 870,Masters,E105844,tutor,TRUE
-42,Marwah,Alaofi,m.k.alaofi@gmail.com,Unknown,0413 072 370,Masters,E123490,tutor,TRUE
-43,Prabath,Abeysekara,prabathabeysekara@gmail.com,prabath.abeysekara@rmit.edu.au,0456 417 865,Phd,E089443,tutor,TRUE
-44,Trevor,Reynolds,unknown,trevor.reynolds@rmit.edu.au,unknown,unknown,E054061,tutor,TRUE
-45,Muhammad,Qadeer,unknown,hassan.qadeer@rmit.edu.au,0475 906 401,masters,unknown,tutor,FALSE
-46,Moshin,Ali,mohsinali@swin.edu.au,mohsin.ali@rmit.edu.au,0488 721 977,Masters,E124058,tutor,TRUE
-47,Shilpa,Patel,shilpa.patel8895@gmail.com,unknown,0468 303 503,Bachelor,unknown,tutor,FALSE
-48,Vu,Mai,unknown,vuhuy.mai@rmit.edu.au,unknown,Phd,E073581,tutor,TRUE
-49,Steven,Korevaar,unknown,s3544280@student.rmit.edu.au,unknown,Phd,unknown,tutor,TRUE
-50,Hai,Dong,unknown,hai.dong@rmit.edu.au,unknown,Phd,E013322,tutor,TRUE
-51,Ruimin,Chu,ruimin.chu@gmail.com,ruimin.chu@rmit.edu.au,0450 734 981,Bachelor (Hons),E116630,tutor,TRUE
-52,Yesaswi,Muralidhar,yeshaswi.am@gmail.com,unknown,0424 751 946,Masters,unknown,tutor,TRUE
-53,Soham,Mandal,sohamwork1@gmail.com,unknown,0414 320 399,Masters,E124237,tutor,TRUE
-54,Yediya,Juan,Yediya.Juan@gmail.com,yediyajuan@gmail.com,0452 481 813,Masters,E124071,tutor,TRUE
-55,Shuo,Huang,shua0043@gmail.com,unknown,0409 813 299,Masters,unknown,tutor,TRUE
-56,Yujin,Huang,jinxwasstorm@gmail.com,unknown,0421 888 938,Masters,E124133,tutor,TRUE
-57,Hermawan,Mulyono,geraldus.mikael@gmail.com,unknown,0423 955 571,Masters,E124188,tutor,TRUE
-58,Sabby,Bala,saby.bala21@outlook.com,unknown,0411 989 400,Masters,unknown,tutor,TRUE
-59,Sajid,Pakirdeen,pdmsajid@gmail.com,unknown,unknown,Masters,unknown,tutor,TRUE
-60,William,Wang,wangwilliam2010@gmail.com,unknown,unknown,GradCert,unknown,tutor,TRUE
-61,Isma,Siddiqui,isma.farah@ieee.org,unknown,0455 734 905,Phd,unknown,tutor,TRUE
-62,Dipto,Pratyaksa,unknown,dipto.pratyaksa@rmit.edu.au,unknown,unknown,097092,tutor,TRUE
-63,Nick,Stefanidis,stefandn@hotmail.com,unknown,0405 989 536,Grad Diploma,unknown,tutor,TRUE
-64,Md,Muktar,muktar.hossain@bauet.ac.bd,unknown,0435 648 202,Masters,unknown,tutor,TRUE
-65,Sam,Haines,sam@samhains.com,unknown,unknown,Masters,unknown,tutor,TRUE
-66,Heeshala Nadeeshan Weerasuriya,Weerasuriya Patabedege,heeshala25@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE
-67,William ,Guardado,william.jesus.guardado@gmail.com,,,Masters Degree,,tutor,TRUE
-68,MD,SHAMSUJJOHA,dishacse@yahoo.com,,,PhD,,tutor,TRUE
-69,Deepanshu,Marwaha,Deepanshumarwaha1998@gmail.com,,,Masters Degree,,tutor,TRUE
-70,Tabish Hussain,Raza,raza.tabish2000@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE
-71,Anik,Dey Sarker,anik11ads@gmail.com,,,Masters Degree,,tutor,TRUE
-72,Chowdhury Shahriar ,Muzammel,s3987367@student.rmit.edu.au,,,Masters Degree,,tutor,TRUE
-73,Yitong,Pei,yitongp22@gmail.com,,,Masters Degree,,tutor,TRUE
-74,Sebastian,Beswick,seb.beswick@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE
-75,Ruoting,Wang,xbbdyx@gmail.com,,,Masters Degree,,tutor,TRUE
-76,Kevin,Shi,Kshi30@outlook.com,,,Bachelor Degree with Honours,,tutor,TRUE
-77,Sarabjot,Singh,hello@sarbr.co,,,Masters Degree,,tutor,TRUE
-78,Chamlok,Chan,chamlokchan@gmail.com,,,Masters Degree,,tutor,TRUE
-79,Robert,Bittar,rbittar95@live.com.au,,,Masters Degree,,tutor,TRUE
-80,Hussein,Alnabulsi,hsnasn@yahoo.com,,,PhD,,tutor,TRUE
-81,Imesh,Ekanayake,s4026542@student.rmit.edu.au,,,Bachelor Degree with Honours,,tutor,TRUE
-82,Lara,Alghamdi,Alghamdilara15@gmail.com,,,Masters Degree,,tutor,TRUE
-83,Muhammad,Nouman,mnouman.22@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE
-84,Yasmeen,Parveen,yparveen74@icloud.com,,,Masters Degree,,tutor,TRUE
-85,Lakshmi ,Palaparambil Dinesh,lpdmbose6@gmail.com,,,PhD,,tutor,TRUE
-86,Md Ashraf,Uddin,ashraf@cse.jnu.ac.bd,,,PhD,,tutor,TRUE
-87,Emad,Alasadi,emad.alasadi@rmit.edu.au,,,PhD,,tutor,TRUE
-88,Jingwen,Zhou,Helen.zhou@rmit.edu.au,,,Bachelor Degree with Honours,,tutor,TRUE
-89,Angel Felipe,Magnossão de Paula,angel.felipe.magnossao.de.paula@rmit.edu.au,,,Masters Degree,,tutor,TRUE
-90,Ha Nam Anh,Pham,hanamanhpham@gmail.com,,,Masters Degree,,tutor,TRUE
-91,Zhengkang,Xiang,alexxiang001@gmail.com,,,Masters Degree,,tutor,TRUE
-92,Farshid,Keivanian,farshid.keivanian@uon.edu.au,,,PhD,,tutor,TRUE
-93,Tharindu B.,Hewage,tharindu.b.hewage@gmail.com,,,PhD,,tutor,TRUE
-94,Muhammad ,Adil,chaudhrie.adil@gmail.com,,,PhD,,tutor,TRUE
-95,Roberto,Espinoza ,roberto.espinozav@gmail.com,,,Masters Degree,,tutor,TRUE
-96,Keith,Wong,keith.wong2@rmit.edu.au,,,PhD,,tutor,TRUE
-97,Grace,Misere,miserehgrace@gmail.com,,,PhD,,tutor,TRUE
-98,Muhammad,Nouman ,mnouman.ee@gmail.com,,,PhD,,tutor,TRUE
-99,Thakshila,Imiya Mohottige,tdthakshi@gmail.com,,,PhD,,tutor,TRUE
-100,Tirath,Ramdas,tirath@int19h.com,,,PhD,,tutor,TRUE
-101,Abdullah,Shabbir,ssabdullah_1992@hotmail.com,,,Masters Degree,,tutor,TRUE
-102,Matthew,Courtney,matthewcourtney@pm.me,,,Masters Degree,,tutor,TRUE
-103,Suhaas,Nagaraj,suhaasnc@gmail.com,,,Masters Degree,,tutor,TRUE
-104,Thilina Rukshan,Edirisinghe Arachchige,rukshan.edirisinghe@gmail.com,,,Masters Degree,,tutor,TRUE
-105,Prasanna,Balasooriya,balasooriya.p@gmail.com,,,Masters Degree,,tutor,TRUE
-106,Lin,Tian,lin.tian2@student.rmit.edu.au,,,Masters Degree,,tutor,TRUE
-107,Sajid ,Pakirdeen,pdmsajid@gmail.com,,,Masters Degree,,tutor,TRUE
-108,Khuyagbaatar,Batsuren,khuyagbaatar.b@gmail.com,,,PhD,,tutor,TRUE
-109,Muhammad ,Islam,islam.m1991@gmail.com,,,PhD,,tutor,TRUE
-110,Roberto,Poles,roberto.poles29@gmail.com,,,PhD,,tutor,TRUE
-111,Andrew,Lonsdale,andrew.lonsdale@lonsbio.com.au,,,PhD,,tutor,TRUE
-112,Nanyu,Chen,violachen17@gmail.com,,,Masters Degree,,tutor,TRUE
-113,Yaokun,Zheng,zhengyk1996@gmail.com,,,Masters Degree,,tutor,TRUE
-114,Gayathri ,Radhabai Gopinathan Nair ,amritagayathri@gmail.com,,,PhD,,tutor,TRUE
-115,Xinh,Dinh,xinhdinhbmt@gmail.com,,,Masters Degree,,tutor,TRUE
-116,Mohamed,Anver,dr.mohamed.anver@gmail.com,,,PhD,,tutor,TRUE
-117,Srinibas,Swain,ssrinibas@gmail.com,,,PhD,,tutor,TRUE
-118,Ishara Sandun Bandara,Herath Mudiyanselage,Isharabnd@gmail.com,,,Masters Degree,,tutor,TRUE
-119,Ishara,Bandara,isharabnd@gmail.com,,,Masters Degree,,tutor,TRUE
-120,Chang Joo,Yun,chris.yun813@gmail.com,,,PhD,,tutor,TRUE
-121,NAVEED,ALI,naveedz.ali@gmail.com,,,PhD,,tutor,TRUE
-122,Fatemeh,Ansarizadeh,f.ansarizadeh@deakin.edu.au,,,PhD,,tutor,TRUE
-123,Isma Farah,Siddiqui,Isma.farah@ieee.org,,,PhD,,tutor,TRUE
-124,Nattapat,Boonprakong,nattapatboon@gmail.com,,,Masters Degree,,tutor,TRUE
-125,Chwee,Lim,chwee.lim2@rmit.edu.au,,,Masters Degree,,tutor,TRUE
-126,Muhammad,Attique,attia85@gmail.com,,,PhD,,tutor,TRUE
-127,Dhruv,Dave,dhruvdave.ce@gmail.om,,,Masters Degree,,tutor,TRUE
-128,Lakshmi Jagathamma,Mohan,lakshmi.jmohan@gmail.com,,,PhD,,tutor,TRUE
-129,Muhammad ,Kamran,Kamran.mathematics@gmail.com,,,PhD,,tutor,TRUE
-130,Ammar,Sohail,ammarsohail@gmail.com,,,PhD,,tutor,TRUE
-131,Rumpa,Dasgupta,rumpa.dasgupta@monash.edu,,,PhD,,tutor,TRUE
-132,Chetan,Pundhir,chetanpundhir333@gmail.com,,,Masters Degree,,tutor,TRUE
-133,Robert,de Graaf,robertdegraaf78@gmail.com,,,Masters Degree,,tutor,TRUE
-134,Luchen,Zhou,luchenzhou2001@gmail.com,,,Masters Degree,,tutor,TRUE
-135,Vesna,Trampevska- Talevska,vtalev@yahoo.co.,,,Masters Degree,,tutor,TRUE
-136,Mohammad,Shakeri,mshakeri63@gmail.com,,,PhD,,tutor,TRUE
-137,Harjot,Singh,htiwana.007@gmail.com,,,Masters Degree,,tutor,TRUE
-138,shuo ,huang,shuo.huang@rmit.edu.au,,,Masters Degree,,tutor,TRUE
-139,Daffa,Buckley,daffabuck@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE
-140,Yujin,Huang,yujin.jinx.huang@rmit.edu.au,,,Masters Degree,,tutor,TRUE
-141,Mehmet Ali,Turhan,mehmetaliturhan2000@outlook.com,,,Masters Degree,,tutor,TRUE
-142,Deepthi,Kuttichira,deepthikuttichira93@gmail.com,,,PhD,,tutor,TRUE
-143,Sanath,Kumar,sanathmaheshkumar@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE
-144,Nadeeshani,Kulatunge,nadeekulatunge@gmail.com,,,Masters Degree,,tutor,TRUE
-145,Sayantan,Dasgupta,sayantan.iitkgp@gmail.com,,,Masters Degree,,tutor,TRUE
-146,Youngsun,Kim,youngkim0011@gmail.com,,,Masters Degree,,tutor,TRUE
-147,Vidhya,Satheeswaran,vidhya0910@gmail.com,,,Masters Degree,,tutor,TRUE
-148,Ying Zhao,Zhao,dishengzhaoying@gmail.com,,,PhD,,tutor,TRUE
-149,Myhuong,Nguyen,myhuongng2@gmail.com,,,PhD,,tutor,TRUE
-150,Waqar Ali,Khan,wkhan@swin.edu.au,,,PhD,,tutor,TRUE
-151,George,Huang,georgehuang310@gmail.com,,,PhD,,tutor,TRUE
-152,Ahmad,Ammari,ammariect@gmail.com,,,PhD,,tutor,TRUE
-153,Tracey,Chen,chenytracey@gmail.com,,,Masters Degree,,tutor,TRUE
-154,Yeu Wen,Mak,yeuwen.mak@u.nus.edu,,,Masters Degree,,tutor,TRUE
-155,TianZhang,He,hetianzhang91@gmail.com,,,PhD,,tutor,TRUE
-156,Selen Esra,Dereli,s.esra.dereli@gmail.com,,,PhD,,tutor,TRUE
-157,Matti,Haddad,career@matada.org,,,Bachelor Degree with Honours,,tutor,TRUE
-158,Steve,Quenette,steve.quenette@gmail.com,,,PhD,,tutor,TRUE
-159,Faisal,Alam,faisal.alam@monash.edu,,,Masters Degree,,tutor,TRUE
-160,Pa Pa,Khin,papakhin.mdy@gmail.com,,,Masters Degree,,tutor,TRUE
-161,Helen,Hou,houlei516@gmail.com,,,PhD,,tutor,TRUE
-162,Kerese,Manueli,kerese.manueli@gmail.com,,,PhD,,tutor,TRUE
-163,Trina,Dey,dtrina45@gmail.com,,,Masters Degree,,tutor,TRUE
-164,Lovee,Jain,lovee.jain93@gmail.com,,,Masters Degree,,tutor,TRUE
-165,Ahmed,Mourad,ahs.mourad@gmail.com,,,PhD,,tutor,TRUE
-166,Eashan,Deshmukh,eashandeshmukh@gmail.com,,,Masters Degree,,tutor,TRUE
-167,sarmad,wani,s4045944@student.rmit.edu.au,,,Masters Degree,,tutor,TRUE
-168,Pragya,Agrawal,Pragyaagrawal.au@gmail.com,,,Masters Degree,,tutor,TRUE
-169,Baron,Li,yichen.li@rmit.edu.au,,,Masters Degree,,tutor,TRUE
-170,Nasrin,Sultana,nasrin21@gmail.com,,,PhD,,tutor,TRUE
-171,Avani,Heriss,Avaniheriss1202@gmail.com ,,,Masters Degree,,tutor,TRUE
-172,James,Thom,james.thom@rmit.edu.au,,,PhD,,tutor,TRUE
-173,Nisha,Nisha,nishamannan01@gmail.com,,,PhD,,tutor,TRUE
-175,Mukesh,Malani,malaniofcl@gmail.com,,,Masters Degree,,tutor,TRUE
-176,Bhagwan,Das,engr.bhagwandas@hotmail.com,,,PhD,,tutor,TRUE
-177,Weijia,Chen,weijiac9@outlook.com,,,Masters Degree,,tutor,TRUE
-178,Robert,McQuillan,,robert.mcquillan@rmit.edu.au,,,,tutor,TRUE
-179,Trevor,Brunton,,,,Master,,tutor,TRUE
-180,Saurab,Kuntanahal,,,,Master,,tutor,TRUE
-181,Alain,Hennebelle,,,,Master,,tutor,TRUE
-182,Navid,Khaledian,,,,PhD,,tutor,TRUE
-183,Md Muktar,Hossain,,,,Master,,tutor,TRUE
-184,Sunny,Kim,,,,Master,,tutor,TRUE
-185,Zubair,Ahsan,,,,Master,,tutor,TRUE
-186,Anton,Edlund,,,,Master,,tutor,TRUE
-187,Wasyihun,Admass,,,,Master,,tutor,TRUE
-188,Ayaz,Mujawar,,,,Master,,tutor,TRUE
-189,Hiruni,Kegalle,,,,Honours,,tutor,TRUE
-190,Anika,Kanwal,,,,PhD,,tutor,TRUE
-191,Sajid,Pakirdeen,,,,Master,,tutor,TRUE
-192,Nikki,Chen,,,,Master,,tutor,TRUE
-193,Jayson,Paul,,,,Master,,tutor,TRUE
-194,Shubham,Dhamija,,,,Master,,tutor,TRUE
-195,Sam,Mahmoudian,,,,Master,,tutor,TRUE
-196,Moe,Hdaib,,,,Honours,,tutor,TRUE
-197,Jingmin,Zhang,,,,Master,,tutor,TRUE
-198,Payal,Tiwari,,,,Master,,tutor,TRUE
-199,Kejian,Shi,,,,Master,,tutor,TRUE
-200,Shahzaib,Hayat,,,,Master,,tutor,TRUE
-201,Chuanyuan,Liu,,,,Master,,tutor,TRUE
-202,Annie,Sun,,,,Master,,tutor,TRUE
-203,Alexis,Li,,,,Master,,tutor,TRUE
-204,Shivangie,Singh,,,,Master,,tutor,TRUE
-205,Saravanan,Manickavasagam,,,,Master,,tutor,TRUE
-300,Geordie,Elliot-Kerr,geordieek@gmail.com,s3465651@student.rmit.edu.au,0492 852 807,Secondary,E120652,mentor,TRUE
-301,Jacob,Hill,jakemelb87@gmail.com,s3870682@student.rmit.edu.au,0414 096 608,Secondary,E122186,mentor,FALSE
-302,Lucas,Rodiadis,lucas2@live.com.au,lucas.rodiadis@rmit.edu.au,0412 048 563,Secondary,E122115,mentor,TRUE
-303,Harry,Porter,h.porter23@icloud.com,harry.porter@rmit.edu.au,0418 547 152,Secondary,E117472,mentor,TRUE
-304,Suhavni,Mather,mathursuhavni06@gmail.com,s3874834@student.rmit.edu.au,0434 438 756,Secondary,E122169,mentor,TRUE
-305,Myeonghoon,Sun,myeonghoon.sun.coder@gmail.com,hoonie.sun@rmit.edu.au,0498 582 854,Diploma,E120635,mentor,TRUE
-306,Joseph,Warren,josipwarren@gmail.com,joseph.warren@rmit.edu.au,0449 569 230,Secondary,E122332,mentor,TRUE
-307,Arjun,Kumar,arjk626@gmail.com,arjun.kumar@rmit.edu.au,0404 582 357,Secondary,E122092,mentor,TRUE
-308,Thomas,Monaghan,tomaghan@gmail.com,tom.monaghan@rmit.edu.au,0433 706 381,Secondary,E122094,mentor,TRUE
-309,Akshita,Agrawal,akshitaagr1509@gmail.com,akshita.agrawal2@rmit.edu.au,0424 466 329,Secondary,E122166,mentor,TRUE
-310,Mitchell,Simmons,mitchellrichardsimmons@gmail.com,mitchell.simmons@rmit.edu.au,0432 797 704,Secondary,E122173,mentor,TRUE
-311,Ibrahim,Ashab,Ibrahim.ashhab@gmail.com,s3953973@student.rmit.edu.au,0412 120 140,Secondary,E122187,mentor,TRUE
-312,Aksharkumar,Amin,aksharamin0501@gmail.com,aksharkumar.amin@rmit.edu.au,0413 251 521,Secondary,E122085,mentor,FALSE
-313,Gilbert,Du,duyiqi1717@gmail.com,gilbert.du@rmit.edu.au,0466 652 220,Secondary,E122132,mentor,TRUE
-314,Artemis,Rossman,rosmanartemis@gmail.com,S3918741@student.rmit.edu.au,0402 970 337,Secondary,E119486,mentor,TRUE
-315,Saksham,Jain,sakshamjain2552@gmail.com,S3923854@student.rmit.edu.au,0493 450 366,Secondary,unknown,mentor,TRUE
-316,Kulindu,Gamage,workkuls@gmail.com,S3976304@student.rmit.edu.au,0434 715 375,Secondary,unknown,mentor,TRUE
+id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active,notes
+1,Gayan,Wijesinghe,gayanw82@gmail.com,gayan.wijesinghe@rmit.edu.au,0411 372 100,Bachelor,E058140,tutor,TRUE,""
+2,Shuyi,Sun,yolandasunshuyi@gmail.com,shuyi.sun@rmit.edu.au,0451 578 862,Masters,E121438,tutor,FALSE,"Available in semester 2 2024"
+3,Yiwei,Zhong,yi.wei.zhong@monash.edu,yiwei.zhong@rmit.edu.au,0452 661 018,Masters,E118705,tutor,TRUE,""
+4,Xiang,Li,martin.xl@gmail.com,xiang.li2@rmit.edu.au,0402 218 508,Phd,E046970,tutor,TRUE,""
+5,David,Tedjopurnomo,davidtedjopurnomo@gmail.com,david.tedjopurnomo2@rmit.edu.au,0426 491 818,Phd,E121366,tutor,TRUE,""
+6,Justin,Perrie,Unknown,justin.perrie@rmit.edu.au,0452 299 865,Bachelor Hons,E034546,tutor,TRUE,""
+7,Man,Hou,houmanbn@gmail.com,man.hou@rmit.edu.au,0424 948 079,Bachelor Hons,E121587,tutor,TRUE,""
+8,Arif,Jubaer,arif.jubaer@gmail.com,arif.Jubaer@rmit.edu.au,0411 215 302,Phd,E091128,tutor,FALSE,""
+9,Kee Chew (Peter),Huang,kchuang100100@gmail.com,kee.chew.huang@rmit.edu.au,0411 075 136,Bachelor,E119363,tutor,TRUE,""
+10,Khang,Vo,khang.vo@classcom.app,khang.vo@rmit.edu.au,0457 270 537,Masters,E038856,tutor,TRUE,""
+11,Axel,Ahmer,axelahmer@fastmail.com,axel.ahmer@rmit.edu.au,0402 337 873,Bachelor Hons,E116911,tutor,TRUE,""
+12,Rich,Chandrasekera,rich@greyteak.com.au,unknown,0404 672 611,Masters,unknown,tutor,FALSE,""
+13,Silva,Wei,silva.weiye@gmail.com,silva.wei2@rmit.edu.au,0430 311 995,Masters,E121497,tutor,TRUE,""
+14,Daniel,Manning,danielmanning213@gmail.com,daniel.manning@rmit.edu.au,0413 406 990,Bachelor Hons,E119563,tutor,FALSE,""
+15,Joy,Chen,joychen0328@gmail.com,joy.chen@rmit.edu.au,0450 691 678,Masters,E121512,tutor,TRUE,""
+16,Milindi,Kodikara,Unknown,milindi.kodikara2@rmit.edu.au,0452 503 667,Bachelor,E116887,tutor,TRUE,""
+17,Audrey,Ahmer,audrey.ahmer@gmail.com,audrey.ahmer@rmit.edu.au,0430 583 308,Masters,E119341,tutor,FALSE,""
+18,Milan,Tresoor,milan.tresoor@gmail.com,S3993878@student.rmit.edu.au,0421 420 950,Masters,unknown,tutor,TRUE,""
+19,Sheryl,Mantik,sheryl.mantik@gmail.com,sheryl.hanna.mantik@rmit.edu.au,0421 999 227,Bachelor Hons,E115886,tutor,FALSE,""
+20,Rodney,Cocker,rodney.cocker@gmail.com,rodneyian.cocker@rmit.edu.au,N/A,Masters,E07582,tutor,TRUE,""
+21,Timothy,Wiley,unknown,timothy.wiley@rmit.edu.au,N/A,Doctorate,unknown,tutor,TRUE,""
+22,Edouard,Amouroux,unknown,edouard.amouroux4@rmit.edu.au,N/A,N/A,unknown,tutor,TRUE,""
+23,Halil,Ali,unknown,halil.ali@rmit.edu.au,N/A,Doctorate,unknown,tutor,TRUE,""
+24,Chaminda,Bulumulla,chamindabulumulla@gmail.com,chaminda.bulumulla2@rmit.edu.au,0412 241 265,Doctorate,E117424,tutor,TRUE,""
+25,Saidur,Rahman,unknown,mohammadsaidur.rahman@rmit.edu.au,unknown,unknown,E025766,tutor,FALSE,""
+26,Michael_D,Dann,unknown,michael.dann@rmit.edu.au,unknown,Masters,unknown,tutor,TRUE,""
+27,Shay,Zheng,shayzheng1@gmail.com,shay.zheng@monash.edu,0460 436 317,Masters,E122329,tutor,TRUE,""
+28,Sunita,Rani,mailinsunita@yahoo.com.au,mailto:sunita.rani2@rmit.edu.au,unknown,Masters,unknown,tutor,TRUE,""
+29,Amina,Hossain,sumit2_05@yahoo.com,amina.hossain@rmit.edu.au,0452 515 624,Masters,E116198,tutor,TRUE,""
+30,Renan,Luigi,renanghp@gmail.com,renan.guarese@rmit.edu.au,0452 515 624,Masters,E118782,tutor,TRUE,""
+31,Waqar,Ali Khan,wkhan@swin.edu.au,N/A,0414 476 223,PhD,unknown,tutor,TRUE,""
+32,Pubudu,Sanjeewani,pubudusanjeewani91@gmail.com,N/A,0451 607 836,PhD,unknown,tutor,TRUE,""
+33,Jyoti,Kundu,jyotikundu@gmail.com,jyoti.kundu@rmit.edu.au,0405 871 176,Masters,E121037,tutor,TRUE,""
+34,Ghazia,Qaiser,ghaziaqaiser@gmail.com,ghazia.qaiser@rmit.edu.au,0478 530 722,Masters,E123590,tutor,TRUE,""
+35,John,Thangarajah,unknown,john.thangarajah@rmit.edu.au,unknown,PhD,E21854,tutor,TRUE,""
+36,Jessica,Villicana,unknown,jessica.rivera.villicana@rmit.edu.au,unknown,unknown,unknown,tutor,TRUE,""
+37,Julie,Porteous,unknown,julie.porteous@rmit.edu.au,unknown,Phd,E75041,tutor,TRUE,""
+38,Azadeh,Alavi,unknown,azadeh.alavi@rmit.edu.au,unknown,Phd,E106570,tutor,TRUE,""
+39,Falk,Scholer,unknown,falk.scholer@rmit.edu.au,unknown,Phd,E57478,tutor,TRUE,""
+40,Palash,Uddin,palash.cse.hstu@gmail.com,md.palash.uddin@rmit.edu.au,0480 176 818,Phd,E123236,tutor,TRUE,""
+41,Rejoy,Benjamin,rejoybenji@gmail.com,rejoy.benjamin@rmit.edu.au,0402 305 870,Masters,E105844,tutor,TRUE,""
+42,Marwah,Alaofi,m.k.alaofi@gmail.com,Unknown,0413 072 370,Masters,E123490,tutor,TRUE,""
+43,Prabath,Abeysekara,prabathabeysekara@gmail.com,prabath.abeysekara@rmit.edu.au,0456 417 865,Phd,E089443,tutor,TRUE,""
+44,Trevor,Reynolds,unknown,trevor.reynolds@rmit.edu.au,unknown,unknown,E054061,tutor,TRUE,""
+45,Muhammad,Qadeer,unknown,hassan.qadeer@rmit.edu.au,0475 906 401,masters,unknown,tutor,FALSE,""
+46,Moshin,Ali,mohsinali@swin.edu.au,mohsin.ali@rmit.edu.au,0488 721 977,Masters,E124058,tutor,TRUE,""
+47,Shilpa,Patel,shilpa.patel8895@gmail.com,unknown,0468 303 503,Bachelor,unknown,tutor,FALSE,""
+48,Vu,Mai,unknown,vuhuy.mai@rmit.edu.au,unknown,Phd,E073581,tutor,TRUE,""
+49,Steven,Korevaar,unknown,s3544280@student.rmit.edu.au,unknown,Phd,unknown,tutor,TRUE,""
+50,Hai,Dong,unknown,hai.dong@rmit.edu.au,unknown,Phd,E013322,tutor,TRUE,""
+51,Ruimin,Chu,ruimin.chu@gmail.com,ruimin.chu@rmit.edu.au,0450 734 981,Bachelor (Hons),E116630,tutor,TRUE,""
+52,Yesaswi,Muralidhar,yeshaswi.am@gmail.com,unknown,0424 751 946,Masters,unknown,tutor,TRUE,""
+53,Soham,Mandal,sohamwork1@gmail.com,unknown,0414 320 399,Masters,E124237,tutor,TRUE,""
+54,Yediya,Juan,Yediya.Juan@gmail.com,yediyajuan@gmail.com,0452 481 813,Masters,E124071,tutor,TRUE,""
+55,Shuo,Huang,shua0043@gmail.com,unknown,0409 813 299,Masters,unknown,tutor,TRUE,""
+56,Yujin,Huang,jinxwasstorm@gmail.com,unknown,0421 888 938,Masters,E124133,tutor,TRUE,""
+57,Hermawan,Mulyono,geraldus.mikael@gmail.com,unknown,0423 955 571,Masters,E124188,tutor,TRUE,""
+58,Sabby,Bala,saby.bala21@outlook.com,unknown,0411 989 400,Masters,unknown,tutor,TRUE,""
+59,Sajid,Pakirdeen,pdmsajid@gmail.com,unknown,unknown,Masters,unknown,tutor,TRUE,""
+60,William,Wang,wangwilliam2010@gmail.com,unknown,unknown,GradCert,unknown,tutor,TRUE,""
+61,Isma,Siddiqui,isma.farah@ieee.org,unknown,0455 734 905,Phd,unknown,tutor,TRUE,""
+62,Dipto,Pratyaksa,unknown,dipto.pratyaksa@rmit.edu.au,unknown,unknown,097092,tutor,TRUE,""
+63,Nick,Stefanidis,stefandn@hotmail.com,unknown,0405 989 536,Grad Diploma,unknown,tutor,TRUE,""
+64,Md,Muktar,muktar.hossain@bauet.ac.bd,unknown,0435 648 202,Masters,unknown,tutor,TRUE,""
+65,Sam,Haines,sam@samhains.com,unknown,unknown,Masters,unknown,tutor,TRUE,""
+66,Heeshala Nadeeshan Weerasuriya,Weerasuriya Patabedege,heeshala25@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+67,William ,Guardado,william.jesus.guardado@gmail.com,,,Masters Degree,,tutor,TRUE,""
+68,MD,SHAMSUJJOHA,dishacse@yahoo.com,,,PhD,,tutor,TRUE,""
+69,Deepanshu,Marwaha,Deepanshumarwaha1998@gmail.com,,,Masters Degree,,tutor,TRUE,""
+70,Tabish Hussain,Raza,raza.tabish2000@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+71,Anik,Dey Sarker,anik11ads@gmail.com,,,Masters Degree,,tutor,TRUE,""
+72,Chowdhury Shahriar ,Muzammel,s3987367@student.rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+73,Yitong,Pei,yitongp22@gmail.com,,,Masters Degree,,tutor,TRUE,""
+74,Sebastian,Beswick,seb.beswick@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+75,Ruoting,Wang,xbbdyx@gmail.com,,,Masters Degree,,tutor,TRUE,""
+76,Kevin,Shi,Kshi30@outlook.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+77,Sarabjot,Singh,hello@sarbr.co,,,Masters Degree,,tutor,TRUE,""
+78,Chamlok,Chan,chamlokchan@gmail.com,,,Masters Degree,,tutor,TRUE,""
+79,Robert,Bittar,rbittar95@live.com.au,,,Masters Degree,,tutor,TRUE,""
+80,Hussein,Alnabulsi,hsnasn@yahoo.com,,,PhD,,tutor,TRUE,""
+81,Imesh,Ekanayake,s4026542@student.rmit.edu.au,,,Bachelor Degree with Honours,,tutor,TRUE,""
+82,Lara,Alghamdi,Alghamdilara15@gmail.com,,,Masters Degree,,tutor,TRUE,""
+83,Muhammad,Nouman,mnouman.22@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+84,Yasmeen,Parveen,yparveen74@icloud.com,,,Masters Degree,,tutor,TRUE,""
+85,Lakshmi ,Palaparambil Dinesh,lpdmbose6@gmail.com,,,PhD,,tutor,TRUE,""
+86,Md Ashraf,Uddin,ashraf@cse.jnu.ac.bd,,,PhD,,tutor,TRUE,""
+87,Emad,Alasadi,emad.alasadi@rmit.edu.au,,,PhD,,tutor,TRUE,""
+88,Jingwen,Zhou,Helen.zhou@rmit.edu.au,,,Bachelor Degree with Honours,,tutor,TRUE,""
+89,Angel Felipe,Magnossão de Paula,angel.felipe.magnossao.de.paula@rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+90,Ha Nam Anh,Pham,hanamanhpham@gmail.com,,,Masters Degree,,tutor,TRUE,""
+91,Zhengkang,Xiang,alexxiang001@gmail.com,,,Masters Degree,,tutor,TRUE,""
+92,Farshid,Keivanian,farshid.keivanian@uon.edu.au,,,PhD,,tutor,TRUE,""
+93,Tharindu B.,Hewage,tharindu.b.hewage@gmail.com,,,PhD,,tutor,TRUE,""
+94,Muhammad ,Adil,chaudhrie.adil@gmail.com,,,PhD,,tutor,TRUE,""
+95,Roberto,Espinoza ,roberto.espinozav@gmail.com,,,Masters Degree,,tutor,TRUE,""
+96,Keith,Wong,keith.wong2@rmit.edu.au,,,PhD,,tutor,TRUE,""
+97,Grace,Misere,miserehgrace@gmail.com,,,PhD,,tutor,TRUE,""
+98,Muhammad,Nouman ,mnouman.ee@gmail.com,,,PhD,,tutor,TRUE,""
+99,Thakshila,Imiya Mohottige,tdthakshi@gmail.com,,,PhD,,tutor,TRUE,""
+100,Tirath,Ramdas,tirath@int19h.com,,,PhD,,tutor,TRUE,""
+101,Abdullah,Shabbir,ssabdullah_1992@hotmail.com,,,Masters Degree,,tutor,TRUE,""
+102,Matthew,Courtney,matthewcourtney@pm.me,,,Masters Degree,,tutor,TRUE,""
+103,Suhaas,Nagaraj,suhaasnc@gmail.com,,,Masters Degree,,tutor,TRUE,""
+104,Thilina Rukshan,Edirisinghe Arachchige,rukshan.edirisinghe@gmail.com,,,Masters Degree,,tutor,TRUE,""
+105,Prasanna,Balasooriya,balasooriya.p@gmail.com,,,Masters Degree,,tutor,TRUE,""
+106,Lin,Tian,lin.tian2@student.rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+107,Sajid ,Pakirdeen,pdmsajid@gmail.com,,,Masters Degree,,tutor,TRUE,""
+108,Khuyagbaatar,Batsuren,khuyagbaatar.b@gmail.com,,,PhD,,tutor,TRUE,""
+109,Muhammad ,Islam,islam.m1991@gmail.com,,,PhD,,tutor,TRUE,""
+110,Roberto,Poles,roberto.poles29@gmail.com,,,PhD,,tutor,TRUE,""
+111,Andrew,Lonsdale,andrew.lonsdale@lonsbio.com.au,,,PhD,,tutor,TRUE,""
+112,Nanyu,Chen,violachen17@gmail.com,,,Masters Degree,,tutor,TRUE,""
+113,Yaokun,Zheng,zhengyk1996@gmail.com,,,Masters Degree,,tutor,TRUE,""
+114,Gayathri ,Radhabai Gopinathan Nair ,amritagayathri@gmail.com,,,PhD,,tutor,TRUE,""
+115,Xinh,Dinh,xinhdinhbmt@gmail.com,,,Masters Degree,,tutor,TRUE,""
+116,Mohamed,Anver,dr.mohamed.anver@gmail.com,,,PhD,,tutor,TRUE,""
+117,Srinibas,Swain,ssrinibas@gmail.com,,,PhD,,tutor,TRUE,""
+118,Ishara Sandun Bandara,Herath Mudiyanselage,Isharabnd@gmail.com,,,Masters Degree,,tutor,TRUE,""
+119,Ishara,Bandara,isharabnd@gmail.com,,,Masters Degree,,tutor,TRUE,""
+120,Chang Joo,Yun,chris.yun813@gmail.com,,,PhD,,tutor,TRUE,""
+121,NAVEED,ALI,naveedz.ali@gmail.com,,,PhD,,tutor,TRUE,""
+122,Fatemeh,Ansarizadeh,f.ansarizadeh@deakin.edu.au,,,PhD,,tutor,TRUE,""
+123,Isma Farah,Siddiqui,Isma.farah@ieee.org,,,PhD,,tutor,TRUE,""
+124,Nattapat,Boonprakong,nattapatboon@gmail.com,,,Masters Degree,,tutor,TRUE,""
+125,Chwee,Lim,chwee.lim2@rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+126,Muhammad,Attique,attia85@gmail.com,,,PhD,,tutor,TRUE,""
+127,Dhruv,Dave,dhruvdave.ce@gmail.om,,,Masters Degree,,tutor,TRUE,""
+128,Lakshmi Jagathamma,Mohan,lakshmi.jmohan@gmail.com,,,PhD,,tutor,TRUE,""
+129,Muhammad ,Kamran,Kamran.mathematics@gmail.com,,,PhD,,tutor,TRUE,""
+130,Ammar,Sohail,ammarsohail@gmail.com,,,PhD,,tutor,TRUE,""
+131,Rumpa,Dasgupta,rumpa.dasgupta@monash.edu,,,PhD,,tutor,TRUE,""
+132,Chetan,Pundhir,chetanpundhir333@gmail.com,,,Masters Degree,,tutor,TRUE,""
+133,Robert,de Graaf,robertdegraaf78@gmail.com,,,Masters Degree,,tutor,TRUE,""
+134,Luchen,Zhou,luchenzhou2001@gmail.com,,,Masters Degree,,tutor,TRUE,""
+135,Vesna,Trampevska- Talevska,vtalev@yahoo.co.,,,Masters Degree,,tutor,TRUE,""
+136,Mohammad,Shakeri,mshakeri63@gmail.com,,,PhD,,tutor,TRUE,""
+137,Harjot,Singh,htiwana.007@gmail.com,,,Masters Degree,,tutor,TRUE,""
+138,shuo ,huang,shuo.huang@rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+139,Daffa,Buckley,daffabuck@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+140,Yujin,Huang,yujin.jinx.huang@rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+141,Mehmet Ali,Turhan,mehmetaliturhan2000@outlook.com,,,Masters Degree,,tutor,TRUE,""
+142,Deepthi,Kuttichira,deepthikuttichira93@gmail.com,,,PhD,,tutor,TRUE,""
+143,Sanath,Kumar,sanathmaheshkumar@gmail.com,,,Bachelor Degree with Honours,,tutor,TRUE,""
+144,Nadeeshani,Kulatunge,nadeekulatunge@gmail.com,,,Masters Degree,,tutor,TRUE,""
+145,Sayantan,Dasgupta,sayantan.iitkgp@gmail.com,,,Masters Degree,,tutor,TRUE,""
+146,Youngsun,Kim,youngkim0011@gmail.com,,,Masters Degree,,tutor,TRUE,""
+147,Vidhya,Satheeswaran,vidhya0910@gmail.com,,,Masters Degree,,tutor,TRUE,""
+148,Ying Zhao,Zhao,dishengzhaoying@gmail.com,,,PhD,,tutor,TRUE,""
+149,Myhuong,Nguyen,myhuongng2@gmail.com,,,PhD,,tutor,TRUE,""
+150,Waqar Ali,Khan,wkhan@swin.edu.au,,,PhD,,tutor,TRUE,""
+151,George,Huang,georgehuang310@gmail.com,,,PhD,,tutor,TRUE,""
+152,Ahmad,Ammari,ammariect@gmail.com,,,PhD,,tutor,TRUE,""
+153,Tracey,Chen,chenytracey@gmail.com,,,Masters Degree,,tutor,TRUE,""
+154,Yeu Wen,Mak,yeuwen.mak@u.nus.edu,,,Masters Degree,,tutor,TRUE,""
+155,TianZhang,He,hetianzhang91@gmail.com,,,PhD,,tutor,TRUE,""
+156,Selen Esra,Dereli,s.esra.dereli@gmail.com,,,PhD,,tutor,TRUE,""
+157,Matti,Haddad,career@matada.org,,,Bachelor Degree with Honours,,tutor,TRUE,""
+158,Steve,Quenette,steve.quenette@gmail.com,,,PhD,,tutor,TRUE,""
+159,Faisal,Alam,faisal.alam@monash.edu,,,Masters Degree,,tutor,TRUE,""
+160,Pa Pa,Khin,papakhin.mdy@gmail.com,,,Masters Degree,,tutor,TRUE,""
+161,Helen,Hou,houlei516@gmail.com,,,PhD,,tutor,TRUE,""
+162,Kerese,Manueli,kerese.manueli@gmail.com,,,PhD,,tutor,TRUE,""
+163,Trina,Dey,dtrina45@gmail.com,,,Masters Degree,,tutor,TRUE,""
+164,Lovee,Jain,lovee.jain93@gmail.com,,,Masters Degree,,tutor,TRUE,""
+165,Ahmed,Mourad,ahs.mourad@gmail.com,,,PhD,,tutor,TRUE,""
+166,Eashan,Deshmukh,eashandeshmukh@gmail.com,,,Masters Degree,,tutor,TRUE,""
+167,sarmad,wani,s4045944@student.rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+168,Pragya,Agrawal,Pragyaagrawal.au@gmail.com,,,Masters Degree,,tutor,TRUE,""
+169,Baron,Li,yichen.li@rmit.edu.au,,,Masters Degree,,tutor,TRUE,""
+170,Nasrin,Sultana,nasrin21@gmail.com,,,PhD,,tutor,TRUE,""
+171,Avani,Heriss,Avaniheriss1202@gmail.com ,,,Masters Degree,,tutor,TRUE,""
+172,James,Thom,james.thom@rmit.edu.au,,,PhD,,tutor,TRUE,""
+173,Nisha,Nisha,nishamannan01@gmail.com,,,PhD,,tutor,TRUE,""
+175,Mukesh,Malani,malaniofcl@gmail.com,,,Masters Degree,,tutor,TRUE,""
+176,Bhagwan,Das,engr.bhagwandas@hotmail.com,,,PhD,,tutor,TRUE,""
+177,Weijia,Chen,weijiac9@outlook.com,,,Masters Degree,,tutor,TRUE,""
+178,Robert,McQuillan,,robert.mcquillan@rmit.edu.au,,,,tutor,TRUE,""
+179,Trevor,Brunton,,,,Master,,tutor,TRUE,""
+180,Saurab,Kuntanahal,,,,Master,,tutor,TRUE,""
+181,Alain,Hennebelle,,,,Master,,tutor,TRUE,""
+182,Navid,Khaledian,,,,PhD,,tutor,TRUE,""
+183,Md Muktar,Hossain,,,,Master,,tutor,TRUE,""
+184,Sunny,Kim,,,,Master,,tutor,TRUE,""
+185,Zubair,Ahsan,,,,Master,,tutor,TRUE,""
+186,Anton,Edlund,,,,Master,,tutor,TRUE,""
+187,Wasyihun,Admass,,,,Master,,tutor,TRUE,""
+188,Ayaz,Mujawar,,,,Master,,tutor,TRUE,""
+189,Hiruni,Kegalle,,,,Honours,,tutor,TRUE,""
+190,Anika,Kanwal,,,,PhD,,tutor,TRUE,""
+191,Sajid,Pakirdeen,,,,Master,,tutor,TRUE,""
+192,Nikki,Chen,,,,Master,,tutor,TRUE,""
+193,Jayson,Paul,,,,Master,,tutor,TRUE,""
+194,Shubham,Dhamija,,,,Master,,tutor,TRUE,""
+195,Sam,Mahmoudian,,,,Master,,tutor,TRUE,""
+196,Moe,Hdaib,,,,Honours,,tutor,TRUE,""
+197,Jingmin,Zhang,,,,Master,,tutor,TRUE,""
+198,Payal,Tiwari,,,,Master,,tutor,TRUE,""
+199,Kejian,Shi,,,,Master,,tutor,TRUE,""
+200,Shahzaib,Hayat,,,,Master,,tutor,TRUE,""
+201,Chuanyuan,Liu,,,,Master,,tutor,TRUE,""
+202,Annie,Sun,,,,Master,,tutor,TRUE,""
+203,Alexis,Li,,,,Master,,tutor,TRUE,""
+204,Shivangie,Singh,,,,Master,,tutor,TRUE,""
+205,Saravanan,Manickavasagam,,,,Master,,tutor,TRUE,""
+300,Geordie,Elliot-Kerr,geordieek@gmail.com,s3465651@student.rmit.edu.au,0492 852 807,Secondary,E120652,mentor,TRUE,""
+301,Jacob,Hill,jakemelb87@gmail.com,s3870682@student.rmit.edu.au,0414 096 608,Secondary,E122186,mentor,FALSE,""
+302,Lucas,Rodiadis,lucas2@live.com.au,lucas.rodiadis@rmit.edu.au,0412 048 563,Secondary,E122115,mentor,TRUE,""
+303,Harry,Porter,h.porter23@icloud.com,harry.porter@rmit.edu.au,0418 547 152,Secondary,E117472,mentor,TRUE,""
+304,Suhavni,Mather,mathursuhavni06@gmail.com,s3874834@student.rmit.edu.au,0434 438 756,Secondary,E122169,mentor,TRUE,""
+305,Myeonghoon,Sun,myeonghoon.sun.coder@gmail.com,hoonie.sun@rmit.edu.au,0498 582 854,Diploma,E120635,mentor,TRUE,""
+306,Joseph,Warren,josipwarren@gmail.com,joseph.warren@rmit.edu.au,0449 569 230,Secondary,E122332,mentor,TRUE,""
+307,Arjun,Kumar,arjk626@gmail.com,arjun.kumar@rmit.edu.au,0404 582 357,Secondary,E122092,mentor,TRUE,""
+308,Thomas,Monaghan,tomaghan@gmail.com,tom.monaghan@rmit.edu.au,0433 706 381,Secondary,E122094,mentor,TRUE,""
+309,Akshita,Agrawal,akshitaagr1509@gmail.com,akshita.agrawal2@rmit.edu.au,0424 466 329,Secondary,E122166,mentor,TRUE,""
+310,Mitchell,Simmons,mitchellrichardsimmons@gmail.com,mitchell.simmons@rmit.edu.au,0432 797 704,Secondary,E122173,mentor,TRUE,""
+311,Ibrahim,Ashab,Ibrahim.ashhab@gmail.com,s3953973@student.rmit.edu.au,0412 120 140,Secondary,E122187,mentor,TRUE,""
+312,Aksharkumar,Amin,aksharamin0501@gmail.com,aksharkumar.amin@rmit.edu.au,0413 251 521,Secondary,E122085,mentor,FALSE,""
+313,Gilbert,Du,duyiqi1717@gmail.com,gilbert.du@rmit.edu.au,0466 652 220,Secondary,E122132,mentor,TRUE,""
+314,Artemis,Rossman,rosmanartemis@gmail.com,S3918741@student.rmit.edu.au,0402 970 337,Secondary,E119486,mentor,TRUE,""
+315,Saksham,Jain,sakshamjain2552@gmail.com,S3923854@student.rmit.edu.au,0493 450 366,Secondary,unknown,mentor,TRUE,""
+316,Kulindu,Gamage,workkuls@gmail.com,S3976304@student.rmit.edu.au,0434 715 375,Secondary,unknown,mentor,TRUE,""
