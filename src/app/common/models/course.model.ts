@@ -1,6 +1,10 @@
 import { BaseModel } from '../../shared/models/base.model';
-import { ICourse, ISkill, IStaff } from '../interfaces/schedule.interface';
-import { ITeachingSkills } from '../interfaces/schedule.interface';
+import {
+  ICourse,
+  ISkill,
+  IStaff,
+} from '../../course-schedule/interfaces/schedule.interface';
+import { ITeachingSkills } from '../../course-schedule/interfaces/schedule.interface';
 
 /**
  * Course model representing a university course and its related information.
