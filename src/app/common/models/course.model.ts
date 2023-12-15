@@ -28,7 +28,7 @@ export class Course extends BaseModel implements ICourse {
    */
   constructor(initialData?: Partial<Course>) {
     super(initialData ?? {});
-    this.defaultSortField = 'title';
+    this.defaultSortField = 'name';
     this.sortOrderAscending = true;
     this.assignInitialValues(initialData);
     this.configureProperties();

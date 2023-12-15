@@ -84,7 +84,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
       .subscribe((entities) => {
         this.data = loadMore ? this.data.concat(entities) : entities;
         this.totalEntities = this.data.length;
-
+        console.log('this.data', this.model.collectionName, this.data);
         if (entities.length > 0) {
           this.lastDocument = this.data[this.data.length - 1];
           if (
