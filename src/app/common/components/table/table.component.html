@@ -1,6 +1,5 @@
 <div class="container">
   <div class="table-controls">
-    <!-- Add record button -->
     <button
       mat-raised-button
       color="primary"
@@ -10,7 +9,6 @@
       Add
     </button>
 
-    <!-- Edit all rows button -->
     <button
       mat-raised-button
       color="primary"
@@ -20,7 +18,6 @@
       {{ editingAllRows ? "Save All" : "Edit All" }}
     </button>
 
-    <!-- Edit table headings button -->
     <button
       mat-raised-button
       color="primary"
@@ -30,7 +27,6 @@
       Edit Table Headings
     </button>
 
-    <!-- Save column headings button -->
     <button
       mat-raised-button
       color="primary"
@@ -40,7 +36,6 @@
       Save Column Headings
     </button>
 
-    <!-- Bulk upload button -->
     <button
       mat-raised-button
       color="primary"
@@ -54,7 +49,6 @@
       Export to Excel
     </button>
 
-    <!-- Merge columns button and select -->
     <div class="merge-columns-container" *ngIf="allowMergeColumns">
       <button
         mat-raised-button
@@ -74,7 +68,6 @@
       </mat-select>
     </div>
 
-    <!-- Delete columns button and select -->
     <div class="delete-columns-container" *ngIf="allowDeleteColumns">
       <button
         mat-raised-button
@@ -95,7 +88,6 @@
     </div>
   </div>
 
-  <!-- Filter input -->
   <div *ngIf="allowFilter === true">
     <mat-form-field appearance="outline">
       <mat-label>Table Filter</mat-label>
@@ -103,9 +95,7 @@
     </mat-form-field>
   </div>
 
-  <!-- Material table -->
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    <!-- Edit buttons column -->
     <ng-container matColumnDef="editButtons">
       <th mat-header-cell *matHeaderCellDef>
         <ng-container *ngIf="allowRowActions"> Actions </ng-container>
@@ -113,7 +103,6 @@
       <td mat-cell *matCellDef="let row; let rowIndex = index">
         <ng-container *ngIf="allowRowActions">
           <div class="row-actions">
-            <!-- Edit button -->
             <button
               *ngIf="!editingRowIndexes.includes(rowIndex)"
               mat-icon-button
@@ -121,7 +110,7 @@
             >
               <mat-icon class="edit-icon">edit</mat-icon>
             </button>
-            <!-- Save button -->
+
             <button
               *ngIf="editingRowIndexes.includes(rowIndex)"
               mat-icon-button
@@ -129,7 +118,7 @@
             >
               <mat-icon>save</mat-icon>
             </button>
-            <!-- Delete button -->
+
             <button
               mat-icon-button
               (click)="deleteRecord.emit({ id: row.id, event: $event })"

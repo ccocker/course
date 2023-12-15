@@ -59,18 +59,18 @@ export class EntityListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.routeSub = this.route.paramMap.subscribe((params) => {
-    //   this.collection = params.get('collection') ?? this.collection ?? 'people'; // Provide a default value
-    //   this.modelFactory.createModel(this.collection).then((model) => {
-    //     this.model = model;
-    //     this.entityStateService.setCurrentModel(model);
-    //     this.model.collectionName = this.collection;
-    //     this.loadEntities();
-    //     this.collectionName$ = this.entityStateService
-    //       .getCurrentModel()
-    //       .pipe(map((model) => model?.collectionName ?? null));
-    //   });
-    // });
+    this.routeSub = this.route.paramMap.subscribe((params) => {
+      this.collection = params.get('collection') ?? this.collection ?? 'people'; // Provide a default value
+      this.modelFactory.createModel(this.collection).then((model) => {
+        this.model = model;
+        this.entityStateService.setCurrentModel(model);
+        this.model.collectionName = this.collection;
+        this.loadEntities();
+        this.collectionName$ = this.entityStateService
+          .getCurrentModel()
+          .pipe(map((model) => model?.collectionName ?? null));
+      });
+    });
   }
 
   private loadEntities(loadMore: boolean = false): void {
@@ -202,6 +202,8 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   navigateToDetails(id: string) {
+    console.log('navigateToDetails', id);
+    console.log('navigateToDetails', this.model);
     this.router.navigate([`/${this.model.collectionName}/details`, id]);
   }
 
