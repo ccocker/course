@@ -22,5 +22,10 @@ export const routes: Route[] = [
   },
   { path: 'course-schedule', component: CourseScheduleComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  {
+    path: ':collection',
+    loadChildren: () =>
+      import('./common/entity/entity.routes').then((r) => r.routes),
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to Home
 ];

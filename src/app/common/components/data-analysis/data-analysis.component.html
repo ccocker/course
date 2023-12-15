@@ -1,0 +1,17 @@
+<h3>Data Analysis</h3>
+<mat-form-field>
+  <mat-select
+    placeholder="Select a property"
+    [(ngModel)]="selectedProperty"
+    (selectionChange)="onPropertySelected()"
+  >
+    <mat-option *ngFor="let property of arrayProperties" [value]="property">
+      {{ property }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<p *ngIf="analysisResult">
+  Even count: {{ analysisResult.evenCount }}, Odd count:
+  {{ analysisResult.oddCount }}
+</p>

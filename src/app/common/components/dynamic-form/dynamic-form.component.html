@@ -1,0 +1,200 @@
+<form [formGroup]="formGroup">
+  <button type="submit" mat-raised-button (click)="onSubmit()">Submit</button>
+  <div *ngFor="let key of objectKeys(formConfiguration)">
+    <ng-container *ngIf="formConfiguration[key].type === 'text'">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ formConfiguration[key].label }}</mat-label>
+        <input matInput type="text" [formControlName]="key" />
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="formConfiguration[key].type === 'number'">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ formConfiguration[key].label }}</mat-label>
+        <input matInput type="number" [formControlName]="key" />
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="formConfiguration[key].type === 'date'">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ formConfiguration[key].label }}</mat-label>
+        <!-- <input matInput [matDatepicker]="picker" [formControlName]="key" /> -->
+        <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+        <!-- <mat-datepicker #picker></mat-datepicker> -->
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="formConfiguration[key].type === 'checkbox'">
+      <mat-checkbox [formControlName]="key">
+        {{ formConfiguration[key].label }}
+      </mat-checkbox>
+    </ng-container>
+
+    <ng-container *ngIf="formConfiguration[key].type === 'select'">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ formConfiguration[key].label }}</mat-label>
+        <mat-select [formControlName]="key">
+          <mat-option
+            *ngFor="let option of formConfiguration[key].options"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="formConfiguration[key].type === 'array'">
+      <label>{{ formConfiguration[key].label }}</label>
+      <div formArrayName="{{ key }}">
+        <div
+          *ngFor="let arrayCtrl of getControls(key); let i = index"
+          class="form-array-row"
+          [formGroupName]="i"
+        >
+          <ng-container
+            *ngFor="let field of objectKeys(formConfiguration[key].fields)"
+          >
+            <ng-container
+              *ngIf="formConfiguration[key].fields[field].type === 'text'"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>{{
+                  formConfiguration[key].fields[field].label
+                }}</mat-label>
+                <input matInput type="text" [formControlName]="field" />
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container
+              *ngIf="formConfiguration[key].fields[field].type === 'number'"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>{{
+                  formConfiguration[key].fields[field].label
+                }}</mat-label>
+                <input matInput type="number" [formControlName]="field" />
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container
+              *ngIf="formConfiguration[key].fields[field].type === 'date'"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>{{
+                  formConfiguration[key].fields[field].label
+                }}</mat-label>
+                <!-- <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [formControlName]="field"
+                /> -->
+                <!-- <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker> -->
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container
+              *ngIf="formConfiguration[key].fields[field].type === 'checkbox'"
+            >
+              <mat-checkbox [formControlName]="field">
+                {{ formConfiguration[key].fields[field].label }}
+              </mat-checkbox>
+            </ng-container>
+
+            <ng-container
+              *ngIf="formConfiguration[key].fields[field].type === 'select'"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>{{
+                  formConfiguration[key].fields[field].label
+                }}</mat-label>
+                <mat-select [formControlName]="field">
+                  <mat-option
+                    *ngFor="
+                      let option of formConfiguration[key].fields[field].options
+                    "
+                    [value]="option"
+                  >
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+          </ng-container>
+          <button
+            mat-icon-button
+            class="add-button"
+            (click)="addArrayItem(key)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="delete-button"
+            (click)="removeArrayItem(key, i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="formConfiguration[key].type === 'object'">
+      <label>{{ formConfiguration[key].label }}</label>
+      <div [formGroupName]="key">
+        <div class="object-grid">
+          <ng-container
+            *ngFor="
+              let subKey of objectKeys(formGroup.get(key).value);
+              let i = index
+            "
+          >
+            <div class="object-value" [formArrayName]="subKey">
+              Line {{ i + 1 }}
+              <ng-container
+                *ngFor="
+                  let ctrl of getControls(key + '.' + subKey);
+                  let i = index
+                "
+              >
+                <mat-form-field appearance="outline">
+                  <input
+                    matInput
+                    min="1"
+                    type="number"
+                    [formControl]="getFormControl(key, subKey, i)"
+                  />
+                </mat-form-field>
+                <button
+                  mat-icon-button
+                  (click)="removeItemFromObjectArray(key, subKey, i)"
+                >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </ng-container>
+              <div>
+                <button
+                  mat-icon-button
+                  (click)="addNewItemToObjectArray(key, subKey)"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addNewArrayToObject(key)"
+          >
+            Add New Line
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</form>

@@ -40,13 +40,28 @@ export class FirestoreDataService {
     return doc(collection(this.firestore, '_')).id;
   }
 
-  // Returns all entities in a given Firestore collection
+  // Fetches a single entity from a Firestore collection by its ID
+  public getEntity<T extends { id: string }>(
+    collectionPath: string,
+    id: string
+  ): Observable<T | undefined> {
+    const docRef = doc(this.firestore, collectionPath, id);
+    return from(getDoc(docRef)).pipe(
+      map((docSnapshot) =>
+        docSnapshot.exists()
+          ? ({ id: docSnapshot.id, ...docSnapshot.data() } as T)
+          : undefined
+      )
+    );
+  }
+
+  // Fetches a single entity from a Firestore collection by its ID
   public getEntities<T extends { id: string }>(
     collectionPath: string,
     orderByField?: string,
     ascending: boolean = true,
     limitCount?: number
-  ): Promise<T[]> {
+  ): Observable<T[]> {
     let constraints: QueryConstraint[] = [];
 
     if (orderByField) {
@@ -59,28 +74,15 @@ export class FirestoreDataService {
     const coll = collection(this.firestore, collectionPath);
     const q = query(coll, ...constraints);
 
-    return getDocs(q).then((querySnapshot) =>
-      querySnapshot.docs.map(
-        (doc) =>
-          ({
-            id: doc.id,
-            ...doc.data(),
-          } as T)
-      )
-    );
-  }
-
-  // Fetches a single entity from a Firestore collection by its ID
-  public getEntity<T extends { id: string }>(
-    collectionPath: string,
-    id: string
-  ): Observable<T | undefined> {
-    const docRef = doc(this.firestore, collectionPath, id);
-    return from(getDoc(docRef)).pipe(
-      map((docSnapshot) =>
-        docSnapshot.exists()
-          ? ({ id: docSnapshot.id, ...docSnapshot.data() } as T)
-          : undefined
+    return from(getDocs(q)).pipe(
+      map((querySnapshot) =>
+        querySnapshot.docs.map(
+          (doc) =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            } as T)
+        )
       )
     );
   }
