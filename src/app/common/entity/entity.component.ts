@@ -10,6 +10,8 @@ import { Observable, map } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@miCommon/components/confirm-dialog/confirm-dialog.component';
 import { AsyncPipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { entityActions } from './store/actions';
 
 @Component({
   selector: 'mi-entity',
@@ -42,13 +44,19 @@ export class EntityComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
-    private modelFactory: ModelFactory
+    private modelFactory: ModelFactory,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((params) => {
       this.collection = params.get('collection') ?? this.collection ?? 'people'; // Provide a default value
-
+      this.store.dispatch(
+        entityActions.getEntity({
+          url: '${this.collection}',
+          id: '0DmXBj3ENHABMkSaNway',
+        })
+      );
       this.modelFactory.createModel(this.collection).then((model) => {
         this.model = model;
 
