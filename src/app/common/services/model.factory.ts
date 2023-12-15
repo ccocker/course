@@ -33,7 +33,6 @@ export class ModelFactory {
         `../models/${modelName.toLowerCase()}.model.ts`
       );
 
-      // const modelModule = await import(`../models/${modelFileName}`);
       const ModelClass = modelModule[modelName];
 
       return new ModelClass();
