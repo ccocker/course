@@ -59,7 +59,6 @@ export class EntityListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data);
     // this.routeSub = this.route.paramMap.subscribe((params) => {
     //   this.collection = params.get('collection') ?? this.collection ?? 'people'; // Provide a default value
     //   this.modelFactory.createModel(this.collection).then((model) => {

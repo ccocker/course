@@ -24,15 +24,21 @@ export class ModelFactory {
 
   async createModel(route: string): Promise<any> {
     let modelName = this.getModelNameFromRoute(route);
+    console.log('modelName', modelName);
     let modelFileName = modelName.toLowerCase() + '.model';
+    console.log('modelFileName', modelFileName);
 
     try {
-      const modelModule = await import(`../models/${modelFileName}`);
+      const modelModule = await import(
+        `../models/${modelName.toLowerCase()}.model.ts`
+      );
+
+      // const modelModule = await import(`../models/${modelFileName}`);
       const ModelClass = modelModule[modelName];
+
       return new ModelClass();
     } catch (error) {
-      console.log(`No model found for route: ${route}`);
-      return {};
+      console.error(`Error loading model for route: ${route}`, error);
       throw new Error(`No model found for route: ${route}`);
     }
   }

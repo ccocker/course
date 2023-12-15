@@ -48,9 +48,10 @@ export class EntityComponent implements OnInit {
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((params) => {
       this.collection = params.get('collection') ?? this.collection ?? 'people'; // Provide a default value
-      debugger;
+      console.log('Collection:', this.collection);
       this.modelFactory.createModel(this.collection).then((model) => {
         this.model = model;
+        console.log(`Model created for collection ${this.collection} `, model);
         this.entityStateService.setCurrentModel(model);
 
         this.model.collectionName = this.collection;
