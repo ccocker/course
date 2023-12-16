@@ -30,7 +30,7 @@ import {
 } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs';
 import { IOrganisation } from '@miShared/interfaces/IOrganization';
-import { IPerson } from '@miShared/interfaces';
+import { IPerson } from '@miCommon/interfaces';
 import { Gender } from '@miCommon/enums';
 
 interface CheckUserExistsResponse {

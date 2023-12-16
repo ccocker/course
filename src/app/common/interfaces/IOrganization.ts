@@ -1,7 +1,4 @@
-import { IAddress } from './IAddress';
-import { IPhone } from './IPhone';
-import { IEmail } from './IEmail';
-import { IDate } from './IDate';
+import { IAddress, IPhone, IEmail, IDate } from '../interfaces/';
 
 export interface IOrganisation {
   id?: string;

@@ -1,5 +1,5 @@
 import { BaseModel } from './base.model';
-import { IAddress, IPhone, IEmail, IDate } from '@miShared/interfaces/';
+import { IAddress, IPhone, IEmail, IDate } from '@miCommon/interfaces/';
 import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
 
 /**

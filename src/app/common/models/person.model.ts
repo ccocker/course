@@ -5,7 +5,7 @@ import {
   IPhone,
   IEmail,
   IDate,
-} from '@miShared/interfaces/';
+} from '@miCommon/interfaces/';
 import { Gender } from '@miCommon/enums';
 import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
 /**
