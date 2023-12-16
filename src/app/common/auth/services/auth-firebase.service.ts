@@ -142,7 +142,6 @@ export class FirebaseAuthService implements IAuthService {
 
     return from(setDoc(orgRef, defaultOrgData)).pipe(
       switchMap(() => {
-        // Update org with its own UID
         return from(updateDoc(orgRef, { id: orgRef.id }));
       })
     );
@@ -185,6 +184,11 @@ export class FirebaseAuthService implements IAuthService {
       notes: [''],
       tags: ['user'],
       gender: Gender.PreferNotToSay,
+      userDetail: {
+        userName: user.displayName || user.email,
+        userRole: 'user',
+        userEmail: user.email,
+      },
     };
   }
 

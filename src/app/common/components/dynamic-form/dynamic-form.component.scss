@@ -19,6 +19,18 @@ mat-form-field {
   }
 }
 
+/* Style for the button group */
+.button-group {
+  display: flex;
+  gap: 10px; /* Adjust spacing between buttons */
+  margin-bottom: 20px; /* Space between buttons and form fields */
+}
+
+/* Style adjustments for individual buttons, if needed */
+// button[mat-raised-button] {
+//   /* Optional styles for buttons */
+// }
+
 // .object-grid {
 //   display: grid;
 //   grid-template-columns: auto 1fr;

@@ -1,4 +1,4 @@
-import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { Location, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormGroup,
@@ -45,7 +45,7 @@ export class DynamicFormComponent implements OnInit {
 
   public formGroup!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private location: Location) {}
 
   /**
    * Initializes the component.
@@ -209,5 +209,9 @@ export class DynamicFormComponent implements OnInit {
       subKey
     ) as FormArray;
     return control.at(index) as FormControl;
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

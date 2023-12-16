@@ -27,6 +27,15 @@ export class Person extends BaseModel {
   notes: string[] = [''];
   tags: string[] = [''];
   gender: Gender = Gender.PreferNotToSay;
+  userDetail: {
+    userName: string;
+    userRole: string;
+    userEmail: string;
+  } = {
+    userName: '',
+    userRole: '',
+    userEmail: '',
+  };
 
   /**
    * Constructor to initialize Person instance.
@@ -54,6 +63,7 @@ export class Person extends BaseModel {
 
     // Assign mergedData to properties
     Object.assign(this, mergedData);
+    this.userDetail = initialData?.userDetail ?? this.userDetail;
   }
 
   /**
@@ -133,6 +143,16 @@ export class Person extends BaseModel {
       },
       company: { required: false, label: 'Company', type: 'text' },
       notes: { required: false, label: 'Notes', type: 'text' },
+      userDetail: {
+        required: false,
+        label: 'User Details',
+        type: 'object',
+        fields: {
+          userName: { required: false, label: 'User Name', type: 'text' },
+          userRole: { required: false, label: 'User Role', type: 'text' },
+          userEmail: { required: false, label: 'User Email', type: 'text' },
+        },
+      },
     };
   }
 }

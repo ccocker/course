@@ -19,4 +19,9 @@ export interface IPerson extends BaseModel {
   tags: string[];
   notes: string[];
   gender: Gender;
+  userDetail: {
+    userName: string;
+    userRole: string;
+    userEmail: string;
+  };
 }

@@ -97,7 +97,7 @@ export const logoutEffect = createEffect(
       ofType(authActions.logout),
       switchMap(() => {
         try {
-          persistanceService.remove('accessToken');
+          persistanceService.set('accessToken', '');
           store.dispatch(authActions.clearCurrentUser());
           return of(authActions.logoutSuccess());
         } catch (error) {
