@@ -28,6 +28,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import * as XLSX from 'xlsx';
+import { LoadingComponent } from '@src/src/app/shared/components/loading/loading.component';
 
 export interface TableColumn {
   property: string;
@@ -56,9 +57,11 @@ export interface TableColumn {
     MatPaginatorModule,
     CurrencyPipe,
     CommonModule,
+    LoadingComponent,
   ],
 })
 export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() isLoading: boolean = true;
   @Input({ required: true }) columns: { property: string; label: string }[] =
     [];
   @Input({ required: true }) allowAdd: boolean = false;

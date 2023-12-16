@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FirestoreDataService } from '@miCommon/services/firestore.data';
 import { ModelFactory } from '@miCommon/services/model.factory';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
@@ -9,13 +8,17 @@ import {
 } from '@miCommon/components/confirm-dialog/confirm-dialog.component';
 import { BaseModel } from '@miCommon/models/base.model';
 import { EntityStateService } from '@miCommon/services/entity-state.service';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { delay, filter, map } from 'rxjs/operators';
 
 import { MiTableComponent } from '@miCommon/components/table/table.component';
-import { JsonPipe, NgIf, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgIf, TitleCasePipe } from '@angular/common';
 import { DataAnalysisComponent } from '@miCommon/components/data-analysis/data-analysis.component';
 import { ExcelReaderComponent } from '@miCommon/components/excel-reader/excel-reader.component';
+import { Store, select } from '@ngrx/store';
+import { entityActions } from '../../store/actions';
+import { selectEntities } from '../../store/reducers';
+import { LoadingComponent } from '@src/src/app/shared/components/loading/loading.component';
 
 @Component({
   selector: 'mi-entity-list',
@@ -29,7 +32,9 @@ import { ExcelReaderComponent } from '@miCommon/components/excel-reader/excel-re
     TitleCasePipe,
     MatDialogModule,
     ExcelReaderComponent,
+    LoadingComponent,
     JsonPipe,
+    AsyncPipe,
   ],
 })
 export class EntityListComponent implements OnInit, OnDestroy {
@@ -49,22 +54,32 @@ export class EntityListComponent implements OnInit, OnDestroy {
   public numberPercentagesTable: { number: number; percentage: number }[] = [];
   lastDocument: any = null;
   @Input() totalColumns: string[] = [];
+  data$: Observable<any>;
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   constructor(
     public entityStateService: EntityStateService,
-    private entityService: FirestoreDataService,
     private route: ActivatedRoute,
     private router: Router,
     private modelFactory: ModelFactory,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((params) => {
       this.collection = params.get('collection') ?? this.collection ?? 'people'; // Provide a default value
+      this.store.dispatch(
+        entityActions.getEntities({
+          url: `${this.collection}`,
+        })
+      );
       this.modelFactory.createModel(this.collection).then((model) => {
         this.model = model;
+
         this.entityStateService.setCurrentModel(model);
+
         this.model.collectionName = this.collection;
+        this.data$ = this.store.pipe(select(selectEntities));
         this.loadEntities();
         this.collectionName$ = this.entityStateService
           .getCurrentModel()
@@ -74,31 +89,27 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   private loadEntities(loadMore: boolean = false): void {
-    this.entityService
-      .getEntities(
-        this.model.collectionName,
-        this.model.defaultSortField,
-        this.model.sortOrderAscending
-        // 10000
-      )
-      .subscribe((entities) => {
-        this.data = loadMore ? this.data.concat(entities) : entities;
-        this.totalEntities = this.data.length;
+    this.data$.subscribe((entities) => {
+      this.data = loadMore ? this.data.concat(entities) : entities;
+      this.totalEntities = this.data?.length || 0;
 
-        if (entities.length > 0) {
-          this.lastDocument = this.data[this.data.length - 1];
-          if (
-            !this.model.listProperties ||
-            this.model.listProperties.length === 0
-          ) {
-            this.addPropertiesToModel(this.data[0]);
-            this.columns = this.model.getDisplayNames();
-          } else {
-            this.columns = this.model.getDisplayNames();
-          }
+      if (entities?.length > 0) {
+        this.lastDocument = this.data[this.data.length - 1];
+        if (
+          !this.model.listProperties ||
+          this.model.listProperties.length === 0
+        ) {
+          this.addPropertiesToModel(this.data[0]);
+          this.columns = this.model.getDisplayNames();
+        } else {
+          this.columns = this.model.getDisplayNames();
         }
-        this.isLoading = false;
-      });
+      }
+
+      setTimeout(() => {
+        this.isLoading$.next(false);
+      }, 1000); // 1000 milliseconds = 2 seconds
+    });
   }
 
   onLoadMoreClick(): void {
@@ -166,7 +177,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
           const firstSegment = this.router.url.split('/')[1];
           this.model.collectionName = firstSegment;
         }
-        this.entityService.deleteEntity(this.model.collectionName, id);
+        // this.entityService.deleteEntity(this.model.collectionName, id);
       }
     });
   }
@@ -180,10 +191,10 @@ export class EntityListComponent implements OnInit, OnDestroy {
     }
     for (const entity of updatedEntities) {
       try {
-        await this.entityService.updateEntity(
-          this.model.collectionName,
-          entity
-        );
+        // await this.entityService.updateEntity(
+        //   this.model.collectionName,
+        //   entity
+        // );
       } catch (error) {
         error = `Failed to update entity with id ${entity.id}: ${error}`;
         throw error;
@@ -206,28 +217,5 @@ export class EntityListComponent implements OnInit, OnDestroy {
 
   hasData(): boolean {
     return !this.isLoading && this.data.length > 0;
-  }
-
-  loadMoreEntities(): void {
-    this.entityService
-      .getEntities(
-        this.model.collectionName,
-        this.model.defaultSortField,
-        false,
-        500
-      )
-      .subscribe((entities) => {
-        // This line appends the newly loaded entities to the existing data array.
-
-        this.data = [...this.data, ...entities];
-
-        // This line updates the totalEntities counter.
-        this.totalEntities = this.data.length;
-
-        // This line updates the lastDocument so that the next batch of entities will be loaded starting from this document.
-        if (entities.length > 0) {
-          this.lastDocument = entities[entities.length - 1];
-        }
-      });
   }
 }

@@ -3,7 +3,6 @@ import { EntityListComponent } from './components/entity-list/entity-list.compon
 import { EntityDetailsComponent } from './components/entity-details/entity-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntityStateService } from '@miCommon/services/entity-state.service';
-import { FirestoreDataService } from '@miCommon/services/firestore.data';
 import { ModelFactory } from '@miCommon/services/model.factory';
 import { BaseModel } from '@miCommon/models';
 import { Observable, map } from 'rxjs';

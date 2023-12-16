@@ -29,6 +29,7 @@ import {
   selectError,
   selectIsLoading,
 } from '../../store/reducers';
+import { LoadingComponent } from '@miShared/components/loading/loading.component';
 
 @Component({
   selector: 'mi-entity-details',
@@ -52,6 +53,7 @@ import {
     AsyncPipe,
     JsonPipe,
     DynamicFormComponent,
+    LoadingComponent,
   ],
 })
 export class EntityDetailsComponent implements OnInit {

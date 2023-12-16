@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'mi-loading',
-  template: '<div>Loading...</div>',
+  templateUrl: './loading.component.html',
+  styleUrls: ['./loading.component.scss'],
   standalone: true,
 })
 export class LoadingComponent {}

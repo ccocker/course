@@ -1,14 +1,11 @@
 <div class="container">
-  <div class="content">
-    <h1>{{ collection | titlecase }} List</h1>
-    {{ collection }}
-    <!-- <ng-container *ngIf="!isLoading; else dataLoaded">
-      <div class="loading">Loading data...</div>
-    </ng-container> -->
+  <h1>{{ collection | titlecase }} List</h1>
 
+  <div class="content">
+    <ng-content></ng-content>
     <ng-container>
-      <ng-content></ng-content>
       <mi-table
+        [isLoading]="isLoading$ | async"
         [allowAdd]="true"
         [allowBulkUpload]="true"
         [allowDeleteColumns]="false"
