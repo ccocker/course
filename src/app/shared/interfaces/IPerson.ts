@@ -1,4 +1,4 @@
-import { Gender } from '../enums';
+import { Gender } from '@miCommon/enums';
 import { BaseModel } from '../models';
 import { IAddress } from './IAddress';
 import { IDate } from './IDate';

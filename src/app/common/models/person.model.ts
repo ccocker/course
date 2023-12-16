@@ -6,7 +6,7 @@ import {
   IEmail,
   IDate,
 } from '@miShared/interfaces/';
-import { Gender } from '@miShared/enums';
+import { Gender } from '@miCommon/enums';
 import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
 /**
  * Person class representing a person and their related information.

@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model';
 import { IAddress, IPhone, IEmail, IDate } from '../interfaces/';
-import { IFormConfiguration } from '../helpers/form-configuration';
+import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
 import { IOrganisation } from '../interfaces/IOrganization';
 
 /**

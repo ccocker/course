@@ -10,12 +10,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { LoginComponent } from './common/auth/components/login/login.component';
+import { LoginComponent } from './common/features/auth/components/login/login.component';
 import { combineLatest } from 'rxjs';
 
 import { Store } from '@ngrx/store';
-import { selectCurrentUser } from './common/auth/store/reducers';
-import { authActions } from './common/auth/store/actions';
+import { selectCurrentUser } from './common/features/auth/store/reducers';
+import { authActions } from './common/features/auth/store/actions';
 
 interface AppConfig {
   title: string;

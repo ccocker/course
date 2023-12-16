@@ -1,8 +1,12 @@
-import { toSentenceCase, toSnakeCase, pluralize } from '../helpers/utils';
+import {
+  toSentenceCase,
+  toSnakeCase,
+  pluralize,
+} from '@miCommon/helpers/utils';
 import {
   createFormConfiguration,
   IFormConfiguration,
-} from '../helpers/form-configuration';
+} from '@miCommon/helpers/form-configuration';
 
 /**
  * Abstract base class for the application's models.

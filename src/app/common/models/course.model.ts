@@ -1,4 +1,4 @@
-import { BaseModel } from '../../shared/models/base.model';
+import { BaseModel } from '@miCommon/models/base.model';
 import {
   ICourse,
   ISkill,
