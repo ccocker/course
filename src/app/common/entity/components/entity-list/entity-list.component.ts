@@ -108,7 +108,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
 
       setTimeout(() => {
         this.isLoading$.next(false);
-      }, 1000); // 1000 milliseconds = 2 seconds
+      }, 2000); // 1000 milliseconds = 2 seconds
     });
   }
 

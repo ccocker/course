@@ -61,7 +61,6 @@ export interface TableColumn {
   ],
 })
 export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() isLoading: boolean = true;
   @Input({ required: true }) columns: { property: string; label: string }[] =
     [];
   @Input({ required: true }) allowAdd: boolean = false;
@@ -88,7 +87,7 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() addRecord = new EventEmitter<void>();
   @Output() bulkUpload = new EventEmitter<void>();
   @Output() filter = new EventEmitter<string>();
-
+  isLoading: boolean = true;
   public editingAllRows = false;
 
   dataSource = new MatTableDataSource();
@@ -119,12 +118,20 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
-      this.dataSource.data = changes['data'].currentValue;
-      this.originalData = JSON.parse(
-        JSON.stringify(changes['data'].currentValue)
-      );
-      this.dataSource.sort = this.sort;
-      this.dataSource._updateChangeSubscription();
+      // Check if the data is not null or undefined and has length
+      if (
+        changes['data'].currentValue &&
+        changes['data'].currentValue.length > 0
+      ) {
+        this.isLoading = false; // Set isLoading to false only when data is loaded
+        this.dataSource.data = changes['data'].currentValue;
+        this.originalData = JSON.parse(
+          JSON.stringify(changes['data'].currentValue)
+        );
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource._updateChangeSubscription();
+      }
     }
   }
 
