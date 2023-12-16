@@ -24,9 +24,8 @@ export class ModelFactory {
 
   async createModel(route: string): Promise<any> {
     let modelName = this.getModelNameFromRoute(route);
-    console.log('modelName', modelName);
+
     let modelFileName = modelName.toLowerCase() + '.model';
-    console.log('modelFileName', modelFileName);
 
     try {
       const modelModule = await import(

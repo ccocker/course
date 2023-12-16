@@ -58,12 +58,7 @@ export class FirebaseAuthService implements IAuthService {
       map((currentUser: User | null) => {
         if (currentUser) {
           const { email, uid, emailVerified, displayName } = currentUser;
-          console.log('Mapped in Service:', {
-            email,
-            uid,
-            emailVerified,
-            displayName,
-          });
+
           return { email, uid, emailVerified, displayName };
         } else {
           return null;

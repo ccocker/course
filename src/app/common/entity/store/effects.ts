@@ -24,6 +24,25 @@ export const getEntityEffect = createEffect(
   { functional: true }
 );
 
+export const getEntitiesEffect = createEffect(
+  (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
+    return actions$.pipe(
+      ofType(entityActions.getEntities),
+      switchMap((action) => {
+        return dataService.getEntities<any>(action.url).pipe(
+          map((entities) => {
+            return entityActions.getEntitiesSuccess({ entities });
+          }),
+          catchError((error) => {
+            return of(entityActions.getEntitiesFailure());
+          })
+        );
+      })
+    );
+  },
+  { functional: true }
+);
+
 export const deleteEntityEffect = createEffect(
   (
     actions$ = inject(Actions),

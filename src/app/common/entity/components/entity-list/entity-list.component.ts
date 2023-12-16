@@ -84,7 +84,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
       .subscribe((entities) => {
         this.data = loadMore ? this.data.concat(entities) : entities;
         this.totalEntities = this.data.length;
-        console.log('this.data', this.model.collectionName, this.data);
+
         if (entities.length > 0) {
           this.lastDocument = this.data[this.data.length - 1];
           if (
@@ -184,7 +184,6 @@ export class EntityListComponent implements OnInit, OnDestroy {
           this.model.collectionName,
           entity
         );
-        console.log(`Entity with id ${entity.id} updated successfully`);
       } catch (error) {
         error = `Failed to update entity with id ${entity.id}: ${error}`;
         throw error;
@@ -202,8 +201,6 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   navigateToDetails(id: string) {
-    console.log('navigateToDetails', id);
-    console.log('navigateToDetails', this.model);
     this.router.navigate([`/${this.model.collectionName}/details`, id]);
   }
 

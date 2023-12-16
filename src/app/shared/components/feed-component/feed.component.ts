@@ -40,11 +40,7 @@ export class FeedComponent implements OnInit {
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('Dispatching feed action', { url: this.apiUrl, id: this.id });
     this.store.dispatch(feedActions.getFeed({ url: this.apiUrl, id: this.id }));
-    this.data$.subscribe((data) => {
-      console.log(data);
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

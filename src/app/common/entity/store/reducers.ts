@@ -1,5 +1,5 @@
 import { routerNavigationAction } from '@ngrx/router-store';
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityStateInterface } from '../interfaces/entityState.interface';
 import { entityActions } from './actions';
 
@@ -10,7 +10,7 @@ const initialState: EntityStateInterface = {
 };
 
 const entityFeature = createFeature({
-  name: 'entity',
+  name: 'entities',
   reducer: createReducer(
     initialState,
     on(entityActions.getEntity, (state) => ({ ...state, isLoading: true })),
@@ -23,6 +23,18 @@ const entityFeature = createFeature({
       ...state,
       isLoading: false,
     })),
+
+    on(entityActions.getEntities, (state) => ({ ...state, isLoading: true })),
+    on(entityActions.getEntitiesSuccess, (state, action) => ({
+      ...state,
+      isLoading: false,
+      data: action.entities,
+    })),
+    on(entityActions.getEntitiesFailure, (state) => ({
+      ...state,
+      isLoading: false,
+    })),
+
     on(routerNavigationAction, () => initialState)
   ),
 });
@@ -34,3 +46,17 @@ export const {
   selectError,
   selectData: selectEntityData,
 } = entityFeature;
+
+export const selectEntityState = (state: Record<string, any>) =>
+  state[entityFeatureKey];
+
+export const selectEntities = createSelector(
+  selectEntityState,
+  (state: EntityStateInterface) => state.data
+);
+
+// Assuming you have a selector to get all entities
+export const selectEntityById = createSelector(
+  selectEntities,
+  (entities, props) => entities.find((entity) => entity.id === props.id)
+);

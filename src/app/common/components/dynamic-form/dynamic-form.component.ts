@@ -51,7 +51,6 @@ export class DynamicFormComponent implements OnInit {
    */
   ngOnInit(): void {
     this.formGroup = this.createFormGroup(this.formConfiguration);
-    console.log('formGroup', this.formGroup);
   }
 
   /**
@@ -80,7 +79,6 @@ export class DynamicFormComponent implements OnInit {
 
     if (defaultData) {
       array.push(this.fb.group(defaultData));
-      console.log('array', this.formGroup);
     } else {
       console.error(`Default data for array ${arrayName} is not provided`);
     }

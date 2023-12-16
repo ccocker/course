@@ -85,7 +85,6 @@ export class AppComponent implements OnInit {
 
   onItemClick(item: any) {
     if (item === 'Logout') {
-      console.log('Clicked Item', item);
       this.store.dispatch(authActions.logout());
     }
   }

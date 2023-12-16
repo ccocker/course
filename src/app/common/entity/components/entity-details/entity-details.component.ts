@@ -23,6 +23,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 
 import { DynamicFormComponent } from '@miCommon/components/dynamic-form/dynamic-form.component';
+import { Store } from '@ngrx/store';
+import {
+  selectEntityData,
+  selectError,
+  selectIsLoading,
+} from '../../store/reducers';
 
 @Component({
   selector: 'mi-entity-details',
@@ -61,11 +67,17 @@ export class EntityDetailsComponent implements OnInit {
   formData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public formGroupData: any;
+  data$ = combineLatest({
+    isLoading: this.store.select(selectIsLoading),
+    error: this.store.select(selectError),
+    article: this.store.select(selectEntityData),
+  });
   constructor(
     private entityService: FirestoreDataService,
     private route: ActivatedRoute,
     private location: Location,
-    private modelFactory: ModelFactory
+    private modelFactory: ModelFactory,
+    private store: Store
   ) {}
 
   ngOnInit(): void {

@@ -46,7 +46,7 @@ export class FirestoreDataService {
     orderByField?: string,
     ascending: boolean = true,
     limitCount?: number
-  ): Promise<T[]> {
+  ): Observable<T[]> {
     let constraints: QueryConstraint[] = [];
 
     if (orderByField) {
@@ -59,13 +59,15 @@ export class FirestoreDataService {
     const coll = collection(this.firestore, collectionPath);
     const q = query(coll, ...constraints);
 
-    return getDocs(q).then((querySnapshot) =>
-      querySnapshot.docs.map(
-        (doc) =>
-          ({
-            id: doc.id,
-            ...doc.data(),
-          } as T)
+    return from(getDocs(q)).pipe(
+      map((querySnapshot) =>
+        querySnapshot.docs.map(
+          (doc) =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            } as T)
+        )
       )
     );
   }
@@ -76,6 +78,7 @@ export class FirestoreDataService {
     id: string
   ): Observable<T | undefined> {
     const docRef = doc(this.firestore, collectionPath, id);
+    console.log('docRef', collectionPath, id);
     return from(getDoc(docRef)).pipe(
       map((docSnapshot) =>
         docSnapshot.exists()
