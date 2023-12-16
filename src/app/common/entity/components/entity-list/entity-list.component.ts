@@ -55,7 +55,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
   lastDocument: any = null;
   @Input() totalColumns: string[] = [];
   data$: Observable<any>;
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   constructor(
     public entityStateService: EntityStateService,
     private route: ActivatedRoute,
@@ -106,9 +106,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
         }
       }
 
-      setTimeout(() => {
-        this.isLoading$.next(false);
-      }, 2000); // 1000 milliseconds = 2 seconds
+      this.isLoading = false;
     });
   }
 

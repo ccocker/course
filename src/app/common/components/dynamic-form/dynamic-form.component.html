@@ -1,5 +1,6 @@
 <form [formGroup]="formGroup">
   <button type="submit" mat-raised-button (click)="onSubmit()">Submit</button>
+  <button type="submit" mat-raised-button (click)="onDelete()">Delete</button>
   <div *ngFor="let key of objectKeys(formConfiguration)">
     <ng-container *ngIf="formConfiguration[key].type === 'text'">
       <mat-form-field appearance="outline">

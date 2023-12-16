@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import { EntityComponent } from './entity.component';
 import { EntityDetailsComponent } from './components/entity-details/entity-details.component';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
@@ -17,5 +16,12 @@ export const routes: Route[] = [
       provideState(entityFeatureKey, entityReducer),
     ],
   },
-  { path: 'details/:id', component: EntityDetailsComponent },
+  {
+    path: 'details/:id',
+    component: EntityDetailsComponent,
+    providers: [
+      provideEffects(entityEffects),
+      provideState(entityFeatureKey, entityReducer),
+    ],
+  },
 ];

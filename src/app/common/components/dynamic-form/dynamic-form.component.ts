@@ -41,6 +41,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() formConfiguration: any;
   @Input() formGroupData: any;
   @Output() formSubmit = new EventEmitter<any>();
+  @Output() deleteRecord = new EventEmitter<any>();
 
   public formGroup!: FormGroup;
 
@@ -67,6 +68,14 @@ export class DynamicFormComponent implements OnInit {
    */
   public onSubmit(): void {
     this.formSubmit.emit(this.formGroup.value);
+  }
+
+  /**
+   * Handles record deletion
+   */
+  public onDelete(): void {
+    const idValue = this.formGroup.get('id').value; // Get the id value from the form
+    this.deleteRecord.emit(idValue); // Emit only the id value
   }
 
   /**

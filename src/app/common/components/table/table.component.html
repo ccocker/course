@@ -1,108 +1,103 @@
 <div class="container">
+  <div class="table-controls">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addRecord.emit()"
+      *ngIf="allowAdd"
+    >
+      Add
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="editingAllRows ? saveAllRowChanges() : toggleEditAllRows()"
+      *ngIf="allowAdd"
+    >
+      {{ editingAllRows ? "Save All" : "Edit All" }}
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="toggleColumnHeadersEdit()"
+      *ngIf="editableColumnHeadings"
+    >
+      Edit Table Headings
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveAllColumnChanges()"
+      *ngIf="editingColumnHeaders"
+    >
+      Save Column Headings
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="startBulkUpload()"
+      *ngIf="allowBulkUpload"
+    >
+      Bulk Upload
+    </button>
+
+    <button mat-raised-button (click)="exportAsExcelFile()">
+      Export to Excel
+    </button>
+
+    <div class="merge-columns-container" *ngIf="allowMergeColumns">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="promptForMergingColumns(selectedColumns)"
+      >
+        Merge Columns
+      </button>
+      <mat-select
+        placeholder="Select Columns to Merge"
+        [(value)]="selectedColumns"
+        multiple
+      >
+        <mat-option *ngFor="let column of columns" [value]="column.property">{{
+          column.label
+        }}</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="delete-columns-container" *ngIf="allowDeleteColumns">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="deleteColumns(selectedColumnsToDelete)"
+      >
+        Delete Columns
+      </button>
+      <mat-select
+        placeholder="Select Columns to Delete"
+        [(value)]="selectedColumnsToDelete"
+        multiple
+      >
+        <mat-option *ngFor="let column of columns" [value]="column.property">{{
+          column.label
+        }}</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div *ngIf="allowFilter === true">
+    <mat-form-field appearance="outline">
+      <mat-label>Table Filter</mat-label>
+      <input matInput (keyup)="tableFilter($event)" />
+    </mat-form-field>
+  </div>
   <ng-container *ngIf="isLoading; else tableContent">
     <mi-loading></mi-loading>
   </ng-container>
   <ng-template #tableContent>
-    <div class="table-controls">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addRecord.emit()"
-        *ngIf="allowAdd"
-      >
-        Add
-      </button>
-
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="editingAllRows ? saveAllRowChanges() : toggleEditAllRows()"
-        *ngIf="allowAdd"
-      >
-        {{ editingAllRows ? "Save All" : "Edit All" }}
-      </button>
-
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="toggleColumnHeadersEdit()"
-        *ngIf="editableColumnHeadings"
-      >
-        Edit Table Headings
-      </button>
-
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="saveAllColumnChanges()"
-        *ngIf="editingColumnHeaders"
-      >
-        Save Column Headings
-      </button>
-
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="startBulkUpload()"
-        *ngIf="allowBulkUpload"
-      >
-        Bulk Upload
-      </button>
-
-      <button mat-raised-button (click)="exportAsExcelFile()">
-        Export to Excel
-      </button>
-
-      <div class="merge-columns-container" *ngIf="allowMergeColumns">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="promptForMergingColumns(selectedColumns)"
-        >
-          Merge Columns
-        </button>
-        <mat-select
-          placeholder="Select Columns to Merge"
-          [(value)]="selectedColumns"
-          multiple
-        >
-          <mat-option
-            *ngFor="let column of columns"
-            [value]="column.property"
-            >{{ column.label }}</mat-option
-          >
-        </mat-select>
-      </div>
-
-      <div class="delete-columns-container" *ngIf="allowDeleteColumns">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="deleteColumns(selectedColumnsToDelete)"
-        >
-          Delete Columns
-        </button>
-        <mat-select
-          placeholder="Select Columns to Delete"
-          [(value)]="selectedColumnsToDelete"
-          multiple
-        >
-          <mat-option
-            *ngFor="let column of columns"
-            [value]="column.property"
-            >{{ column.label }}</mat-option
-          >
-        </mat-select>
-      </div>
-    </div>
-
-    <div *ngIf="allowFilter === true">
-      <mat-form-field appearance="outline">
-        <mat-label>Table Filter</mat-label>
-        <input matInput (keyup)="tableFilter($event)" />
-      </mat-form-field>
-    </div>
-
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
       <ng-container matColumnDef="editButtons">
         <th mat-header-cell *matHeaderCellDef>

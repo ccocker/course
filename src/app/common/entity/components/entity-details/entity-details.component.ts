@@ -30,6 +30,7 @@ import {
   selectIsLoading,
 } from '../../store/reducers';
 import { LoadingComponent } from '@miShared/components/loading/loading.component';
+import { entityActions } from '../../store/actions';
 
 @Component({
   selector: 'mi-entity-details',
@@ -157,8 +158,11 @@ export class EntityDetailsComponent implements OnInit {
 
   async addNewEntity(newEntity: any) {
     try {
-      await this.entityService.createEntity(this.collection, newEntity);
-      this.goBack();
+      this.store.dispatch(
+        entityActions.createEntity({ url: this.collection, entity: newEntity })
+      );
+      // await this.entityService.createEntity(this.collection, newEntity);
+      // this.goBack();
     } catch (error) {
       // Update failed - handle the error as needed.
     }
@@ -174,5 +178,10 @@ export class EntityDetailsComponent implements OnInit {
 
   removeBackground() {}
 
-  delete() {}
+  deleteEntity(id: string) {
+    console.log('deleteEntity', this.collection, id);
+    this.store.dispatch(
+      entityActions.deleteEntity({ url: this.collection, id: id })
+    );
+  }
 }

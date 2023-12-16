@@ -35,7 +35,7 @@
   </div>
 </div>
 
-<div *ngIf="formData$ | async as formData; else loading">
+<div *ngIf="formData$ | async as formData; else loadingTemplate">
   <ng-container
     *ngIf="formConfiguration$ | async as formConfiguration; else loading"
   >
@@ -43,8 +43,10 @@
       [formConfiguration]="formConfiguration"
       [formGroupData]="formData"
       (formSubmit)="onSubmit($event)"
+      (deleteRecord)="deleteEntity($event)"
     ></mi-dynamic-form>
   </ng-container>
 </div>
-<mi-loading #loading></mi-loading>
-<!-- <ng-template #loading>Loading...</ng-template> -->
+<ng-template #loadingTemplate>
+  <mi-loading></mi-loading>
+</ng-template>

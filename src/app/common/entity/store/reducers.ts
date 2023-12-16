@@ -10,9 +10,25 @@ const initialState: EntityStateInterface = {
 };
 
 const entityFeature = createFeature({
-  name: 'entities',
+  name: 'entity',
   reducer: createReducer(
     initialState,
+
+    on(entityActions.createEntity, (state) => ({
+      ...state,
+      isLoading: true,
+    })),
+    on(entityActions.createEntitySuccess, (state, action) => ({
+      ...state,
+      isLoading: false,
+      data: [...state.data, action.entity],
+    })),
+    on(entityActions.createEntityFailure, (state, action) => ({
+      ...state,
+      isLoading: false,
+      validationErrors: action.errors,
+    })),
+
     on(entityActions.getEntity, (state) => ({ ...state, isLoading: true })),
     on(entityActions.getEntitySuccess, (state, action) => ({
       ...state,

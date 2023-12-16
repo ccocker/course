@@ -14,10 +14,11 @@ import {
   deleteDoc,
   QueryConstraint,
   writeBatch,
+  setDoc,
 } from 'firebase/firestore';
 
 import { hasUndefinedProperties } from '../helpers/undefined-properties';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from, map, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -88,16 +89,19 @@ export class FirestoreDataService {
     );
   }
 
-  // Creates a new entity in a Firestore collection
-  public async createEntity<T extends { id: string }>(
+  public createEntity<T extends { id: string }>(
     collectionPath: string,
-    entity: Omit<T, 'id'>
-  ): Promise<void> {
+    entity: T // Changed to include 'id' in the entity type
+  ): Observable<void> {
     if (hasUndefinedProperties(entity)) {
-      throw new Error('Data contains undefined properties');
+      return throwError(() => new Error('Data contains undefined properties'));
     }
-    const collRef = collection(this.firestore, collectionPath);
-    await addDoc(collRef, entity);
+    const docRef = doc(this.firestore, collectionPath, entity.id); // Create a reference with the desired document ID
+
+    // Use setDoc to create the document with the specified ID
+    return from(setDoc(docRef, entity)).pipe(
+      map(() => void 0) // Maps the result to void
+    );
   }
 
   // Updates an existing entity in a Firestore collection

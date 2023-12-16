@@ -1,9 +1,43 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { FirestoreDataService } from '../../../shared/services/firestore.data';
 import { entityActions } from './actions';
+
+export const createEntityEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    entityService = inject(FirestoreDataService)
+  ) => {
+    return actions$.pipe(
+      ofType(entityActions.createEntity),
+      switchMap(({ url, entity }) => {
+        return entityService.createEntity(url, entity).pipe(
+          map((entity) => entityActions.createEntitySuccess({ entity })),
+          catchError((error) =>
+            of(entityActions.createEntityFailure({ errors: error }))
+          )
+        );
+      })
+    );
+  },
+  { functional: true }
+);
+
+export const redirectAfterCreateEffect = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(entityActions.createEntitySuccess),
+      tap((action: { entity: { url: string; id: string } }) => {
+        const { url, id } = action.entity; // Assuming these are properties of the entity
+        router.navigate([url, id]); // Use router.navigate to go to the specified path
+      })
+    );
+  },
+  { functional: true, dispatch: false }
+);
 
 export const getEntityEffect = createEffect(
   (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
@@ -66,11 +100,11 @@ export const deleteEntityEffect = createEffect(
 );
 
 export const redirectAfterDeleteEffect = createEffect(
-  (actions$ = inject(Actions), router = inject(Router)) => {
+  (actions$ = inject(Actions), location = inject(Location)) => {
     return actions$.pipe(
       ofType(entityActions.deleteEntitySuccess),
       tap(() => {
-        router.navigateByUrl('/');
+        location.back();
       })
     );
   },
