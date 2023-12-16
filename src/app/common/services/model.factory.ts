@@ -25,11 +25,11 @@ export class ModelFactory {
   async createModel(route: string): Promise<any> {
     let modelName = this.getModelNameFromRoute(route);
 
-    let modelFileName = modelName.toLowerCase() + '.model';
+    let modelFileName = modelName.toLowerCase() + '.model.ts';
 
     try {
       const modelModule = await import(
-        `../models/${modelName.toLowerCase()}.model.ts`
+        `../models/${modelFileName.toLowerCase()}`
       );
 
       const ModelClass = modelModule[modelName];
