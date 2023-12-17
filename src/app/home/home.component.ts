@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { authActions } from '../common/features/auth/store/actions';
 import { LoginComponent } from '../common/features/auth/components/login/login.component';
+import { Router } from '@angular/router';
 
 interface AppConfig {
   title: string;
@@ -37,7 +38,7 @@ export class HomeComponent {
 
   homePageLinks = [
     { title: 'Login/Register', link: 'https://angular.dev' },
-    { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
+    { title: 'Learn with Tutorials', link: 'courses' },
     { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
     {
       title: 'Angular Language Service',
@@ -46,15 +47,13 @@ export class HomeComponent {
     { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
   ];
 
-  constructor(
-    private dialog: MatDialog,
-    private store: Store,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   onItemClick(item: any) {
     if (item.title === 'Login/Register') {
       this.openLoginDialog();
+    } else {
+      this.router.navigate([`/${item['link']}`]);
     }
   }
 
