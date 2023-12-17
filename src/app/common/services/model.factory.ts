@@ -24,20 +24,33 @@ export class ModelFactory {
 
   async createModel(route: string): Promise<any> {
     let modelName = this.getModelNameFromRoute(route);
-
     let modelFileName = modelName.toLowerCase() + '.model.ts';
 
     try {
-      const modelModule = await import(
-        `../models/${modelFileName.toLowerCase()}`
-      );
-
+      // First attempt to load from the primary location
+      const modelModule = await import(`../models/${modelFileName}`);
       const ModelClass = modelModule[modelName];
-
       return new ModelClass();
     } catch (error) {
-      console.error(`Error loading model for route: ${route}`, error);
-      throw new Error(`No model found for route: ${route}`);
+      console.error(
+        `Error loading model from primary location for route: ${route}`,
+        error
+      );
+
+      // If the first attempt fails, try the second location
+      try {
+        const sharedModelModule = await import(
+          `../../shared/models/${modelFileName}`
+        );
+        const SharedModelClass = sharedModelModule[modelName];
+        return new SharedModelClass();
+      } catch (sharedError) {
+        console.error(
+          `Error loading model from shared location for route: ${route}`,
+          sharedError
+        );
+        throw new Error(`No model found for route: ${route}`);
+      }
     }
   }
 }
