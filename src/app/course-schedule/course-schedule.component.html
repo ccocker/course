@@ -72,6 +72,7 @@
     </div>
 
     <!-- Events -->
+
     <div
       *ngFor="let event of schedule"
       class="event"
@@ -105,6 +106,16 @@
         <div *ngFor="let tutor of event.class.staff">
           {{ tutor.firstName }} {{ tutor.lastName }}<br />
         </div>
+        <br />
+        <!-- New Checkbox for Class Availability Selection -->
+        <input
+          type="checkbox"
+          [id]="'avail-' + event.course.code"
+          (change)="selectClassAvailability(event.course.code)"
+        />
+        <!--
+        <label [for]="'avail-' + event.course.code">Available</label>
+        -->
       </div>
       <!-- Event details -->
     </div>
