@@ -1,3 +1,6 @@
+<ng-container *ngIf="data$ | async as data">{{
+  data.currentUser?.email
+}}</ng-container>
 <body>
   <div class="filter-panels">
     <!-- Courses Panel -->

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatCardModule } from '@angular/material/card'
 import { MatChipsModule } from '@angular/material/chips'
@@ -6,6 +6,11 @@ import { MatGridListModule } from '@angular/material/grid-list'
 import { ScheduleService } from './services/schedule.service'
 import { FilterEventsPipe, EnumToArrayPipe } from './events-filter.pipe'
 import { DayOfWeek, IScheduleEvent } from './interfaces/schedule.interface'
+import { Store, select } from '@ngrx/store'
+import { combineLatest } from 'rxjs'
+import { selectCurrentUser } from '@src/src/app/common/features/auth/store/reducers'
+import { authActions } from '@src/src/app/common/features/auth/store/actions'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'mi-course-schedule',
@@ -21,7 +26,8 @@ import { DayOfWeek, IScheduleEvent } from './interfaces/schedule.interface'
   templateUrl: './course-schedule.component.html',
   styleUrl: './course-schedule.component.scss',
 })
-export class CourseScheduleComponent {
+export class CourseScheduleComponent implements OnInit, OnDestroy {
+  private dataSubscription: Subscription
   DayOfWeek = DayOfWeek
   private earliestStartTime: Date
   showOnlyUnderstaffed: boolean = false
@@ -54,9 +60,20 @@ export class CourseScheduleComponent {
     },
   }
 */
-  constructor(public scheduleService: ScheduleService) {}
+  data$ = combineLatest({
+    currentUser: this.store.select(selectCurrentUser),
+  })
+
+  constructor(
+    public scheduleService: ScheduleService,
+    private store: Store,
+  ) {}
 
   ngOnInit() {
+    this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
+      this.selectAllStaff(currentUser.email)
+    })
+    this.store.dispatch(authActions.getCurrentUser())
     this.schedule = this.scheduleService.getSchedule()
     this.selectedCourses = new Set(
       this.scheduleService.getAllCourses().map((course) => course.code),
@@ -279,16 +296,38 @@ export class CourseScheduleComponent {
     })
   }
 
+  ngOnDestroy() {
+    this.dataSubscription.unsubscribe()
+  }
+
   deselectAllCourses() {
     this.selectedCourses.clear()
   }
 
   selectAllStaff() {
+    const staffList = this.scheduleService.getStaff()
+    const matchingStaff = staffList.find(
+      (staff) => staff.rEmail === currentUserEmail,
+    )
+
+    if (matchingStaff) {
+      // If there's a matching staff, select only this staff
+      this.selectedStaff.clear()
+      this.selectedStaff.add(matchingStaff.enumber)
+    } else {
+      // If there's no match, select all staff
+      staffList.forEach((staff) => {
+        this.selectedStaff.add(staff.enumber)
+      })
+    }
+  }
+  /**
+  selectAllStaff() {
     this.scheduleService.getStaff().forEach((staff) => {
       this.selectedStaff.add(staff.enumber)
     })
   }
-
+**/
   deselectAllStaff() {
     this.selectedStaff.clear()
   }

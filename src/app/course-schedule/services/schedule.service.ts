@@ -230,7 +230,7 @@ export class ScheduleService {
         firstName: 'Henry',
         lastName: 'Cavill',
         pEmail: 'henry.cavill@thepridelands.za',
-        rEmail: 'henry.cavill@rmit.edu.au',
+        rEmail: 'craig.cocker@gmail.com',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Lead',
