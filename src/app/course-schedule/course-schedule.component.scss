@@ -8,61 +8,58 @@ body {
 
 .filter-panels {
   display: flex;
-  justify-content: flex-start;
-  gap: 10px; // Space between panels
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 20px;
-
-  .panel {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    max-width: 200px;
-    margin-top: 10px;
-    flex: 1; // Make panels flexible in size
-
-    h3 {
-      margin-top: 0;
-    }
-
-    input[type='checkbox'] {
-      margin-right: 5px;
-    }
-  }
-
-  .courses-panel {
-    // Additional styling for courses panel, if needed
-  }
-
-  .staff-panel {
-    // Additional styling for staff panel, if needed
-  }
-
-  /* Style for the buttons */
-  .panel button {
-    background-color: #f5f5f7; /* Light grey color */
-    border: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    color: #333;
-    cursor: pointer;
-    font-size: 8px;
-    margin: 5px;
-    padding: 5px 10px;
-    transition:
-      background-color 0.3s,
-      box-shadow 0.3s;
-  }
-
-  .panel button:hover {
-    background-color: #e4e4e6; /* Slightly darker on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
 }
 
-.panel-header {
+.panel {
+  width: 100%;
+  max-width: 250px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.understaffed-toggle-panel {
+  width: 100%;
+  max-width: 250px; /* Ensure consistent width with other panels */
+}
+
+.mat-toolbar {
+  background-color: #5b9bd5;
+  color: white;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: start;
-  gap: 10px; /* Adjust spacing between elements */
+  padding: 0 10px;
+  border-radius: 4px 4px 0 0;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.mat-icon-button {
+  margin-left: 8px;
+}
+
+.mat-form-field {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Other styles... */
+
+.panel-header {
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    button {
+      margin-right: 8px;
+    }
+  }
 }
 
 .panel-header h3 {
