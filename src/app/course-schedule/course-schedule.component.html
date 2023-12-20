@@ -1,25 +1,8 @@
 <body>
   <div class="filter-panels">
     <div class="panel courses-panel">
-      <mat-toolbar color="primary">
-        <span>Select Courses</span>
-        <span class="toolbar-spacer"></span>
-        <button
-          mat-icon-button
-          (click)="selectAllCourses()"
-          matTooltip="Select all courses"
-        >
-          <mat-icon>select_all</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="deselectAllCourses()"
-          matTooltip="Deselect all courses"
-        >
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-toolbar>
       <mat-form-field appearance="fill">
+        <mat-label>Select Courses</mat-label>
         <mat-select [(value)]="selectedCourses" multiple>
           <mat-option
             *ngFor="let course of coursesList"
@@ -28,17 +11,43 @@
           >
         </mat-select>
       </mat-form-field>
+      <div class="icon-buttons">
+        <button
+          mat-icon-button
+          (click)="selectAllCourses()"
+          matTooltip="Select all courses"
+          class="small-icon"
+        >
+          <mat-icon>select_all</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="deselectAllCourses()"
+          matTooltip="Deselect all courses"
+          class="small-icon"
+        >
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
     </div>
 
     <div class="panel staff-panel">
-      <mat-toolbar color="accent">
-        <span>Select Staff</span>
-        <span class="toolbar-spacer"></span>
+      <mat-form-field appearance="fill">
+        <mat-label>Select Staff</mat-label>
+
+        <mat-select [(value)]="selectedStaff" multiple>
+          <mat-option *ngFor="let staff of staffList" [value]="staff.enumber"
+            >{{ staff.firstName }} {{ staff.lastName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <div class="icon-buttons">
         <button
           mat-icon-button
           (click)="selectAllStaff()"
           [disabled]="selectedStaff.length === staffList.length"
           matTooltip="Select all staff"
+          class="small-icon"
         >
           <mat-icon>select_all</mat-icon>
         </button>
@@ -47,37 +56,26 @@
           (click)="deselectAllStaff()"
           [disabled]="selectedStaff.length === 0"
           matTooltip="Deselect all staff"
+          class="small-icon"
         >
           <mat-icon>clear</mat-icon>
         </button>
-      </mat-toolbar>
-      <mat-form-field appearance="fill">
-        <mat-select [(value)]="selectedStaff" multiple>
-          <mat-option *ngFor="let staff of staffList" [value]="staff.enumber"
-            >{{ staff.firstName }} {{ staff.lastName }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-    </div>
+      </div>
 
-    <div class="panel understaffed-toggle-panel">
-      <mat-toolbar color="warn">
-        <span>{{
-          showOnlyUnderstaffed
-            ? "Showing Classes Needing Staff"
-            : "Showing All Classes"
-        }}</span>
-        <span class="toolbar-spacer"></span>
-        <button
-          mat-icon-button
-          (click)="toggleUnderstaffedFilter()"
-          matTooltip="Toggle understaffed filter"
-        >
-          <mat-icon>{{
-            showOnlyUnderstaffed ? "visibility_off" : "visibility"
-          }}</mat-icon>
-        </button>
-      </mat-toolbar>
+      <div class="panel understaffed-toggle-panel">
+        <label class="toggle-label">
+          {{
+            showOnlyUnderstaffed
+              ? "Showing Classes Needing Staff"
+              : "Showing All Classes"
+          }}
+          <mat-slide-toggle
+            [checked]="showOnlyUnderstaffed"
+            (change)="toggleUnderstaffedFilter()"
+            color="warn"
+          ></mat-slide-toggle>
+        </label>
+      </div>
     </div>
   </div>
 

@@ -8,63 +8,59 @@ body {
 
 .filter-panels {
   display: flex;
+  align-items: flex-start; /* Align items to the start of the container */
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 20px; /* Consistent gap between panels */
 }
 
 .panel {
-  width: 100%;
-  max-width: 250px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.understaffed-toggle-panel {
-  width: 100%;
-  max-width: 250px; /* Ensure consistent width with other panels */
-}
-
-.mat-toolbar {
-  background-color: #5b9bd5;
-  color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
-  border-radius: 4px 4px 0 0;
-}
-
-.toolbar-spacer {
-  flex: 1;
-}
-
-.mat-icon-button {
-  margin-left: 8px;
+  padding: 10px;
+  max-width: 320px; /* Maximum width of each panel */
 }
 
 .mat-form-field {
-  width: 100%;
-  box-sizing: border-box;
+  width: calc(100% - 60px); /* Subtract width of icons from 100% */
+  margin-right: 4px; /* Adjust spacing between select and icons */
 }
 
-/* Other styles... */
-
-.panel-header {
-  .button-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-
-    button {
-      margin-right: 8px;
-    }
-  }
-}
-
-.panel-header h3 {
+.icon-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
-  flex-grow: 1; /* Allows the title to take up available space */
+  padding: 0;
+  height: fit-content; /* Adjust height to fit icons */
+}
+
+.small-icon {
+  transform: scale(0.5); /* Make icons smaller */
+  margin: 1px 0; /* Further reduce vertical spacing between icons */
+}
+
+.understaffed-toggle-panel {
+  flex-grow: 0; /* Prevents the toggle panel from growing */
+  display: flex;
+  align-items: center;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px; /* Adjust label font size as needed */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .filter-panels {
+    flex-direction: column;
+  }
+
+  .panel {
+    width: 100%; /* Full width on smaller screens */
+    max-width: none; /* Remove max-width constraint */
+  }
 }
 
 .timetable {

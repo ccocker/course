@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -30,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatGridListModule,
     MatIconModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatToolbarModule,
     FilterEventsPipe,
     EnumToArrayPipe,
