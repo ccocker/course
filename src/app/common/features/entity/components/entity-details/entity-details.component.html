@@ -1,0 +1,52 @@
+<div class="banner-container">
+  <ng-container *ngIf="entity$ | async as entity">
+    <img *ngIf="entity?.banner" class="banner-image" [src]="entity?.banner" />
+    <div class="banner-overlay"></div>
+    <div class="banner-controls">
+      <div class="banner-control">
+        <input
+          class="element"
+          id="background-file-input"
+          type="file"
+          [multiple]="false"
+          [accept]="'image/jpeg, image/png'"
+          #backgroundFileInput
+        />
+        <label
+          class="banner-control-icon"
+          for="background-file-input"
+          matRipple
+        >
+          <mat-icon>add_a_photo</mat-icon>
+        </label>
+      </div>
+      <div class="banner-control">
+        <button mat-icon-button (click)="removeBackground()">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="banner-close">
+    <a mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </a>
+  </div>
+</div>
+
+<div *ngIf="formData$ | async as formData; else loadingTemplate">
+  <ng-container
+    *ngIf="formConfiguration$ | async as formConfiguration; else loading"
+  >
+    <mi-dynamic-form
+      [formConfiguration]="formConfiguration"
+      [formGroupData]="formData"
+      (formSubmit)="onSubmit($event)"
+      (deleteRecord)="deleteEntity($event)"
+    ></mi-dynamic-form>
+  </ng-container>
+</div>
+<ng-template #loadingTemplate>
+  <mi-loading></mi-loading>
+</ng-template>

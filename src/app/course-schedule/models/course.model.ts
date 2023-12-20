@@ -1,6 +1,6 @@
-import { BaseModel } from '../../shared/models/base.model';
-import { ICourse } from '../interfaces/course.interface';
-import { ITeachingSkills } from '../interfaces/teaching-skills.interface';
+import { BaseModel } from '@miCommon/models/base.model';
+import { ICourse, ISkill, IStaff } from '../interfaces/schedule.interface';
+import { ITeachingSkills } from '../interfaces/schedule.interface';
 
 /**
  * Course model representing a university course and its related information.
@@ -12,10 +12,11 @@ export class Course extends BaseModel implements ICourse {
   public code: string = '';
   public color: string = '';
   public groups: string[] = [];
-  public teachingSkills: ITeachingSkills[] = [];
+  public teachingSkills: any = {} as ITeachingSkills;
   public startDate: Date = new Date();
   public endDate: Date = new Date();
-  public coordinator: string = '';
+  public coordinator: IStaff = {} as IStaff;
+  public baseColour: string = '';
 
   /**
    * Constructor to initialize Class instance.

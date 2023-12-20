@@ -232,19 +232,27 @@ export class CourseScheduleComponent {
         this.selectedStaff.has(staff.enumber),
       ) || this.selectedStaff.has(event.class.offeringGroup.lead.enumber)
 
+    // Check if no courses or no staff are selected
     if (this.selectedCourses.size === 0 || this.selectedStaff.size === 0) {
       return false
     }
 
     const isUnderstaffed = this.isUnderstaffed(event)
 
-    // Show event only if it's understaffed when the filter is active
+    // Additional logic to consider user's availability
+    const isAvailableForClass = this.selectedStaff.has(
+      event.class.offeringGroup.lead.enumber,
+    ) // Assuming the user's ID is in selectedStaff
+
+    // Show event only if it's understaffed when the filter is active and the user is available for the class
     return (
       isCourseSelected &&
       isAnyStaffSelected &&
-      (!this.showOnlyUnderstaffed || isUnderstaffed)
+      (!this.showOnlyUnderstaffed || isUnderstaffed) &&
+      isAvailableForClass // New condition for user's availability
     )
   }
+
   /*
 
   shouldDisplayEvent(event: IScheduleEvent): boolean {
@@ -361,6 +369,13 @@ export class CourseScheduleComponent {
     }
   }
 
+  selectClassAvailability(classCode: string) {
+    if (this.selectedCourses.has(classCode)) {
+      this.selectedCourses.delete(classCode)
+    } else {
+      this.selectedCourses.add(classCode)
+    }
+  }
   // Helper function to convert minutes to time string format
   minutesToTime(minutes: number): string {
     const hours = Math.floor(minutes / 60)

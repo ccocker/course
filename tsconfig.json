@@ -3,10 +3,17 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["*"],
+      "@environments/*": ["src/environments/*"],
+      "@miCommon/*": ["src/app/common/*"],
+      "@miShared/*": ["src/app/shared/*"]
+    },
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "noImplicitOverride": false,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
@@ -22,8 +29,8 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
   }
 }

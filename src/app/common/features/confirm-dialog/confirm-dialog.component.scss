@@ -1,0 +1,8 @@
+.mat-dialog-content {
+  overflow: auto; // Enables scrollbars if content overflows
+}
+
+.mat-table {
+  width: 100%; // Makes sure table takes up all available width
+  overflow: auto; // Enables scrollbars if content overflows
+}

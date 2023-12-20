@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>{{ collection | titlecase }} List</h1>
+
+  <div class="content">
+    <ng-content></ng-content>
+    <ng-container>
+      <mi-table
+        [allowAdd]="true"
+        [allowBulkUpload]="true"
+        [allowDeleteColumns]="false"
+        [allowMergeColumns]="false"
+        [columns]="columns"
+        [editableColumnHeadings]="false"
+        [data]="data"
+        [totalColumns]="totalColumns"
+        [collection]="collection"
+        (dataChanged)="onDataChanged($event)"
+        (emitRecord)="navigateToDetails($event)"
+        (deleteRecord)="deleteEntity($event.id, $event.event)"
+        (addRecord)="addNewRecord()"
+        (bulkUpload)="bulkUpload()"
+      ></mi-table>
+    </ng-container>
+
+    <ng-template #noData>
+      <div class="no-records">There are currently no records.</div>
+      <mi-excel-reader></mi-excel-reader>
+    </ng-template>
+  </div>
+</div>

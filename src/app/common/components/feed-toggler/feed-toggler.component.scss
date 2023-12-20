@@ -1,0 +1,26 @@
+.feed-toggle {
+  .custom-nav {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    border-bottom: 1px solid #ddd; // Bottom border for the nav
+
+    .custom-nav-item {
+      margin-right: 1rem; // Spacing between nav items
+
+      .custom-nav-link {
+        padding: 0.5rem 1rem;
+        color: #555; // Default link color
+        text-decoration: none;
+        border-radius: 0.25rem;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover,
+        &.active {
+          color: #fff; // Text color for hover and active
+          background-color: #007bff; // Background color for hover and active
+        }
+      }
+    }
+  }
+}

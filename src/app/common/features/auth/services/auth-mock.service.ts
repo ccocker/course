@@ -1,0 +1,36 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { IAuthService } from '../interfaces/auth-service.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthMockService implements IAuthService {
+  private loginStatus = new BehaviorSubject<boolean>(true); // Add this line
+
+  constructor() {}
+
+  login(credentials: any): Observable<any> {
+    this.loginStatus.next(true); // Update login status
+    return of({ token: 'mock-token', user: 'MockUser' });
+  }
+
+  getCurrentUser(): Observable<any> {
+    return null;
+  }
+  registerAccount(credentials: any): Observable<any> {
+    return null;
+  }
+
+  resetPassword(email: string): Observable<void> {
+    return null;
+  }
+
+  logout(): void {
+    this.loginStatus.next(false); // Update login status
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.loginStatus.asObservable();
+  }
+}

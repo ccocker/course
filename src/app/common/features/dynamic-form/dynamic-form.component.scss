@@ -1,0 +1,62 @@
+/* Padding around the form */
+form {
+  padding: 20px;
+}
+
+/* Each Form control when not part of an array will take up 100% width */
+mat-form-field {
+  width: 100%;
+}
+
+/* Form Array Record styling to fit controls in one row */
+.form-array-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  > mat-form-field {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* Style for the button group */
+.button-group {
+  display: flex;
+  gap: 10px; /* Adjust spacing between buttons */
+  margin-bottom: 20px; /* Space between buttons and form fields */
+}
+
+/* Style adjustments for individual buttons, if needed */
+// button[mat-raised-button] {
+//   /* Optional styles for buttons */
+// }
+
+// .object-grid {
+//   display: grid;
+//   grid-template-columns: auto 1fr;
+//   gap: 10px;
+//   align-items: center;
+// }
+
+.object-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.object-value {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+/* Save icon button, delete button, and close button */
+.save-button,
+.delete-button,
+.close-button {
+  cursor: pointer;
+  margin-right: 10px;
+}

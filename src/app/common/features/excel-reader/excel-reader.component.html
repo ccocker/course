@@ -1,0 +1,60 @@
+<input
+  type="file"
+  #fileInput
+  style="display: none"
+  (change)="readExcelFile($event)"
+  accept=".xlsx,.xls,.csv"
+/>
+<div class="actions">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="openFileDialog()"
+    class="upload-button"
+  >
+    Upload Excel File
+  </button>
+  <mat-checkbox
+    [(ngModel)]="hasHeaderRow"
+    name="hasHeaderRow"
+    class="header-checkbox"
+  >
+    Header
+  </mat-checkbox>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addColumn()"
+    class="add-button"
+  >
+    Add Column
+  </button>
+  <mat-checkbox [(ngModel)]="deleteBeforeUpload" class="delete-checkbox">
+    Delete Before Upload
+  </mat-checkbox>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="saveToFirebase()"
+    class="save-button"
+  >
+    Save to Firebase
+  </button>
+  <mat-form-field appearance="outline" class="table-name-input">
+    <mat-label>Table Name</mat-label>
+    <input matInput [(ngModel)]="tableName" placeholder="Enter table name" />
+  </mat-form-field>
+</div>
+<mi-table
+  *ngIf="showTable && tableData && tableData.length > 0"
+  [allowAdd]="false"
+  [allowBulkUpload]="true"
+  [allowDeleteColumns]="true"
+  [allowMergeColumns]="true"
+  [columns]="tableColumns"
+  [collection]="collection"
+  [editableColumnHeadings]="true"
+  [data]="tableData"
+  (columnUpdated)="onColumnUpdated($event)"
+  (dataChanged)="onDataChanged($event)"
+></mi-table>

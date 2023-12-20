@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  {{ data.content }}
+  <ng-container *ngIf="data.component">
+    <ng-template [ngComponentOutlet]="data.component"></ng-template>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">
+    {{ data.actionLabel || "OK" }}
+  </button>
+  <button mat-raised-button (click)="close()">Close</button>
+</div>

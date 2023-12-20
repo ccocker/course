@@ -1,0 +1,23 @@
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    display: inline-block;
+    margin: 0.5rem;
+  }
+}
+
+.tag {
+  background-color: #f0f0f0; // light grey background, change as needed
+  border-radius: 20px; // gives the pill shape
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d1d1; // light grey border, change as needed
+  color: #333; // text color, change as needed
+  font-size: 0.9rem;
+  text-transform: lowercase;
+  cursor: pointer;
+  &:hover {
+    background-color: #e0e0e0; // change hover background as needed
+  }
+}

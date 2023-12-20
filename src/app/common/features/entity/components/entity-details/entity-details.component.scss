@@ -1,0 +1,129 @@
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 192px;
+  background-color: var(--accent-100);
+}
+
+@media screen and (min-width: 640px) {
+  .banner-container {
+    height: 192px;
+    padding: 0 24px;
+  }
+}
+
+.banner-image {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.banner-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.banner-control {
+  margin: 0 16px;
+}
+
+.element {
+  position: absolute;
+  height: 0;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.banner-control-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.banner-control-icon:hover {
+  background-color: var(--hover);
+}
+
+.banner-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-top: 6px;
+}
+
+.banner-close a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.banner-close a mat-icon {
+  color: white;
+}
+
+.fixed-header {
+  position: sticky;
+  top: 192px; /* This should be the same height as your .banner-container height */
+  z-index: 100;
+  max-width: 100%;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-container {
+  display: flex;
+  gap: 8px;
+}
+
+.form-container {
+  width: 100%;
+  padding: 24px;
+  max-width: 100%; /* same as max-width of .mat-toolbar */
+}
+
+.form-field-wrapper {
+  width: 100%;
+  margin-bottom: 16px;
+  display: flex;
+}
+
+.form-field-container {
+  flex-grow: 1;
+}
+
+mat-form-field {
+  flex-grow: 1;
+}

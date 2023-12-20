@@ -1,0 +1,27 @@
+.sidebar {
+  // Style for sidebar, if needed
+}
+
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  a {
+    background-color: #f0f0f0; // Change to desired background color
+    border-radius: 20px; // Pill shape
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border: 1px solid #d1d1d1; // Border color
+    color: #333; // Text color
+    font-size: 0.9rem;
+    text-decoration: none; // Remove underline from links
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e0e0e0; // Hover background color
+    }
+  }
+}

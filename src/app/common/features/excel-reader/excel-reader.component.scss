@@ -1,0 +1,20 @@
+.actions-grid {
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.header-checkbox {
+  margin-right: 2rem;
+}
+
+.table-name-input {
+  min-width: 150px;
+  max-width: 150px;
+  margin-left: 1rem; // Add a margin to the left of the input field
+}

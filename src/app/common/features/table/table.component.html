@@ -1,0 +1,252 @@
+<div class="container">
+  <div class="table-controls">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addRecord.emit()"
+      *ngIf="allowAdd"
+    >
+      Add
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="editingAllRows ? saveAllRowChanges() : toggleEditAllRows()"
+      *ngIf="allowAdd"
+    >
+      {{ editingAllRows ? "Save All" : "Edit All" }}
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="toggleColumnHeadersEdit()"
+      *ngIf="editableColumnHeadings"
+    >
+      Edit Table Headings
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveAllColumnChanges()"
+      *ngIf="editingColumnHeaders"
+    >
+      Save Column Headings
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="startBulkUpload()"
+      *ngIf="allowBulkUpload"
+    >
+      Bulk Upload
+    </button>
+
+    <button mat-raised-button (click)="exportAsExcelFile()">
+      Export to Excel
+    </button>
+
+    <div class="merge-columns-container" *ngIf="allowMergeColumns">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="promptForMergingColumns(selectedColumns)"
+      >
+        Merge Columns
+      </button>
+      <mat-select
+        placeholder="Select Columns to Merge"
+        [(value)]="selectedColumns"
+        multiple
+      >
+        <mat-option *ngFor="let column of columns" [value]="column.property">{{
+          column.label
+        }}</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="delete-columns-container" *ngIf="allowDeleteColumns">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="deleteColumns(selectedColumnsToDelete)"
+      >
+        Delete Columns
+      </button>
+      <mat-select
+        placeholder="Select Columns to Delete"
+        [(value)]="selectedColumnsToDelete"
+        multiple
+      >
+        <mat-option *ngFor="let column of columns" [value]="column.property">{{
+          column.label
+        }}</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div *ngIf="allowFilter === true">
+    <mat-form-field appearance="outline">
+      <mat-label>Table Filter</mat-label>
+      <input matInput (keyup)="tableFilter($event)" />
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="isLoading; else tableContent">
+    <mi-loading></mi-loading>
+  </ng-container>
+  <ng-template #tableContent>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="editButtons">
+        <th mat-header-cell *matHeaderCellDef>
+          <ng-container *ngIf="allowRowActions"> Actions </ng-container>
+        </th>
+        <td mat-cell *matCellDef="let row; let rowIndex = index">
+          <ng-container *ngIf="allowRowActions">
+            <div class="row-actions">
+              <button
+                *ngIf="!editingRowIndexes.includes(rowIndex)"
+                mat-icon-button
+                (click)="toggleRowEdit(rowIndex)"
+              >
+                <mat-icon class="edit-icon">edit</mat-icon>
+              </button>
+
+              <button
+                *ngIf="editingRowIndexes.includes(rowIndex)"
+                mat-icon-button
+                (click)="toggleRowEdit(rowIndex); saveRowChanges(row, row.id)"
+              >
+                <mat-icon>save</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                (click)="deleteRecord.emit({ id: row.id, event: $event })"
+              >
+                <mat-icon class="delete-icon">delete</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- Dynamic columns -->
+      <ng-container
+        *ngFor="let column of columns; let columnIndex = index"
+        [matColumnDef]="column.property"
+      >
+        <th mat-header-cell *matHeaderCellDef>
+          <ng-container *ngIf="!editingColumnHeaders; else editColumnHeader">
+            <span mat-sort-header>{{
+              columnEdits[column.property] || column.label
+            }}</span>
+            <input
+              *ngIf="allowFilter"
+              class="column-filter"
+              matInput
+              (keyup)="columnFilter(column.property, $event)"
+              placeholder="Filter"
+            />
+          </ng-container>
+
+          <ng-template #editColumnHeader>
+            <mat-form-field appearance="fill" class="edit-column-field">
+              <input
+                matInput
+                #inputRef
+                [value]="columnEdits[column.property] || column.label"
+                (input)="columnEdits[column.property] = inputRef.value"
+              />
+            </mat-form-field>
+          </ng-template>
+        </th>
+
+        <td
+          [ngClass]="{
+            numeric: isNumeric(column),
+            'negative-value': isNegative(row[column.property])
+          }"
+          mat-cell
+          *matCellDef="let row; let rowIndex = index"
+        >
+          <ng-container
+            *ngIf="
+              !editingAllRows && !editingRowIndexes.includes(rowIndex);
+              else editRowData
+            "
+          >
+            <ng-container
+              *ngIf="shouldShowTotal(column.property); else noCurrency"
+            >
+              {{ row[column.property] | currency : "USD" : "symbol" : "1.0-5" }}
+            </ng-container>
+            <ng-template #noCurrency>
+              {{ formatDate(column, row[column.property]) }}
+            </ng-template>
+          </ng-container>
+
+          <ng-template #editRowData>
+            <mat-form-field appearance="fill" class="edit-data-field">
+              <input
+                matInput
+                [(ngModel)]="row[column.property]"
+                [value]="row[column.property]"
+                (ngModelChange)="
+                  changedRows[row.id] = row; originalData[row.id] = row
+                "
+                class="max-content-width"
+              />
+            </mat-form-field>
+          </ng-template>
+        </td>
+
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [ngClass]="{
+            numeric: isNumericFooter(column.property),
+            'negative-value': isNegativeTotal(column.property)
+          }"
+        >
+          <ng-container *ngIf="shouldShowTotal(column.property)">
+            {{
+              getTotal(column.property) | currency : "USD" : "symbol" : "1.0-5"
+            }}
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <!-- Header, rows, and footer -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="getDisplayedColumnPropertiesWithEdit(); sticky: true"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          let rowIndex = index;
+          columns: getDisplayedColumnPropertiesWithEdit()
+        "
+        [ngClass]="{ 'editing-row': editingRowIndexes.includes(rowIndex) }"
+        (dblclick)="toggleRowEdit(rowIndex, row.id)"
+      ></tr>
+      <tr
+        mat-footer-row
+        *matFooterRowDef="getDisplayedColumnPropertiesWithEdit()"
+      ></tr>
+    </table>
+
+    <!-- Pagination -->
+    <mat-paginator
+      *ngIf="showPagination"
+      [length]="dataSource.data.length"
+      [pageSizeOptions]="[25, 50, 75, 100]"
+      class="mat-elevation-z8"
+    ></mat-paginator>
+  </ng-template>
+</div>

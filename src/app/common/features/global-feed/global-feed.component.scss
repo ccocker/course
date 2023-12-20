@@ -1,0 +1,32 @@
+.home-page {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Adjust if you have specific size for banner */
+}
+
+.container.page {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px; /* Adjust the gap as per your design */
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 3fr 1fr; /* 3:1 ratio for main content and sidebar */
+  gap: 20px; /* Adjust the gap as per your design */
+}
+
+.feed-toggler,
+mi-feed {
+  grid-column: 1 / 2; /* Occupies the first column */
+}
+
+.popular-tags {
+  grid-column: 2 / 3; /* Occupies the second column */
+}
+
+/* If you want to adjust for responsiveness */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+  }
+}
