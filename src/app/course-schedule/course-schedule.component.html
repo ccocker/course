@@ -1,81 +1,85 @@
 <body>
   <div class="filter-panels">
     <div class="panel courses-panel">
-      <mat-form-field appearance="fill">
-        <mat-label>Select Courses</mat-label>
-        <mat-select [(value)]="selectedCourses" multiple>
-          <mat-option
-            *ngFor="let course of coursesList"
-            [value]="course.code"
-            >{{ course.name }}</mat-option
+      <div class="select-with-icons">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Courses</mat-label>
+          <mat-select [(value)]="selectedCourses" multiple>
+            <mat-option
+              *ngFor="let course of coursesList"
+              [value]="course.code"
+            >
+              {{ course.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="icon-wrapper">
+          <button
+            mat-icon-button
+            (click)="selectAllCourses()"
+            matTooltip="Select all courses"
+            class="small-icon"
           >
-        </mat-select>
-      </mat-form-field>
-      <div class="icon-buttons">
-        <button
-          mat-icon-button
-          (click)="selectAllCourses()"
-          matTooltip="Select all courses"
-          class="small-icon"
-        >
-          <mat-icon>select_all</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="deselectAllCourses()"
-          matTooltip="Deselect all courses"
-          class="small-icon"
-        >
-          <mat-icon>clear</mat-icon>
-        </button>
+            <mat-icon>select_all</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deselectAllCourses()"
+            matTooltip="Deselect all courses"
+            class="small-icon"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
 
     <div class="panel staff-panel" *ngIf="staffList.length > 1">
-      <mat-form-field appearance="fill">
-        <mat-label>Select Staff</mat-label>
-
-        <mat-select [(value)]="selectedStaff" multiple>
-          <mat-option *ngFor="let staff of staffList" [value]="staff.enumber"
-            >{{ staff.firstName }} {{ staff.lastName }}</mat-option
+      <div class="select-with-icons">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Staff</mat-label>
+          <mat-select [(value)]="selectedStaff" multiple>
+            <mat-option *ngFor="let staff of staffList" [value]="staff.enumber">
+              {{ staff.firstName }} {{ staff.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="icon-wrapper">
+          <button
+            mat-icon-button
+            (click)="selectAllStaff()"
+            [disabled]="selectedStaff.length === staffList.length"
+            matTooltip="Select all staff"
+            class="small-icon"
           >
-        </mat-select>
-      </mat-form-field>
-      <div class="icon-buttons">
-        <button
-          mat-icon-button
-          (click)="selectAllStaff()"
-          [disabled]="selectedStaff.length === staffList.length"
-          matTooltip="Select all staff"
-          class="small-icon"
-        >
-          <mat-icon>select_all</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          (click)="deselectAllStaff()"
-          [disabled]="selectedStaff.length === 0"
-          matTooltip="Deselect all staff"
-          class="small-icon"
-        >
-          <mat-icon>clear</mat-icon>
-        </button>
+            <mat-icon>select_all</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deselectAllStaff()"
+            [disabled]="selectedStaff.length === 0"
+            matTooltip="Deselect all staff"
+            class="small-icon"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
       </div>
+    </div>
 
-      <div class="panel understaffed-toggle-panel">
-        <label class="toggle-label">
-          {{
-            showOnlyUnderstaffed
-              ? "Showing Classes Needing Staff"
-              : "Showing All Classes"
-          }}
-          <mat-slide-toggle
-            [checked]="showOnlyUnderstaffed"
-            (change)="toggleUnderstaffedFilter()"
-            color="warn"
-          ></mat-slide-toggle>
-        </label>
-      </div>
+    <div class="panel understaffed-toggle-panel">
+      <label class="toggle-label">
+        {{
+          showOnlyUnderstaffed
+            ? "Showing Classes Needing Staff"
+            : "Showing All Classes"
+        }}
+        <mat-slide-toggle
+          [checked]="showOnlyUnderstaffed"
+          (change)="toggleUnderstaffedFilter()"
+          color="warn"
+        ></mat-slide-toggle>
+      </label>
     </div>
   </div>
 

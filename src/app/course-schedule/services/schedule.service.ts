@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core'
-import { ISkill } from '../interfaces/schedule.interface'
-import { ColorService } from './color.service'
+import { Injectable } from '@angular/core';
+import { ISkill } from '../interfaces/schedule.interface';
+import { ColorService } from './color.service';
 
 import {
   IRoom,
@@ -12,13 +12,13 @@ import {
   IGroupClasses,
   DayOfWeek,
   IScheduleEvent,
-} from '../interfaces/schedule.interface'
+} from '../interfaces/schedule.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
-  private colorService: ColorService = new ColorService()
+  private colorService: ColorService = new ColorService();
   private scheduleData: IScheduleEvent[] = [
     {
       class: this.getGroupClasses()[0],
@@ -196,7 +196,7 @@ export class ScheduleService {
       class: this.getGroupClasses()[43],
       course: this.getAllCourses()[2],
     },
-  ]
+  ];
 
   constructor() {}
 
@@ -205,8 +205,8 @@ export class ScheduleService {
       { buildingNo: 12, floor: 10, roomNumber: 5, capacity: 120 },
       { buildingNo: 12, floor: 10, roomNumber: 6, capacity: 150 },
       { buildingNo: 14, floor: 9, roomNumber: 23, capacity: 60 },
-    ]
-    return existingRooms
+    ];
+    return existingRooms;
   }
 
   private getTimeSlots(): ITimeslot[] {
@@ -219,8 +219,8 @@ export class ScheduleService {
       { startTime: '16:30', endTime: '18:30' },
       { startTime: '18:30', endTime: '20:30' },
       { startTime: '06:30', endTime: '08:30' },
-    ]
-    return slots
+    ];
+    return slots;
   }
 
   getStaff(): IStaff[] {
@@ -230,7 +230,7 @@ export class ScheduleService {
         firstName: 'Henry',
         lastName: 'Cavill',
         pEmail: 'henry.cavill@thepridelands.za',
-        rEmail: 'craig.cocker@gmail.com',
+        rEmail: 'henry.cavill@thepridelands.za',
         phone: '0411 123 123',
         qualification: 'Masters',
         type: 'Lead',
@@ -335,8 +335,8 @@ export class ScheduleService {
         type: 'Tutor',
         isAvailable: true,
       },
-    ]
-    return staff
+    ];
+    return staff;
   }
   skills: ISkill[] = [
     {
@@ -349,26 +349,26 @@ export class ScheduleService {
       name: 'Object Oriented Design',
       description: 'Ability to model data in an objected oriented framework',
     },
-  ]
+  ];
 
   private getCourseById(id: string): ICourse | null {
-    const allCourses: ICourse[] = this.getAllCourses()
+    const allCourses: ICourse[] = this.getAllCourses();
     for (const course of allCourses) {
       if (id === course.code) {
-        return course
+        return course;
       }
     }
-    return null
+    return null;
   }
 
   private getTutorById(id: string): IStaff | null {
-    const allStaff: IStaff[] = this.getStaff()
+    const allStaff: IStaff[] = this.getStaff();
     for (const staff of allStaff) {
       if (id === staff.enumber) {
-        return staff
+        return staff;
       }
     }
-    return null
+    return null;
   }
 
   getAllCourses(): ICourse[] {
@@ -407,8 +407,8 @@ export class ScheduleService {
         teachingSkills: this.skills,
         coordinator: this.getStaff()[0],
       },
-    ]
-    return classes
+    ];
+    return classes;
   }
 
   private getOfferings(): IOffering[] {
@@ -419,8 +419,8 @@ export class ScheduleService {
         teachStartDate: new Date('2024-03-04T08:30:00'),
         teachFinishDate: new Date('2024-04-30T08:30:00'),
       },
-    ]
-    return offerings
+    ];
+    return offerings;
   }
 
   private getOfferingGroups(): IOfferingGroup[] {
@@ -491,21 +491,21 @@ export class ScheduleService {
         groupCapacity: 60,
         offering: this.getOfferings()[0],
       },
-    ]
-    return group
+    ];
+    return group;
   }
 
   private getTutors(): IStaff[] {
-    const tutors: IStaff[] = []
-    const staffMembers = this.getStaff()
+    const tutors: IStaff[] = [];
+    const staffMembers = this.getStaff();
 
     for (let staff of staffMembers) {
       if (staff.type !== 'Lead') {
-        tutors.push(staff)
+        tutors.push(staff);
       }
     }
 
-    return tutors
+    return tutors;
   }
 
   private getGroupClasses(): IGroupClasses[] {
@@ -524,7 +524,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
+          this.getOfferingGroups()[1].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[1],
       },
@@ -542,7 +542,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
+          this.getOfferingGroups()[2].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[2],
       },
@@ -552,7 +552,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
+          this.getOfferingGroups()[3].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[3],
       },
@@ -562,7 +562,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
+          this.getOfferingGroups()[4].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[4],
       },
@@ -572,7 +572,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
+          this.getOfferingGroups()[5].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[5],
       },
@@ -582,7 +582,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
+          this.getOfferingGroups()[9].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[9],
       },
@@ -592,7 +592,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
+          this.getOfferingGroups()[7].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[7],
       },
@@ -602,7 +602,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
+          this.getOfferingGroups()[6].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[6],
       },
@@ -612,7 +612,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
+          this.getOfferingGroups()[8].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -622,7 +622,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
+          this.getOfferingGroups()[0].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[0],
       },
@@ -632,7 +632,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
+          this.getOfferingGroups()[1].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[1],
       },
@@ -642,7 +642,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
+          this.getOfferingGroups()[2].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[2],
       },
@@ -652,7 +652,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
+          this.getOfferingGroups()[3].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[3],
       },
@@ -662,7 +662,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
+          this.getOfferingGroups()[4].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[4],
       },
@@ -680,7 +680,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
+          this.getOfferingGroups()[9].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[9],
       },
@@ -690,7 +690,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
+          this.getOfferingGroups()[7].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[7],
       },
@@ -700,7 +700,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[2],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
+          this.getOfferingGroups()[10].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[10],
       },
@@ -710,7 +710,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
+          this.getOfferingGroups()[6].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[6],
       },
@@ -720,7 +720,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
+          this.getOfferingGroups()[8].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -730,7 +730,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
+          this.getOfferingGroups()[0].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[0],
       },
@@ -740,7 +740,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
+          this.getOfferingGroups()[1].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[1],
       },
@@ -750,7 +750,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
+          this.getOfferingGroups()[2].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[2],
       },
@@ -760,7 +760,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
+          this.getOfferingGroups()[3].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[3],
       },
@@ -770,7 +770,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
+          this.getOfferingGroups()[4].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[4],
       },
@@ -780,7 +780,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
+          this.getOfferingGroups()[5].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[5],
       },
@@ -790,7 +790,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
+          this.getOfferingGroups()[7].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[7],
       },
@@ -800,7 +800,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
+          this.getOfferingGroups()[6].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[6],
       },
@@ -810,7 +810,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
+          this.getOfferingGroups()[8].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -820,7 +820,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[1],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
+          this.getOfferingGroups()[10].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[10],
       },
@@ -830,7 +830,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
+          this.getOfferingGroups()[7].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[7],
       },
@@ -840,7 +840,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
+          this.getOfferingGroups()[9].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[9],
       },
@@ -850,7 +850,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
+          this.getOfferingGroups()[8].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -860,7 +860,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
+          this.getOfferingGroups()[0].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[0],
       },
@@ -870,7 +870,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
+          this.getOfferingGroups()[1].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[1],
       },
@@ -880,7 +880,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[2],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
+          this.getOfferingGroups()[10].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[10],
       },
@@ -890,7 +890,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
+          this.getOfferingGroups()[2].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[2],
       },
@@ -900,7 +900,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
+          this.getOfferingGroups()[3].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[3],
       },
@@ -910,7 +910,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
+          this.getOfferingGroups()[4].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[4],
       },
@@ -920,7 +920,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
+          this.getOfferingGroups()[5].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[5],
       },
@@ -930,7 +930,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
+          this.getOfferingGroups()[6].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[6],
       },
@@ -940,61 +940,61 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
         staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
+          this.getOfferingGroups()[9].groupCapacity
         ),
         offeringGroup: this.getOfferingGroups()[9],
       },
-    ]
-    return classes
+    ];
+    return classes;
   }
 
   private assignTutorsToClass(capacity: number): IStaff[] {
     // Calculate the number of tutors needed for the given capacity
-    const numberOfTutors = this.calculateTutors(capacity)
+    const numberOfTutors = this.calculateTutors(capacity);
 
     // Get all available tutors
-    const allTutors = this.getTutors()
+    const allTutors = this.getTutors();
 
     // Select the needed number of tutors from the available tutors
-    const assignedTutors = allTutors.slice(0, numberOfTutors)
+    const assignedTutors = allTutors.slice(0, numberOfTutors);
 
-    return assignedTutors
+    return assignedTutors;
   }
 
   calculateTutors(capacity: number): number {
     // Subtract 30 from the capacity, divide by 30, and round up
-    return Math.ceil((capacity - 30) / 30)
+    return Math.ceil((capacity - 30) / 30);
   }
 
   getSchedule() {
-    return this.scheduleData
+    return this.scheduleData;
   }
 
   private assignSpecificTutorsToClass(
-    specificStaffIds?: string[],
+    specificStaffIds?: string[]
   ): IStaff[] | null {
     // If specific staff IDs are provided, use them to assign staff
     if (specificStaffIds && specificStaffIds.length > 0) {
-      const allStaff = this.getStaff()
+      const allStaff = this.getStaff();
       return allStaff.filter(
         (staff) =>
-          specificStaffIds.includes(staff.enumber) && staff.type !== 'Lead',
-      )
+          specificStaffIds.includes(staff.enumber) && staff.type !== 'Lead'
+      );
     }
-    return null
+    return null;
   }
 
   public generateColorShades(): Record<string, Record<string, string>> {
-    const courses = this.getAllCourses()
-    const groupColours: Record<string, Record<string, string>> = {}
+    const courses = this.getAllCourses();
+    const groupColours: Record<string, Record<string, string>> = {};
 
     courses.forEach((course) => {
       // Use course's code as key and generate shades for its base color
       groupColours[course.code] = this.colorService.generateShadesForColor(
-        course.baseColour,
-      )
-    })
+        course.baseColour
+      );
+    });
 
-    return groupColours
+    return groupColours;
   }
 }

@@ -15,28 +15,41 @@ body {
 
 .panel {
   display: flex;
-  align-items: center;
-  padding: 10px;
-  max-width: 320px; /* Maximum width of each panel */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px; /* Adjust the gap between the select and the icons as needed */
+}
+
+.select-with-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* Aligns items to the top */
 }
 
 .mat-form-field {
-  width: calc(100% - 60px); /* Subtract width of icons from 100% */
-  margin-right: 4px; /* Adjust spacing between select and icons */
+  flex-grow: 1; /* Allows the select field to fill the space */
 }
 
-.icon-buttons {
+.icon-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  height: fit-content; /* Adjust height to fit icons */
+  flex-direction: column; /* Stack icons vertically */
+  justify-content: space-between; /* Distributes spacing evenly */
+  height: 100%; /* Set the height to match mat-form-field */
+}
+
+button.mat-icon-button {
+  margin: 0; /* Remove any default margins */
+  padding: 0; /* Adjust padding to fit design */
 }
 
 .small-icon {
-  transform: scale(0.5); /* Make icons smaller */
-  margin: 1px 0; /* Further reduce vertical spacing between icons */
+  /* Scale down the icon to 50% of its original size */
+  transform: scale(0.65);
+  /* Removing margin and padding to help with alignment */
+  margin: 0;
+  padding: 0;
+  /* Align the icon center if needed after scaling */
+  align-self: center;
 }
 
 .understaffed-toggle-panel {
