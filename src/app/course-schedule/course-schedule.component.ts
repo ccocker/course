@@ -89,9 +89,24 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       this.currentUser = currentUser;
       this.coursesList = this.scheduleService.getAllCourses();
       this.selectedCourses = this.coursesList.map((course) => course.code);
-      this.staffList = this.scheduleService.getStaff();
+
+      // Get the complete staff list
+      const completeStaffList = this.scheduleService.getStaff();
+
+      // Check if the current user is in the staff list
+      const currentUserStaffRecord = completeStaffList.find(
+        (staff) => staff.rEmail === currentUser.email
+      );
+
+      // If the current user is a staff member, filter the list; otherwise, use the complete list
+      this.staffList = currentUserStaffRecord
+        ? [currentUserStaffRecord]
+        : completeStaffList;
+
+      // Map the selected staff depending on the filtered staff list
       this.selectedStaff = this.staffList.map((staff) => staff.enumber);
     });
+
     this.schedule = this.scheduleService.getSchedule();
 
     this.determineEarliestStartTime();
