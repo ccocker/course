@@ -929,12 +929,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
         lead: this.assignSpecificTutorsToClass(['E07590']),
-        staff: this.assignSpecificTutorsToClass([
-          'E07600',
-          'E07601',
-          'E07602',
-          'E07603',
-        ]),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[6],
       },
       {

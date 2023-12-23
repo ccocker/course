@@ -290,17 +290,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
     const isUnderstaffed = this.isUnderstaffed(event)
 
-    // Additional logic to consider user's availability
-    const isAvailableForClass = this.selectedStaff.includes(
-      event.class.lead[0].miId,
-    )
-
     // Show event only if it's understaffed when the filter is active and the user is available for the class
     return (
       isCourseSelected &&
       isAnyStaffSelected &&
-      (!this.showOnlyUnderstaffed || isUnderstaffed) &&
-      isAvailableForClass
+      (!this.showOnlyUnderstaffed || isUnderstaffed)
     )
   }
 
