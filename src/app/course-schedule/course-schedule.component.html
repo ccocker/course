@@ -71,8 +71,8 @@
       <label class="toggle-label">
         {{
           showOnlyUnderstaffed
-            ? "Showing Classes Needing Staff"
-            : "Showing All Classes"
+            ? 'Showing Classes Needing Staff'
+            : 'Showing All Classes'
         }}
         <mat-slide-toggle
           [checked]="showOnlyUnderstaffed"
@@ -128,9 +128,9 @@
         <br />
         {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
         {{ event.class.classNumber }}<br />
-        {{ formatNumber(event.class.room.buildingNo, 3, "0") }}.{{
+        {{ formatNumber(event.class.room.buildingNo, 3, '0') }}.{{
           event.class.room.floor
-        }}.{{ formatNumber(event.class.room.roomNumber, 3, "0") }} ({{
+        }}.{{ formatNumber(event.class.room.roomNumber, 3, '0') }} ({{
           event.class.room.capacity
         }})<br />
         {{ event.class.timeslot.startTime }} - {{ event.class.timeslot.endTime
@@ -146,7 +146,14 @@
         <!-- New Checkbox for Class Availability Selection -->
         <input
           type="checkbox"
-          [id]="'avail-' + event.course.code"
+          [name]="
+            '' +
+            event.course.code +
+            '-' +
+            event.class.offeringGroup.group +
+            '-' +
+            event.class.classNumber
+          "
           (change)="selectClassAvailability(event.course.code)"
         />
         <!--

@@ -1,3 +1,4 @@
+import { IPerson } from '@miCommon/interfaces/'
 export enum DayOfWeek {
   Monday = 'MONDAY',
   Tuesday = 'TUESDAY',
@@ -29,16 +30,8 @@ export interface ITimeslot {
   endTime: string
 }
 
-export interface IStaff {
+export interface IStaff extends IPerson {
   enumber: string
-  firstName: string
-  lastName: string
-  pEmail: string
-  rEmail: string
-  phone: string
-  qualification: string
-  type: string
-  isAvailable: boolean
 }
 
 export interface ICourse {
@@ -47,7 +40,7 @@ export interface ICourse {
   description: string
   teachingSkills: ISkill[]
   baseColour: string
-  coordinator: IStaff
+  coordinator: IPerson
 }
 
 export interface IOffering {
@@ -58,7 +51,7 @@ export interface IOffering {
 }
 
 export interface IOfferingGroup {
-  lead: IStaff
+  lead: IPerson
   group: number
   groupCapacity: number
   offering: IOffering
@@ -76,7 +69,8 @@ export interface IGroupClasses {
   day: DayOfWeek
   timeslot: ITimeslot
   room: IRoom
-  staff: IStaff[]
+  lead: any
+  staff: IPerson[]
   offeringGroup: IOfferingGroup
 }
 
