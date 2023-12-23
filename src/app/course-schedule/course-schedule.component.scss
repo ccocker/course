@@ -139,3 +139,15 @@ button.mat-icon-button {
   bottom: 5px; // Adjust as necessary to align with the bottom of the event div
   left: 5px; // Adjust for horizontal alignment
 }
+
+.understaffed {
+  // Styles for understaffed event
+  border: 3px solid red;
+  background-color: #cccccc;
+}
+
+.overstaffed {
+  // Styles for overstaffed event
+  background-color: black;
+  color: white;
+}

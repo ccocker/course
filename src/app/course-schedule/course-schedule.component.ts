@@ -463,4 +463,12 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     }
     return '' // Default display value when nothing is selected
   }
+
+  isOverstaffed(event: IScheduleEvent): boolean {
+    const requiredStaff = this.scheduleService.calculateTutors(
+      event.class.offeringGroup.groupCapacity,
+    )
+    const assignedStaff = event.class.staff.length
+    return assignedStaff > requiredStaff
+  }
 }

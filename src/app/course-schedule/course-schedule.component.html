@@ -112,14 +112,19 @@
       <div
         *ngFor="let event of schedule"
         class="event"
+        [ngClass]="{
+          understaffed: isUnderstaffed(event),
+          overstaffed: isOverstaffed(event)
+        }"
         [ngStyle]="{
           'grid-column-start': event.gridColumnStart,
           'grid-column-end': event.gridColumnEnd,
           'grid-row-start': event.gridRowStart,
           'grid-row-end': event.gridRowEnd,
-          border: isUnderstaffed(event) ? '3px solid red' : '1px solid #dddddd',
           'background-color': isUnderstaffed(event)
             ? '#CCCCCC'
+            : isOverstaffed(event)
+            ? ''
             : getEventColor(event),
           display: shouldDisplayEvent(event) ? 'block' : 'none'
         }"
