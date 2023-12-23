@@ -80,7 +80,7 @@ button.mat-icon-button {
   width: 1500px;
   display: grid;
   grid-template-columns: 60px repeat(13, minmax(0, 1fr));
-  grid-auto-rows: 30px;
+  grid-auto-rows: 35px;
   gap: 2px;
 }
 
@@ -118,14 +118,24 @@ button.mat-icon-button {
   align-items: flex-start; /* Aligns content to the start vertically */
   text-align: left; /* Aligns text to the left */
   padding: 0 5px;
-  height: 100%;
 }
 
 .event {
   border: 1px solid #dddddd;
   background-color: #f8cbad;
   display: flex;
-  justify-content: flex-start; /* Aligns content to the start horizontally */
-  align-items: flex-start; /* Aligns content to the start vertically */
+  flex-direction: column; // Set flex direction to column
+  justify-content: space-between; // Space between content and checkbox
   padding: 5px;
+  position: relative; // Position relative for absolute positioning of checkbox
+}
+
+.event-content {
+  /* Contains all other content inside the event div */
+}
+
+.event-checkbox {
+  position: absolute;
+  bottom: 5px; // Adjust as necessary to align with the bottom of the event div
+  left: 5px; // Adjust for horizontal alignment
 }
