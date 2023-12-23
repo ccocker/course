@@ -40,10 +40,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Select Staff</mat-label>
             <mat-select [(value)]="selectedStaff" multiple>
-              <mat-option
-                *ngFor="let staff of staffList"
-                [value]="staff.enumber"
-              >
+              <mat-option *ngFor="let staff of staffList" [value]="staff.miId">
                 {{ staff.firstName }} {{ staff.lastName }}
               </mat-option>
             </mat-select>
