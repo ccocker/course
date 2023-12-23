@@ -281,7 +281,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     const isAnyStaffSelected =
       event.class.staff.some((staff) =>
         this.selectedStaff.includes(staff.miId),
-      ) || this.selectedStaff.includes(event.class.offeringGroup.lead.miId)
+      ) || this.selectedStaff.includes(event.class.lead[0].miId)
 
     // Check if no courses or no staff are selected
     if (this.selectedCourses.length === 0 || this.selectedStaff.length === 0) {
@@ -292,7 +292,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
     // Additional logic to consider user's availability
     const isAvailableForClass = this.selectedStaff.includes(
-      event.class.offeringGroup.lead.miId,
+      event.class.lead[0].miId,
     )
 
     // Show event only if it's understaffed when the filter is active and the user is available for the class
