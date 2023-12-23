@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { catchError, from, map, of, switchMap, tap } from 'rxjs';
 import { CurrentUserInterface } from '@miShared/interfaces/current-user.interface';
 import { AUTH_SERVICE_TOKEN } from '../services/auth.service';
 import { authActions } from './actions';
@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.interface';
 import { PersistanceService } from '@miShared/services/persistance-service';
 import { Store } from '@ngrx/store';
+import { Firestore, doc, getDoc } from 'firebase/firestore';
+import { FirestoreDataService } from '../../../services/firestore.data';
+import { Person } from '../../../models';
 
 export const getCurrentUserEffect = createEffect(
   (
@@ -42,18 +45,38 @@ export const registerEffect = createEffect(
   (
     actions$ = inject(Actions),
     authService = inject(AUTH_SERVICE_TOKEN),
-    persistanceService = inject(PersistanceService)
+    persistanceService = inject(PersistanceService),
+    firestoreDataService = inject(FirestoreDataService) // Inject your Firestore data service
   ) => {
     return actions$.pipe(
       ofType(authActions.register),
       switchMap(({ request }) => {
         return authService.login(request.user).pipe(
-          map((currentUser: CurrentUserInterface) => {
+          switchMap((currentUser: any) => {
+            return firestoreDataService
+              .getEntity<Person>('people', currentUser.uid)
+              .pipe(
+                map((personDetails) => {
+                  if (!personDetails) {
+                    throw new Error('Person not found');
+                  }
+
+                  return {
+                    ...currentUser,
+                    userDetail: personDetails.userDetail,
+                  };
+                })
+              );
+          }),
+          tap((mergedUser) => {
             persistanceService.set(
               'accessToken',
-              currentUser['stsTokenManager']['accessToken']
+              mergedUser['stsTokenManager']['accessToken']
             );
-            return authActions.registerSuccess({ currentUser });
+            console.log('Merged User:', mergedUser);
+          }),
+          map((mergedUser) => {
+            return authActions.registerSuccess({ currentUser: mergedUser });
           }),
           catchError((errorResponse: BackendErrorsInterface) => {
             console.log(errorResponse);

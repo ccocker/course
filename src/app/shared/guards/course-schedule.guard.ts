@@ -38,11 +38,6 @@ export class CourseScheduleGuard implements CanActivate {
           this.router.navigate(['/login']);
           return false;
         }
-        this.store.dispatch(
-          entityActions.getEntities({
-            url: `people`,
-          })
-        );
 
         const user = currentUser as any; // Cast to Person, if compatible
         const action = route.data.requiredAction as string;
