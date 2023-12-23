@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { ResetPasswordComponent } from './common/features/auth/components/reset-password/reset-password.component';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 import { HomeComponent } from './home/home.component';
+import { CourseScheduleGuard } from './shared/guards/course-schedule.guard';
 
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
@@ -26,7 +27,12 @@ export const routes: Route[] = [
         (m) => m.routes
       ),
   },
-  { path: 'course-schedule', component: CourseScheduleComponent },
+  {
+    path: 'course-schedule',
+    component: CourseScheduleComponent,
+    canActivate: [CourseScheduleGuard], // Apply the guard here
+    data: { requiredAction: 'view' }, // Example, specify the required action
+  },
   { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: ':collection',

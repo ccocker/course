@@ -188,6 +188,7 @@ export class FirebaseAuthService implements IAuthService {
         userName: user.displayName || user.email,
         userRole: 'user',
         userEmail: user.email,
+        roles: [],
       },
     };
   }

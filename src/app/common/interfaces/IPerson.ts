@@ -1,9 +1,6 @@
 import { Gender } from '@miCommon/enums';
 import { BaseModel } from '../models';
-import { IAddress } from './IAddress';
-import { IDate } from './IDate';
-import { IEmail } from './IEmail';
-import { IPhone } from './IPhone';
+import { IAddress, IDate, IEmail, IPhone, IRole } from './';
 
 export interface IPerson extends BaseModel {
   firstName: string;
@@ -23,5 +20,6 @@ export interface IPerson extends BaseModel {
     userName: string;
     userRole: string;
     userEmail: string;
+    roles: IRole[];
   };
 }

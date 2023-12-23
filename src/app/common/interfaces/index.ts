@@ -9,3 +9,4 @@ export * from './IPhone';
 export * from './IDate';
 export * from './IOrganization';
 export * from './IPerson';
+export * from './IRole';

@@ -5,6 +5,7 @@ import {
   IPhone,
   IEmail,
   IDate,
+  IRole,
 } from '@miCommon/interfaces/';
 import { Gender } from '@miCommon/enums';
 import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
@@ -31,10 +32,12 @@ export class Person extends BaseModel {
     userName: string;
     userRole: string;
     userEmail: string;
+    roles: IRole[];
   } = {
     userName: '',
     userRole: '',
     userEmail: '',
+    roles: [],
   };
 
   /**
