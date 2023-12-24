@@ -26,7 +26,11 @@ export const routes: Route[] = [
         (m) => m.routes
       ),
   },
-  { path: 'course-schedule', component: CourseScheduleComponent },
+  {
+    path: 'course-schedule',
+    loadChildren: () =>
+      import('./course-schedule/course-schedule.routes').then((r) => r.routes),
+  },
   { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: ':collection',
