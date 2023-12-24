@@ -191,28 +191,41 @@
         <div *ngFor="let tutor of event.class.staff">
           {{ tutor.firstName }} {{ tutor.lastName }}<br />
         </div>
-        <mat-radio-group
-          aria-label="Select Priority"
-          class="event-radio-buttons"
-          [name]="
-            event.course.code +
-            '-' +
-            event.class.offeringGroup.group +
-            '-' +
-            event.class.classNumber
-          "
-          (change)="updatePreferences(event, $event.value)"
+        <div
+          class="custom-radio-group"
+          [attr.aria-label]="'Select Priority for ' + event.course.code"
         >
           <div class="radio-option">
-            <mat-radio-button value="high"></mat-radio-button>
+            <input
+              type="radio"
+              id="high-{{ event.course.code }}"
+              name="priority-{{ event.course.code }}"
+              value="high"
+              (change)="updatePreferences(event, 'high')"
+            />
+            <label for="high-{{ event.course.code }}">H</label>
           </div>
           <div class="radio-option">
-            <mat-radio-button value="medium"></mat-radio-button>
+            <input
+              type="radio"
+              id="medium-{{ event.course.code }}"
+              name="priority-{{ event.course.code }}"
+              value="medium"
+              (change)="updatePreferences(event, 'medium')"
+            />
+            <label for="medium-{{ event.course.code }}">M</label>
           </div>
           <div class="radio-option">
-            <mat-radio-button value="low"></mat-radio-button>
+            <input
+              type="radio"
+              id="low-{{ event.course.code }}"
+              name="priority-{{ event.course.code }}"
+              value="low"
+              (change)="updatePreferences(event, 'low')"
+            />
+            <label for="low-{{ event.course.code }}">L</label>
           </div>
-        </mat-radio-group>
+        </div>
       </div>
     </div>
   </div>

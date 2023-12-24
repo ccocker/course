@@ -384,7 +384,7 @@ export class ScheduleService {
         lastName: 'Cocker',
         emails: [
           { label: 'person', address: 'craig.cocker@thepridelands.za' },
-          { label: 'RMIT', address: 'craig.cocker@gmail.com' },
+          { label: 'RMIT', address: 'craig.cocker1@gmail.com' },
         ],
         phoneNumbers: [
           { label: 'mobile', country: 'Australia', number: '0411 123 123' },
