@@ -1,4 +1,5 @@
 <body>
+  <button (click)="bulkUpload()">Bulk Upload</button>
   <form>
     <div class="filter-panels">
       <div class="panel courses-panel">
@@ -117,8 +118,8 @@
         <label class="toggle-label">
           {{
             showOnlyUnderstaffed
-              ? 'Showing Classes Needing Staff'
-              : 'Showing All Classes'
+              ? "Showing Classes Needing Staff"
+              : "Showing All Classes"
           }}
           <mat-slide-toggle
             [checked]="showOnlyUnderstaffed"
@@ -178,9 +179,9 @@
           <br />
           {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
           {{ event.class.classNumber }}<br />
-          {{ formatNumber(event.class.room.buildingNo, 3, '0') }}.{{
+          {{ formatNumber(event.class.room.buildingNo, 3, "0") }}.{{
             event.class.room.floor
-          }}.{{ formatNumber(event.class.room.roomNumber, 3, '0') }} ({{
+          }}.{{ formatNumber(event.class.room.roomNumber, 3, "0") }} ({{
             event.class.room.capacity
           }})<br />
           {{ event.class.timeslot.startTime }} -

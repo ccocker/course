@@ -15,11 +15,16 @@ import {
   QueryConstraint,
   writeBatch,
   setDoc,
+  where,
+  CollectionReference,
+  Firestore,
 } from 'firebase/firestore';
 
 import { hasUndefinedProperties } from '../helpers/undefined-properties';
 import { Observable, from, map, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ProgressDialogComponent } from '@miCommon/components/progress-dialog/progress-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +33,7 @@ export class FirestoreDataService {
   private app = initializeApp(environment.firebaseConfig);
   private firestore = getFirestore(this.app);
   private totalRecordsUpdated = 0;
+  private dialogRef!: MatDialogRef<ProgressDialogComponent>;
 
   constructor() {}
 
@@ -105,7 +111,6 @@ export class FirestoreDataService {
       modifiedEntity = { ...entity, id: this.getNewFirestoreId() };
     }
 
-    console.log('entity', modifiedEntity, collectionPath);
     const docRef = doc(this.firestore, collectionPath, modifiedEntity.id);
 
     // Use setDoc to create the document with the specified ID
@@ -143,6 +148,65 @@ export class FirestoreDataService {
         batch.delete(docSnapshot.ref);
       });
       await batch.commit();
+    }
+  }
+
+  public async uploadBulkData(
+    collectionPath: string,
+    data: any[],
+    deleteBeforeUpload: boolean = false,
+    skipIfKeyExists: string = ''
+  ): Promise<void> {
+    const db = getFirestore(this.app);
+    const collRef = collection(db, collectionPath);
+
+    if (deleteBeforeUpload) {
+      await this.deleteAllRecords(collectionPath);
+    }
+
+    // Filter data if skipIfKeyExists is provided
+    if (skipIfKeyExists !== '') {
+      const filteredData = [];
+      for (const item of data) {
+        const q = query(
+          collRef,
+          where(skipIfKeyExists, '==', item[skipIfKeyExists])
+        );
+        const docSnapshots = await getDocs(q);
+
+        if (docSnapshots.empty) {
+          filteredData.push(item);
+        }
+      }
+      data = filteredData;
+    }
+
+    // Process data in batches
+    await this.processDataInBatches(db, collRef, data);
+  }
+
+  private async processDataInBatches(
+    db: Firestore,
+    collRef: CollectionReference,
+    data: any[]
+  ): Promise<void> {
+    const batchSize = 500; // Adjust batch size as needed
+    const batchCount = Math.ceil(data.length / batchSize);
+
+    for (let batchIndex = 0; batchIndex < batchCount; batchIndex++) {
+      const batch = writeBatch(db);
+      const batchData = data.slice(
+        batchIndex * batchSize,
+        (batchIndex + 1) * batchSize
+      );
+
+      batchData.forEach((item) => {
+        const docRef = doc(collRef); // Automatically generate document ID
+        batch.set(docRef, item);
+      });
+
+      await batch.commit();
+      // Update progress and handle any additional logic
     }
   }
 }

@@ -26,6 +26,7 @@ import { DynamicFormComponent } from '../common/features/dynamic-form/dynamic-fo
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { courseScheduleActions } from './store/actions';
+import { FirestoreDataService } from '@miCommon/services/firestore.data';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -95,7 +96,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   constructor(
     public scheduleService: ScheduleService,
     private store: Store,
-    private fb: FormBuilder // Inject the FormBuilder
+    private fb: FormBuilder,
+    private firestoreDataService: FirestoreDataService
   ) {}
 
   ngOnInit() {
@@ -547,7 +549,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       startDate, // Include the startDate in the preference data
     };
 
-    console.log(preferenceData);
+    console.log(event, priority, preferenceData);
     this.store.dispatch(
       courseScheduleActions.createTutorPreferences({
         url: this.collection,
@@ -555,4 +557,30 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+  bulkUpload() {
+    console.log(this.schedule);
+    const convertedArray = this.schedule.map((item) =>
+      this.convertToPlainObject(item.course)
+    );
+    this.firestoreDataService.uploadBulkData('courses', convertedArray, true);
+  }
+
+  convertToPlainObject = (obj: any): any => {
+    if (obj === null || obj === undefined || typeof obj !== 'object') {
+      return obj;
+    }
+
+    if (Array.isArray(obj)) {
+      return obj.map(this.convertToPlainObject);
+    }
+
+    const plainObj: any = {};
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key];
+      plainObj[key] = this.convertToPlainObject(value);
+    });
+
+    return plainObj;
+  };
 }

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core'
-import { ISkill } from '../interfaces/schedule.interface'
-import { ColorService } from './color.service'
+import { Injectable } from '@angular/core';
+import { ISkill } from '../interfaces/schedule.interface';
+import { ColorService } from './color.service';
 
 import {
   IRoom,
@@ -12,16 +12,16 @@ import {
   IGroupClasses,
   DayOfWeek,
   IScheduleEvent,
-} from '../interfaces/schedule.interface'
+} from '../interfaces/schedule.interface';
 
-import { IPerson } from '@miCommon/interfaces'
-import { Person } from '@miCommon/models'
+import { IPerson } from '@miCommon/interfaces';
+import { Person } from '@miCommon/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
-  private colorService: ColorService = new ColorService()
+  private colorService: ColorService = new ColorService();
   private scheduleData: IScheduleEvent[] = [
     {
       class: this.getGroupClasses()[0],
@@ -199,7 +199,7 @@ export class ScheduleService {
       class: this.getGroupClasses()[43],
       course: this.getAllCourses()[2],
     },
-  ]
+  ];
 
   constructor() {}
 
@@ -208,8 +208,8 @@ export class ScheduleService {
       { buildingNo: 12, floor: 10, roomNumber: 5, capacity: 120 },
       { buildingNo: 12, floor: 10, roomNumber: 6, capacity: 150 },
       { buildingNo: 14, floor: 9, roomNumber: 23, capacity: 60 },
-    ]
-    return existingRooms
+    ];
+    return existingRooms;
   }
 
   private getTimeSlots(): ITimeslot[] {
@@ -222,8 +222,8 @@ export class ScheduleService {
       { startTime: '16:30', endTime: '18:30' },
       { startTime: '18:30', endTime: '20:30' },
       { startTime: '06:30', endTime: '08:30' },
-    ]
-    return slots
+    ];
+    return slots;
   }
 
   getStaff(): IPerson[] {
@@ -453,8 +453,8 @@ export class ScheduleService {
           { label: 'Masters', description: '', expiry: new Date() },
         ],
       }),
-    ]
-    return staff
+    ];
+    return staff;
   }
   skills: ISkill[] = [
     {
@@ -467,26 +467,26 @@ export class ScheduleService {
       name: 'Object Oriented Design',
       description: 'Ability to model data in an objected oriented framework',
     },
-  ]
+  ];
 
   private getCourseById(id: string): ICourse | null {
-    const allCourses: ICourse[] = this.getAllCourses()
+    const allCourses: ICourse[] = this.getAllCourses();
     for (const course of allCourses) {
       if (id === course.code) {
-        return course
+        return course;
       }
     }
-    return null
+    return null;
   }
 
   private getTutorById(id: string): IPerson | null {
-    const allStaff: IPerson[] = this.getStaff()
+    const allStaff: IPerson[] = this.getStaff();
     for (const staff of allStaff) {
       if (id === staff.miId) {
-        return staff
+        return staff;
       }
     }
-    return null
+    return null;
   }
 
   getAllCourses(): ICourse[] {
@@ -497,7 +497,7 @@ export class ScheduleService {
         description:
           'Learn algorithmic thinkng in the context of object oriented programming',
         baseColour: '#FF8C00',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
       {
@@ -505,7 +505,7 @@ export class ScheduleService {
         name: 'Programming Bootcamp 2',
         description: 'Develop your understanding of OO programming through C++',
         baseColour: '#3399FF',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
       {
@@ -513,7 +513,7 @@ export class ScheduleService {
         name: 'Web Bootcamp',
         description: 'Learn HTML, CSS and Javascript',
         baseColour: '#3CB371',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
       {
@@ -522,11 +522,11 @@ export class ScheduleService {
         description:
           'Learn to develop a technology product for a target market that focusses on solving an aspect of a social challenge.',
         baseColour: '#3CB371',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
-    ]
-    return classes
+    ];
+    return classes;
   }
 
   private getOfferings(): IOffering[] {
@@ -537,8 +537,8 @@ export class ScheduleService {
         teachStartDate: new Date('2024-03-04T08:30:00'),
         teachFinishDate: new Date('2024-04-30T08:30:00'),
       },
-    ]
-    return offerings
+    ];
+    return offerings;
   }
 
   private getOfferingGroups(): IOfferingGroup[] {
@@ -609,15 +609,15 @@ export class ScheduleService {
         groupCapacity: 60,
         offering: this.getOfferings()[0],
       },
-    ]
-    return group
+    ];
+    return group;
   }
 
   private getTutors(): IPerson[] {
-    const tutors: IPerson[] = []
-    const staffMembers = this.getStaff()
+    const tutors: IPerson[] = [];
+    const staffMembers = this.getStaff();
 
-    return staffMembers
+    return staffMembers;
   }
 
   private getGroupClasses(): IGroupClasses[] {
@@ -1088,54 +1088,54 @@ export class ScheduleService {
         staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[9],
       },
-    ]
-    return classes
+    ];
+    return classes;
   }
 
   private assignTutorsToClass(capacity: number): IPerson[] {
     // Calculate the number of tutors needed for the given capacity
-    const numberOfTutors = this.calculateTutors(capacity)
+    const numberOfTutors = this.calculateTutors(capacity);
 
     // Get all available tutors
-    const allTutors = this.getTutors()
+    const allTutors = this.getTutors();
 
     // Select the needed number of tutors from the available tutors
-    const assignedTutors = allTutors.slice(7, numberOfTutors)
+    const assignedTutors = allTutors.slice(7, numberOfTutors);
 
-    return assignedTutors
+    return assignedTutors;
   }
 
   calculateTutors(capacity: number): number {
     // Subtract 30 from the capacity, divide by 30, and round up
-    return Math.ceil((capacity - 30) / 30)
+    return Math.ceil((capacity - 30) / 30);
   }
 
   getSchedule() {
-    return this.scheduleData
+    return this.scheduleData;
   }
 
   private assignSpecificTutorsToClass(
-    specificStaffIds?: string[],
+    specificStaffIds?: string[]
   ): IPerson[] | null {
     // If specific staff IDs are provided, use them to assign staff
     if (specificStaffIds && specificStaffIds.length > 0) {
-      const allStaff = this.getStaff()
-      return allStaff.filter((staff) => specificStaffIds.includes(staff.miId))
+      const allStaff = this.getStaff();
+      return allStaff.filter((staff) => specificStaffIds.includes(staff.miId));
     }
-    return null
+    return null;
   }
 
   public generateColorShades(): Record<string, Record<string, string>> {
-    const courses = this.getAllCourses()
-    const groupColours: Record<string, Record<string, string>> = {}
+    const courses = this.getAllCourses();
+    const groupColours: Record<string, Record<string, string>> = {};
 
     courses.forEach((course) => {
       // Use course's code as key and generate shades for its base color
       groupColours[course.code] = this.colorService.generateShadesForColor(
-        course.baseColour,
-      )
-    })
+        course.baseColour
+      );
+    });
 
-    return groupColours
+    return groupColours;
   }
 }
