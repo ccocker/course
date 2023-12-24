@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule } from '@angular/forms'
 import { MatCardModule } from '@angular/material/card'
 import { MatChipsModule } from '@angular/material/chips'
 import { MatGridListModule } from '@angular/material/grid-list'
@@ -9,7 +10,6 @@ import {
   DayOfWeek,
   ICourse,
   IScheduleEvent,
-  IStaff,
 } from './interfaces/schedule.interface'
 import { Store } from '@ngrx/store'
 import { combineLatest } from 'rxjs'
@@ -22,6 +22,9 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import { IPerson } from '@miCommon/interfaces'
+import { DynamicFormComponent } from '../common/features/dynamic-form/dynamic-form.component'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { MatRadioModule } from '@angular/material/radio'
 
 @Component({
   selector: 'mi-course-schedule',
@@ -37,6 +40,9 @@ import { IPerson } from '@miCommon/interfaces'
     MatToolbarModule,
     FilterEventsPipe,
     EnumToArrayPipe,
+    DynamicFormComponent,
+    ReactiveFormsModule,
+    MatRadioModule,
   ],
   templateUrl: './course-schedule.component.html',
   styleUrl: './course-schedule.component.scss',
@@ -48,7 +54,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   showOnlyUnderstaffed: boolean = false
   weekdays: string[] = []
   schedule: IScheduleEvent[]
-
+  filteredStaffList: IPerson[] = [] // Filtered list for display in the dropdown
+  eventForm: FormGroup
   timeSlots: { startTime: string; endTime: string }[] = []
   headerColumns: Record<string, { start: number; span: number }> = {}
   coursesList: ICourse[] = []
@@ -86,9 +93,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   constructor(
     public scheduleService: ScheduleService,
     private store: Store,
+    private fb: FormBuilder, // Inject the FormBuilder
   ) {}
 
   ngOnInit() {
+    this.initForm()
     this.store.dispatch(authActions.getCurrentUser())
     this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
       this.currentUser = currentUser
@@ -111,7 +120,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       // Map the selected staff depending on the filtered staff list
       this.selectedStaff = this.staffList.map((staff) => staff.miId)
     })
-
+    this.filteredStaffList = this.staffList
     this.schedule = this.scheduleService.getSchedule()
 
     this.determineEarliestStartTime()
@@ -129,6 +138,33 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
     this.groupColours = this.scheduleService.generateColorShades()
     console.log()
+  }
+
+  private initForm() {
+    this.eventForm = this.fb.group({
+      courseCode: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+    })
+  }
+
+  // Function to load event data into the form
+  loadEventData(event: IScheduleEvent) {
+    this.eventForm.patchValue({
+      courseCode: event.course.code,
+      startTime: event.class.timeslot.startTime,
+      endTime: event.class.timeslot.endTime,
+      // ... set other values as needed
+    })
+  }
+
+  // Function to handle form submission
+  onSubmit() {
+    if (this.eventForm.valid) {
+      // Process the form data
+      console.log('Form Data:', this.eventForm.value)
+      // ... update the event logic here
+    }
   }
 
   toggleUnderstaffedFilter() {
@@ -464,5 +500,43 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     )
     const assignedStaff = event.class.staff.length
     return assignedStaff > requiredStaff
+  }
+
+  filterStaff(searchTerm: string) {
+    if (!searchTerm) {
+      this.filteredStaffList = this.staffList
+    } else {
+      this.filteredStaffList = this.staffList.filter(
+        (staff) =>
+          staff.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          staff.lastName.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+    }
+  }
+
+  updatePreferences(event: IScheduleEvent, priority: string) {
+    const {
+      course: { code: courseCode },
+      class: {
+        classNumber,
+        offeringGroup: {
+          group: offeringGroupNumber,
+          offering: { startDate }, // Destructure the startDate from the offering object
+        },
+      },
+    } = event
+
+    const userId = this.currentUser.email
+
+    const preferenceData = {
+      userId,
+      priority,
+      courseCode,
+      groupNumber: offeringGroupNumber,
+      classNumber,
+      startDate, // Include the startDate in the preference data
+    }
+
+    console.log(preferenceData)
   }
 }

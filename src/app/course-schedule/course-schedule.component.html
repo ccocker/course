@@ -39,6 +39,51 @@
         <div class="select-with-icons">
           <mat-form-field appearance="fill">
             <mat-label>Select Staff</mat-label>
+            <input
+              type="text"
+              [formControl]="staffSearchControl"
+              matInput
+              [matAutocomplete]="auto"
+              (keyup)="filterStaff($event.target.value)"
+              placeholder="Search for staff..."
+            />
+            <mat-select [(value)]="selectedStaff" multiple>
+              <mat-option
+                *ngFor="let staff of filteredStaffList"
+                [value]="staff.miId"
+              >
+                {{ staff.firstName }} {{ staff.lastName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="icon-wrapper">
+            <button
+              mat-icon-button
+              (click)="selectAllStaff()"
+              [disabled]="selectedStaff.length === staffList.length"
+              matTooltip="Select all staff"
+              class="small-icon"
+            >
+              <mat-icon>select_all</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="deselectAllStaff()"
+              [disabled]="selectedStaff.length === 0"
+              matTooltip="Deselect all staff"
+              class="small-icon"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+            <!-- Icon buttons -->
+          </div>
+        </div>
+      </div>
+      <!--
+      <div class="panel staff-panel" *ngIf="staffList.length > 1">
+        <div class="select-with-icons">
+          <mat-form-field appearance="fill">
+            <mat-label>Select Staff</mat-label>
             <mat-select [(value)]="selectedStaff" multiple>
               <mat-option *ngFor="let staff of staffList" [value]="staff.miId">
                 {{ staff.firstName }} {{ staff.lastName }}
@@ -67,7 +112,7 @@
           </div>
         </div>
       </div>
-
+      -->
       <div class="panel understaffed-toggle-panel">
         <label class="toggle-label">
           {{
@@ -147,24 +192,29 @@
           <div *ngFor="let tutor of event.class.staff">
             {{ tutor.firstName }} {{ tutor.lastName }}<br />
           </div>
-          <br />
-          <!-- New Checkbox for Class Availability Selection -->
-          <input
-            class="event-checkbox"
-            type="checkbox"
+          <mat-radio-group
+            aria-label="Select Priority"
+            class="event-radio-buttons"
             [name]="
-              '' +
               event.course.code +
               '-' +
               event.class.offeringGroup.group +
               '-' +
               event.class.classNumber
             "
-          />
-          <!--
-        <label [for]="'avail-' + event.course.code">Available</label>
-        --></div>
-        <!-- Event details -->
+            (change)="updatePreferences(event, $event.value)"
+          >
+            <div class="radio-option">
+              <mat-radio-button value="high"></mat-radio-button>
+            </div>
+            <div class="radio-option">
+              <mat-radio-button value="medium"></mat-radio-button>
+            </div>
+            <div class="radio-option">
+              <mat-radio-button value="low"></mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
       </div>
     </div>
   </form>
