@@ -336,7 +336,7 @@ export class ScheduleService {
       new Person({
         miId: 'E07588',
         firstName: 'Nick',
-        lastName: 'Henrix',
+        lastName: 'Hendrix',
         emails: [
           { label: 'person', address: 'nick.henrix@thepridelands.za' },
           { label: 'RMIT', address: 'nick.henrix@gmail.com' },
@@ -370,6 +370,21 @@ export class ScheduleService {
         emails: [
           { label: 'person', address: 'oleg.zagorodnii@thepridelands.za' },
           { label: 'RMIT', address: 'oleg.zagorodnii@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07591',
+        firstName: 'Craig',
+        lastName: 'Cocker',
+        emails: [
+          { label: 'person', address: 'craig.cocker@thepridelands.za' },
+          { label: 'RMIT', address: 'craig.cocker@gmail.com' },
         ],
         phoneNumbers: [
           { label: 'mobile', country: 'Australia', number: '0411 123 123' },
@@ -636,7 +651,7 @@ export class ScheduleService {
         timeslot: this.getTimeSlots()[1],
         room: this.getRooms()[2],
         lead: this.assignSpecificTutorsToClass(['E07583']),
-        staff: this.assignSpecificTutorsToClass(['E07600']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601']),
         offeringGroup: this.getOfferingGroups()[10],
       },
       {
@@ -722,7 +737,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[1],
-        lead: this.assignSpecificTutorsToClass(['E07581']),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
         staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -841,7 +856,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[1],
-        lead: this.assignSpecificTutorsToClass(['E07581']),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
         staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -937,7 +952,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
-        lead: this.assignSpecificTutorsToClass(['E07581']),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
         staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
@@ -973,7 +988,7 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
-        lead: this.assignSpecificTutorsToClass(['E07581']),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
         staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
