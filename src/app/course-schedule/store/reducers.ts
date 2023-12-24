@@ -29,6 +29,27 @@ const courseScheduleFeature = createFeature({
       validationErrors: action.errors,
     })),
 
+    on(courseScheduleActions.createTutorPreferences, (state) => ({
+      ...state,
+      isLoading: true,
+    })),
+    on(
+      courseScheduleActions.createTutorPreferencesSuccess,
+      (state, action) => ({
+        ...state,
+        isLoading: false,
+        data: [...state.data, action.tutorPreferences],
+      })
+    ),
+    on(
+      courseScheduleActions.createTutorPreferencesFailure,
+      (state, action) => ({
+        ...state,
+        isLoading: false,
+        validationErrors: action.errors,
+      })
+    ),
+
     on(courseScheduleActions.getCourseSchedule, (state) => ({
       ...state,
       isLoading: true,

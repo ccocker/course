@@ -10,6 +10,12 @@ export const courseScheduleActions = createActionGroup({
       errors: BackendErrorsInterface;
     }>(),
 
+    'Create tutor preferences': props<{ url: string; tutorPreferences: any }>(),
+    'Create tutor preferences success': props<{ tutorPreferences: any }>(),
+    'Create tutor preferences failure': props<{
+      errors: BackendErrorsInterface;
+    }>(),
+
     'Get course schedules': props<{ url: string }>(),
     'Get course schedules success': props<{ courseSchedules: any[] }>(),
     'Get course schedules failure': emptyProps(),

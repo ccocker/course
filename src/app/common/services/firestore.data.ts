@@ -88,17 +88,28 @@ export class FirestoreDataService {
     );
   }
 
-  public createEntity<T extends { id: string }>(
+  public createEntity<T extends { id?: string }>(
     collectionPath: string,
-    entity: T // Changed to include 'id' in the entity type
+    entity: T
   ): Observable<void> {
+    // Check for undefined properties in the entity
     if (hasUndefinedProperties(entity)) {
       return throwError(() => new Error('Data contains undefined properties'));
     }
-    const docRef = doc(this.firestore, collectionPath, entity.id); // Create a reference with the desired document ID
+
+    let modifiedEntity = entity;
+
+    // Generate a new Firestore ID if the entity doesn't have one
+    if (!entity.id) {
+      // Create a new object with all properties of entity and a new id
+      modifiedEntity = { ...entity, id: this.getNewFirestoreId() };
+    }
+
+    console.log('entity', modifiedEntity, collectionPath);
+    const docRef = doc(this.firestore, collectionPath, modifiedEntity.id);
 
     // Use setDoc to create the document with the specified ID
-    return from(setDoc(docRef, entity)).pipe(
+    return from(setDoc(docRef, modifiedEntity)).pipe(
       map(() => void 0) // Maps the result to void
     );
   }

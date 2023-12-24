@@ -99,7 +99,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.collection = 'courses';
+    this.collection = 'tutorPreferences';
     this.initForm();
     this.store.dispatch(authActions.getCurrentUser());
     this.store.dispatch(
@@ -548,5 +548,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     };
 
     console.log(preferenceData);
+    this.store.dispatch(
+      courseScheduleActions.createTutorPreferences({
+        url: this.collection,
+        tutorPreferences: preferenceData,
+      })
+    );
   }
 }
