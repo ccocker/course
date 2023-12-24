@@ -57,7 +57,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   weekdays: string[] = [];
   schedule: IScheduleEvent[];
   filteredStaffList: IPerson[] = []; // Filtered list for display in the dropdown
-  eventForm: FormGroup;
+
   timeSlots: { startTime: string; endTime: string }[] = [];
   headerColumns: Record<string, { start: number; span: number }> = {};
   coursesList: ICourse[] = [];
@@ -102,7 +102,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.collection = 'tutorPreferences';
-    this.initForm();
+
     this.store.dispatch(authActions.getCurrentUser());
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({
@@ -148,33 +148,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
     this.groupColours = this.scheduleService.generateColorShades();
     console.log();
-  }
-
-  private initForm() {
-    this.eventForm = this.fb.group({
-      courseCode: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-    });
-  }
-
-  // Function to load event data into the form
-  loadEventData(event: IScheduleEvent) {
-    this.eventForm.patchValue({
-      courseCode: event.course.code,
-      startTime: event.class.timeslot.startTime,
-      endTime: event.class.timeslot.endTime,
-      // ... set other values as needed
-    });
-  }
-
-  // Function to handle form submission
-  onSubmit() {
-    if (this.eventForm.valid) {
-      // Process the form data
-      console.log('Form Data:', this.eventForm.value);
-      // ... update the event logic here
-    }
   }
 
   toggleUnderstaffedFilter() {

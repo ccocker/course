@@ -1,86 +1,84 @@
 <body>
   <button (click)="bulkUpload()">Bulk Upload</button>
-  <form>
-    <div class="filter-panels">
-      <div class="panel courses-panel">
-        <div class="select-with-icons">
-          <mat-form-field appearance="fill">
-            <mat-label>Select Courses</mat-label>
-            <mat-select [(value)]="selectedCourses" multiple>
-              <mat-option
-                *ngFor="let course of coursesList"
-                [value]="course.code"
-              >
-                {{ course.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div class="icon-wrapper">
-            <button
-              mat-icon-button
-              (click)="selectAllCourses()"
-              matTooltip="Select all courses"
-              class="small-icon"
-            >
-              <mat-icon>select_all</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              (click)="deselectAllCourses()"
-              matTooltip="Deselect all courses"
-              class="small-icon"
-            >
-              <mat-icon>clear</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
 
-      <div class="panel staff-panel" *ngIf="staffList.length > 1">
-        <div class="select-with-icons">
-          <mat-form-field appearance="fill">
-            <mat-label>Select Staff</mat-label>
-            <input
-              type="text"
-              [formControl]="staffSearchControl"
-              matInput
-              [matAutocomplete]="auto"
-              (keyup)="filterStaff($event.target.value)"
-              placeholder="Search for staff..."
-            />
-            <mat-select [(value)]="selectedStaff" multiple>
-              <mat-option
-                *ngFor="let staff of filteredStaffList"
-                [value]="staff.miId"
-              >
-                {{ staff.firstName }} {{ staff.lastName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div class="icon-wrapper">
-            <button
-              mat-icon-button
-              (click)="selectAllStaff()"
-              [disabled]="selectedStaff.length === staffList.length"
-              matTooltip="Select all staff"
-              class="small-icon"
+  <div class="filter-panels">
+    <div class="panel courses-panel">
+      <div class="select-with-icons">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Courses</mat-label>
+          <mat-select [(value)]="selectedCourses" multiple>
+            <mat-option
+              *ngFor="let course of coursesList"
+              [value]="course.code"
             >
-              <mat-icon>select_all</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              (click)="deselectAllStaff()"
-              [disabled]="selectedStaff.length === 0"
-              matTooltip="Deselect all staff"
-              class="small-icon"
-            >
-              <mat-icon>clear</mat-icon>
-            </button>
-            <!-- Icon buttons -->
-          </div>
+              {{ course.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="icon-wrapper">
+          <button
+            mat-icon-button
+            (click)="selectAllCourses()"
+            matTooltip="Select all courses"
+            class="small-icon"
+          >
+            <mat-icon>select_all</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deselectAllCourses()"
+            matTooltip="Deselect all courses"
+            class="small-icon"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
         </div>
       </div>
-      <!--
+    </div>
+
+    <div class="panel staff-panel" *ngIf="staffList.length > 1">
+      <div class="select-with-icons">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Staff</mat-label>
+          <input
+            type="text"
+            matInput
+            [matAutocomplete]="auto"
+            (keyup)="filterStaff($event.target.value)"
+            placeholder="Search for staff..."
+          />
+          <mat-select [(value)]="selectedStaff" multiple>
+            <mat-option
+              *ngFor="let staff of filteredStaffList"
+              [value]="staff.miId"
+            >
+              {{ staff.firstName }} {{ staff.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="icon-wrapper">
+          <button
+            mat-icon-button
+            (click)="selectAllStaff()"
+            [disabled]="selectedStaff.length === staffList.length"
+            matTooltip="Select all staff"
+            class="small-icon"
+          >
+            <mat-icon>select_all</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deselectAllStaff()"
+            [disabled]="selectedStaff.length === 0"
+            matTooltip="Deselect all staff"
+            class="small-icon"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--
       <div class="panel staff-panel" *ngIf="staffList.length > 1">
         <div class="select-with-icons">
           <mat-form-field appearance="fill">
@@ -114,109 +112,108 @@
         </div>
       </div>
       -->
-      <div class="panel understaffed-toggle-panel">
-        <label class="toggle-label">
-          {{
-            showOnlyUnderstaffed
-              ? "Showing Classes Needing Staff"
-              : "Showing All Classes"
-          }}
-          <mat-slide-toggle
-            [checked]="showOnlyUnderstaffed"
-            (change)="toggleUnderstaffedFilter()"
-            color="warn"
-          ></mat-slide-toggle>
-        </label>
-      </div>
+    <div class="panel understaffed-toggle-panel">
+      <label class="toggle-label">
+        {{
+          showOnlyUnderstaffed
+            ? "Showing Classes Needing Staff"
+            : "Showing All Classes"
+        }}
+        <mat-slide-toggle
+          [checked]="showOnlyUnderstaffed"
+          (change)="toggleUnderstaffedFilter()"
+          color="warn"
+        ></mat-slide-toggle>
+      </label>
+    </div>
+  </div>
+
+  <div class="timetable">
+    <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
+    <!-- Dynamic headers for each day -->
+    <div
+      *ngFor="let day of weekdays"
+      class="header"
+      [style.gridColumn]="
+        headerColumns[day].start + ' / span ' + headerColumns[day].span
+      "
+      style="grid-row: 1"
+    >
+      {{ day }}
     </div>
 
-    <div class="timetable">
-      <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
-      <!-- Dynamic headers for each day -->
-      <div
-        *ngFor="let day of weekdays"
-        class="header"
-        [style.gridColumn]="
-          headerColumns[day].start + ' / span ' + headerColumns[day].span
-        "
-        style="grid-row: 1"
-      >
-        {{ day }}
-      </div>
+    <!-- Timeslots -->
+    <div
+      *ngFor="let timeSlot of timeSlots; let i = index"
+      class="timeslot"
+      [style.gridColumnStart]="1"
+      [style.gridRow]="i + 2"
+    >
+      {{ timeSlot.startTime }} - {{ timeSlot.endTime }}
+    </div>
 
-      <!-- Timeslots -->
-      <div
-        *ngFor="let timeSlot of timeSlots; let i = index"
-        class="timeslot"
-        [style.gridColumnStart]="1"
-        [style.gridRow]="i + 2"
-      >
-        {{ timeSlot.startTime }} - {{ timeSlot.endTime }}
-      </div>
-
-      <!-- Events -->
-      <div
-        *ngFor="let event of schedule"
-        class="event"
-        [ngClass]="{
-          understaffed: isUnderstaffed(event),
-          overstaffed: isOverstaffed(event)
-        }"
-        [ngStyle]="{
-          'grid-column-start': event.gridColumnStart,
-          'grid-column-end': event.gridColumnEnd,
-          'grid-row-start': event.gridRowStart,
-          'grid-row-end': event.gridRowEnd,
-          'background-color': isUnderstaffed(event)
-            ? '#CCCCCC'
-            : isOverstaffed(event)
-            ? ''
-            : getEventColor(event),
-          display: shouldDisplayEvent(event) ? 'block' : 'none'
-        }"
-      >
-        <div class="event-content">
-          <br />
-          {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
-          {{ event.class.classNumber }}<br />
-          {{ formatNumber(event.class.room.buildingNo, 3, "0") }}.{{
-            event.class.room.floor
-          }}.{{ formatNumber(event.class.room.roomNumber, 3, "0") }} ({{
-            event.class.room.capacity
-          }})<br />
-          {{ event.class.timeslot.startTime }} -
-          {{ event.class.timeslot.endTime }}<br /><br />
-          <b
-            >{{ event.class.lead[0].firstName }}
-            {{ event.class.lead[0].lastName }}</b
-          ><br />
-          <div *ngFor="let tutor of event.class.staff">
-            {{ tutor.firstName }} {{ tutor.lastName }}<br />
-          </div>
-          <mat-radio-group
-            aria-label="Select Priority"
-            class="event-radio-buttons"
-            [name]="
-              event.course.code +
-              '-' +
-              event.class.offeringGroup.group +
-              '-' +
-              event.class.classNumber
-            "
-            (change)="updatePreferences(event, $event.value)"
-          >
-            <div class="radio-option">
-              <mat-radio-button value="high"></mat-radio-button>
-            </div>
-            <div class="radio-option">
-              <mat-radio-button value="medium"></mat-radio-button>
-            </div>
-            <div class="radio-option">
-              <mat-radio-button value="low"></mat-radio-button>
-            </div>
-          </mat-radio-group>
+    <!-- Events -->
+    <div
+      *ngFor="let event of schedule"
+      class="event"
+      [ngClass]="{
+        understaffed: isUnderstaffed(event),
+        overstaffed: isOverstaffed(event)
+      }"
+      [ngStyle]="{
+        'grid-column-start': event.gridColumnStart,
+        'grid-column-end': event.gridColumnEnd,
+        'grid-row-start': event.gridRowStart,
+        'grid-row-end': event.gridRowEnd,
+        'background-color': isUnderstaffed(event)
+          ? '#CCCCCC'
+          : isOverstaffed(event)
+          ? ''
+          : getEventColor(event),
+        display: shouldDisplayEvent(event) ? 'block' : 'none'
+      }"
+    >
+      <div class="event-content">
+        <br />
+        {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
+        {{ event.class.classNumber }}<br />
+        {{ formatNumber(event.class.room.buildingNo, 3, "0") }}.{{
+          event.class.room.floor
+        }}.{{ formatNumber(event.class.room.roomNumber, 3, "0") }} ({{
+          event.class.room.capacity
+        }})<br />
+        {{ event.class.timeslot.startTime }} - {{ event.class.timeslot.endTime
+        }}<br /><br />
+        <b
+          >{{ event.class.lead[0].firstName }}
+          {{ event.class.lead[0].lastName }}</b
+        ><br />
+        <div *ngFor="let tutor of event.class.staff">
+          {{ tutor.firstName }} {{ tutor.lastName }}<br />
         </div>
+        <mat-radio-group
+          aria-label="Select Priority"
+          class="event-radio-buttons"
+          [name]="
+            event.course.code +
+            '-' +
+            event.class.offeringGroup.group +
+            '-' +
+            event.class.classNumber
+          "
+          (change)="updatePreferences(event, $event.value)"
+        >
+          <div class="radio-option">
+            <mat-radio-button value="high"></mat-radio-button>
+          </div>
+          <div class="radio-option">
+            <mat-radio-button value="medium"></mat-radio-button>
+          </div>
+          <div class="radio-option">
+            <mat-radio-button value="low"></mat-radio-button>
+          </div>
+        </mat-radio-group>
       </div>
     </div>
-  </form>
+  </div>
 </body>
