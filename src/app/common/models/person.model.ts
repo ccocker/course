@@ -4,6 +4,7 @@ import {
   IAddress,
   IPhone,
   IEmail,
+  IQualification,
   IDate,
   IRole,
 } from '@miCommon/interfaces/';
@@ -23,6 +24,9 @@ export class Person extends BaseModel {
   addresses: IAddress[] = [{ label: '', address: '' }];
   phoneNumbers: IPhone[] = [{ label: '', country: '', number: '' }];
   emails: IEmail[] = [{ label: '', address: '' }];
+  qualifications: IQualification[] = [
+    { label: '', description: '', expiry: new Date() },
+  ];
   dates: IDate[] = [{ label: '', date: new Date() }];
   company: string = '';
   notes: string[] = [''];
