@@ -9,12 +9,12 @@ export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
   {
     path: 'auth', // Parent route for all auth-required routes
-    canActivate: [AuthGuard], // Apply the AuthGuard here
+    canActivate: [], // Apply the AuthGuard here
     children: [
       {
         path: 'course-schedule',
         component: CourseScheduleComponent,
-        canActivate: [CourseScheduleGuard],
+        // canActivate: [CourseScheduleGuard],
       },
     ],
   },

@@ -97,6 +97,27 @@ export const registerEffect = createEffect(
   { functional: true }
 );
 
+// Add this effect to your existing auth effects
+export const rehydrateAuthStateEffect = createEffect(
+  (actions$ = inject(Actions), authService = inject(AUTH_SERVICE_TOKEN)) => {
+    return actions$.pipe(
+      ofType(authActions.rehydrateAuthState),
+      switchMap(({ accessToken }) => {
+        // You might need to modify this part based on how your authService works
+        return authService.getCurrentUser().pipe(
+          map((currentUser) => {
+            return authActions.getCurrentUserSuccess({ currentUser });
+          }),
+          catchError(() => {
+            return of(authActions.getCurrentUserFailure());
+          })
+        );
+      })
+    );
+  },
+  { functional: true }
+);
+
 export const redirectAfterRegisterEffect = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
     return actions$.pipe(

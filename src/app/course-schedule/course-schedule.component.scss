@@ -24,17 +24,9 @@ body {
       margin-top: 0;
     }
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       margin-right: 5px;
     }
-  }
-
-  .courses-panel {
-    // Additional styling for courses panel, if needed
-  }
-
-  .staff-panel {
-    // Additional styling for staff panel, if needed
   }
 
   /* Style for the buttons */
@@ -47,9 +39,7 @@ body {
     font-size: 8px;
     margin: 5px;
     padding: 5px 10px;
-    transition:
-      background-color 0.3s,
-      box-shadow 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
   }
 
   .panel button:hover {

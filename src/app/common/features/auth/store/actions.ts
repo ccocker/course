@@ -14,6 +14,8 @@ export const authActions = createActionGroup({
     'Get current user success': props<{ currentUser: CurrentUserInterface }>(),
     'Get current user failure': emptyProps(),
 
+    'Rehydrate auth state': props<{ accessToken: string }>(),
+
     Logout: emptyProps(),
     'Logout success': emptyProps(),
     'Logout failure': emptyProps(),
