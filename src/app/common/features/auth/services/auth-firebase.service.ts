@@ -26,6 +26,7 @@ import {
   combineLatest,
   from,
   map,
+  of,
   throwError,
 } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs';
@@ -65,6 +66,11 @@ export class FirebaseAuthService implements IAuthService {
         }
       })
     );
+  }
+
+  validateToken(token: string): Observable<boolean> {
+    const isValid = token && typeof token === 'string' && token.length > 0;
+    return of(isValid);
   }
 
   public login(credentials: any): Observable<any> {
@@ -188,6 +194,7 @@ export class FirebaseAuthService implements IAuthService {
         userName: user.displayName || user.email,
         userRole: 'user',
         userEmail: user.email,
+        roles: [],
       },
     };
   }

@@ -1,30 +1,9 @@
-interface Role {
-  id: number;
-  name: string;
-  permissions: Permission[];
+export interface IPermission {
+  action: string; // e.g., 'add', 'edit', 'view'
+  scope: string; // e.g., 'article', 'user'
 }
 
-interface Permission {
-  id: number;
+export interface IRole {
   name: string;
-  description: string;
+  permissions: IPermission[];
 }
-
-// Example usage
-const adminRole: Role = {
-  id: 1,
-  name: 'Admin',
-  permissions: [
-    { id: 1, name: 'create-user', description: 'Create a new user' },
-    { id: 2, name: 'delete-user', description: 'Delete an existing user' },
-    // ... other permissions
-  ],
-};
-
-const userRole: Role = {
-  id: 2,
-  name: 'User',
-  permissions: [
-    // ... user-specific permissions
-  ],
-};

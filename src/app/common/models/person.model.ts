@@ -4,7 +4,9 @@ import {
   IAddress,
   IPhone,
   IEmail,
+  IQualification,
   IDate,
+  IRole,
 } from '@miCommon/interfaces/';
 import { Gender } from '@miCommon/enums';
 import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
@@ -22,6 +24,9 @@ export class Person extends BaseModel {
   addresses: IAddress[] = [{ label: '', address: '' }];
   phoneNumbers: IPhone[] = [{ label: '', country: '', number: '' }];
   emails: IEmail[] = [{ label: '', address: '' }];
+  qualifications: IQualification[] = [
+    { label: '', description: '', expiry: new Date() },
+  ];
   dates: IDate[] = [{ label: '', date: new Date() }];
   company: string = '';
   notes: string[] = [''];
@@ -31,10 +36,12 @@ export class Person extends BaseModel {
     userName: string;
     userRole: string;
     userEmail: string;
+    roles: IRole[];
   } = {
     userName: '',
     userRole: '',
     userEmail: '',
+    roles: [],
   };
 
   /**

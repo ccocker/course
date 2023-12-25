@@ -2,9 +2,22 @@ import { Route } from '@angular/router';
 import { ResetPasswordComponent } from './common/features/auth/components/reset-password/reset-password.component';
 import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 import { HomeComponent } from './home/home.component';
+import { CourseScheduleGuard } from './shared/guards/course-schedule.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
+  {
+    path: 'auth', // Parent route for all auth-required routes
+    canActivate: [], // Apply the AuthGuard here
+    children: [
+      {
+        path: 'course-schedule',
+        component: CourseScheduleComponent,
+        // canActivate: [CourseScheduleGuard],
+      },
+    ],
+  },
   {
     path: 'global-feed',
     loadChildren: () =>
@@ -26,7 +39,6 @@ export const routes: Route[] = [
         (m) => m.routes
       ),
   },
-  { path: 'course-schedule', component: CourseScheduleComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: ':collection',

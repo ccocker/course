@@ -3,7 +3,7 @@ import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 import { routes } from './app/app.routes';
 import { provideRouter } from '@angular/router';
-import { provideState, provideStore } from '@ngrx/store';
+import { Store, provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { isDevMode } from '@angular/core';
 import {
@@ -25,6 +25,8 @@ import {
   popularTagsFeatureKey,
   popularTagsReducer,
 } from '@miCommon/components/popular-tags/store/reducers';
+import { PersistanceService } from '@miShared/services/persistance-service';
+import { authActions } from './app/common/features/auth/store/actions';
 
 const providers = [
   ...appConfig.providers,
@@ -49,4 +51,14 @@ const providers = [
 
 bootstrapApplication(AppComponent, {
   providers: providers,
-}).catch((err) => console.error(err));
+})
+  .then((appRef) => {
+    // Rehydrate auth state
+    const store = appRef.injector.get(Store);
+    const persistanceService = appRef.injector.get(PersistanceService);
+    const accessToken: any = persistanceService.get('accessToken');
+    if (accessToken) {
+      store.dispatch(authActions.rehydrateAuthState({ accessToken }));
+    }
+  })
+  .catch((err) => console.error(err));

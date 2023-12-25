@@ -18,6 +18,12 @@ export class AuthMockService implements IAuthService {
   getCurrentUser(): Observable<any> {
     return null;
   }
+
+  validateToken(token: string): Observable<boolean> {
+    const isValid = token && typeof token === 'string' && token.length > 0;
+    return of(isValid);
+  }
+
   registerAccount(credentials: any): Observable<any> {
     return null;
   }
