@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model';
+import { BaseModel } from './base.model'
 import {
   IPerson,
   IAddress,
@@ -7,57 +7,57 @@ import {
   IQualification,
   IDate,
   IRole,
-} from '@miCommon/interfaces/';
-import { Gender } from '@miCommon/enums';
-import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
+} from '@miCommon/interfaces/'
+import { Gender } from '@miCommon/enums'
+import { IFormConfiguration } from '@miCommon/helpers/form-configuration'
 /**
  * Person class representing a person and their related information.
  * This class extends the BaseModel and implements the IPerson interface.
  */
 export class Person extends BaseModel {
-  firstName: string = '';
-  lastName: string = '';
-  age: number = 0;
-  avatar: string = '';
-  banner: string = '';
-  active: boolean = false;
-  addresses: IAddress[] = [{ label: '', address: '' }];
-  phoneNumbers: IPhone[] = [{ label: '', country: '', number: '' }];
-  emails: IEmail[] = [{ label: '', address: '' }];
+  firstName: string = ''
+  lastName: string = ''
+  age: number = 0
+  avatar: string = ''
+  banner: string = ''
+  active: boolean = false
+  addresses: IAddress[] = [{ label: '', address: '' }]
+  phoneNumbers: IPhone[] = [{ label: '', country: '', number: '' }]
+  emails: IEmail[] = [{ label: '', address: '' }]
   qualifications: IQualification[] = [
     { label: '', description: '', expiry: new Date() },
-  ];
-  dates: IDate[] = [{ label: '', date: new Date() }];
-  company: string = '';
-  notes: string[] = [''];
-  tags: string[] = [''];
-  gender: Gender = Gender.PreferNotToSay;
+  ]
+  dates: IDate[] = [{ label: '', date: new Date() }]
+  company: string = ''
+  notes: string[] = ['']
+  tags: string[] = ['']
+  gender: Gender = Gender.PreferNotToSay
   userDetail: {
-    userName: string;
-    userRole: string;
-    userEmail: string;
-    roles: IRole[];
+    userName: string
+    userRole: string
+    userEmail: string
+    roles: IRole[]
   } = {
     userName: '',
     userRole: '',
     userEmail: '',
     roles: [],
-  };
+  }
 
   /**
    * Constructor to initialize Person instance.
    * @param initialData Optional partial IPerson data to initialize the instance.
    */
   constructor(initialData?: Partial<IPerson>) {
-    super(initialData ?? {});
-    this.defaultSortField = 'firstName';
-    this.sortOrderAscending = true;
-    this.assignInitialValues(initialData);
-    this.configureProperties();
+    super(initialData ?? {})
+    this.defaultSortField = 'firstName'
+    this.sortOrderAscending = true
+    this.assignInitialValues(initialData)
+    this.configureProperties()
     this.createFormConfiguration(
       this.formProperties,
-      this.getSpecificFormConfig()
-    );
+      this.getSpecificFormConfig(),
+    )
   }
 
   /**
@@ -66,18 +66,18 @@ export class Person extends BaseModel {
    */
   private assignInitialValues(initialData?: Partial<IPerson>): void {
     // Merge default values with initialData
-    const mergedData: Person = { ...this, ...initialData } as Person;
+    const mergedData: Person = { ...this, ...initialData } as Person
 
     // Assign mergedData to properties
-    Object.assign(this, mergedData);
-    this.userDetail = initialData?.userDetail ?? this.userDetail;
+    Object.assign(this, mergedData)
+    this.userDetail = initialData?.userDetail ?? this.userDetail
   }
 
   /**
    * Configure listProperties and formProperties arrays.
    */
   private configureProperties(): void {
-    this.listProperties = ['firstName', 'lastName', 'age', 'gender', 'active'];
+    this.listProperties = ['firstName', 'lastName', 'age', 'gender', 'active']
     this.formProperties = [
       'id',
       'firstName',
@@ -91,7 +91,7 @@ export class Person extends BaseModel {
       'dates',
       'company',
       'notes',
-    ];
+    ]
   }
 
   /**
@@ -160,6 +160,6 @@ export class Person extends BaseModel {
           userEmail: { required: false, label: 'User Email', type: 'text' },
         },
       },
-    };
+    }
   }
 }

@@ -1,0 +1,10 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 60px;
+  .progress-label {
+    position: absolute;
+  }
+}

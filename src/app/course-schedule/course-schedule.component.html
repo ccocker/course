@@ -1,50 +1,131 @@
 <body>
+  <button (click)="bulkUpload()">Bulk Upload</button>
+
   <div class="filter-panels">
-    <!-- Courses Panel -->
     <div class="panel courses-panel">
-      <div class="panel-header">
-        <h3>Courses</h3>
-        <button (click)="selectAllCourses()">Select All</button>
-        <button (click)="deselectAllCourses()">Deselect All</button>
-      </div>
-      <div *ngFor="let course of scheduleService.getAllCourses()">
-        <input
-          type="checkbox"
-          [id]="course.code"
-          [checked]="isCourseSelected(course.code)"
-          (change)="toggleCourseSelection(course.code)"
-        />
-        <label [for]="course.code">{{ course.name }}</label>
+      <div class="select-with-icons">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Courses</mat-label>
+          <mat-select [(value)]="selectedCourses" multiple>
+            <mat-option
+              *ngFor="let course of coursesList"
+              [value]="course.code"
+            >
+              {{ course.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="icon-wrapper">
+          <button
+            mat-icon-button
+            (click)="selectAllCourses()"
+            matTooltip="Select all courses"
+            class="small-icon"
+          >
+            <mat-icon>select_all</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deselectAllCourses()"
+            matTooltip="Deselect all courses"
+            class="small-icon"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Staff Panel -->
-    <div class="panel staff-panel">
-      <div class="panel-header">
-        <h3>Staff</h3>
-        <button (click)="selectAllStaff()">Select All</button>
-        <button (click)="deselectAllStaff()">Deselect All</button>
-      </div>
-      <div *ngFor="let staff of scheduleService.getStaff()">
-        <input
-          type="checkbox"
-          [id]="'staff-' + staff.enumber"
-          [checked]="isStaffSelected(staff.enumber)"
-          (change)="toggleStaffSelection(staff.enumber)"
-        />
-        <label [for]="'staff-' + staff.enumber"
-          >{{ staff.firstName }} {{ staff.lastName }}</label
-        >
+    <div class="panel staff-panel" *ngIf="staffList.length > 1">
+      <div class="select-with-icons">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Staff</mat-label>
+          <input
+            type="text"
+            matInput
+            [matAutocomplete]="auto"
+            (keyup)="filterStaff($event.target.value)"
+            placeholder="Search for staff..."
+          />
+          <mat-select [(value)]="selectedStaff" multiple>
+            <mat-option
+              *ngFor="let staff of filteredStaffList"
+              [value]="staff.miId"
+            >
+              {{ staff.firstName }} {{ staff.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="icon-wrapper">
+          <button
+            mat-icon-button
+            (click)="selectAllStaff()"
+            [disabled]="selectedStaff.length === staffList.length"
+            matTooltip="Select all staff"
+            class="small-icon"
+          >
+            <mat-icon>select_all</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deselectAllStaff()"
+            [disabled]="selectedStaff.length === 0"
+            matTooltip="Deselect all staff"
+            class="small-icon"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="filter-toggle">
-    <button (click)="toggleUnderstaffedFilter()">
-      {{
-        showOnlyUnderstaffed ? 'Show All Classes' : 'Show Classes Needing Staff'
-      }}
-    </button>
+    <!--
+      <div class="panel staff-panel" *ngIf="staffList.length > 1">
+        <div class="select-with-icons">
+          <mat-form-field appearance="fill">
+            <mat-label>Select Staff</mat-label>
+            <mat-select [(value)]="selectedStaff" multiple>
+              <mat-option *ngFor="let staff of staffList" [value]="staff.miId">
+                {{ staff.firstName }} {{ staff.lastName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="icon-wrapper">
+            <button
+              mat-icon-button
+              (click)="selectAllStaff()"
+              [disabled]="selectedStaff.length === staffList.length"
+              matTooltip="Select all staff"
+              class="small-icon"
+            >
+              <mat-icon>select_all</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="deselectAllStaff()"
+              [disabled]="selectedStaff.length === 0"
+              matTooltip="Deselect all staff"
+              class="small-icon"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      -->
+    <div class="panel understaffed-toggle-panel">
+      <label class="toggle-label">
+        {{
+          showOnlyUnderstaffed
+            ? "Showing Classes Needing Staff"
+            : "Showing All Classes"
+        }}
+        <mat-slide-toggle
+          [checked]="showOnlyUnderstaffed"
+          (change)="toggleUnderstaffedFilter()"
+          color="warn"
+        ></mat-slide-toggle>
+      </label>
+    </div>
   </div>
 
   <div class="timetable">
@@ -72,52 +153,80 @@
     </div>
 
     <!-- Events -->
-
     <div
       *ngFor="let event of schedule"
       class="event"
+      [ngClass]="{
+        understaffed: isUnderstaffed(event),
+        overstaffed: isOverstaffed(event)
+      }"
       [ngStyle]="{
         'grid-column-start': event.gridColumnStart,
         'grid-column-end': event.gridColumnEnd,
         'grid-row-start': event.gridRowStart,
         'grid-row-end': event.gridRowEnd,
-        border: isUnderstaffed(event) ? '3px solid red' : '1px solid #dddddd',
         'background-color': isUnderstaffed(event)
           ? '#CCCCCC'
+          : isOverstaffed(event)
+          ? ''
           : getEventColor(event),
         display: shouldDisplayEvent(event) ? 'block' : 'none'
       }"
     >
-      <div>
+      <div class="event-content">
         <br />
         {{ event.course.code }} - G{{ event.class.offeringGroup.group }} -
         {{ event.class.classNumber }}<br />
-        {{ formatNumber(event.class.room.buildingNo, 3, '0') }}.{{
+        {{ formatNumber(event.class.room.buildingNo, 3, "0") }}.{{
           event.class.room.floor
-        }}.{{ formatNumber(event.class.room.roomNumber, 3, '0') }} ({{
+        }}.{{ formatNumber(event.class.room.roomNumber, 3, "0") }} ({{
           event.class.room.capacity
         }})<br />
         {{ event.class.timeslot.startTime }} - {{ event.class.timeslot.endTime
         }}<br /><br />
         <b
-          >{{ event.class.offeringGroup.lead.firstName }}
-          {{ event.class.offeringGroup.lead.lastName }}</b
+          >{{ event.class.lead[0].firstName }}
+          {{ event.class.lead[0].lastName }}</b
         ><br />
         <div *ngFor="let tutor of event.class.staff">
           {{ tutor.firstName }} {{ tutor.lastName }}<br />
         </div>
-        <br />
-        <!-- New Checkbox for Class Availability Selection -->
-        <input
-          type="checkbox"
-          [id]="'avail-' + event.course.code"
-          (change)="selectClassAvailability(event.course.code)"
-        />
-        <!--
-        <label [for]="'avail-' + event.course.code">Available</label>
-        -->
+        <div
+          class="custom-radio-group"
+          [attr.aria-label]="'Select Priority for ' + event.course.code"
+        >
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="high-{{ event.course.code }}"
+              name="priority-{{ event.course.code }}"
+              value="high"
+              (change)="updatePreferences(event, 'high')"
+            />
+            <label for="high-{{ event.course.code }}">H</label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="medium-{{ event.course.code }}"
+              name="priority-{{ event.course.code }}"
+              value="medium"
+              (change)="updatePreferences(event, 'medium')"
+            />
+            <label for="medium-{{ event.course.code }}">M</label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="low-{{ event.course.code }}"
+              name="priority-{{ event.course.code }}"
+              value="low"
+              (change)="updatePreferences(event, 'low')"
+            />
+            <label for="low-{{ event.course.code }}">L</label>
+          </div>
+        </div>
       </div>
-      <!-- Event details -->
     </div>
   </div>
 </body>

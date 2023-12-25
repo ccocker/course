@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core'
-import { ISkill } from '../interfaces/schedule.interface'
-import { ColorService } from './color.service'
+import { Injectable } from '@angular/core';
+import { ISkill } from '../interfaces/schedule.interface';
+import { ColorService } from './color.service';
 
 import {
   IRoom,
@@ -12,13 +12,16 @@ import {
   IGroupClasses,
   DayOfWeek,
   IScheduleEvent,
-} from '../interfaces/schedule.interface'
+} from '../interfaces/schedule.interface';
+
+import { IPerson } from '@miCommon/interfaces';
+import { Person } from '@miCommon/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleService {
-  private colorService: ColorService = new ColorService()
+  private colorService: ColorService = new ColorService();
   private scheduleData: IScheduleEvent[] = [
     {
       class: this.getGroupClasses()[0],
@@ -196,7 +199,7 @@ export class ScheduleService {
       class: this.getGroupClasses()[43],
       course: this.getAllCourses()[2],
     },
-  ]
+  ];
 
   constructor() {}
 
@@ -205,8 +208,8 @@ export class ScheduleService {
       { buildingNo: 12, floor: 10, roomNumber: 5, capacity: 120 },
       { buildingNo: 12, floor: 10, roomNumber: 6, capacity: 150 },
       { buildingNo: 14, floor: 9, roomNumber: 23, capacity: 60 },
-    ]
-    return existingRooms
+    ];
+    return existingRooms;
   }
 
   private getTimeSlots(): ITimeslot[] {
@@ -219,124 +222,239 @@ export class ScheduleService {
       { startTime: '16:30', endTime: '18:30' },
       { startTime: '18:30', endTime: '20:30' },
       { startTime: '06:30', endTime: '08:30' },
-    ]
-    return slots
+    ];
+    return slots;
   }
 
-  getStaff(): IStaff[] {
-    const staff: IStaff[] = [
-      {
-        enumber: 'E07581',
+  getStaff(): IPerson[] {
+    const staff: IPerson[] = [
+      new Person({
+        miId: 'E07581',
         firstName: 'Henry',
         lastName: 'Cavill',
-        pEmail: 'henry.cavill@thepridelands.za',
-        rEmail: 'henry.cavill@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Lead',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07583',
+        emails: [
+          { label: 'person', address: 'henry.cavill@thepridelands.za' },
+          { label: 'RMIT', address: 'henry.cavill@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07583',
         firstName: 'Matt',
         lastName: 'Bomer',
-        pEmail: 'matt.bomer@thepridelands.za',
-        rEmail: 'matt.bomer@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Lead',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07582',
+        emails: [
+          { label: 'person', address: 'matt.bomer@thepridelands.za' },
+          { label: 'RMIT', address: 'matt.bomer@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07582',
         firstName: 'Rodney',
         lastName: 'Cocker',
-        pEmail: 'simba@thepridelands.za',
-        rEmail: 'rodneyian.cocker@rmit.edu.a',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07584',
+        emails: [
+          { label: 'person', address: 'rodney.cocker@thepridelands.za' },
+          { label: 'RMIT', address: 'rodney.cocker@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07584',
         firstName: 'David',
         lastName: 'Leon',
-        pEmail: 'david.leon@thepridelands.za',
-        rEmail: 'david.leon@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07585',
+        emails: [
+          { label: 'person', address: 'david.leon@thepridelands.za' },
+          { label: 'RMIT', address: 'david.leon@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07585',
         firstName: 'Paul',
         lastName: 'Walker',
-        pEmail: 'paul.walker@thepridelands.za',
-        rEmail: 'paul.walker@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07586',
+        emails: [
+          { label: 'person', address: 'paul.walker@thepridelands.za' },
+          { label: 'RMIT', address: 'paul.walker@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07586',
         firstName: 'Ian',
         lastName: 'Somerhalder',
-        pEmail: 'ian.somerhalder@thepridelands.za',
-        rEmail: 'ian.somerhalder@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07587',
+        emails: [
+          { label: 'person', address: 'ian.somerhalder@thepridelands.za' },
+          { label: 'RMIT', address: 'ian.somerhalder@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07587',
         firstName: 'Alex',
         lastName: "O'Laoughlin",
-        pEmail: 'alex.olaoughlin@thepridelands.za',
-        rEmail: 'alex.aolaoughlin@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07588',
+        emails: [
+          { label: 'person', address: 'alex.olaoughlin@thepridelands.za' },
+          { label: 'RMIT', address: 'alex.olaoughlin@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07588',
         firstName: 'Nick',
-        lastName: 'Henrix',
-        pEmail: 'nick.henrix@thepridelands.za',
-        rEmail: 'nick.henrix@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07589',
+        lastName: 'Hendrix',
+        emails: [
+          { label: 'person', address: 'nick.henrix@thepridelands.za' },
+          { label: 'RMIT', address: 'nick.henrix@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07589',
         firstName: 'David James',
         lastName: 'Elliot',
-        pEmail: 'david.james.elliot@thepridelands.za',
-        rEmail: 'david.james.elliot@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-      {
-        enumber: 'E07590',
+        emails: [
+          { label: 'person', address: 'david.james.elliot@thepridelands.za' },
+          { label: 'RMIT', address: 'david.james.elliot@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07590',
         firstName: 'Oleg',
         lastName: 'Zagorodnii',
-        pEmail: 'oleg.zagorodnii@thepridelands.za',
-        rEmail: 'oleg.zagorodnii@rmit.edu.au',
-        phone: '0411 123 123',
-        qualification: 'Masters',
-        type: 'Tutor',
-        isAvailable: true,
-      },
-    ]
-    return staff
+        emails: [
+          { label: 'person', address: 'oleg.zagorodnii@thepridelands.za' },
+          { label: 'RMIT', address: 'oleg.zagorodnii@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07591',
+        firstName: 'Craig',
+        lastName: 'Cocker',
+        emails: [
+          { label: 'person', address: 'craig.cocker@thepridelands.za' },
+          { label: 'RMIT', address: 'craig.cocker1@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07600',
+        firstName: 'Tutor',
+        lastName: '1',
+        emails: [
+          { label: 'person', address: 'tutor.1@thepridelands.za' },
+          { label: 'RMIT', address: 'tutor.1@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07601',
+        firstName: 'Tutor',
+        lastName: '2',
+        emails: [
+          { label: 'person', address: 'tutor.1@thepridelands.za' },
+          { label: 'RMIT', address: 'tutor.1@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07602',
+        firstName: 'Tutor',
+        lastName: '3',
+        emails: [
+          { label: 'person', address: 'tutor.1@thepridelands.za' },
+          { label: 'RMIT', address: 'tutor.1@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+      new Person({
+        miId: 'E07603',
+        firstName: 'Tutor',
+        lastName: '4',
+        emails: [
+          { label: 'person', address: 'tutor.1@thepridelands.za' },
+          { label: 'RMIT', address: 'tutor.1@gmail.com' },
+        ],
+        phoneNumbers: [
+          { label: 'mobile', country: 'Australia', number: '0411 123 123' },
+        ],
+        qualifications: [
+          { label: 'Masters', description: '', expiry: new Date() },
+        ],
+      }),
+    ];
+    return staff;
   }
   skills: ISkill[] = [
     {
@@ -349,26 +467,26 @@ export class ScheduleService {
       name: 'Object Oriented Design',
       description: 'Ability to model data in an objected oriented framework',
     },
-  ]
+  ];
 
   private getCourseById(id: string): ICourse | null {
-    const allCourses: ICourse[] = this.getAllCourses()
+    const allCourses: ICourse[] = this.getAllCourses();
     for (const course of allCourses) {
       if (id === course.code) {
-        return course
+        return course;
       }
     }
-    return null
+    return null;
   }
 
-  private getTutorById(id: string): IStaff | null {
-    const allStaff: IStaff[] = this.getStaff()
+  private getTutorById(id: string): IPerson | null {
+    const allStaff: IPerson[] = this.getStaff();
     for (const staff of allStaff) {
-      if (id === staff.enumber) {
-        return staff
+      if (id === staff.miId) {
+        return staff;
       }
     }
-    return null
+    return null;
   }
 
   getAllCourses(): ICourse[] {
@@ -379,7 +497,7 @@ export class ScheduleService {
         description:
           'Learn algorithmic thinkng in the context of object oriented programming',
         baseColour: '#FF8C00',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
       {
@@ -387,7 +505,7 @@ export class ScheduleService {
         name: 'Programming Bootcamp 2',
         description: 'Develop your understanding of OO programming through C++',
         baseColour: '#3399FF',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
       {
@@ -395,7 +513,7 @@ export class ScheduleService {
         name: 'Web Bootcamp',
         description: 'Learn HTML, CSS and Javascript',
         baseColour: '#3CB371',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
       {
@@ -404,11 +522,11 @@ export class ScheduleService {
         description:
           'Learn to develop a technology product for a target market that focusses on solving an aspect of a social challenge.',
         baseColour: '#3CB371',
-        teachingSkills: this.skills,
+        teachingSkills: [],
         coordinator: this.getStaff()[0],
       },
-    ]
-    return classes
+    ];
+    return classes;
   }
 
   private getOfferings(): IOffering[] {
@@ -419,8 +537,8 @@ export class ScheduleService {
         teachStartDate: new Date('2024-03-04T08:30:00'),
         teachFinishDate: new Date('2024-04-30T08:30:00'),
       },
-    ]
-    return offerings
+    ];
+    return offerings;
   }
 
   private getOfferingGroups(): IOfferingGroup[] {
@@ -491,21 +609,15 @@ export class ScheduleService {
         groupCapacity: 60,
         offering: this.getOfferings()[0],
       },
-    ]
-    return group
+    ];
+    return group;
   }
 
-  private getTutors(): IStaff[] {
-    const tutors: IStaff[] = []
-    const staffMembers = this.getStaff()
+  private getTutors(): IPerson[] {
+    const tutors: IPerson[] = [];
+    const staffMembers = this.getStaff();
 
-    for (let staff of staffMembers) {
-      if (staff.type !== 'Lead') {
-        tutors.push(staff)
-      }
-    }
-
-    return tutors
+    return staffMembers;
   }
 
   private getGroupClasses(): IGroupClasses[] {
@@ -515,7 +627,8 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
-        staff: this.assignSpecificTutorsToClass(['E07582', 'E07584']),
+        lead: this.assignSpecificTutorsToClass(['E07581']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[0],
       },
       {
@@ -523,9 +636,13 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07582']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[1],
       },
       {
@@ -533,185 +650,205 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[1],
         room: this.getRooms()[2],
+        lead: this.assignSpecificTutorsToClass(['E07583']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601']),
+        offeringGroup: this.getOfferingGroups()[10],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07584']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[2],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07585']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[3],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07586']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[4],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07587']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[5],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07588']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[9],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07589']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[7],
+      },
+      {
+        classNumber: 1,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07590']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[6],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Monday,
+        timeslot: this.getTimeSlots()[5],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07591']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[8],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07581']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[0],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[0],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07582']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[1],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07584']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[2],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[2],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07585']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[3],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07586']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[4],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[3],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07587']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[5],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[0],
+        lead: this.assignSpecificTutorsToClass(['E07588']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
+        offeringGroup: this.getOfferingGroups()[9],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[1],
+        lead: this.assignSpecificTutorsToClass(['E07589']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
+        offeringGroup: this.getOfferingGroups()[7],
+      },
+      {
+        classNumber: 2,
+        day: DayOfWeek.Tuesday,
+        timeslot: this.getTimeSlots()[4],
+        room: this.getRooms()[2],
+        lead: this.assignSpecificTutorsToClass(['E07583']),
         staff: this.assignSpecificTutorsToClass(['']),
         offeringGroup: this.getOfferingGroups()[10],
       },
       {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[2],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[2],
-      },
-      {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[2],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[3],
-      },
-      {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[3],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[4],
-      },
-      {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[3],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[5],
-      },
-      {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[4],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[9],
-      },
-      {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[4],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[7],
-      },
-      {
-        classNumber: 1,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[5],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[6],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Monday,
-        timeslot: this.getTimeSlots()[5],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[8],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[0],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[0],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[0],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[1],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[2],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[2],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[2],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[3],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[3],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[4],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[3],
-        room: this.getRooms()[1],
-        staff: this.assignSpecificTutorsToClass(['E07582', 'E07584', 'E07585']),
-        offeringGroup: this.getOfferingGroups()[5],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[4],
-        room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[9],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[4],
-        room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[7],
-      },
-      {
-        classNumber: 2,
-        day: DayOfWeek.Tuesday,
-        timeslot: this.getTimeSlots()[4],
-        room: this.getRooms()[2],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
-        ),
-        offeringGroup: this.getOfferingGroups()[10],
-      },
-      {
         classNumber: 2,
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07590']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[6],
       },
       {
@@ -719,9 +856,8 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
       {
@@ -729,9 +865,8 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07581']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[0],
       },
       {
@@ -739,9 +874,13 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07582']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[1],
       },
       {
@@ -749,9 +888,8 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07584']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[2],
       },
       {
@@ -759,9 +897,13 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07585']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[3],
       },
       {
@@ -769,9 +911,8 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07586']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[4],
       },
       {
@@ -779,9 +920,13 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07587']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[5],
       },
       {
@@ -789,9 +934,8 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07589']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[7],
       },
       {
@@ -799,9 +943,8 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07590']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[6],
       },
       {
@@ -809,9 +952,8 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
       {
@@ -819,9 +961,8 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[1],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07583']),
+        staff: this.assignSpecificTutorsToClass(['E07600']),
         offeringGroup: this.getOfferingGroups()[10],
       },
       {
@@ -829,9 +970,8 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[7].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07589']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[7],
       },
       {
@@ -839,9 +979,8 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07588']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[9],
       },
       {
@@ -849,9 +988,8 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[5],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[8].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07591']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[8],
       },
       {
@@ -859,9 +997,8 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[0].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07581']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[0],
       },
       {
@@ -869,9 +1006,13 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[1].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07582']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[1],
       },
       {
@@ -879,9 +1020,8 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[0],
         room: this.getRooms()[2],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[10].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07583']),
+        staff: this.assignSpecificTutorsToClass(['']),
         offeringGroup: this.getOfferingGroups()[10],
       },
       {
@@ -889,9 +1029,8 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[2].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07584']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[2],
       },
       {
@@ -899,9 +1038,13 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[2],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[3].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07585']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[3],
       },
       {
@@ -909,9 +1052,8 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[4].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07586']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[4],
       },
       {
@@ -919,9 +1061,13 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[3],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[5].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07587']),
+        staff: this.assignSpecificTutorsToClass([
+          'E07600',
+          'E07601',
+          'E07602',
+          'E07603',
+        ]),
         offeringGroup: this.getOfferingGroups()[5],
       },
       {
@@ -929,9 +1075,8 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[0],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[6].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07590']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[6],
       },
       {
@@ -939,62 +1084,58 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[4],
         room: this.getRooms()[1],
-        staff: this.assignTutorsToClass(
-          this.getOfferingGroups()[9].groupCapacity,
-        ),
+        lead: this.assignSpecificTutorsToClass(['E07588']),
+        staff: this.assignSpecificTutorsToClass(['E07600', 'E07601', 'E07602']),
         offeringGroup: this.getOfferingGroups()[9],
       },
-    ]
-    return classes
+    ];
+    return classes;
   }
 
-  private assignTutorsToClass(capacity: number): IStaff[] {
+  private assignTutorsToClass(capacity: number): IPerson[] {
     // Calculate the number of tutors needed for the given capacity
-    const numberOfTutors = this.calculateTutors(capacity)
+    const numberOfTutors = this.calculateTutors(capacity);
 
     // Get all available tutors
-    const allTutors = this.getTutors()
+    const allTutors = this.getTutors();
 
     // Select the needed number of tutors from the available tutors
-    const assignedTutors = allTutors.slice(0, numberOfTutors)
+    const assignedTutors = allTutors.slice(7, numberOfTutors);
 
-    return assignedTutors
+    return assignedTutors;
   }
 
   calculateTutors(capacity: number): number {
     // Subtract 30 from the capacity, divide by 30, and round up
-    return Math.ceil((capacity - 30) / 30)
+    return Math.ceil((capacity - 30) / 30);
   }
 
   getSchedule() {
-    return this.scheduleData
+    return this.scheduleData;
   }
 
   private assignSpecificTutorsToClass(
-    specificStaffIds?: string[],
-  ): IStaff[] | null {
+    specificStaffIds?: string[]
+  ): IPerson[] | null {
     // If specific staff IDs are provided, use them to assign staff
     if (specificStaffIds && specificStaffIds.length > 0) {
-      const allStaff = this.getStaff()
-      return allStaff.filter(
-        (staff) =>
-          specificStaffIds.includes(staff.enumber) && staff.type !== 'Lead',
-      )
+      const allStaff = this.getStaff();
+      return allStaff.filter((staff) => specificStaffIds.includes(staff.miId));
     }
-    return null
+    return null;
   }
 
   public generateColorShades(): Record<string, Record<string, string>> {
-    const courses = this.getAllCourses()
-    const groupColours: Record<string, Record<string, string>> = {}
+    const courses = this.getAllCourses();
+    const groupColours: Record<string, Record<string, string>> = {};
 
     courses.forEach((course) => {
       // Use course's code as key and generate shades for its base color
       groupColours[course.code] = this.colorService.generateShadesForColor(
-        course.baseColour,
-      )
-    })
+        course.baseColour
+      );
+    });
 
-    return groupColours
+    return groupColours;
   }
 }
