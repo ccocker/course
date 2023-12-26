@@ -79,7 +79,7 @@ export const redirectAfterRegisterEffect = createEffect(
     return actions$.pipe(
       ofType(authActions.registerSuccess),
       tap(() => {
-        router.navigateByUrl('/course-schedule');
+        router.navigateByUrl('/auth/course-schedule');
       })
     );
   },

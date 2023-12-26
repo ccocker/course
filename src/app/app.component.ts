@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,7 @@ import { authActions } from './common/features/auth/store/actions';
 interface AppConfig {
   title: string;
   isRtl: boolean;
-  sidenavMenuItems: string[];
+  sidenavMenuItems: any[];
   loggedInItems: string[];
   loggedOutItems: string[];
   showTopNav: boolean;
@@ -49,7 +49,15 @@ export class AppComponent implements OnInit {
   appConfig: AppConfig = {
     title: 'RMIT COURSE SCHEDULER',
     isRtl: false,
-    sidenavMenuItems: ['Dashboard'],
+    sidenavMenuItems: [
+      { title: 'Dashboard', link: '' },
+      { title: 'Course Schedule', link: 'auth/course-schedule' },
+      { title: 'Courses', link: 'auth/courses' },
+      {
+        title: 'People',
+        link: 'auth/people',
+      },
+    ],
     loggedInItems: ['Logout'],
     loggedOutItems: ['Home', 'About', 'Login'],
     showTopNav: true,
@@ -63,7 +71,7 @@ export class AppComponent implements OnInit {
     currentUser: this.store.select(selectCurrentUser),
   });
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit() {
     this.store.dispatch(authActions.getCurrentUser());
@@ -86,6 +94,8 @@ export class AppComponent implements OnInit {
   onItemClick(item: any) {
     if (item === 'Logout') {
       this.store.dispatch(authActions.logout());
+    } else {
+      this.router.navigate([`/${item['link']}`]);
     }
   }
 }

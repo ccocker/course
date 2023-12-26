@@ -1,10 +1,33 @@
 import { Route } from '@angular/router';
-import { ResetPasswordComponent } from './common/features/auth/components/reset-password/reset-password.component';
-import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 import { HomeComponent } from './home/home.component';
 
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
+  {
+    path: ':collection',
+    loadChildren: () =>
+      import('./common/features/entity/entity.routes').then((r) => r.routes),
+  },
+  {
+    path: 'auth', // Parent route for all auth-required routes
+
+    children: [
+      {
+        path: 'course-schedule',
+        loadChildren: () =>
+          import('./course-schedule/course-schedule.routes').then(
+            (r) => r.routes
+          ),
+      },
+      {
+        path: ':collection',
+        loadChildren: () =>
+          import('./common/features/entity/entity.routes').then(
+            (r) => r.routes
+          ),
+      },
+    ],
+  },
   {
     path: 'global-feed',
     loadChildren: () =>
@@ -26,16 +49,6 @@ export const routes: Route[] = [
         (m) => m.routes
       ),
   },
-  {
-    path: 'course-schedule',
-    loadChildren: () =>
-      import('./course-schedule/course-schedule.routes').then((r) => r.routes),
-  },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  {
-    path: ':collection',
-    loadChildren: () =>
-      import('./common/features/entity/entity.routes').then((r) => r.routes),
-  },
+
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to Home
 ];
