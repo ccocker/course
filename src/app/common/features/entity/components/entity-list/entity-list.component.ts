@@ -2,14 +2,11 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModelFactory } from '@miCommon/services/model.factory';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import {
-  ConfirmDialogComponent,
-  openDialog,
-} from '@miCommon/features/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@miCommon/features/confirm-dialog/confirm-dialog.component';
 import { BaseModel } from '@miCommon/models/base.model';
 import { EntityStateService } from '@miCommon/services/entity-state.service';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay, filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { MiTableComponent } from '@miCommon/features/table/table.component';
 import { AsyncPipe, JsonPipe, NgIf, TitleCasePipe } from '@angular/common';

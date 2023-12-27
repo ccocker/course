@@ -103,7 +103,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.collection = 'tutorPreferences';
 
-    this.store.dispatch(authActions.getCurrentUser());
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({
         url: `${this.collection}`,
