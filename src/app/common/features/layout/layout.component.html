@@ -1,0 +1,64 @@
+@if(data$ | async; as data){
+
+<div
+  id="main-container"
+  [attr.dir]="appConfig.isRtl ? 'rtl' : 'ltr'"
+  *ngIf="data.currentUser"
+>
+  <mat-toolbar color="primary" [class.toolbar-rtl]="appConfig.isRtl">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="toolbar-title" *ngIf="appConfig.showAppTitle">{{
+      appConfig.title
+    }}</span>
+
+    <span class="menu-items">
+      <a
+        *ngFor="
+          let item of data.currentUser
+            ? appConfig.loggedInItems
+            : appConfig.loggedOutItems
+        "
+        href="javascript:void(0)"
+        (click)="onItemClick(item)"
+      >
+        {{ item }}
+      </a>
+      {{ data.currentUser?.email }}
+    </span>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    [class.mat-rtl]="appConfig.isRtl"
+    [class.mat-ltr]="!appConfig.isRtl"
+  >
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      opened="true"
+      [attr.dir]="appConfig.isRtl ? 'rtl' : 'ltr'"
+    >
+      <mat-nav-list>
+        <a
+          mat-list-item
+          *ngFor="let item of appConfig.sidenavMenuItems"
+          (click)="onItemClick(item)"
+        >
+          {{ item.title }}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <ng-content></ng-content>
+
+  <footer class="footer">
+    <span>&copy; Your Company. All rights reserved.</span>
+  </footer>
+</div>
+}

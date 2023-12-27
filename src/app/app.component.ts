@@ -16,6 +16,7 @@ import { combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from './common/features/auth/store/reducers';
 import { authActions } from './common/features/auth/store/actions';
+import { LayoutComponent } from './common/features/layout/layout.component';
 
 interface AppConfig {
   title: string;
@@ -41,6 +42,7 @@ interface AppConfig {
     MatListModule,
     MatSidenavModule,
     LoginComponent,
+    LayoutComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

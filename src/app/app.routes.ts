@@ -1,14 +1,13 @@
 import { Route } from '@angular/router';
 import { ResetPasswordComponent } from './common/features/auth/components/reset-password/reset-password.component';
-import { CourseScheduleComponent } from './course-schedule/course-schedule.component';
 import { HomeComponent } from './home/home.component';
-import { CourseScheduleGuard } from './shared/guards/course-schedule.guard';
-import { AuthGuard } from './shared/guards/auth.guard';
+import { LayoutComponent } from './common/features/layout/layout.component';
 
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
   {
     path: 'auth', // Parent route for all auth-required routes
+    component: LayoutComponent,
     canActivate: [], // Apply the AuthGuard here
     children: [
       {
