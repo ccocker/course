@@ -73,7 +73,6 @@ export const registerEffect = createEffect(
               'accessToken',
               mergedUser['stsTokenManager']['accessToken']
             );
-            console.log('Merged User:', mergedUser);
           }),
           map((mergedUser) => {
             return authActions.registerSuccess({ currentUser: mergedUser });
