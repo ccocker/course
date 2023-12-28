@@ -532,6 +532,7 @@ export class ScheduleService {
   private getOfferings(): IOffering[] {
     const offerings: IOffering[] = [
       {
+        courseCode: 'BC1',
         startDate: new Date('2024-03-04T08:30:00'),
         finishDate: new Date('2024-06-30T23:59:00'),
         teachStartDate: new Date('2024-03-04T08:30:00'),

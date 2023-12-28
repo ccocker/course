@@ -93,6 +93,90 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   });
   collection!: string;
 
+  coursesupload = [
+    {
+      code: 'BC1',
+      name: 'Programming Bootcamp 1',
+      description: '...',
+      baseColour: '#FF8C00',
+    },
+    {
+      code: 'BC2',
+      name: 'Programming Bootcamp 2',
+      description: '...',
+      baseColour: '#3399FF',
+    },
+    {
+      code: 'WBC',
+      name: 'Web Bootcamp',
+      description: '...',
+      baseColour: '#3399FF',
+    },
+    {
+      code: 'PS1',
+      name: 'Programming Studio 1',
+      description: '...',
+      baseColour: '#FF8C00',
+    },
+    {
+      code: 'PS2',
+      name: 'Programming Studio 2',
+      description: '...',
+      baseColour: '#3399FF',
+    },
+    {
+      code: 'WS',
+      name: 'Web Studio',
+      description: '...',
+      baseColour: '#3399FF',
+    },
+  ];
+
+  offering = [
+    {
+      courseCode: 'BC1',
+      startDate: '2024-03-04',
+      finishDate: '2024-06-30',
+      teachStartDate: '2024-03-04',
+      teachFinishDate: '2024-04-21',
+    },
+    {
+      courseCode: 'BC2',
+      startDate: '2024-03-04',
+      finishDate: '2024-06-30',
+      teachStartDate: '2024-03-04',
+      teachFinishDate: '2024-04-21',
+    },
+    {
+      courseCode: 'WBC',
+      startDate: '2024-03-04',
+      finishDate: '2024-06-30',
+      teachStartDate: '2024-03-04',
+      teachFinishDate: '2024-04-21',
+    },
+    {
+      courseCode: 'PS1',
+      startDate: '2024-03-04',
+      finishDate: '2024-06-30',
+      teachStartDate: '2024-04-22',
+      teachFinishDate: '2024-06-30',
+    },
+    {
+      courseCode: 'PS2',
+      startDate: '2024-03-04',
+      finishDate: '2024-06-30',
+      teachStartDate: '2024-04-22',
+      teachFinishDate: '2024-06-30',
+    },
+    {
+      courseCode: 'WS',
+      startDate: '2024-03-04',
+      finishDate: '2024-06-30',
+      teachStartDate: '2024-04-22',
+      teachFinishDate: '2024-06-30',
+    },
+  ];
+
   constructor(
     public scheduleService: ScheduleService,
     private store: Store,
@@ -101,7 +185,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.collection = 'tutorPreferences';
+    this.collection = 'course-schedules';
 
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({
@@ -535,7 +619,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     const convertedArray = this.schedule.map((item) =>
       this.convertToPlainObject(item.course)
     );
-    this.firestoreDataService.uploadBulkData('courses', convertedArray, true);
+    this.firestoreDataService.uploadBulkData('offerings', this.offering, true);
   }
 
   convertToPlainObject = (obj: any): any => {

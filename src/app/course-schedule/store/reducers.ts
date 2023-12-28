@@ -10,7 +10,7 @@ const initialState: CourseScheduleStateInterface = {
 };
 
 const courseScheduleFeature = createFeature({
-  name: 'courseSchedule',
+  name: 'course-schedules',
   reducer: createReducer(
     initialState,
 

@@ -14,13 +14,9 @@ export class Course extends BaseModel implements ICourse {
   public name: string = '';
   public description: string = '';
   public code: string = '';
-  public color: string = '';
-  public groups: string[] = [];
-  public teachingSkills: any = {} as ITeachingSkills;
-  public startDate: Date = new Date();
-  public endDate: Date = new Date();
-  public coordinator: IStaff = {} as IStaff;
   public baseColour: string = '';
+  public teachingSkills: any = {} as ITeachingSkills;
+  public coordinator: IStaff = {} as IStaff;
 
   /**
    * Constructor to initialize Class instance.
@@ -52,20 +48,19 @@ export class Course extends BaseModel implements ICourse {
    */
   private configureProperties(): void {
     this.listProperties = [
-      'name',
       'code',
+      'name',
+      'description',
+      'baseColour',
       'coordinator',
-      'startDate',
-      'endDate',
     ];
     this.formProperties = [
       'id',
       'name',
       'description',
       'code',
+      'baseColour',
       'teachingSkills',
-      'startDate',
-      'endDate',
       'coordinator',
     ];
   }
