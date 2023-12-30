@@ -5,7 +5,7 @@ import { IOfferingGroup } from '../../course-schedule/interfaces/schedule.interf
  * OfferingGroup model representing a group of offerings, including group capacity.
  * This class extends the BaseModel.
  */
-export class OfferingGroup extends BaseModel implements IOfferingGroup {
+export class Offeringgroup extends BaseModel implements IOfferingGroup {
   public offeringCode: any = null;
   public leadCode: any = null;
   public group: number = 0;
@@ -15,7 +15,7 @@ export class OfferingGroup extends BaseModel implements IOfferingGroup {
    * Constructor to initialize Class instance.
    * @param initialData Optional partial class data to initialize the instance.
    */
-  constructor(initialData?: Partial<OfferingGroup>) {
+  constructor(initialData?: Partial<Offeringgroup>) {
     super(initialData ?? {});
     this.defaultSortField = 'group';
     this.sortOrderAscending = true;
@@ -28,12 +28,12 @@ export class OfferingGroup extends BaseModel implements IOfferingGroup {
    * Assign initial values to Class instance properties.
    * @param initialData Optional partial class data to merge with default values.
    */
-  private assignInitialValues(initialData?: Partial<OfferingGroup>): void {
+  private assignInitialValues(initialData?: Partial<Offeringgroup>): void {
     // Merge default values with initialData
-    const mergedData: OfferingGroup = {
+    const mergedData: Offeringgroup = {
       ...this,
       ...initialData,
-    } as OfferingGroup;
+    } as Offeringgroup;
 
     // Assign mergedData to properties
     Object.assign(this, mergedData);
