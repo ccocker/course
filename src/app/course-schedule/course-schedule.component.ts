@@ -177,6 +177,51 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     },
   ];
 
+  offeringGroups: any[] = [
+    {
+      group: 'G1',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+    {
+      group: 'G2',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+    {
+      group: 'G3',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+    {
+      group: 'G4',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+    {
+      group: 'G5',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+    {
+      group: 'G6',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+    {
+      group: 'G7',
+      offeringCode: 'BC1',
+      leadCode: 'E07582',
+      groupCapacity: 20,
+    },
+  ];
+
   constructor(
     public scheduleService: ScheduleService,
     private store: Store,
@@ -589,7 +634,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
         classNumber,
         offeringGroup: {
           group: offeringGroupNumber,
-          offering: { startDate }, // Destructure the startDate from the offering object
+          offeringCode: { startDate }, // Destructure the startDate from the offering object
         },
       },
     } = event;
@@ -619,7 +664,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     const convertedArray = this.schedule.map((item) =>
       this.convertToPlainObject(item.course)
     );
-    this.firestoreDataService.uploadBulkData('offerings', this.offering, true);
+    this.firestoreDataService.uploadBulkData(
+      'offeringgroups',
+      this.offeringGroups,
+      true
+    );
   }
 
   convertToPlainObject = (obj: any): any => {

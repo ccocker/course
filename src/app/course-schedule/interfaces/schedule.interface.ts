@@ -52,10 +52,10 @@ export interface IOffering {
 }
 
 export interface IOfferingGroup {
-  lead: IPerson;
+  offeringCode: any;
+  leadCode: any;
   group: number;
   groupCapacity: number;
-  offering: IOffering;
 }
 
 export interface IRoom {

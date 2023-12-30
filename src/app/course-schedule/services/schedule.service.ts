@@ -529,7 +529,7 @@ export class ScheduleService {
     return classes;
   }
 
-  private getOfferings(): IOffering[] {
+  private getOfferings(): string {
     const offerings: IOffering[] = [
       {
         courseCode: 'BC1',
@@ -539,76 +539,76 @@ export class ScheduleService {
         teachFinishDate: new Date('2024-04-30T08:30:00'),
       },
     ];
-    return offerings;
+    return 'offerings';
   }
 
   private getOfferingGroups(): IOfferingGroup[] {
     const group: IOfferingGroup[] = [
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 1,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[1],
+        leadCode: this.getStaff()[1],
         group: 2,
         groupCapacity: 150,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 3,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[1],
+        leadCode: this.getStaff()[1],
         group: 4,
         groupCapacity: 150,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 5,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[1],
+        leadCode: this.getStaff()[1],
         group: 6,
         groupCapacity: 150,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 7,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 1,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 2,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 1,
         groupCapacity: 120,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
       {
-        lead: this.getStaff()[0],
+        leadCode: this.getStaff()[0],
         group: 2,
         groupCapacity: 60,
-        offering: this.getOfferings()[0],
+        offeringCode: this.getOfferings()[0],
       },
     ];
     return group;
