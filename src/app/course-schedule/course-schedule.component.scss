@@ -13,9 +13,8 @@ body {
   margin-bottom: 20px;
 
   .panel {
-    border: 1px solid #ccc;
     padding: 10px;
-    border-radius: 5px;
+
     max-width: 200px;
     margin-top: 10px;
     flex: 1; // Make panels flexible in size
@@ -24,7 +23,7 @@ body {
       margin-top: 0;
     }
 
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       margin-right: 5px;
     }
   }
@@ -39,9 +38,7 @@ body {
     font-size: 8px;
     margin: 5px;
     padding: 5px 10px;
-    transition:
-      background-color 0.3s,
-      box-shadow 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
   }
 
   .panel button:hover {
@@ -212,7 +209,7 @@ button.mat-icon-button {
   margin-right: 8px;
 }
 
-.radio-option input[type='radio'] {
+.radio-option input[type="radio"] {
   width: 10px;
   height: 10px;
   margin: 0;

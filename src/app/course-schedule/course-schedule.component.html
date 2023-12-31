@@ -188,9 +188,9 @@
           {{ event?.class?.timeslot?.startTime }} -
           {{ event?.class?.timeslot?.endTime }}<br /><br />
           <!-- <b
-          >{{ event?.class?.lead[0]?.firstName }}
-          {{ event?.class?.lead[0]?.lastName }}</b
-        ><br /> -->
+            >{{ event?.class?.lead[0]?.firstName }}
+            {{ event?.class?.lead[0]?.lastName }}</b
+          ><br /> -->
           <div *ngFor="let tutor of event?.class?.staff">
             {{ tutor?.firstName }} {{ tutor?.lastName }}<br />
           </div>

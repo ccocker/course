@@ -12,7 +12,7 @@ import {
   IScheduleEvent,
 } from './interfaces/schedule.interface';
 import { Store } from '@ngrx/store';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, map, startWith } from 'rxjs';
 import { selectCurrentUser } from '@src/src/app/common/features/auth/store/reducers';
 import { Subscription } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
@@ -27,7 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { courseScheduleActions } from './store/course-schedules/actions';
 import { FirestoreDataService } from '@miCommon/services/firestore.data';
 import { selectEntities } from './store/course-schedules/reducers';
-import { selectEntities as peopleEntities } from '../common/features/entity/store/reducers';
+import { selectEntities as selectPeopleEntities } from '../common/features/entity/store/reducers';
 import { entityActions } from '../common/features/entity/store/actions';
 import { coursesActions } from '../course-schedule/store/courses/actions';
 import { selectCourses } from './store/courses/reducers';
@@ -35,6 +35,10 @@ import { offeringsActions } from './store/offering/actions';
 import { offeringgroupsActions } from './store/offering-groups/actions';
 import { roomsActions } from './store/rooms/actions';
 import { groupClassesActions } from './store/group-classes/actions';
+import { selectRooms } from './store/rooms/reducers';
+import { selectOfferings } from './store/offering/reducers';
+import { selectOfferingGroups } from './store/offering-groups/reducers';
+import { selectGroupClasses } from './store/group-classes/reducers';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -99,7 +103,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   data$ = combineLatest({
     currentUser: this.store.select(selectCurrentUser),
     courses: this.store.select(selectCourses),
-    people: this.store.select(peopleEntities),
+    offerings: this.store.select(selectOfferings),
+    offeringgroups: this.store.select(selectOfferingGroups),
+    groupclasses: this.store.select(selectGroupClasses),
+    people: this.store.select(selectPeopleEntities),
+    rooms: this.store.select(selectRooms),
   });
   collection!: string;
 
@@ -626,15 +634,90 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
     );
-    this.people$ = this.store.select(peopleEntities);
+    this.people$ = this.store.select(selectPeopleEntities);
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({
         url: `${this.collection}`,
       })
     );
-    this.data$.subscribe((data) => {
-      console.log(data);
+    this.data$.subscribe((originalData) => {
+      const firstFiveRecords = Object.keys(originalData).reduce(
+        (accumulatedData, key) => {
+          if (Array.isArray(originalData[key])) {
+            accumulatedData[key] = originalData[key].slice(0, 1);
+          }
+          return accumulatedData;
+        },
+        {}
+      );
+
+      console.log('First 1 record of each array:', firstFiveRecords);
     });
+
+    const data$ = combineLatest({
+      courses: this.store.select(selectCourses).pipe(startWith([])),
+      offerings: this.store.select(selectOfferings).pipe(startWith([])),
+      offeringgroups: this.store
+        .select(selectOfferingGroups)
+        .pipe(startWith([])),
+      groupclasses: this.store.select(selectGroupClasses).pipe(startWith([])),
+      people: this.store.select(selectPeopleEntities).pipe(startWith([])),
+      rooms: this.store.select(selectRooms).pipe(startWith([])),
+    });
+
+    const schedule$ = data$.pipe(
+      map(
+        ({
+          courses,
+          offerings,
+          offeringgroups,
+          groupclasses,
+          people,
+          rooms,
+        }) => {
+          return (groupclasses || []).map((groupclass) => {
+            const offering = (offerings || []).find(
+              (o) => o.courseCode === groupclass.offeringGroupCode
+            );
+            const course = (courses || []).find(
+              (c) => c.code === offering?.courseCode
+            );
+            const offeringGroup = (offeringgroups || []).find(
+              (og) => og.group === groupclass.groupNumber
+            );
+            const room = (rooms || []).find(
+              (r) => r.roomNumber === groupclass.roomCode
+            );
+            const instructor = (people || []).find(
+              (p) => p.miId === offeringGroup?.leadCode
+            );
+
+            // Constructing classReference
+            const classReference = `${offeringGroup?.offeringCode}-${groupclass.classNumber} & ${room?.floor}`;
+
+            return {
+              classReference,
+              classNumber: groupclass.classNumber,
+              day: groupclass.day,
+              startTime: groupclass.startTime,
+              endTime: groupclass.endTime,
+              courseName: course?.name,
+              instructorName: instructor
+                ? `${instructor.firstName} ${instructor.lastName}`
+                : '',
+              roomCapacity: room?.capacity,
+              // Additional properties...
+            };
+          });
+        }
+      )
+    );
+
+    schedule$.subscribe((schedule) => {
+      console.log(schedule);
+      // Handle the combined schedule data as needed
+    });
+
     this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
       this.currentUser = currentUser;
       this.coursesList = this.scheduleService.getAllCourses();
@@ -658,6 +741,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     });
     this.filteredStaffList = this.staffList;
     this.schedule = this.scheduleService.getSchedule();
+    console.log('Schedule:', this.schedule.slice(0, 1));
 
     this.determineEarliestStartTime();
 

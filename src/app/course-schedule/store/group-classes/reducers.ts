@@ -72,13 +72,13 @@ export const {
 export const selectEntityState = (state: Record<string, any>) =>
   state[groupClassesFeatureKey];
 
-export const selectGroupClasss = createSelector(
+export const selectGroupClasses = createSelector(
   selectEntityState,
   (state: CourseScheduleStateInterface) => state?.data
 );
 
 // Assuming you have a selector to get all entities
 export const selectEntityById = createSelector(
-  selectGroupClasss,
+  selectGroupClasses,
   (entities, props) => entities.find((entity) => entity.id === props.id)
 );

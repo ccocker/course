@@ -72,7 +72,6 @@ export const getOfferingGroupsTestEffect = createEffect(
   (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
     return actions$.pipe(
       ofType(offeringgroupsActions.getOfferingGroups),
-      tap(() => console.log('Test Effect Triggered')),
       map(() =>
         offeringgroupsActions.getOfferingGroupsSuccess({ offeringgroups: [] })
       )
@@ -85,12 +84,9 @@ export const getOfferingGroupsEffect = createEffect(
   (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
     return actions$.pipe(
       ofType(offeringgroupsActions.getOfferingGroups),
-      tap((action) => console.log('Offering Groups Effect:', action)),
       switchMap((action) => {
-        console.log('Get Offering Group Action:', action);
         return dataService.getEntities<any>(action.url).pipe(
           map((offeringgroups) => {
-            console.log('Get Offering Group Action:', offeringgroups);
             return offeringgroupsActions.getOfferingGroupsSuccess({
               offeringgroups,
             });
