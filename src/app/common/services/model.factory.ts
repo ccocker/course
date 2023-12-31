@@ -13,6 +13,8 @@ export class ModelFactory {
       modelName = this.customSingularConversions.get(route) ?? '';
     } else if (route.endsWith('ies')) {
       modelName = route.slice(0, -3) + 'y';
+    } else if (route.endsWith('es')) {
+      modelName = route.slice(0, -2);
     } else if (route.endsWith('s')) {
       modelName = route.slice(0, -1);
     } else {

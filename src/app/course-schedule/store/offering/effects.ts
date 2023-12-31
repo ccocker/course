@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { FirestoreDataService } from '@miCommon/services/firestore.data';
-import { courseScheduleActions } from './actions';
+import { offeringsActions } from './actions';
 
 export const createCourseScheduleEffect = createEffect(
   (
@@ -12,45 +12,17 @@ export const createCourseScheduleEffect = createEffect(
     entityService = inject(FirestoreDataService)
   ) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.createCourseSchedule),
-      switchMap(({ url, courseSchedule }) => {
-        return entityService.createEntity(url, courseSchedule).pipe(
-          map((courseSchedule) =>
-            courseScheduleActions.createCourseScheduleSuccess({
-              courseSchedule,
+      ofType(offeringsActions.createOffering),
+      switchMap(({ url, offering }) => {
+        return entityService.createEntity(url, offering).pipe(
+          map((offering) =>
+            offeringsActions.createOfferingSuccess({
+              offering,
             })
           ),
           catchError((error) =>
             of(
-              courseScheduleActions.createCourseScheduleFailure({
-                errors: error,
-              })
-            )
-          )
-        );
-      })
-    );
-  },
-  { functional: true }
-);
-
-export const createTutorPreferencesEffect = createEffect(
-  (
-    actions$ = inject(Actions),
-    entityService = inject(FirestoreDataService)
-  ) => {
-    return actions$.pipe(
-      ofType(courseScheduleActions.createTutorPreferences),
-      switchMap(({ url, tutorPreferences }) => {
-        return entityService.createEntity(url, tutorPreferences).pipe(
-          map((tutorPreferences) =>
-            courseScheduleActions.createTutorPreferencesSuccess({
-              tutorPreferences,
-            })
-          ),
-          catchError((error) =>
-            of(
-              courseScheduleActions.createTutorPreferencesFailure({
+              offeringsActions.createOfferingFailure({
                 errors: error,
               })
             )
@@ -65,9 +37,9 @@ export const createTutorPreferencesEffect = createEffect(
 export const redirectAfterCreateEffect = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.createCourseScheduleSuccess),
-      tap((action: { courseSchedule: { url: string; id: string } }) => {
-        const { url, id } = action.courseSchedule; // Assuming these are properties of the course schedule
+      ofType(offeringsActions.createOfferingSuccess),
+      tap((action: { offering: { url: string; id: string } }) => {
+        const { url, id } = action.offering; // Assuming these are properties of the course schedule
         router.navigate([url, id]); // Use router.navigate to go to the specified path
       })
     );
@@ -75,19 +47,19 @@ export const redirectAfterCreateEffect = createEffect(
   { functional: true, dispatch: false }
 );
 
-export const getCourseScheduleEffect = createEffect(
+export const getCourseEffect = createEffect(
   (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.getCourseSchedule),
+      ofType(offeringsActions.getOffering),
       switchMap((action) => {
         return dataService.getEntity<any>(action.url, action.id).pipe(
-          map((courseSchedule) => {
-            return courseScheduleActions.getCourseScheduleSuccess({
-              courseSchedule,
+          map((offerings) => {
+            return offeringsActions.getOfferingsSuccess({
+              offerings,
             });
           }),
           catchError((error) => {
-            return of(courseScheduleActions.getCourseScheduleFailure());
+            return of(offeringsActions.getOfferingsFailure());
           })
         );
       })
@@ -96,19 +68,19 @@ export const getCourseScheduleEffect = createEffect(
   { functional: true }
 );
 
-export const getEntitiesEffect = createEffect(
+export const getOfferingsEffect = createEffect(
   (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.getCourseSchedules),
+      ofType(offeringsActions.getOfferings),
       switchMap((action) => {
         return dataService.getEntities<any>(action.url).pipe(
-          map((courseSchedules) => {
-            return courseScheduleActions.getCourseSchedulesSuccess({
-              courseSchedules,
+          map((offerings) => {
+            return offeringsActions.getOfferingsSuccess({
+              offerings,
             });
           }),
           catchError((error) => {
-            return of(courseScheduleActions.getCourseSchedulesFailure());
+            return of(offeringsActions.getOfferingsFailure());
           })
         );
       })
@@ -123,14 +95,14 @@ export const deleteCourseScheduleEffect = createEffect(
     entityService = inject(FirestoreDataService)
   ) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.deleteCourseSchedule),
+      ofType(offeringsActions.deleteOfferings),
       switchMap(({ url, id }) => {
         return entityService.deleteEntity(url, id).pipe(
           map(() => {
-            return courseScheduleActions.deleteCourseScheduleSuccess();
+            return offeringsActions.deleteOfferingsSuccess();
           }),
           catchError(() => {
-            return of(courseScheduleActions.deleteCourseScheduleFailure());
+            return of(offeringsActions.deleteOfferingsFailure());
           })
         );
       })
@@ -142,7 +114,7 @@ export const deleteCourseScheduleEffect = createEffect(
 export const redirectAfterDeleteEffect = createEffect(
   (actions$ = inject(Actions), location = inject(Location)) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.deleteCourseScheduleSuccess),
+      ofType(offeringsActions.deleteOfferingsSuccess),
       tap(() => {
         location.back();
       })

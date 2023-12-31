@@ -68,7 +68,7 @@ export const selectEntityState = (state: Record<string, any>) =>
 
 export const selectEntities = createSelector(
   selectEntityState,
-  (state: EntityStateInterface) => state.data
+  (state: EntityStateInterface) => state?.data
 );
 
 // Assuming you have a selector to get all entities

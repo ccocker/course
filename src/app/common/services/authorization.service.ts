@@ -9,8 +9,6 @@ export class AuthService {
   constructor() {}
 
   hasPermission(user: Person, requiredPermission: IPermission): boolean {
-    console.log('Checking permissions for user: ', user.userDetail);
-
     // Check if roles is an object and permissions is an array
     if (
       user.userDetail.roles &&

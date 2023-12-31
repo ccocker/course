@@ -66,13 +66,13 @@ export interface IRoom {
 }
 
 export interface IGroupClasses {
+  offeringGroupCode: any;
+  roomCode: any;
+  leadCode: any;
+  staffCodes: any[];
   classNumber: number;
   day: DayOfWeek;
   timeslot: ITimeslot;
-  room: IRoom;
-  lead: any;
-  staff: IPerson[];
-  offeringGroup: IOfferingGroup;
 }
 
 export interface IScheduleEvent {

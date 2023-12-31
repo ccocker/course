@@ -179,7 +179,6 @@ export class EntityDetailsComponent implements OnInit {
   removeBackground() {}
 
   deleteEntity(id: string) {
-    console.log('deleteEntity', this.collection, id);
     this.store.dispatch(
       entityActions.deleteEntity({ url: this.collection, id: id })
     );

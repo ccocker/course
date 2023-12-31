@@ -12,9 +12,8 @@ import {
   IScheduleEvent,
 } from './interfaces/schedule.interface';
 import { Store } from '@ngrx/store';
-import { combineLatest } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { selectCurrentUser } from '@src/src/app/common/features/auth/store/reducers';
-import { authActions } from '@src/src/app/common/features/auth/store/actions';
 import { Subscription } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,8 +24,17 @@ import { IPerson } from '@miCommon/interfaces';
 import { DynamicFormComponent } from '../common/features/dynamic-form/dynamic-form.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
-import { courseScheduleActions } from './store/actions';
+import { courseScheduleActions } from './store/course-schedules/actions';
 import { FirestoreDataService } from '@miCommon/services/firestore.data';
+import { selectEntities } from './store/course-schedules/reducers';
+import { selectEntities as peopleEntities } from '../common/features/entity/store/reducers';
+import { entityActions } from '../common/features/entity/store/actions';
+import { coursesActions } from '../course-schedule/store/courses/actions';
+import { selectCourses } from './store/courses/reducers';
+import { offeringsActions } from './store/offering/actions';
+import { offeringgroupsActions } from './store/offering-groups/actions';
+import { roomsActions } from './store/rooms/actions';
+import { groupClassesActions } from './store/group-classes/actions';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -90,6 +98,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 */
   data$ = combineLatest({
     currentUser: this.store.select(selectCurrentUser),
+    courses: this.store.select(selectCourses),
+    people: this.store.select(peopleEntities),
   });
   collection!: string;
 
@@ -222,6 +232,377 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     },
   ];
 
+  people$: Observable<any>;
+
+  rooms = [
+    { roomCode: '012.10.006', capacity: '150' },
+    { roomCode: '012.10.005', capacity: '120' },
+    { roomCode: '014.09.023', capacity: '60' },
+  ];
+
+  groupClasses = [
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G1',
+      classNumber: '1',
+      day: 'M',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G1',
+      classNumber: '2',
+      day: 'T',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G1',
+      classNumber: '3',
+      day: 'W',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G1',
+      classNumber: '4',
+      day: 'F',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G2',
+      classNumber: '1',
+      day: 'M',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G2',
+      classNumber: '2',
+      day: 'T',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G2',
+      classNumber: '3',
+      day: 'W',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G2',
+      classNumber: '4',
+      day: 'F',
+      startTime: '08:30',
+      endTime: '10:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G3',
+      classNumber: '1',
+      day: 'M',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G3',
+      classNumber: '2',
+      day: 'T',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G3',
+      classNumber: '3',
+      day: 'W',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G3',
+      classNumber: '4',
+      day: 'F',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G4',
+      classNumber: '1',
+      day: 'M',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G4',
+      classNumber: '2',
+      day: 'T',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G4',
+      classNumber: '3',
+      day: 'W',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G4',
+      classNumber: '4',
+      day: 'F',
+      startTime: '10:30',
+      endTime: '12:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G5',
+      classNumber: '1',
+      day: 'M',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G5',
+      classNumber: '2',
+      day: 'T',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G5',
+      classNumber: '3',
+      day: 'W',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G5',
+      classNumber: '4',
+      day: 'F',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G6',
+      classNumber: '1',
+      day: 'M',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G6',
+      classNumber: '2',
+      day: 'T',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G6',
+      classNumber: '3',
+      day: 'W',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC1',
+      groupNumber: 'G6',
+      classNumber: '4',
+      day: 'F',
+      startTime: '12:30',
+      endTime: '14:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G1',
+      classNumber: '1',
+      day: 'M',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G1',
+      classNumber: '2',
+      day: 'T',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G1',
+      classNumber: '3',
+      day: 'W',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G1',
+      classNumber: '4',
+      day: 'TH',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G2',
+      classNumber: '1',
+      day: 'M',
+      startTime: '16:30',
+      endTime: '18:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G2',
+      classNumber: '2',
+      day: 'T',
+      startTime: '16:30',
+      endTime: '18:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G2',
+      classNumber: '3',
+      day: 'W',
+      startTime: '16:30',
+      endTime: '18:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'BC2',
+      groupNumber: 'G2',
+      classNumber: '4',
+      day: 'TH',
+      startTime: '16:30',
+      endTime: '18:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G1',
+      classNumber: '1',
+      day: 'M',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G1',
+      classNumber: '2',
+      day: 'T',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G1',
+      classNumber: '3',
+      day: 'TH',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.006',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G1',
+      classNumber: 4,
+      day: 'F',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G2',
+      classNumber: 1,
+      day: 'M',
+      startTime: '09:30',
+      endTime: '11:30',
+      roomCode: '014.09.023',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G2',
+      classNumber: 2,
+      day: 'T',
+      startTime: '14:30',
+      endTime: '16:30',
+      roomCode: '014.09.023',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G2',
+      classNumber: 3,
+      day: 'TH',
+      startTime: '09:00',
+      endTime: '11:00',
+      roomCode: '012.10.005',
+    },
+    {
+      offeringGroupCode: 'WBC',
+      groupNumber: 'G2',
+      classNumber: 4,
+      day: 'FR',
+      startTime: '08:30',
+      endTime: '11:30',
+      roomCode: '014.09.023',
+    },
+  ];
+
   constructor(
     public scheduleService: ScheduleService,
     private store: Store,
@@ -230,13 +611,30 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.collection = 'course-schedules';
+    this.collection = 'courseschedules';
+    this.store.dispatch(entityActions.getEntities({ url: 'people' }));
+    this.store.dispatch(coursesActions.getCourses({ url: 'courses' }));
 
+    this.store.dispatch(offeringsActions.getOfferings({ url: 'offerings' }));
+    this.store.dispatch(
+      offeringgroupsActions.getOfferingGroups({ url: 'offeringgroups' })
+    );
+    this.store.dispatch(roomsActions.getRooms({ url: 'rooms' }));
+    this.store.dispatch(
+      groupClassesActions.getGroupClasses({ url: 'groupclasses' })
+    );
+    this.store.dispatch(
+      courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
+    );
+    this.people$ = this.store.select(peopleEntities);
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({
         url: `${this.collection}`,
       })
     );
+    this.data$.subscribe((data) => {
+      console.log(data);
+    });
     this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
       this.currentUser = currentUser;
       this.coursesList = this.scheduleService.getAllCourses();
@@ -272,10 +670,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     this.weekdays.push(DayOfWeek.Wednesday);
     this.weekdays.push(DayOfWeek.Thursday);
     this.weekdays.push(DayOfWeek.Friday);
-    console.log();
 
     this.groupColours = this.scheduleService.generateColorShades();
-    console.log();
   }
 
   toggleUnderstaffedFilter() {
@@ -381,9 +777,9 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
   isUnderstaffed(event: IScheduleEvent): boolean {
     const requiredStaff = this.scheduleService.calculateTutors(
-      event.class.offeringGroup.groupCapacity
+      event.class.offeringGroupCode['groupCapacity']
     );
-    const assignedStaff = event.class.staff.length;
+    const assignedStaff = event.class['staff']?.length;
     return assignedStaff < requiredStaff;
   }
 
@@ -428,12 +824,15 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   shouldDisplayEvent(event: IScheduleEvent): boolean {
     const isCourseSelected = this.selectedCourses.includes(event.course.code);
     const isAnyStaffSelected =
-      event.class.staff.some((staff) =>
-        this.selectedStaff.includes(staff.miId)
-      ) || this.selectedStaff.includes(event.class.lead[0].miId);
+      event.class['staff']?.some((staff) =>
+        this.selectedStaff?.includes(staff.miId)
+      ) || '1';
 
     // Check if no courses or no staff are selected
-    if (this.selectedCourses.length === 0 || this.selectedStaff.length === 0) {
+    if (
+      this.selectedCourses?.length === 0 ||
+      this.selectedStaff?.length === 0
+    ) {
       return false;
     }
 
@@ -579,7 +978,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
   getEventColor(event: IScheduleEvent): string {
     const courseCode = event.course.code;
-    const groupNumber = event.class.offeringGroup.group;
+    const groupNumber = event.class.offeringGroupCode['group'];
 
     // Access the specific shade for the group.
     // The group number is used to directly access the correct shade.
@@ -595,13 +994,13 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   formatNumber(num: number, pad: number, padChar: string): string {
-    return num.toString().padStart(pad, padChar);
+    return num?.toString().padStart(pad, padChar);
   }
 
   getSelectDisplayValue(selectedValues: any[]): string {
-    if (selectedValues.length > 1) {
+    if (selectedValues?.length > 1) {
       return 'Multiple Selections';
-    } else if (selectedValues.length === 1) {
+    } else if (selectedValues?.length === 1) {
       return selectedValues[0]; // Assuming this is the display value you want
     }
     return ''; // Default display value when nothing is selected
@@ -609,9 +1008,9 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
   isOverstaffed(event: IScheduleEvent): boolean {
     const requiredStaff = this.scheduleService.calculateTutors(
-      event.class.offeringGroup.groupCapacity
+      event.class.offeringGroupCode['groupCapacity']
     );
-    const assignedStaff = event.class.staff.length;
+    const assignedStaff = event.class['staff']?.length;
     return assignedStaff > requiredStaff;
   }
 
@@ -632,7 +1031,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       course: { code: courseCode },
       class: {
         classNumber,
-        offeringGroup: {
+        offeringGroupCode: {
           group: offeringGroupNumber,
           offeringCode: { startDate }, // Destructure the startDate from the offering object
         },
@@ -650,7 +1049,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       startDate, // Include the startDate in the preference data
     };
 
-    console.log(event, priority, preferenceData);
     this.store.dispatch(
       courseScheduleActions.createTutorPreferences({
         url: this.collection,
@@ -660,13 +1058,12 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   bulkUpload() {
-    console.log(this.schedule);
     const convertedArray = this.schedule.map((item) =>
       this.convertToPlainObject(item.course)
     );
     this.firestoreDataService.uploadBulkData(
-      'offeringgroups',
-      this.offeringGroups,
+      'groupclasses',
+      this.groupClasses,
       true
     );
   }

@@ -43,9 +43,10 @@ const providers = [
   provideStoreDevtools({
     maxAge: 25,
     logOnly: isDevMode(),
-    autoPause: true,
-    trace: false,
+    autoPause: false,
+    trace: true,
     traceLimit: 75,
+    connectInZone: true,
   }),
 ];
 

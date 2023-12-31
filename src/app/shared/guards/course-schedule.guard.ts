@@ -32,7 +32,6 @@ export class CourseScheduleGuard implements CanActivate {
       select(selectCurrentUser),
       take(1),
       map((currentUser) => {
-        console.log('Current user: ', currentUser);
         if (!currentUser) {
           console.error('No current user found');
           this.router.navigate(['/login']);

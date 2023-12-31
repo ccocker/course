@@ -1,6 +1,6 @@
 import { routerNavigationAction } from '@ngrx/router-store';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { CourseScheduleStateInterface } from '../interfaces/courseScheduleState.interface';
+import { CourseScheduleStateInterface } from '../../interfaces/courseScheduleState.interface';
 import { courseScheduleActions } from './actions';
 
 const initialState: CourseScheduleStateInterface = {
@@ -10,7 +10,7 @@ const initialState: CourseScheduleStateInterface = {
 };
 
 const courseScheduleFeature = createFeature({
-  name: 'course-schedules',
+  name: 'courseschedules',
   reducer: createReducer(
     initialState,
 
@@ -95,7 +95,7 @@ export const selectEntityState = (state: Record<string, any>) =>
 
 export const selectEntities = createSelector(
   selectEntityState,
-  (state: CourseScheduleStateInterface) => state.data
+  (state: CourseScheduleStateInterface) => state?.data
 );
 
 // Assuming you have a selector to get all entities

@@ -92,10 +92,7 @@ export class FirebaseAuthService implements IAuthService {
           );
         } else {
           return from(this.registerAccount(credentials)).pipe(
-            map((response) => response.user), // Extracting the user object
-            tap((user) => {
-              console.log('User object:', user); // Logging the user object
-            })
+            map((response) => response.user) // Extracting the user object
           );
         }
       }),
