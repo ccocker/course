@@ -110,7 +110,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     rooms: this.store.select(selectRooms),
   });
   collection!: string;
-
+  schedule1$: Observable<any>;
   coursesupload = [
     {
       code: 'BC1',
@@ -641,6 +641,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       })
     );
     this.data$.subscribe((originalData) => {
+      console.log('Original data:', originalData);
       const firstFiveRecords = Object.keys(originalData).reduce(
         (accumulatedData, key) => {
           if (Array.isArray(originalData[key])) {
@@ -650,8 +651,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
         },
         {}
       );
-
-      console.log('First 1 record of each array:', firstFiveRecords);
     });
 
     const data$ = combineLatest({
@@ -665,7 +664,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       rooms: this.store.select(selectRooms).pipe(startWith([])),
     });
 
-    const schedule$ = data$.pipe(
+    this.schedule1$ = data$.pipe(
       map(
         ({
           courses,
@@ -675,6 +674,12 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
           people,
           rooms,
         }) => {
+          // Assuming the first record in 'people' array has the lead's data
+          const lead =
+            people && people.length > 0
+              ? `${people[0].firstName} ${people[0].lastName}`
+              : '';
+
           return (groupclasses || []).map((groupclass) => {
             const offering = (offerings || []).find(
               (o) => o.courseCode === groupclass.offeringGroupCode
@@ -702,18 +707,17 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
               startTime: groupclass.startTime,
               endTime: groupclass.endTime,
               courseName: course?.name,
-              instructorName: instructor
+              lead: instructor
                 ? `${instructor.firstName} ${instructor.lastName}`
                 : '',
               roomCapacity: room?.capacity,
-              // Additional properties...
             };
           });
         }
       )
     );
 
-    schedule$.subscribe((schedule) => {
+    this.schedule1$.subscribe((schedule) => {
       console.log(schedule);
       // Handle the combined schedule data as needed
     });
