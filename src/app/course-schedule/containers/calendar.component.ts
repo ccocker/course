@@ -81,7 +81,34 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       endTime: '12:00',
       description: 'Project Planning Session',
     },
-    // Add more events as needed
+    {
+      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: `Henry's Place Again`,
+    },
+    {
+      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: `Henry's Place Again`,
+    },
+    {
+      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: `Henry's Place Again`,
+    },
+    {
+      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: `Henry's Place Again`,
+    },
   ];
 
   ngOnInit() {
@@ -215,6 +242,64 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         eventStartDate.getTime() === currentDate.getTime() &&
         eventStartTime.getHours() === timeslotDate.getHours() &&
         eventStartTime.getMinutes() === timeslotDate.getMinutes()
+      );
+    });
+  }
+
+  calculateEventStyle(event: CalendarEvent, date: Date, timeslot: string): any {
+    const duration = this.calculateEventDurationInSlots(event);
+    const offset = this.calculateEventOffset(event, timeslot);
+    const concurrentEvents = this.getConcurrentEvents(event, date, timeslot);
+
+    // Assuming a gap of 2%
+    const gap = 2;
+    const width =
+      (100 - gap * (concurrentEvents.length - 1)) / concurrentEvents.length;
+    const index = concurrentEvents.indexOf(event);
+    const left = (width + gap) * index;
+
+    return {
+      height: `${duration * 60}px`, // Assuming each timeslot is 60px high
+      top: `${offset * 60}px`,
+      width: `${width}%`,
+      left: `${left}%`,
+    };
+  }
+
+  calculateEventDurationInSlots(event: CalendarEvent): number {
+    const startTime = this.timeslotStringToDate(event.startTime);
+    const endTime = this.timeslotStringToDate(event.endTime);
+    const durationInMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
+    return durationInMinutes / this.timeslotIncrement;
+  }
+
+  // Helper method to calculate the top offset based on the event's start time
+  // ...
+
+  calculateEventOffset(event: CalendarEvent, timeslot: string): number {
+    const eventStart = this.timeslotStringToDate(event.startTime);
+    const timeslotStart = this.timeslotStringToDate(timeslot);
+    const offsetMinutes =
+      (eventStart.getTime() - timeslotStart.getTime()) / 60000;
+    return offsetMinutes / this.timeslotIncrement;
+  }
+
+  getConcurrentEvents(
+    event: CalendarEvent,
+    date: Date,
+    timeslot: string
+  ): CalendarEvent[] {
+    const timeslotStart = this.timeslotStringToDate(timeslot);
+    const timeslotEnd = new Date(
+      timeslotStart.getTime() + this.timeslotIncrement * 60000
+    );
+
+    return this.events.filter((e) => {
+      const start = this.timeslotStringToDate(e.startTime);
+      const end = this.timeslotStringToDate(e.endTime);
+      return (
+        e.startDate.getDate() === date.getDate() &&
+        !(end <= timeslotStart || start >= timeslotEnd)
       );
     });
   }

@@ -19,6 +19,14 @@
   height: calc(100vh - 60px);
 }
 
+.event {
+  position: absolute;
+  width: 100%;
+  border: 2px solid #ff0000; /* Example border */
+  box-sizing: border-box;
+  /* Add additional styling as needed */
+}
+
 .cell {
   display: flex;
   align-items: center;
@@ -44,6 +52,6 @@
 }
 
 .day-cell {
-  /* Cells for each day under the date */
+  position: relative;
   height: 60px; /* Example fixed height, adjust as necessary */
 }

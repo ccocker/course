@@ -40,10 +40,16 @@
     <ng-container *ngFor="let date of dates">
       <div class="cell day-cell">
         <div
-          *ngFor="let event of getEventsForTimeslot(timeslot, date)"
-          class="event"
+          class="timeslot-container"
+          *ngIf="getEventsForTimeslot(timeslot, date).length"
         >
-          {{ event.description }}
+          <div
+            *ngFor="let event of getEventsForTimeslot(timeslot, date)"
+            class="event"
+            [ngStyle]="calculateEventStyle(event, date, timeslot)"
+          >
+            {{ event.description }}
+          </div>
         </div>
       </div>
     </ng-container>
