@@ -21,6 +21,7 @@ interface CalendarEvent {
   endDate: Date;
   endTime: string;
   description: string;
+  color: string;
 }
 
 @Component({
@@ -44,7 +45,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendar: ElementRef;
   dates: Date[] = [];
   timeslots: string[] = [];
-  timeslotIncrement: number = 60;
+  timeslotIncrement: number = 15;
   filteredEvents: CalendarEvent[] = [];
   currentView: 'day' | 'workWeek' | 'week' | 'month' = 'week';
   selectedDate: Date = new Date();
@@ -55,6 +56,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       endDate: new Date(2024, 0, 2),
       endTime: '12:00',
       description: 'Matts Place',
+      color: '#e6194B', // Red
     },
     {
       startDate: new Date(2024, 0, 8),
@@ -62,20 +64,23 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       endDate: new Date(2024, 0, 8),
       endTime: '16:00',
       description: 'Matts Place',
+      color: '#3cb44b', // Green
     },
     {
-      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startDate: new Date(2024, 0, 1),
       startTime: '09:00',
       endDate: new Date(2024, 0, 1),
       endTime: '10:00',
       description: 'Team Stand-up Meeting',
+      color: '#ffe119', // Yellow
     },
     {
-      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startDate: new Date(2024, 0, 1),
       startTime: '09:00',
       endDate: new Date(2024, 0, 1),
       endTime: '12:00',
       description: `Henry's Place`,
+      color: '#4363d8', // Blue
     },
     {
       startDate: new Date(2024, 0, 1),
@@ -83,13 +88,15 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       endDate: new Date(2024, 0, 1),
       endTime: '12:00',
       description: 'Project Planning Session',
+      color: '#f58231', // Orange
     },
     {
-      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startDate: new Date(2024, 0, 1),
       startTime: '09:00',
       endDate: new Date(2024, 0, 1),
       endTime: '12:00',
       description: `Henry's Place Again`,
+      color: '#911eb4', // Purple
     },
   ];
 
@@ -260,8 +267,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
-  // Add this method inside the CalendarComponent class
-
   private timeslotStringToDate(timeslot: string): Date {
     const [hours, minutes] = timeslot.split(':').map(Number);
     const date = new Date();
@@ -301,6 +306,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       top: `${offset * 60}px`,
       width: `${width}%`,
       left: `${left}%`,
+      'background-color': event.color, // Set the background color
     };
   }
 

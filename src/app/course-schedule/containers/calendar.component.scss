@@ -5,6 +5,10 @@
   height: 100vh; /* Full viewport height */
 }
 
+.calendar-toolbar {
+  gap: 10px;
+}
+
 .header-row,
 .content-row {
   display: contents;
