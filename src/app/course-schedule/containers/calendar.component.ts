@@ -45,6 +45,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   dates: Date[] = [];
   timeslots: string[] = [];
   timeslotIncrement: number = 60;
+  filteredEvents: CalendarEvent[] = [];
+  currentView: 'day' | 'workWeek' | 'week' | 'month' = 'week';
+  selectedDate: Date = new Date();
   events: CalendarEvent[] = [
     {
       startDate: new Date(2024, 0, 2),
@@ -88,32 +91,12 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       endTime: '12:00',
       description: `Henry's Place Again`,
     },
-    {
-      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '12:00',
-      description: `Henry's Place Again`,
-    },
-    {
-      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '12:00',
-      description: `Henry's Place Again`,
-    },
-    {
-      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '12:00',
-      description: `Henry's Place Again`,
-    },
   ];
 
   ngOnInit() {
     this.initializeWeek();
     this.initializeTimeslots();
+    this.filteredEvents = this.events.slice();
   }
 
   ngAfterViewInit() {
@@ -121,21 +104,32 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   initializeWeek() {
-    const today = new Date();
-    const firstDayOfWeek =
-      today.getDate() - today.getDay() + (today.getDay() === 0 ? -6 : 1); // Adjust to start week from Monday
-    const week = [];
-
-    for (let i = 0; i < 7; i++) {
-      let day = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        firstDayOfWeek + i
-      );
-      week.push(day);
+    switch (this.currentView) {
+      case 'day':
+        this.dates = [new Date(this.selectedDate)];
+        break;
+      case 'workWeek':
+        this.generateWeek(true);
+        break;
+      case 'week':
+        this.generateWeek(false);
+        break;
+      case 'month':
+        this.generateMonth();
+        break;
+      default:
+        this.generateWeek(false);
     }
+  }
 
-    this.dates = week;
+  filterEvents(searchTerm: string): void {
+    if (!searchTerm) {
+      this.filteredEvents = this.events.slice();
+      return;
+    }
+    this.filteredEvents = this.events.filter((event) =>
+      event.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   }
 
   initializeTimeslots() {
@@ -162,6 +156,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   updateCalendar(newStartDate: Date) {
+    this.selectedDate = newStartDate;
+    this.initializeWeek();
     // Set the start date to the selected date without adjusting to the beginning of the week
     const startOfWeek = new Date(newStartDate);
 
@@ -178,6 +174,48 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         )
       );
     }
+  }
+
+  onViewChange() {
+    this.initializeWeek();
+  }
+
+  generateWeek(workWeekOnly: boolean) {
+    let startDay = workWeekOnly ? 1 : 0; // 0 for Sunday, 1 for Monday
+    let firstDayOfWeek =
+      this.selectedDate.getDate() - this.selectedDate.getDay() + startDay;
+    let week = [];
+
+    for (let i = 0; i < 7; i++) {
+      let day = new Date(
+        this.selectedDate.getFullYear(),
+        this.selectedDate.getMonth(),
+        firstDayOfWeek + i
+      );
+      week.push(day);
+    }
+
+    this.dates = workWeekOnly ? week.slice(0, 5) : week; // slice for work week (Mon-Fri)
+  }
+
+  generateMonth() {
+    let month = [];
+    const start = new Date(
+      this.selectedDate.getFullYear(),
+      this.selectedDate.getMonth(),
+      1
+    );
+    const end = new Date(
+      this.selectedDate.getFullYear(),
+      this.selectedDate.getMonth() + 1,
+      0
+    );
+
+    for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
+      month.push(new Date(day));
+    }
+
+    this.dates = month;
   }
 
   navigateTo(direction: 'prev' | 'next') {
@@ -232,7 +270,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   getEventsForTimeslot(timeslot: string, date: Date): CalendarEvent[] {
-    return this.events.filter((event) => {
+    return this.filteredEvents.filter((event) => {
       // Check if the event's date and timeslot match the provided date and timeslot
       const eventStartTime = this.timeslotStringToDate(event.startTime);
       const eventStartDate = new Date(event.startDate.setHours(0, 0, 0, 0));

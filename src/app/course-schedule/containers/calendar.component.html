@@ -26,13 +26,30 @@
       <mat-option value="60">1 hour</mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field class="search-bar">
+    <mat-label>Search Events</mat-label>
+    <input
+      matInput
+      (input)="filterEvents($event.target.value)"
+      placeholder="Search Events"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>View</mat-label>
+    <mat-select [(value)]="currentView" (selectionChange)="onViewChange()">
+      <mat-option value="day">Day View</mat-option>
+      <mat-option value="workWeek">Work Week View</mat-option>
+      <mat-option value="week">Week View</mat-option>
+      <mat-option value="month">Month View</mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-toolbar>
 
 <div class="calendar" #calendar>
   <div class="header-row">
     <div class="cell timeslot-header"></div>
     <div class="cell date-cell" *ngFor="let date of dates">
-      {{ date | date : "EEE, d MMM" }}
+      {{ date | date : (currentView === "month" ? "EEE, d" : "EEE, d MMM") }}
     </div>
   </div>
   <div class="content-row" *ngFor="let timeslot of timeslots">
