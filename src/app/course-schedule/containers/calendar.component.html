@@ -28,15 +28,17 @@
   </mat-form-field>
 </mat-toolbar>
 
-<div class="calendar">
+<div class="calendar" #calendar>
   <div class="header-row">
     <div class="cell timeslot-header"></div>
     <div class="cell date-cell" *ngFor="let date of dates">
       {{ date | date : "EEE, d MMM" }}
     </div>
   </div>
-  <div class="content-row" *ngFor="let timeslot of timeslots">
-    <div class="cell timeslot-cell">{{ timeslot }}</div>
+  <div class="content-row" *ngFor="let timeslot of timeslots; let i = index">
+    <div class="cell timeslot-cell" [attr.id]="'timeslot-' + i">
+      {{ timeslot }}
+    </div>
     <div class="cell day-cell" *ngFor="let date of dates"></div>
   </div>
 </div>

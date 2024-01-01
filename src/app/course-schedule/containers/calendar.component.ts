@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,14 +32,19 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
   ],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
+  @ViewChild('calendar') calendar: ElementRef;
   dates: Date[] = [];
   timeslots: string[] = [];
-  timeslotIncrement: number = 60;
+  timeslotIncrement: number = 15;
 
   ngOnInit() {
     this.initializeWeek();
     this.initializeTimeslots();
+  }
+
+  ngAfterViewInit() {
+    this.scrollToCurrentTimeSlot();
   }
 
   initializeWeek() {
@@ -112,5 +123,38 @@ export class CalendarComponent implements OnInit {
 
     // Update the calendar view based on the new start date
     this.updateCalendar(newStartDate);
+  }
+
+  // Modify this method inside the CalendarComponent class
+
+  scrollToCurrentTimeSlot(): void {
+    const now = new Date();
+    // Subtract one hour from the current time
+    now.setHours(now.getHours() - 1);
+
+    // Find the index of the timeslot that's closest to one hour before the current time
+    const closestTimeslotIndex = this.timeslots.findIndex((timeslot) => {
+      const timeslotDate = this.timeslotStringToDate(timeslot);
+      return timeslotDate >= now;
+    });
+
+    // Adjust index to get the timeslot before the current time
+    const scrollToIndex = Math.max(closestTimeslotIndex - 1, 0);
+
+    setTimeout(() => {
+      const timeslotElement = this.calendar.nativeElement.querySelector(
+        `#timeslot-${scrollToIndex}`
+      );
+      timeslotElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
+  }
+
+  // Add this method inside the CalendarComponent class
+
+  private timeslotStringToDate(timeslot: string): Date {
+    const [hours, minutes] = timeslot.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0); // set hours and minutes, seconds and ms to 0
+    return date;
   }
 }
