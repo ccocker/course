@@ -15,6 +15,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 
+interface CalendarEvent {
+  startDate: Date;
+  startTime: string;
+  endDate: Date;
+  endTime: string;
+  description: string;
+}
+
 @Component({
   selector: 'mi-calendar',
   templateUrl: './calendar.component.html',
@@ -36,7 +44,45 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendar: ElementRef;
   dates: Date[] = [];
   timeslots: string[] = [];
-  timeslotIncrement: number = 15;
+  timeslotIncrement: number = 60;
+  events: CalendarEvent[] = [
+    {
+      startDate: new Date(2024, 0, 2),
+      startTime: '11:00',
+      endDate: new Date(2024, 0, 2),
+      endTime: '12:00',
+      description: 'Matts Place',
+    },
+    {
+      startDate: new Date(2024, 0, 8),
+      startTime: '14:00',
+      endDate: new Date(2024, 0, 8),
+      endTime: '16:00',
+      description: 'Matts Place',
+    },
+    {
+      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '10:00',
+      description: 'Team Stand-up Meeting',
+    },
+    {
+      startDate: new Date(2024, 0, 1), // Assuming format is year, monthIndex, day
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: `Henry's Place`,
+    },
+    {
+      startDate: new Date(2024, 0, 1),
+      startTime: '11:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: 'Project Planning Session',
+    },
+    // Add more events as needed
+  ];
 
   ngOnInit() {
     this.initializeWeek();
@@ -156,5 +202,20 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const date = new Date();
     date.setHours(hours, minutes, 0, 0); // set hours and minutes, seconds and ms to 0
     return date;
+  }
+
+  getEventsForTimeslot(timeslot: string, date: Date): CalendarEvent[] {
+    return this.events.filter((event) => {
+      // Check if the event's date and timeslot match the provided date and timeslot
+      const eventStartTime = this.timeslotStringToDate(event.startTime);
+      const eventStartDate = new Date(event.startDate.setHours(0, 0, 0, 0));
+      const timeslotDate = this.timeslotStringToDate(timeslot);
+      const currentDate = new Date(date.setHours(0, 0, 0, 0));
+      return (
+        eventStartDate.getTime() === currentDate.getTime() &&
+        eventStartTime.getHours() === timeslotDate.getHours() &&
+        eventStartTime.getMinutes() === timeslotDate.getMinutes()
+      );
+    });
   }
 }
