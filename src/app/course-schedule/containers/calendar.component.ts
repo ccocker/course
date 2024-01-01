@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'mi-calendar',
@@ -21,12 +22,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSelectModule,
     MatToolbarModule,
   ],
 })
 export class CalendarComponent implements OnInit {
   dates: Date[] = [];
   timeslots: string[] = [];
+  timeslotIncrement: number = 60;
 
   ngOnInit() {
     this.initializeWeek();
@@ -54,11 +57,16 @@ export class CalendarComponent implements OnInit {
   initializeTimeslots() {
     this.timeslots = [];
     for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += 15) {
-        // Adjust the increment for different timeslot sizes
-        let timeslot = `${hour.toString().padStart(2, '0')}:${minute
-          .toString()
-          .padStart(2, '0')}`;
+      for (let minute = 0; minute < 60; minute += this.timeslotIncrement) {
+        // Calculate the actual hour and minute considering the overflow of minutes
+        let actualHour = hour + Math.floor(minute / 60);
+        let actualMinute = minute % 60;
+
+        // Format hours and minutes to always have two digits
+        let formattedHour = actualHour.toString().padStart(2, '0');
+        let formattedMinute = actualMinute.toString().padStart(2, '0');
+
+        let timeslot = `${formattedHour}:${formattedMinute}`;
         this.timeslots.push(timeslot);
       }
     }

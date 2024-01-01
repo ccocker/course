@@ -10,6 +10,15 @@
   display: contents;
 }
 
+.header-row {
+  height: 100px;
+}
+
+.scrollable-content {
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+}
+
 .cell {
   display: flex;
   align-items: center;
@@ -23,7 +32,10 @@
 }
 
 .date-cell {
-  grid-column: span 1; /* Each date takes up one column */
+  position: sticky;
+  top: 0;
+  background: white; /* Or your preferred background color */
+  z-index: 1; /* Ensures it stays above other content when scrolling */
 }
 
 .timeslot-cell {
