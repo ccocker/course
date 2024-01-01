@@ -1,4 +1,6 @@
-<ng-container *ngIf="data$ | async as data">
+<mi-calendar></mi-calendar>
+
+<!-- <ng-container *ngIf="data$ | async as data">
   <body>
     <button (click)="bulkUpload()">Bulk Upload</button>
 
@@ -79,40 +81,7 @@
           </div>
         </div>
       </div>
-      <!--
-      <div class="panel staff-panel" *ngIf="staffList?.length > 1">
-        <div class="select-with-icons">
-          <mat-form-field appearance="fill">
-            <mat-label>Select Staff</mat-label>
-            <mat-select [(value)]="selectedStaff" multiple>
-              <mat-option *ngFor="let staff of staffList" [value]="staff?.miId">
-                {{ staff?.firstName }} {{ staff?.lastName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div class="icon-wrapper">
-            <button
-              mat-icon-button
-              (click)="selectAllStaff()"
-              [disabled]="selectedStaff?.length === staffList?.length"
-              matTooltip="Select all staff"
-              class="small-icon"
-            >
-              <mat-icon>select_all</mat-icon>
-            </button>
-            <button
-              mat-icon-button
-              (click)="deselectAllStaff()"
-              [disabled]="selectedStaff?.length === 0"
-              matTooltip="Deselect all staff"
-              class="small-icon"
-            >
-              <mat-icon>clear</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-      -->
+
       <div class="panel understaffed-toggle-panel">
         <label class="toggle-label">
           {{
@@ -131,7 +100,7 @@
 
     <div class="timetable">
       <div class="header" style="grid-column-start: 1; grid-row: 1">Time</div>
-      <!-- Dynamic headers for each day -->
+
       <div
         *ngFor="let day of weekdays"
         class="header"
@@ -143,7 +112,6 @@
         {{ day }}
       </div>
 
-      <!-- Timeslots -->
       <div
         *ngFor="let timeSlot of timeSlots; let i = index"
         class="timeslot"
@@ -153,9 +121,8 @@
         {{ timeSlot?.startTime }} - {{ timeSlot?.endTime }}
       </div>
 
-      <!-- Events -->
       <div
-        *ngFor="let event of schedule"
+        *ngFor="let event of schedule; let i = index"
         class="event"
         [ngClass]="{
           understaffed: isUnderstaffed(event),
@@ -187,10 +154,7 @@
           }})<br />
           {{ event?.class?.timeslot?.startTime }} -
           {{ event?.class?.timeslot?.endTime }}<br /><br />
-          <!-- <b
-            >{{ event?.class?.lead[0]?.firstName }}
-            {{ event?.class?.lead[0]?.lastName }}</b
-          ><br /> -->
+
           <div *ngFor="let tutor of event?.class?.staff">
             {{ tutor?.firstName }} {{ tutor?.lastName }}<br />
           </div>
@@ -229,8 +193,14 @@
               <label for="low-{{ event?.course?.code }}">L</label>
             </div>
           </div>
+          <div>{{ schedule1[i]?.classReference }}</div>
+          <div>
+            {{ schedule1[i]?.room?.roomNumber + schedule1[i]?.room?.capacity }}
+          </div>
+          <div>{{ schedule1[i]?.startTime + "-" + schedule1[i]?.endTime }}</div>
+          <div>{{ schedule1[i]?.lead }}</div>
         </div>
       </div>
     </div>
   </body>
-</ng-container>
+</ng-container> -->

@@ -39,6 +39,7 @@ import { selectRooms } from './store/rooms/reducers';
 import { selectOfferings } from './store/offering/reducers';
 import { selectOfferingGroups } from './store/offering-groups/reducers';
 import { selectGroupClasses } from './store/group-classes/reducers';
+import { CalendarComponent } from './containers/calendar.component';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -57,6 +58,7 @@ import { selectGroupClasses } from './store/group-classes/reducers';
     DynamicFormComponent,
     ReactiveFormsModule,
     MatRadioModule,
+    CalendarComponent,
   ],
   templateUrl: './course-schedule.component.html',
   styleUrl: './course-schedule.component.scss',
@@ -68,6 +70,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   showOnlyUnderstaffed: boolean = false;
   weekdays: string[] = [];
   schedule: IScheduleEvent[];
+  schedule1: any[];
   filteredStaffList: IPerson[] = []; // Filtered list for display in the dropdown
 
   timeSlots: { startTime: string; endTime: string }[] = [];
@@ -641,7 +644,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       })
     );
     this.data$.subscribe((originalData) => {
-      console.log('Original data:', originalData);
       const firstFiveRecords = Object.keys(originalData).reduce(
         (accumulatedData, key) => {
           if (Array.isArray(originalData[key])) {
@@ -664,7 +666,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       rooms: this.store.select(selectRooms).pipe(startWith([])),
     });
 
-    this.schedule1$ = data$.pipe(
+    const schedule = data$.pipe(
       map(
         ({
           courses,
@@ -698,11 +700,10 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
             );
 
             // Constructing classReference
-            const classReference = `${offeringGroup?.offeringCode}-${groupclass.classNumber} & ${room?.floor}`;
-
-            return {
+            const classReference = `${course.code}-${offeringGroup?.group}-${groupclass.classNumber} `;
+            let classDetails = {
               classReference,
-              classNumber: groupclass.classNumber,
+              room,
               day: groupclass.day,
               startTime: groupclass.startTime,
               endTime: groupclass.endTime,
@@ -712,14 +713,15 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
                 : '',
               roomCapacity: room?.capacity,
             };
+            return classDetails;
           });
         }
       )
     );
 
-    this.schedule1$.subscribe((schedule) => {
-      console.log(schedule);
-      // Handle the combined schedule data as needed
+    schedule.subscribe((schedule) => {
+      this.schedule1 = schedule;
+      console.log('Schedule 1:', schedule);
     });
 
     this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
@@ -745,7 +747,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     });
     this.filteredStaffList = this.staffList;
     this.schedule = this.scheduleService.getSchedule();
-    console.log('Schedule:', this.schedule.slice(0, 1));
+    console.log('Event from Schedule:', this.schedule.slice(0, 1));
 
     this.determineEarliestStartTime();
 

@@ -1,0 +1,37 @@
+.calendar {
+  display: grid;
+  grid-template-columns: 100px repeat(7, 1fr); /* One column for timeslots, seven for days of the week */
+  width: 100%; /* Full width */
+  height: 100vh; /* Full viewport height */
+}
+
+.header-row,
+.content-row {
+  display: contents;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd; /* Example styling */
+}
+
+.timeslot-header {
+  grid-column: 1; /* Timeslot label column */
+  background: #f0f0f0; /* Example styling */
+}
+
+.date-cell {
+  grid-column: span 1; /* Each date takes up one column */
+}
+
+.timeslot-cell {
+  grid-row: span 1; /* Each timeslot label takes up one row height */
+  background: #f0f0f0; /* Example styling */
+}
+
+.day-cell {
+  /* Cells for each day under the date */
+  height: 60px; /* Example fixed height, adjust as necessary */
+}
