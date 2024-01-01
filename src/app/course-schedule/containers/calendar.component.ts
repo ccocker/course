@@ -55,21 +55,20 @@ export class CalendarComponent implements OnInit {
   }
 
   initializeTimeslots() {
-    this.timeslots = [];
+    this.timeslots = []; // clear previous timeslots
+
+    // Determine the number of slots per hour based on the increment
+    const slotsPerHour = 60 / this.timeslotIncrement;
+
     for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += this.timeslotIncrement) {
-        // Ensure that the hour doesn't go beyond 23
-        let adjustedHour = hour;
-        if (hour === 23 && minute + this.timeslotIncrement >= 60) {
-          break; // Skip creating timeslot if it goes beyond 23:59
-        }
-
-        // Format hours and minutes to always have two digits
-        let formattedHour = adjustedHour.toString().padStart(2, '0');
-        let formattedMinute = minute.toString().padStart(2, '0');
-
-        let timeslot = `${formattedHour}:${formattedMinute}`;
-        this.timeslots.push(timeslot);
+      for (let slot = 0; slot < slotsPerHour; slot++) {
+        // Calculate the minutes for the current slot
+        const minutes = slot * this.timeslotIncrement;
+        // Format the hour and minutes to ensure two digits
+        const hourFormatted = hour.toString().padStart(2, '0');
+        const minuteFormatted = minutes.toString().padStart(2, '0');
+        // Add the time slot to the array
+        this.timeslots.push(`${hourFormatted}:${minuteFormatted}`);
       }
     }
   }
