@@ -252,6 +252,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     { roomCode: '014.09.023', capacity: '60' },
   ];
 
+  // BC1-G1-1 012.10.085 Henry Cavill
+
   events: any[] = [
     {
       startDate: new Date(2024, 0, 2),
@@ -276,6 +278,14 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       endTime: '10:00',
       description: 'Team Stand-up Meeting',
       color: '#ffe119', // Yellow
+    },
+    {
+      startDate: new Date(2024, 0, 4),
+      startTime: '14:00',
+      endDate: new Date(2024, 0, 4),
+      endTime: '16:00',
+      description: 'BC1-G1-1 012.10.085 Henry Cavill',
+      color: '#3fe118', // Yellow
     },
     {
       startDate: new Date(2024, 0, 1),
