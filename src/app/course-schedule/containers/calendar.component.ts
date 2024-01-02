@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -42,10 +43,18 @@ interface CalendarEvent {
   ],
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
+  @Input()
+  set startDate(value: Date) {
+    this._startDate = value || new Date(); // Use today's date as default
+    this.updateCalendar(this._startDate);
+  }
+  @Input()
+  showDateNavigator: boolean = true;
   @ViewChild('calendar') calendar: ElementRef;
+  private _startDate: Date;
   dates: Date[] = [];
   timeslots: string[] = [];
-  timeslotIncrement: number = 15;
+  timeslotIncrement: number = 60;
   filteredEvents: CalendarEvent[] = [];
   currentView: 'day' | 'workWeek' | 'week' | 'month' = 'week';
   selectedDate: Date = new Date();
@@ -101,6 +110,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   ];
 
   ngOnInit() {
+    this.startDate = this._startDate || new Date();
     this.initializeWeek();
     this.initializeTimeslots();
     this.filteredEvents = this.events.slice();
@@ -108,6 +118,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.scrollToCurrentTimeSlot();
+  }
+
+  get startDate(): Date {
+    return this._startDate;
   }
 
   initializeWeek() {

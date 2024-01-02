@@ -1,20 +1,22 @@
 <mat-toolbar class="calendar-toolbar">
-  <button mat-icon-button (click)="navigateTo('prev')">
-    <mat-icon>chevron_left</mat-icon>
-  </button>
-  <mat-form-field>
-    <input
-      matInput
-      [matDatepicker]="picker"
-      placeholder="Choose a date"
-      (dateChange)="onDateSelect($event)"
-    />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <button mat-icon-button (click)="navigateTo('next')">
-    <mat-icon>chevron_right</mat-icon>
-  </button>
+  <ng-container *ngIf="showDateNavigator">
+    <button mat-icon-button (click)="navigateTo('prev')">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Choose a date"
+        (dateChange)="onDateSelect($event)"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-icon-button (click)="navigateTo('next')">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </ng-container>
   <mat-form-field>
     <mat-label>Timeslot Increment</mat-label>
     <mat-select

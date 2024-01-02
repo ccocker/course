@@ -64,6 +64,7 @@ import { CalendarComponent } from './containers/calendar.component';
   styleUrl: './course-schedule.component.scss',
 })
 export class CourseScheduleComponent implements OnInit, OnDestroy {
+  customStartDate: Date;
   private dataSubscription: Subscription;
   DayOfWeek = DayOfWeek;
   private earliestStartTime: Date;
@@ -619,7 +620,14 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     private store: Store,
     private fb: FormBuilder,
     private firestoreDataService: FirestoreDataService
-  ) {}
+  ) {
+    const today = new Date();
+    this.customStartDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 7
+    );
+  }
 
   ngOnInit() {
     this.collection = 'courseschedules';
