@@ -50,6 +50,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
   @Input()
   showDateNavigator: boolean = true;
+  @Input()
+  events: CalendarEvent[] = [];
   @ViewChild('calendar') calendar: ElementRef;
   private _startDate: Date;
   dates: Date[] = [];
@@ -58,56 +60,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   filteredEvents: CalendarEvent[] = [];
   currentView: 'day' | 'workWeek' | 'week' | 'month' = 'week';
   selectedDate: Date = new Date();
-  events: CalendarEvent[] = [
-    {
-      startDate: new Date(2024, 0, 2),
-      startTime: '11:00',
-      endDate: new Date(2024, 0, 2),
-      endTime: '12:00',
-      description: 'Matts Place',
-      color: '#e6194B', // Red
-    },
-    {
-      startDate: new Date(2024, 0, 8),
-      startTime: '14:00',
-      endDate: new Date(2024, 0, 8),
-      endTime: '16:00',
-      description: 'Matts Place',
-      color: '#3cb44b', // Green
-    },
-    {
-      startDate: new Date(2024, 0, 1),
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '10:00',
-      description: 'Team Stand-up Meeting',
-      color: '#ffe119', // Yellow
-    },
-    {
-      startDate: new Date(2024, 0, 1),
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '12:00',
-      description: `Henry's Place`,
-      color: '#4363d8', // Blue
-    },
-    {
-      startDate: new Date(2024, 0, 1),
-      startTime: '11:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '12:00',
-      description: 'Project Planning Session',
-      color: '#f58231', // Orange
-    },
-    {
-      startDate: new Date(2024, 0, 2),
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 2),
-      endTime: '12:00',
-      description: `Henry's Place Again`,
-      color: '#911eb4', // Purple
-    },
-  ];
 
   ngOnInit() {
     this.startDate = this._startDate || new Date();

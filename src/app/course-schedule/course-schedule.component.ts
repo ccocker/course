@@ -252,6 +252,57 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     { roomCode: '014.09.023', capacity: '60' },
   ];
 
+  events: any[] = [
+    {
+      startDate: new Date(2024, 0, 2),
+      startTime: '11:00',
+      endDate: new Date(2024, 0, 2),
+      endTime: '12:00',
+      description: 'Matts Place',
+      color: '#e6194B', // Red
+    },
+    {
+      startDate: new Date(2024, 0, 8),
+      startTime: '14:00',
+      endDate: new Date(2024, 0, 8),
+      endTime: '16:00',
+      description: 'Matts Place',
+      color: '#3cb44b', // Green
+    },
+    {
+      startDate: new Date(2024, 0, 1),
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '10:00',
+      description: 'Team Stand-up Meeting',
+      color: '#ffe119', // Yellow
+    },
+    {
+      startDate: new Date(2024, 0, 1),
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: `Henry's Place`,
+      color: '#4363d8', // Blue
+    },
+    {
+      startDate: new Date(2024, 0, 1),
+      startTime: '11:00',
+      endDate: new Date(2024, 0, 1),
+      endTime: '12:00',
+      description: 'Project Planning Session',
+      color: '#f58231', // Orange
+    },
+    {
+      startDate: new Date(2024, 0, 2),
+      startTime: '09:00',
+      endDate: new Date(2024, 0, 2),
+      endTime: '12:00',
+      description: `Henry's Place Again`,
+      color: '#911eb4', // Purple
+    },
+  ];
+
   groupClasses = [
     {
       offeringGroupCode: 'BC1',
