@@ -256,29 +256,30 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
   events: any[] = [
     {
-      startDate: new Date(2024, 0, 2),
-      startTime: '11:00',
-      endDate: new Date(2024, 0, 2),
-      endTime: '12:00',
-      description: 'Matts Place',
+      startDate: new Date(2024, 0, 1),
+      startTime: '08:30',
+      endDate: new Date(2024, 0, 1),
+      endTime: '10:30',
+      description: `BC1-G1-1 012.10.005`,
       color: '#e6194B', // Red
     },
     {
-      startDate: new Date(2024, 0, 8),
-      startTime: '14:00',
-      endDate: new Date(2024, 0, 8),
-      endTime: '16:00',
-      description: 'Matts Place',
-      color: '#3cb44b', // Green
+      startDate: new Date(2024, 0, 2),
+      startTime: '08:30',
+      endDate: new Date(2024, 0, 2),
+      endTime: '10:30',
+      description: `BC1-G1-2 012.10.006`,
+      color: '#e6194B', // Red
     },
     {
-      startDate: new Date(2024, 0, 1),
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '10:00',
-      description: 'Team Stand-up Meeting',
-      color: '#ffe119', // Yellow
+      startDate: new Date(2024, 0, 3),
+      startTime: '08:30',
+      endDate: new Date(2024, 0, 3),
+      endTime: '10:30',
+      description: `BC1-G1-3 012.10.005`,
+      color: '#e6194B', // Red
     },
+
     {
       startDate: new Date(2024, 0, 4),
       startTime: '14:00',
@@ -288,11 +289,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       color: '#3fe118', // Yellow
     },
     {
-      startDate: new Date(2024, 0, 1),
-      startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
-      endTime: '12:00',
-      description: `Henry's Place`,
+      startDate: new Date(2024, 0, 5),
+      startTime: '08:30',
+      endDate: new Date(2024, 0, 5),
+      endTime: '10:30',
+      description: `BC1-G1-4 012.10.006`,
       color: '#4363d8', // Blue
     },
     {
@@ -310,6 +311,14 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       endTime: '12:00',
       description: `Henry's Place Again`,
       color: '#911eb4', // Purple
+    },
+    {
+      startDate: new Date(2024, 0, 8),
+      startTime: '14:00',
+      endDate: new Date(2024, 0, 8),
+      endTime: '16:00',
+      description: 'Matts Place',
+      color: '#3cb44b', // Green
     },
   ];
 
@@ -686,7 +695,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     this.customStartDate = new Date(
       today.getFullYear(),
       today.getMonth(),
-      today.getDate() + 7
+      today.getDate() + 2
     );
   }
 

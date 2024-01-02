@@ -56,7 +56,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   private _startDate: Date;
   dates: Date[] = [];
   timeslots: string[] = [];
-  timeslotIncrement: number = 60;
+  timeslotIncrement: number = 30;
   filteredEvents: CalendarEvent[] = [];
   currentView: 'day' | 'workWeek' | 'week' | 'month' = 'week';
   selectedDate: Date = new Date();
