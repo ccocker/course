@@ -100,9 +100,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       color: '#f58231', // Orange
     },
     {
-      startDate: new Date(2024, 0, 1),
+      startDate: new Date(2024, 0, 2),
       startTime: '09:00',
-      endDate: new Date(2024, 0, 1),
+      endDate: new Date(2024, 0, 2),
       endTime: '12:00',
       description: `Henry's Place Again`,
       color: '#911eb4', // Purple
