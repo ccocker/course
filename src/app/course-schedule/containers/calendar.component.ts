@@ -62,7 +62,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   selectedDate: Date = new Date();
 
   ngOnInit() {
-    this.startDate = this._startDate || new Date();
+    this.selectedDate = this.startDate || new Date();
+    console.log(this.startDate, this.selectedDate);
     this.initializeWeek();
     this.initializeTimeslots();
     this.filteredEvents = this.events.slice();
@@ -80,6 +81,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     switch (this.currentView) {
       case 'day':
         this.dates = [new Date(this.selectedDate)];
+
         break;
       case 'workWeek':
         this.generateWeek(true);
@@ -154,7 +156,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   generateWeek(workWeekOnly: boolean) {
-    let startDay = workWeekOnly ? 1 : 0; // 0 for Sunday, 1 for Monday
+    let startDay = workWeekOnly ? 1 : 1; // 0 for Sunday, 1 for Monday
     let firstDayOfWeek =
       this.selectedDate.getDate() - this.selectedDate.getDay() + startDay;
     let week = [];
