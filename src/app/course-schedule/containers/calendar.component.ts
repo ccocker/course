@@ -54,6 +54,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   showDateNavigator: boolean = true;
   @Input()
   events: CalendarEvent[] = [];
+  @Input() startTime: string = '00:00';
+  @Input() scrollToCurrentTime: boolean = true;
+
   @ViewChild('calendar') calendar: ElementRef;
   @ContentChild(TemplateRef) eventTemplate: TemplateRef<any>;
   private _startDate: Date;
@@ -73,7 +76,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.scrollToCurrentTimeSlot();
+    if (this.scrollToCurrentTime) {
+      this.scrollToCurrentTimeSlot();
+    }
   }
 
   get startDate(): Date {
@@ -112,17 +117,19 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   initializeTimeslots() {
     this.timeslots = []; // clear previous timeslots
 
+    // Parse the hour and minutes from the startTime input
+    const [startHour, startMinute] = this.startTime.split(':').map(Number);
+
     // Determine the number of slots per hour based on the increment
     const slotsPerHour = 60 / this.timeslotIncrement;
 
-    for (let hour = 0; hour < 24; hour++) {
+    for (let hour = startHour; hour < 24; hour++) {
       for (let slot = 0; slot < slotsPerHour; slot++) {
-        // Calculate the minutes for the current slot
-        const minutes = slot * this.timeslotIncrement;
-        // Format the hour and minutes to ensure two digits
+        const minutes = startMinute + slot * this.timeslotIncrement;
+        if (hour === startHour && minutes < startMinute) continue; // Skip slots before the startMinute in the first hour
+
         const hourFormatted = hour.toString().padStart(2, '0');
-        const minuteFormatted = minutes.toString().padStart(2, '0');
-        // Add the time slot to the array
+        const minuteFormatted = (minutes % 60).toString().padStart(2, '0');
         this.timeslots.push(`${hourFormatted}:${minuteFormatted}`);
       }
     }
