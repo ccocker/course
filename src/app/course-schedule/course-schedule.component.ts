@@ -1169,11 +1169,13 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
     );
     this.people$ = this.store.select(selectPeopleEntities);
+
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({
         url: `${this.collection}`,
       })
     );
+
     this.data$.subscribe((originalData) => {
       const firstFiveRecords = Object.keys(originalData).reduce(
         (accumulatedData, key) => {
@@ -1251,7 +1253,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     );
 
     schedule.subscribe((schedule) => {
-      this.schedule1 = schedule;
+      this.schedule1 = this.events;
     });
 
     this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
@@ -1681,8 +1683,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       this.convertToPlainObject(item.course)
     );
     this.firestoreDataService.uploadBulkData(
-      'groupclasses',
-      this.groupClasses,
+      'courseschedules',
+      this.schedule1,
       true
     );
   }
@@ -1706,6 +1708,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   };
 
   onPriorityChange(event: any, selectedPriority: string): void {
+    console.log('Clicked');
     // Show an alert dialog with the selected priority and event details
     alert(
       `Selected priority for event '${event.description}': ${selectedPriority}`

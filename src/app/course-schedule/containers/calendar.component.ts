@@ -69,7 +69,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.selectedDate = this.startDate || new Date();
-    console.log(this.startDate, this.selectedDate);
     this.initializeWeek();
     this.initializeTimeslots();
     this.filteredEvents = this.events.slice();
