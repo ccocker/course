@@ -216,7 +216,15 @@ button.mat-icon-button {
   padding: 0;
 }
 
-.radio-option label {
-  margin-top: 4px;
-  font-size: 10px;
+/* In parent component's CSS */
+.radio-options-container {
+  display: flex;
+  // justify-content: space-around;
+  align-items: center;
+}
+
+.radio-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

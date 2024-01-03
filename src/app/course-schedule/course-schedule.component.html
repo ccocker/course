@@ -1,21 +1,28 @@
-<!-- Inside parent component template -->
 <mi-calendar
   [showDateNavigator]="true"
   [events]="events"
   [startDate]="customStartDate"
 >
-  <ng-template let-event>
-    <!-- Radio buttons for each event -->
+  <ng-template let-event eventTemplate>
     <div class="event-radio-buttons">
-      <label *ngFor="let option of ['H', 'M', 'L', 'X']">
-        <input
-          type="radio"
-          [value]="option"
-          [name]="event.id"
-          (change)="onPriorityChange(event, option)"
-        />
-        {{ option }}
-      </label>
+      <div class="event-details">
+        {{ event.offeringGroupCode }} - {{ event.groupNumber }} -
+        {{ event.classNumber }}
+      </div>
+      <div class="event-details">{{ event.roomCode }}</div>
+      <h5>Select Your Preferences</h5>
+      <div class="radio-options-container">
+        <label *ngFor="let option of ['H', 'M', 'L', 'X']">
+          <input
+            class="radio-option"
+            type="radio"
+            [value]="option"
+            [name]="event.id"
+            (change)="onPriorityChange(event, option)"
+          />
+          {{ option }}
+        </label>
+      </div>
     </div>
   </ng-template>
 </mi-calendar>
