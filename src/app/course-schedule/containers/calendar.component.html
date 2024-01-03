@@ -54,8 +54,8 @@
       {{ date | date : (currentView === "month" ? "EEE, d" : "EEE, d MMM") }}
     </div>
   </div>
-  <div class="content-row" *ngFor="let timeslot of timeslots">
-    <div class="cell timeslot-cell">{{ timeslot }}</div>
+  <div class="content-row" *ngFor="let timeslot of timeslots; let i = index">
+    <div class="cell timeslot-cell" id="timeslot-{{ i }}">{{ timeslot }}</div>
     <ng-container *ngFor="let date of dates">
       <div class="cell day-cell">
         <div

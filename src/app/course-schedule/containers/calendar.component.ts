@@ -213,6 +213,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   // Modify this method inside the CalendarComponent class
 
   scrollToCurrentTimeSlot(): void {
+    console.log('Timeslots', this.timeslots);
     const now = new Date();
     // Subtract one hour from the current time
     now.setHours(now.getHours() - 1);
@@ -222,10 +223,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       const timeslotDate = this.timeslotStringToDate(timeslot);
       return timeslotDate >= now;
     });
+    console.log('closestTimeslotIndex,', closestTimeslotIndex);
 
     // Adjust index to get the timeslot before the current time
     const scrollToIndex = Math.max(closestTimeslotIndex - 1, 0);
-
+    console.log('scrollToIndex,', scrollToIndex);
     setTimeout(() => {
       const timeslotElement = this.calendar.nativeElement.querySelector(
         `#timeslot-${scrollToIndex}`
