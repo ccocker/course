@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  ContentChild,
   ElementRef,
   Input,
   OnInit,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,6 +55,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @Input()
   events: CalendarEvent[] = [];
   @ViewChild('calendar') calendar: ElementRef;
+  @ContentChild(TemplateRef) eventTemplate: TemplateRef<any>;
   private _startDate: Date;
   dates: Date[] = [];
   timeslots: string[] = [];

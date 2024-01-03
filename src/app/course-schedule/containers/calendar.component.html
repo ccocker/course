@@ -68,6 +68,9 @@
             [ngStyle]="calculateEventStyle(event, date, timeslot)"
           >
             {{ event.description }}
+            <ng-container
+              *ngTemplateOutlet="eventTemplate; context: { $implicit: event }"
+            ></ng-container>
           </div>
         </div>
       </div>

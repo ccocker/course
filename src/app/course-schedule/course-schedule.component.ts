@@ -1148,7 +1148,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.events.forEach((event) => {
+    this.events.forEach((event, index) => {
+      event.id = `event-${index + 1}`;
       event.description = `${event.description} - ${event.roomCode}`;
     });
 
@@ -1251,7 +1252,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
     schedule.subscribe((schedule) => {
       this.schedule1 = schedule;
-      console.log('Schedule 1:', schedule);
     });
 
     this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
@@ -1277,7 +1277,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     });
     this.filteredStaffList = this.staffList;
     this.schedule = this.scheduleService.getSchedule();
-    console.log('Event from Schedule:', this.schedule.slice(0, 1));
 
     this.determineEarliestStartTime();
 
@@ -1705,4 +1704,15 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
     return plainObj;
   };
+
+  onPriorityChange(event: any, selectedPriority: string): void {
+    // Show an alert dialog with the selected priority and event details
+    alert(
+      `Selected priority for event '${event.description}': ${selectedPriority}`
+    );
+
+    // You can still keep the console.log if you want to log this information as well
+    console.log('Selected priority for event:', event, selectedPriority);
+    // Additional logic to handle the change can go here
+  }
 }
