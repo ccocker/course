@@ -1148,6 +1148,10 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.events.forEach((event) => {
+      event.description = `${event.description} - ${event.roomCode}`;
+    });
+
     this.collection = 'courseschedules';
     this.store.dispatch(entityActions.getEntities({ url: 'people' }));
     this.store.dispatch(coursesActions.getCourses({ url: 'courses' }));
