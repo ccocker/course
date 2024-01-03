@@ -6,26 +6,25 @@
   [startTime]="'08:00'"
   [scrollToCurrentTime]="false"
 >
-  <ng-template let-event eventTemplate>
+  <ng-template let-event>
+    <ng-container class="event-details">
+      {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
+
+      {{ event?.classNumber }}
+
+      {{ event?.roomCode }}
+    </ng-container>
+
     <div class="event-radio-buttons">
-      <div class="event-details">
-        {{ event.offeringGroupCode }} - {{ event.groupNumber }} -
-        {{ event.classNumber }}
-      </div>
-      <div class="event-details">{{ event.roomCode }}</div>
-      <h5>Select Your Preferences</h5>
-      <div class="radio-options-container">
-        <label *ngFor="let option of ['H', 'M', 'L', 'X']">
-          <input
-            class="radio-option"
-            type="radio"
-            [value]="option"
-            [name]="event.id"
-            (change)="onPriorityChange(event, option)"
-          />
-          {{ option }}
-        </label>
-      </div>
+      <label *ngFor="let option of ['H', 'M', 'L', 'X']">
+        <input
+          type="radio"
+          [value]="option"
+          [name]="event.id"
+          (change)="onPriorityChange(event, option)"
+        />
+        {{ option }}
+      </label>
     </div>
   </ng-template>
 </mi-calendar>
