@@ -1,7 +1,7 @@
 .calendar {
   display: grid;
   grid-template-columns: 100px repeat(5, 1fr); /* One column for timeslots, seven for days of the week */
-  width: 100%; /* Full width */
+  width: 150%; /* Full width */
   height: 100vh; /* Full viewport height */
 }
 
