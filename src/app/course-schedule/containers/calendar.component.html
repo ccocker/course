@@ -66,6 +66,7 @@
             *ngFor="let event of getEventsForTimeslot(timeslot, date)"
             class="event"
             [ngStyle]="calculateEventStyle(event, date, timeslot)"
+            (dblclick)="onEventDoubleClick(event)"
           >
             {{ event.description }}
 

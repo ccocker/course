@@ -1,21 +1,25 @@
 <button (click)="bulkUpload()">Bulk Upload</button>
+
 <mi-calendar
+  *ngIf="!selectedEvent"
   [showDateNavigator]="true"
   [events]="events"
   [startDate]="customStartDate"
   [startTime]="'08:00'"
   [scrollToCurrentTime]="false"
+  (eventDoubleClick)="onEventEdit($event)"
 >
   <ng-template let-event>
     <ng-container class="event-details">
       {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
 
       {{ event?.classNumber }}
-
-      {{ event?.roomCode }}
+      <div>
+        {{ event?.roomCode }}
+      </div>
     </ng-container>
 
-    <div class="event-radio-buttons">
+    <ng-container class="event-radio-buttons">
       <label *ngFor="let option of ['H', 'M', 'L', 'X']">
         <input
           type="radio"
@@ -25,9 +29,16 @@
         />
         {{ option }}
       </label>
-    </div>
+    </ng-container>
   </ng-template>
 </mi-calendar>
+
+<mi-dynamic-form
+  *ngIf="selectedEvent"
+  [formConfiguration]="selectedEvent.formConfiguration"
+  [formGroupData]="selectedEvent"
+  (formSubmit)="onFormSubmit($event)"
+></mi-dynamic-form>
 
 <!-- <ng-container *ngIf="data$ | async as data">
   <body>

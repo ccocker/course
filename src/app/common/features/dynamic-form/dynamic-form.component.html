@@ -23,9 +23,9 @@
     <ng-container *ngIf="formConfiguration[key].type === 'date'">
       <mat-form-field appearance="outline">
         <mat-label>{{ formConfiguration[key].label }}</mat-label>
-        <!-- <input matInput [matDatepicker]="picker" [formControlName]="key" /> -->
-        <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
-        <!-- <mat-datepicker #picker></mat-datepicker> -->
+        <input matInput [matDatepicker]="picker" [formControlName]="key" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </ng-container>
 

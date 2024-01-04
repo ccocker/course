@@ -51,6 +51,8 @@ export class DynamicFormComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit(): void {
+    console.log('formGroupData', this.formGroupData);
+    console.log('formConfiguration', this.formConfiguration);
     this.formGroup = this.createFormGroup(this.formConfiguration);
   }
 
@@ -109,9 +111,20 @@ export class DynamicFormComponent implements OnInit {
    * @returns A FormGroup object.
    */
   private createFormGroup(config: any): FormGroup {
+    console.log('config', config);
+    if (!config || typeof config !== 'object') {
+      console.error('Invalid config provided to createFormGroup', config);
+      return this.fb.group({});
+    }
+
     const group: any = {};
     Object.keys(config).forEach((key) => {
-      if (config[key].type === 'array') {
+      if (!config[key]) {
+        console.warn(
+          `Config key '${key}' is undefined or null in form configuration`,
+          config
+        );
+      } else if (config[key].type === 'array') {
         const dataArray = this.formGroupData[key] ?? [];
         group[key] = this.fb.array(
           dataArray.map((data: any) =>
@@ -133,6 +146,7 @@ export class DynamicFormComponent implements OnInit {
         group[key] = new FormControl(this.formGroupData[key] || null);
       }
     });
+
     return this.fb.group(group);
   }
 

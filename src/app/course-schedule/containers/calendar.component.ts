@@ -4,8 +4,10 @@ import {
   Component,
   ContentChild,
   ElementRef,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -17,8 +19,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { ModelFactory } from '../../common/services/model.factory';
+import { BaseModel, Event } from '../../common/models';
+import { from, pipe, tap } from 'rxjs';
 
 interface CalendarEvent {
+  id: string;
   startDate: Date;
   startTime: string;
   endDate: Date;
@@ -56,6 +62,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   events: CalendarEvent[] = [];
   @Input() startTime: string = '00:00';
   @Input() scrollToCurrentTime: boolean = true;
+  @Output() eventDoubleClick = new EventEmitter<any>();
 
   @ViewChild('calendar') calendar: ElementRef;
   @ContentChild(TemplateRef) eventTemplate: TemplateRef<any>;
@@ -66,6 +73,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   filteredEvents: CalendarEvent[] = [];
   currentView: 'day' | 'workWeek' | 'week' | 'month' = 'workWeek';
   selectedDate: Date = new Date();
+  model!: BaseModel;
+
+  constructor(private modelFactory: ModelFactory) {}
 
   ngOnInit() {
     this.selectedDate = this.startDate || new Date();
@@ -324,5 +334,28 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         !(end <= timeslotStart || start >= timeslotEnd)
       );
     });
+  }
+
+  // Inside CalendarComponent
+  onEventDoubleClick(data: any): void {
+    console.log('Event double clicked', data);
+
+    from(this.modelFactory.createModel('events'))
+      .pipe(
+        tap((model) => {
+          console.log('Model', model);
+          // Assign data from Firestore
+          Object.assign(model, {
+            ...data,
+          });
+
+          this.model = model;
+          console.log('Event double clicked', this.model);
+
+          // Emit the event here, after the model has been created and assigned
+          this.eventDoubleClick.emit(this.model);
+        })
+      )
+      .subscribe(); // Don't forget to subscribe to trigger the observable
   }
 }

@@ -115,6 +115,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   });
   collection!: string;
   schedule1$: Observable<any>;
+  selectedEvent: any | null = null;
   coursesupload = [
     {
       code: 'BC1',
@@ -1717,5 +1718,16 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     // You can still keep the console.log if you want to log this information as well
     console.log('Selected priority for event:', event, selectedPriority);
     // Additional logic to handle the change can go here
+  }
+
+  onEventEdit(eventData: any): void {
+    console.log('Event edit:', eventData);
+    this.selectedEvent = eventData;
+  }
+
+  onFormSubmit(updatedEventData: any): void {
+    // Logic to update the event in the events array
+    // Refresh the calendar if needed
+    this.selectedEvent = null; // Hide the form
   }
 }
