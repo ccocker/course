@@ -56,6 +56,7 @@ export class LayoutComponent implements OnInit {
       { title: 'Group Classes', link: 'auth/groupclasses' },
       { title: 'Offerings', link: 'auth/offerings' },
       { title: 'Offering Groups', link: 'auth/offeringgroups' },
+      { title: 'Tutor Preferences', link: 'auth/tutorpreferences' },
       {
         title: 'People',
         link: 'auth/people',

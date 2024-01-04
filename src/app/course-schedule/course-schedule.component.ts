@@ -1672,7 +1672,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     console.log(preferenceData);
     this.store.dispatch(
       courseScheduleActions.createTutorPreferences({
-        url: 'tutorPreferences',
+        url: 'tutorpreferences',
         tutorPreferences: preferenceData,
       })
     );

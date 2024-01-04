@@ -4,7 +4,7 @@ import { BaseModel } from '@miCommon/models/base.model';
  * Enrollment model representing course enrollment details.
  * This class extends the BaseModel.
  */
-export class TutorPreferences extends BaseModel {
+export class Tutorpreferences extends BaseModel {
   public userId: string = '';
   public priority: string = '';
   public courseCode: string = '';
@@ -16,7 +16,7 @@ export class TutorPreferences extends BaseModel {
    * Constructor to initialize Class instance.
    * @param initialData Optional partial class data to initialize the instance.
    */
-  constructor(initialData?: Partial<TutorPreferences>) {
+  constructor(initialData?: Partial<Tutorpreferences>) {
     super(initialData ?? {});
     this.defaultSortField = 'userId';
     this.sortOrderAscending = true;
@@ -29,12 +29,12 @@ export class TutorPreferences extends BaseModel {
    * Assign initial values to Class instance properties.
    * @param initialData Optional partial class data to merge with default values.
    */
-  private assignInitialValues(initialData?: Partial<TutorPreferences>): void {
+  private assignInitialValues(initialData?: Partial<Tutorpreferences>): void {
     // Merge default values with initialData
-    const mergedData: TutorPreferences = {
+    const mergedData: Tutorpreferences = {
       ...this,
       ...initialData,
-    } as TutorPreferences;
+    } as Tutorpreferences;
 
     // Assign mergedData to properties
     Object.assign(this, mergedData);
@@ -47,6 +47,7 @@ export class TutorPreferences extends BaseModel {
     this.listProperties = [
       'userId',
       'courseCode',
+      'priority',
       'groupNumber',
       'classNumber',
       'startDate',
