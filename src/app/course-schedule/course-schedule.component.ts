@@ -1649,31 +1649,30 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   updatePreferences(event: IScheduleEvent, priority: string) {
-    const {
-      course: { code: courseCode },
-      class: {
-        classNumber,
-        offeringGroupCode: {
-          group: offeringGroupNumber,
-          offeringCode: { startDate }, // Destructure the startDate from the offering object
-        },
-      },
-    } = event;
+    console.log(event);
+    // const {
+    //   course: { code: courseCode },
+    //   class: {
+    //     classNumber,
+    //     offeringGroupCode: {
+    //       group: offeringGroupNumber,
+    //       offeringCode: { startDate }, // Destructure the startDate from the offering object
+    //     },
+    //   },
+    // } = event;
 
     const userId = this.currentUser.email;
 
     const preferenceData = {
       userId,
+      id: event['id'],
       priority,
-      courseCode,
-      groupNumber: offeringGroupNumber,
-      classNumber,
-      startDate, // Include the startDate in the preference data
+      courseCode: event['offeringGroupCode'] + event['groupNumber'],
     };
-
+    console.log(preferenceData);
     this.store.dispatch(
       courseScheduleActions.createTutorPreferences({
-        url: this.collection,
+        url: 'tutorPreferences',
         tutorPreferences: preferenceData,
       })
     );
@@ -1726,8 +1725,23 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   onFormSubmit(updatedEventData: any): void {
-    // Logic to update the event in the events array
-    // Refresh the calendar if needed
+    console.log(updatedEventData);
+
+    // Find the index of the event in the array
+    const index = this.events.findIndex(
+      (event) => event.id === updatedEventData.id
+    );
+
+    // Check if the event was found
+    if (index !== -1) {
+      // Update the event at the found index
+      this.events[index] = updatedEventData;
+    } else {
+      console.warn('Event not found for updating:', updatedEventData.id);
+    }
+
+    // Additional logic to refresh the calendar if needed
+
     this.selectedEvent = null; // Hide the form
   }
 }

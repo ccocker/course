@@ -25,7 +25,7 @@
           type="radio"
           [value]="option"
           [name]="event.id"
-          (change)="onPriorityChange(event, option)"
+          (change)="updatePreferences(event, option)"
         />
         {{ option }}
       </label>
