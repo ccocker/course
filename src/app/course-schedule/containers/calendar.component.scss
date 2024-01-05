@@ -1,8 +1,13 @@
+$border-color: #ddd;
+$background-color: #f0f0f0;
+$event-border-color: #ff0000;
+$sticky-background-color: white;
+
 .calendar {
   display: grid;
-  grid-template-columns: 100px repeat(5, 1fr); /* One column for timeslots, seven for days of the week */
-  width: 150%; /* Full width */
-  height: 100vh; /* Full viewport height */
+  grid-template-columns: 100px repeat(5, 1fr);
+  width: 150%;
+  height: 100vh;
 }
 
 .calendar-toolbar {
@@ -23,39 +28,37 @@
   height: calc(100vh - 60px);
 }
 
-.event {
-  position: absolute;
-  width: 100%;
-  border: 2px solid #ff0000; /* Example border */
-  box-sizing: border-box;
-  /* Add additional styling as needed */
-}
-
 .cell {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd; /* Example styling */
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid $border-color;
 }
 
-.timeslot-header {
-  grid-column: 1; /* Timeslot label column */
-  background: #f0f0f0; /* Example styling */
+.timeslot-header,
+.timeslot-cell {
+  background: $background-color;
 }
 
 .date-cell {
   position: sticky;
   top: 0;
-  background: white; /* Or your preferred background color */
-  z-index: 1; /* Ensures it stays above other content when scrolling */
+  background: $sticky-background-color;
+  z-index: 1;
 }
 
 .timeslot-cell {
-  grid-row: span 1; /* Each timeslot label takes up one row height */
-  background: #f0f0f0; /* Example styling */
+  grid-row: span 1;
 }
 
 .day-cell {
   position: relative;
-  height: 60px; /* Example fixed height, adjust as necessary */
+  height: 60px;
+}
+
+.event {
+  position: absolute;
+  width: 100%;
+  border: 2px solid $event-border-color;
+  box-sizing: border-box;
 }

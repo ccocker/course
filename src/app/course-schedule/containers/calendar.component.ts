@@ -309,16 +309,26 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const concurrentEvents = this.getConcurrentEvents(event, date, timeslot);
     const eventIndex = concurrentEvents.findIndex((e) => e.id === event.id);
     const numberOfConcurrentEvents = concurrentEvents.length;
-    const widthPerEvent = 100 / numberOfConcurrentEvents; // Divide the width equally among concurrent events
+
+    // You might want to limit the maximum number of concurrent events displayed side by side
+    // to avoid events becoming too narrow to be interacted with or read.
+    const maxConcurrentEventsDisplayed = 3;
+    const adjustedNumberOfConcurrentEvents = Math.min(
+      numberOfConcurrentEvents,
+      maxConcurrentEventsDisplayed
+    );
+    const widthPerEvent = 100 / adjustedNumberOfConcurrentEvents; // Divide the width equally among concurrent events
+    const eventLeftOffset =
+      (eventIndex % maxConcurrentEventsDisplayed) * widthPerEvent; // Calculate left offset
 
     return {
       position: 'absolute',
       top: `${eventTopOffset}px`,
       height: `${eventHeight}px`,
       width: `${widthPerEvent}%`,
-      left: `${eventIndex * widthPerEvent}%`, // Position each event next to the previous
-      'background-color': event.color, // Use the event's color.
-      'z-index': '100', // Ensure the event is above the timeslot background
+      left: `${eventLeftOffset}%`, // Adjusted to use eventLeftOffset
+      'background-color': event.color,
+      'z-index': 100 + eventIndex, // Increment z-index to handle slight overlaps
       // Add other styling as needed.
     };
   }
