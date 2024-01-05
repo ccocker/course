@@ -264,37 +264,62 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   getEventsForTimeslot(timeslot: string, date: Date): CalendarEvent[] {
     return this.filteredEvents.filter((event) => {
-      // Check if the event's date and timeslot match the provided date and timeslot
+      // Transform timeslot and event start time to Date objects for comparison
       const eventStartTime = this.timeslotStringToDate(event.startTime);
+      const eventEndTime = this.timeslotStringToDate(event.endTime);
+      const timeslotStartTime = this.timeslotStringToDate(timeslot);
+      // Calculate the end time of the timeslot
+      const timeslotEndTime = new Date(
+        timeslotStartTime.getTime() + this.timeslotIncrement * 60000
+      );
+
+      // Check if the event's start time is within the timeslot
+      const isWithinTimeslot =
+        eventStartTime >= timeslotStartTime && eventStartTime < timeslotEndTime;
+
+      // Check if the event's date matches the current date
       const eventStartDate = new Date(event.startDate.setHours(0, 0, 0, 0));
-      const timeslotDate = this.timeslotStringToDate(timeslot);
       const currentDate = new Date(date.setHours(0, 0, 0, 0));
+
+      // The event should be included if it starts within the timeslot and has the same date
       return (
-        eventStartDate.getTime() === currentDate.getTime() &&
-        eventStartTime.getHours() === timeslotDate.getHours() &&
-        eventStartTime.getMinutes() === timeslotDate.getMinutes()
+        eventStartDate.getTime() === currentDate.getTime() && isWithinTimeslot
       );
     });
   }
 
   calculateEventStyle(event: CalendarEvent, date: Date, timeslot: string): any {
-    const duration = this.calculateEventDurationInSlots(event);
-    const offset = this.calculateEventOffset(event, timeslot);
-    const concurrentEvents = this.getConcurrentEvents(event, date, timeslot);
+    // Duration calculation
+    const startTime = this.timeslotStringToDate(event.startTime);
+    const endTime = this.timeslotStringToDate(event.endTime);
+    const durationInMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
+    const durationInSlots = durationInMinutes / this.timeslotIncrement;
 
-    // Assuming a gap of 2%
-    const gap = 2;
-    const width =
-      (100 - gap * (concurrentEvents.length - 1)) / concurrentEvents.length;
-    const index = concurrentEvents.indexOf(event);
-    const left = (width + gap) * index;
+    // Offset calculation
+    const timeslotStart = this.timeslotStringToDate(timeslot);
+    const offsetInMinutes =
+      (startTime.getTime() - timeslotStart.getTime()) / 60000;
+    const offsetInSlots = offsetInMinutes / this.timeslotIncrement;
+
+    // Assuming each timeslot's height is 60px.
+    const eventHeight = durationInSlots * 60;
+    const eventTopOffset = offsetInSlots * 60;
+
+    // Concurrent events calculation
+    const concurrentEvents = this.getConcurrentEvents(event, date, timeslot);
+    const eventIndex = concurrentEvents.findIndex((e) => e.id === event.id);
+    const numberOfConcurrentEvents = concurrentEvents.length;
+    const widthPerEvent = 100 / numberOfConcurrentEvents; // Divide the width equally among concurrent events
 
     return {
-      height: `${duration * 60}px`, // Assuming each timeslot is 60px high
-      top: `${offset * 60}px`,
-      width: `${width}%`,
-      left: `${left}%`,
-      'background-color': event.color, // Set the background color
+      position: 'absolute',
+      top: `${eventTopOffset}px`,
+      height: `${eventHeight}px`,
+      width: `${widthPerEvent}%`,
+      left: `${eventIndex * widthPerEvent}%`, // Position each event next to the previous
+      'background-color': event.color, // Use the event's color.
+      'z-index': '100', // Ensure the event is above the timeslot background
+      // Add other styling as needed.
     };
   }
 
