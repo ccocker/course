@@ -1188,9 +1188,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     );
     this.people$ = this.store.select(selectPeopleEntities);
     this.events$ = this.store.select(selectEventsEntities);
-    this.events$.subscribe((data) => {
-      this.events = data;
-    });
+
     this.data$.subscribe((originalData) => {
       const firstFiveRecords = Object.keys(originalData).reduce(
         (accumulatedData, key) => {

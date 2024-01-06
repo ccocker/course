@@ -58,17 +58,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
   @Input()
   showDateNavigator: boolean = true;
-  private _events: CalendarEvent[];
-
-  set events(value: CalendarEvent[]) {
-    this._events = (value || []).map((event) => ({
-      ...event,
-      startDate: new Date(event.startDate),
-      endDate: new Date(event.endDate),
-    }));
-    this.filteredEvents = [...this._events];
-  }
-
+  @Input()
+  events: CalendarEvent[] = [];
   @Input() startTime: string = '00:00';
   @Input() scrollToCurrentTime: boolean = true;
   @Output() eventDoubleClick = new EventEmitter<any>();
@@ -90,13 +81,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.selectedDate = this.startDate || new Date();
     this.initializeWeek();
     this.initializeTimeslots();
-    console.log('On Init Events', this.events);
-    console.log('On Init Filtered Events', this.filteredEvents);
+    this.filteredEvents = this.events.slice();
   }
 
   ngAfterViewInit() {
-    console.log('After View Init Events', this.events);
-    console.log('After View Init Filtered Events', this.filteredEvents);
     if (this.scrollToCurrentTime) {
       this.scrollToCurrentTimeSlot();
     }
