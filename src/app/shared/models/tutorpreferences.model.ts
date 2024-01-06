@@ -6,11 +6,9 @@ import { BaseModel } from '@miCommon/models/base.model';
  */
 export class Tutorpreferences extends BaseModel {
   public userId: string = '';
+  public eventId: string = '';
+  public classCode: string = '';
   public priority: string = '';
-  public courseCode: string = '';
-  public groupNumber: number = 0;
-  public classNumber: number = 0;
-  public startDate: Date = new Date();
 
   /**
    * Constructor to initialize Class instance.
@@ -44,22 +42,7 @@ export class Tutorpreferences extends BaseModel {
    * Configure listProperties and formProperties arrays.
    */
   private configureProperties(): void {
-    this.listProperties = [
-      'userId',
-      'courseCode',
-      'priority',
-      'groupNumber',
-      'classNumber',
-      'startDate',
-    ];
-    this.formProperties = [
-      'id',
-      'userId',
-      'priority',
-      'courseCode',
-      'groupNumber',
-      'classNumber',
-      'startDate',
-    ];
+    this.listProperties = ['userId', 'classCode', 'priority'];
+    this.formProperties = ['eventId', 'userId', 'classCode', 'priority'];
   }
 }

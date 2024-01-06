@@ -13,6 +13,7 @@ import * as offeringsEffects from './store/offering/effects';
 import * as offeringGroupsEffects from './store/offering-groups/effects';
 import * as roomsEffects from './store/rooms/effects';
 import * as groupClassesEffects from './store/group-classes/effects';
+import * as tutorPreferencesEffects from './store/tutor-preferences/effects';
 import {
   offeringsFeatureKey,
   offeringsReducer,
@@ -26,6 +27,10 @@ import {
   groupClassesFeatureKey,
   groupClassesReducer,
 } from './store/group-classes/reducers';
+import {
+  tutorPreferencesFeatureKey,
+  tutorPreferencesReducer,
+} from './store/tutor-preferences/reducers';
 
 export const routes: Route[] = [
   // { path: '', redirectTo: 'list', pathMatch: 'full' },
@@ -45,6 +50,8 @@ export const routes: Route[] = [
       provideState(roomsFeatureKey, roomsReducer),
       provideEffects(groupClassesEffects),
       provideState(groupClassesFeatureKey, groupClassesReducer),
+      provideEffects(tutorPreferencesEffects),
+      provideState(tutorPreferencesFeatureKey, tutorPreferencesReducer),
     ],
   },
 ];

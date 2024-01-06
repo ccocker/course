@@ -25,6 +25,7 @@ import { DynamicFormComponent } from '../common/features/dynamic-form/dynamic-fo
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { courseScheduleActions } from './store/course-schedules/actions';
+import { tutorPreferencesActions } from './store/tutor-preferences/actions';
 import { FirestoreDataService } from '@miCommon/services/firestore.data';
 import { selectEntities } from './store/course-schedules/reducers';
 import { selectEntities as selectPeopleEntities } from '../common/features/entity/store/reducers';
@@ -40,6 +41,7 @@ import { selectOfferings } from './store/offering/reducers';
 import { selectOfferingGroups } from './store/offering-groups/reducers';
 import { selectGroupClasses } from './store/group-classes/reducers';
 import { CalendarComponent } from './containers/calendar.component';
+import { selectTutorPreferences } from './store/tutor-preferences/reducers';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -73,7 +75,12 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   schedule: IScheduleEvent[];
   schedule1: any[];
   filteredStaffList: IPerson[] = []; // Filtered list for display in the dropdown
-
+  tutorPreferences: Array<{
+    userId: string;
+    eventId: string;
+    classCode: string;
+    priority: string;
+  }> = [];
   timeSlots: { startTime: string; endTime: string }[] = [];
   headerColumns: Record<string, { start: number; span: number }> = {};
   coursesList: ICourse[] = [];
@@ -112,6 +119,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     groupclasses: this.store.select(selectGroupClasses),
     people: this.store.select(selectPeopleEntities),
     rooms: this.store.select(selectRooms),
+    tutorpreferences: this.store.select(selectTutorPreferences),
   });
   collection!: string;
   schedule1$: Observable<any>;
@@ -1164,7 +1172,10 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     );
     this.store.dispatch(roomsActions.getRooms({ url: 'rooms' }));
     this.store.dispatch(
-      groupClassesActions.getGroupClasses({ url: 'groupclasses' })
+      tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' })
+    );
+    this.store.dispatch(
+      courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
     );
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
@@ -1649,29 +1660,25 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   updatePreferences(event: IScheduleEvent, priority: string) {
-    console.log(event);
-    // const {
-    //   course: { code: courseCode },
-    //   class: {
-    //     classNumber,
-    //     offeringGroupCode: {
-    //       group: offeringGroupNumber,
-    //       offeringCode: { startDate }, // Destructure the startDate from the offering object
-    //     },
-    //   },
-    // } = event;
+   
 
     const userId = this.currentUser.email;
 
     const preferenceData = {
       userId,
-      id: event['id'],
+      eventId: event['id'],
       priority,
-      courseCode: event['offeringGroupCode'] + event['groupNumber'],
+      classCode:
+        event['offeringGroupCode'] +
+        '-' +
+        event['groupNumber'] +
+        '-' +
+        event['classNumber'],
     };
     console.log(preferenceData);
+
     this.store.dispatch(
-      courseScheduleActions.createTutorPreferences({
+      tutorPreferencesActions.createTutorPreferences({
         url: 'tutorpreferences',
         tutorPreferences: preferenceData,
       })

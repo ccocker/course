@@ -34,34 +34,6 @@ export const createCourseScheduleEffect = createEffect(
   { functional: true }
 );
 
-export const createTutorPreferencesEffect = createEffect(
-  (
-    actions$ = inject(Actions),
-    entityService = inject(FirestoreDataService)
-  ) => {
-    return actions$.pipe(
-      ofType(courseScheduleActions.createTutorPreferences),
-      switchMap(({ url, tutorPreferences }) => {
-        return entityService.createEntity(url, tutorPreferences).pipe(
-          map((tutorPreferences) =>
-            courseScheduleActions.createTutorPreferencesSuccess({
-              tutorPreferences,
-            })
-          ),
-          catchError((error) =>
-            of(
-              courseScheduleActions.createTutorPreferencesFailure({
-                errors: error,
-              })
-            )
-          )
-        );
-      })
-    );
-  },
-  { functional: true }
-);
-
 export const redirectAfterCreateEffect = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
     return actions$.pipe(
