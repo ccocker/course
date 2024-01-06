@@ -27,7 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { courseScheduleActions } from './store/course-schedules/actions';
 import { tutorPreferencesActions } from './store/tutor-preferences/actions';
 import { FirestoreDataService } from '@miCommon/services/firestore.data';
-import { selectEntities } from './store/course-schedules/reducers';
+import { selectEntities as selectEventsEntities } from './store/course-schedules/reducers';
 import { selectEntities as selectPeopleEntities } from '../common/features/entity/store/reducers';
 import { entityActions } from '../common/features/entity/store/actions';
 import { coursesActions } from '../course-schedule/store/courses/actions';
@@ -255,6 +255,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   ];
 
   people$: Observable<any>;
+  events$: Observable<any>;
 
   rooms = [
     { roomCode: '012.10.006', capacity: '150' },
@@ -1158,9 +1159,13 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.events.forEach((event, index) => {
-      event.id = `event-${index + 1}`;
-      // event.description = `${event.description} - ${event.roomCode}`;
+    this.events.forEach((event) => {
+      event.id =
+        event['offeringGroupCode'] +
+        '-' +
+        event['groupNumber'] +
+        '-' +
+        event['classNumber'];
     });
 
     this.collection = 'courseschedules';
@@ -1182,13 +1187,10 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
     );
     this.people$ = this.store.select(selectPeopleEntities);
-
-    this.store.dispatch(
-      courseScheduleActions.getCourseSchedules({
-        url: `${this.collection}`,
-      })
-    );
-
+    this.events$ = this.store.select(selectEventsEntities);
+    this.events$.subscribe((data) => {
+      this.events = data;
+    });
     this.data$.subscribe((originalData) => {
       const firstFiveRecords = Object.keys(originalData).reduce(
         (accumulatedData, key) => {
@@ -1726,7 +1728,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     );
     this.firestoreDataService.uploadBulkData(
       'courseschedules',
-      this.schedule1,
+      this.events,
       true
     );
   }

@@ -201,7 +201,14 @@ export class FirestoreDataService {
       );
 
       batchData.forEach((item) => {
-        const docRef = doc(collRef); // Automatically generate document ID
+        let docRef;
+        if (item.id && typeof item.id === 'string' && item.id.trim() !== '') {
+          // If 'id' exists, use it to create the document reference
+          docRef = doc(collRef, item.id);
+        } else {
+          // If 'id' doesn't exist, let Firebase generate the document ID
+          docRef = doc(collRef);
+        }
         batch.set(docRef, item);
       });
 

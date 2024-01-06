@@ -3,7 +3,7 @@
 <mi-calendar
   *ngIf="!selectedEvent"
   [showDateNavigator]="true"
-  [events]="events"
+  [events]="events$ | async"
   [startDate]="customStartDate"
   [startTime]="'08:00'"
   [scrollToCurrentTime]="false"
@@ -20,10 +20,7 @@
     </ng-container>
 
     <ng-container class="event-radio-buttons">
-      <div>
-        Tutor Preference for {{ buildClassCode(event) }}:
-        {{ tutorPreferencesMap.get(buildClassCode(event)) }}
-      </div>
+      <div>Tutor Preference for {{ buildClassCode(event) }}:</div>
       <label *ngFor="let option of ['H', 'M', 'L', 'X']">
         <input
           type="radio"
