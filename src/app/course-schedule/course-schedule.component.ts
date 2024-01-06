@@ -81,6 +81,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     classCode: string;
     priority: string;
   }> = [];
+  tutorPreferencesMap = new Map();
   timeSlots: { startTime: string; endTime: string }[] = [];
   headerColumns: Record<string, { start: number; span: number }> = {};
   coursesList: ICourse[] = [];
@@ -1268,8 +1269,8 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       this.schedule1 = this.events;
     });
 
-    this.dataSubscription = this.data$.subscribe(({ currentUser }) => {
-      this.currentUser = currentUser;
+    this.dataSubscription = this.data$.subscribe((data) => {
+      this.currentUser = data.currentUser;
       this.coursesList = this.scheduleService.getAllCourses();
       this.selectedCourses = this.coursesList.map((course) => course.code);
 
@@ -1278,7 +1279,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
       // Check if the current user is in the staff list
       const currentUserStaffRecord = completeStaffList.find(
-        (staff) => staff.emails[1].address === currentUser?.email
+        (staff) => staff.emails[1].address === data.currentUser?.email
       );
 
       // If the current user is a staff member, filter the list; otherwise, use the complete list
@@ -1288,6 +1289,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
       // Map the selected staff depending on the filtered staff list
       this.selectedStaff = this.staffList.map((staff) => staff.miId);
+      if (data.tutorpreferences) {
+        this.tutorPreferences = data.tutorpreferences;
+        console.log('Tutor Preferences:', this.tutorPreferences);
+        this.processTutorPreferences(data.tutorpreferences, this.currentUser);
+      }
     });
     this.filteredStaffList = this.staffList;
     this.schedule = this.scheduleService.getSchedule();
@@ -1305,6 +1311,27 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     this.weekdays.push(DayOfWeek.Friday);
 
     this.groupColours = this.scheduleService.generateColorShades();
+  }
+
+  processTutorPreferences(tutorPreferences, currentUser) {
+    const filteredPreferences = tutorPreferences.filter(
+      (p) => p.userId === currentUser.email
+    );
+
+    filteredPreferences.forEach((preference) => {
+      this.tutorPreferencesMap.set(preference.classCode, preference.priority);
+    });
+    console.log('Tutor Preferences Map:', this.tutorPreferencesMap);
+  }
+
+  buildClassCode(event) {
+    return (
+      event['offeringGroupCode'] +
+      '-' +
+      event['groupNumber'] +
+      '-' +
+      event['classNumber']
+    );
   }
 
   toggleUnderstaffedFilter() {
@@ -1660,8 +1687,12 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   updatePreferences(event: IScheduleEvent, priority: string) {
-   
-
+    console.log(
+      'Updating preferences for event:',
+      event,
+      'with priority:',
+      priority
+    );
     const userId = this.currentUser.email;
 
     const preferenceData = {
