@@ -3,7 +3,7 @@
 <mi-calendar
   *ngIf="!selectedEvent"
   [showDateNavigator]="true"
-  [events]="events$ | async"
+  [events]="events"
   [startDate]="customStartDate"
   [startTime]="'08:00'"
   [scrollToCurrentTime]="false"

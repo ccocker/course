@@ -25,11 +25,9 @@ export class AuthGuard implements CanActivate {
       take(1),
       map((currentUser) => {
         if (!currentUser) {
-          console.log('Access denied. Redirecting to home page...');
           this.router.navigate(['/home']);
           return false;
         }
-        console.log('User is authenticated, allow access:', currentUser);
 
         return true;
       })

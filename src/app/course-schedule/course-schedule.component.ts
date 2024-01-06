@@ -1293,7 +1293,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       this.selectedStaff = this.staffList.map((staff) => staff.miId);
       if (data.tutorpreferences) {
         this.tutorPreferences = data.tutorpreferences;
-        console.log('Tutor Preferences:', this.tutorPreferences);
+
         this.processTutorPreferences(data.tutorpreferences, this.currentUser);
       }
     });
@@ -1323,7 +1323,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     filteredPreferences.forEach((preference) => {
       this.tutorPreferencesMap.set(preference.classCode, preference.priority);
     });
-    console.log('Tutor Preferences Map:', this.tutorPreferencesMap);
   }
 
   buildClassCode(event) {
