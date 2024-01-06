@@ -77,7 +77,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   filteredStaffList: IPerson[] = []; // Filtered list for display in the dropdown
   tutorPreferences: Array<{
     userId: string;
-    eventId: string;
+    id: string;
     classCode: string;
     priority: string;
   }> = [];
@@ -776,7 +776,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       classNumber: 4,
       day: 'FR',
       startTime: '08:30',
-      endTime: '11:30',
+      endTime: '10:30',
       roomCode: '014.09.023',
       description: '',
       color: '#FFF2E6',
@@ -1687,27 +1687,31 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   updatePreferences(event: IScheduleEvent, priority: string) {
-    console.log(
-      'Updating preferences for event:',
-      event,
-      'with priority:',
-      priority
-    );
     const userId = this.currentUser.email;
+    const classCode =
+      event['offeringGroupCode'] +
+      '-' +
+      event['groupNumber'] +
+      '-' +
+      event['classNumber'];
 
-    const preferenceData = {
+    // Find an existing preference with the same userId and classCode
+    const existingPreference = this.tutorPreferences.find(
+      (preference) =>
+        preference.userId === userId && preference.classCode === classCode
+    );
+
+    // Prepare the preference data
+    let preferenceData = {
       userId,
-      eventId: event['id'],
+      id: existingPreference ? existingPreference.id : event['id'], // Use existing eventId if found
       priority,
-      classCode:
-        event['offeringGroupCode'] +
-        '-' +
-        event['groupNumber'] +
-        '-' +
-        event['classNumber'],
+      classCode: classCode,
     };
-    console.log(preferenceData);
 
+    console.log('Updated Preference Data:', preferenceData);
+
+    // Dispatch the action with the updated preference data
     this.store.dispatch(
       tutorPreferencesActions.createTutorPreferences({
         url: 'tutorpreferences',

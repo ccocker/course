@@ -6,7 +6,7 @@ import { BaseModel } from '@miCommon/models/base.model';
  */
 export class Tutorpreferences extends BaseModel {
   public userId: string = '';
-  public eventId: string = '';
+  public id: string = '';
   public classCode: string = '';
   public priority: string = '';
 
@@ -43,6 +43,6 @@ export class Tutorpreferences extends BaseModel {
    */
   private configureProperties(): void {
     this.listProperties = ['userId', 'classCode', 'priority'];
-    this.formProperties = ['eventId', 'userId', 'classCode', 'priority'];
+    this.formProperties = ['id', 'userId', 'classCode', 'priority'];
   }
 }
