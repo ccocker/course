@@ -22,6 +22,7 @@ import {
 import { authActions } from '../../store/actions';
 import { Actions, ofType } from '@ngrx/effects';
 import { combineLatest } from 'rxjs';
+import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.interface';
 
 @Component({
   selector: 'mi-login',
@@ -42,7 +43,7 @@ import { combineLatest } from 'rxjs';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  loginError: string | null = null;
+  loginError: BackendErrorsInterface | null = null;
   resetPassword = false;
 
   data$ = combineLatest({
@@ -79,7 +80,13 @@ export class LoginComponent {
 
     this.store.dispatch(authActions.register({ request }));
 
-    this.loginError = null;
+    this.actions$
+      .pipe(ofType(authActions.registerFailure), take(1))
+      .subscribe((receivedAction) => {
+        console.log('receivedAction', receivedAction);
+        // Ensure that receivedAction contains the 'errors' property of the correct type
+        this.loginError = receivedAction.errors;
+      });
   }
 
   onResetPassword() {

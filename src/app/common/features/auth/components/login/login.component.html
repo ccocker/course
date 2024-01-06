@@ -24,8 +24,10 @@
               Password is required
             </mat-error>
           </mat-form-field>
-          <!-- <mat-error> {{ data.backendErrors["code"] }}</mat-error> -->
 
+          <mat-error *ngIf="loginError">
+            {{ loginError.message }}
+          </mat-error>
           <button
             mat-raised-button
             color="primary"
