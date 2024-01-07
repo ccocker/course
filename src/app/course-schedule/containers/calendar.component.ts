@@ -269,8 +269,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   getEventsForTimeslot(timeslot: string, date: Date): CalendarEvent[] {
     return this.filteredEvents.filter((event) => {
-      console.log('Event', event);
-
       // Transform timeslot and event start time to Date objects for comparison
       const eventStartTime = this.timeslotStringToDate(event.startTime);
       const eventEndTime = this.timeslotStringToDate(event.endTime);

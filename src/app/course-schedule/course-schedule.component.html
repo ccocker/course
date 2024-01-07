@@ -1,40 +1,43 @@
 <button (click)="bulkUpload()">Bulk Upload</button>
 
-<mi-calendar
-  [showDateNavigator]="true"
-  *ngIf="events$ | async as data"
-  [events]="data"
-  [startDate]="customStartDate"
-  [startTime]="'08:00'"
-  [scrollToCurrentTime]="false"
-  (eventDoubleClick)="onEventEdit($event)"
->
-  <ng-template let-event>
-    <ng-container class="event-details">
-      {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
+<div *ngIf="!selectedEvent">
+  <mi-calendar
+    [showDateNavigator]="true"
+    *ngIf="events$ | async as data"
+    [events]="data"
+    [startDate]="customStartDate"
+    [startTime]="'08:00'"
+    [scrollToCurrentTime]="false"
+    (eventDoubleClick)="onEventEdit($event)"
+  >
+    <ng-template let-event>
+      <ng-container class="event-details">
+        {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
 
-      {{ event?.classNumber }}
-      <div>
-        {{ event?.roomCode }}
-      </div>
-    </ng-container>
+        {{ event?.classNumber }}
+        <div>
+          {{ event?.roomCode }}
+        </div>
+      </ng-container>
 
-    <ng-container class="event-radio-buttons">
-      <div>Tutor Preference for {{ buildClassCode(event) }}:</div>
-      <label *ngFor="let option of ['H', 'M', 'L', 'X']">
-        <input
-          type="radio"
-          [value]="option"
-          [name]="event.id"
-          [checked]="tutorPreferencesMap.get(buildClassCode(event)) === option"
-          (change)="updatePreferences(event, option)"
-        />
-        {{ option }}
-      </label>
-    </ng-container>
-  </ng-template>
-</mi-calendar>
-
+      <ng-container class="event-radio-buttons">
+        <div>Tutor Preference for {{ buildClassCode(event) }}:</div>
+        <label *ngFor="let option of ['H', 'M', 'L', 'X']">
+          <input
+            type="radio"
+            [value]="option"
+            [name]="event.id"
+            [checked]="
+              tutorPreferencesMap.get(buildClassCode(event)) === option
+            "
+            (change)="updatePreferences(event, option)"
+          />
+          {{ option }}
+        </label>
+      </ng-container>
+    </ng-template>
+  </mi-calendar>
+</div>
 <mi-dynamic-form
   *ngIf="selectedEvent"
   [formConfiguration]="selectedEvent.formConfiguration"
