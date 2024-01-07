@@ -120,15 +120,15 @@ export class FirestoreDataService {
   }
 
   // Updates an existing entity in a Firestore collection
-  public async updateEntity<T extends { id: string }>(
+  public updateEntity<T extends { id: string }>(
     collectionPath: string,
     entity: T
-  ): Promise<void> {
+  ): Observable<void> {
     if (hasUndefinedProperties(entity)) {
       throw new Error('Data contains undefined properties');
     }
     const docRef = doc(this.firestore, collectionPath, entity.id);
-    await updateDoc(docRef, entity);
+    return from(updateDoc(docRef, entity));
   }
 
   // Deletes an entity from a Firestore collection

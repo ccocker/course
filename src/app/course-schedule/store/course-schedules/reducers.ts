@@ -29,18 +29,21 @@ const courseScheduleFeature = createFeature({
       validationErrors: action.errors,
     })),
 
-    on(courseScheduleActions.getCourseSchedule, (state) => ({
+    on(courseScheduleActions.updateCourseSchedule, (state) => ({
       ...state,
       isLoading: true,
     })),
-    on(courseScheduleActions.getCourseScheduleSuccess, (state, action) => ({
+    on(courseScheduleActions.updateCourseScheduleSuccess, (state, action) => ({
       ...state,
       isLoading: false,
-      data: action.courseSchedule,
+      data: state.data.map((cs) =>
+        cs.id === action.courseSchedule.id ? action.courseSchedule : cs
+      ),
     })),
-    on(courseScheduleActions.getCourseScheduleFailure, (state) => ({
+    on(courseScheduleActions.updateCourseScheduleFailure, (state, action) => ({
       ...state,
       isLoading: false,
+      validationErrors: action.errors,
     })),
 
     on(courseScheduleActions.getCourseSchedules, (state) => ({

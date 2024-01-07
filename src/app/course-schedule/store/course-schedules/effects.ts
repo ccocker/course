@@ -47,20 +47,24 @@ export const redirectAfterCreateEffect = createEffect(
   { functional: true, dispatch: false }
 );
 
-export const getCourseScheduleEffect = createEffect(
+export const updateCourseScheduleEffect = createEffect(
   (actions$ = inject(Actions), dataService = inject(FirestoreDataService)) => {
     return actions$.pipe(
-      ofType(courseScheduleActions.getCourseSchedule),
-      switchMap((action) => {
-        return dataService.getEntity<any>(action.url, action.id).pipe(
-          map((courseSchedule) => {
-            return courseScheduleActions.getCourseScheduleSuccess({
-              courseSchedule,
-            });
-          }),
-          catchError((error) => {
-            return of(courseScheduleActions.getCourseScheduleFailure());
-          })
+      ofType(courseScheduleActions.updateCourseSchedule),
+      switchMap(({ url, courseSchedule }) => {
+        return dataService.updateEntity(url, courseSchedule).pipe(
+          map((updatedCourseSchedule) =>
+            courseScheduleActions.updateCourseScheduleSuccess({
+              courseSchedule: updatedCourseSchedule,
+            })
+          ),
+          catchError((error) =>
+            of(
+              courseScheduleActions.updateCourseScheduleFailure({
+                errors: error,
+              })
+            )
+          )
         );
       })
     );

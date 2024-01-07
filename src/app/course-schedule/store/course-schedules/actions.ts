@@ -14,9 +14,11 @@ export const courseScheduleActions = createActionGroup({
     'Get course schedules success': props<{ courseSchedules: any[] }>(),
     'Get course schedules failure': emptyProps(),
 
-    'Get course schedule': props<{ url: string; id: string }>(),
-    'Get course schedule success': props<{ courseSchedule: any }>(),
-    'Get course schedule failure': emptyProps(),
+    'Update course schedule': props<{ url: string; courseSchedule: any }>(),
+    'Update course schedule success': props<{ courseSchedule: any }>(),
+    'Update course schedule failure': props<{
+      errors: BackendErrorsInterface;
+    }>(),
 
     'Delete course schedule': props<{ url: string; id: string }>(),
     'Delete course schedule success': emptyProps(),
