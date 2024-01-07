@@ -16,6 +16,7 @@ import { Store, select } from '@ngrx/store';
 import { entityActions } from '../../store/actions';
 import { selectEntities } from '../../store/reducers';
 import { LoadingComponent } from '@miCommon/components/loading/loading.component';
+import { FirestoreDataService } from '@miCommon/services/firestore.data';
 
 @Component({
   selector: 'mi-entity-list',
@@ -59,7 +60,8 @@ export class EntityListComponent implements OnInit, OnDestroy {
     private router: Router,
     private modelFactory: ModelFactory,
     private dialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private firestoreDataService: FirestoreDataService
   ) {}
 
   ngOnInit(): void {
@@ -204,6 +206,11 @@ export class EntityListComponent implements OnInit, OnDestroy {
 
   bulkUpload() {
     this.router.navigate([`/excel-upload`]);
+  }
+
+  deleteAll() {
+    console.log('delete all', this.model.collectionName);
+    this.firestoreDataService.deleteAllRecords(this.model.collectionName);
   }
 
   navigateToDetails(id: string) {

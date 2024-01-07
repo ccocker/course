@@ -65,6 +65,7 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
     [];
   @Input({ required: true }) allowAdd: boolean = false;
   @Input({ required: true }) allowBulkUpload: boolean = false;
+  @Input({ required: true }) allowDeleteAll: boolean = false;
   @Input({ required: true }) allowDeleteColumns: boolean = false;
   @Input({ required: true }) allowMergeColumns: boolean = false;
   @Input({ required: true }) collection: string = '';
@@ -86,6 +87,7 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() emitRecord = new EventEmitter<string>();
   @Output() addRecord = new EventEmitter<void>();
   @Output() bulkUpload = new EventEmitter<void>();
+  @Output() emitDeleteAll = new EventEmitter<void>();
   @Output() filter = new EventEmitter<string>();
   isLoading: boolean = true;
   public editingAllRows = false;
@@ -294,6 +296,10 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   public startBulkUpload(): void {
     this.bulkUpload.emit();
+  }
+
+  public deleteAll(): void {
+    this.emitDeleteAll.emit();
   }
 
   public columnFilter(column: string, event: Event): void {

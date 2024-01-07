@@ -45,6 +45,15 @@
       Bulk Upload
     </button>
 
+    <button
+      *ngIf="allowDeleteAll"
+      mat-raised-button
+      color="primary"
+      (click)="deleteAll()"
+    >
+      Delete All
+    </button>
+
     <button mat-raised-button (click)="exportAsExcelFile()">
       Export to Excel
     </button>
