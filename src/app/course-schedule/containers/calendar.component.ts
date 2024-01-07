@@ -64,6 +64,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @Input()
   showDateNavigator: boolean = true;
   @Input()
+  showDescription: boolean = false;
+  @Input()
   events: CalendarEvent[] = [];
   @Input() startTime: string = '00:00';
   @Input() scrollToCurrentTime: boolean = true;

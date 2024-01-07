@@ -73,7 +73,7 @@
             [ngStyle]="calculateEventStyle(event, date, timeslot)"
             (dblclick)="onEventDoubleClick(event)"
           >
-            {{ event.description }}
+            <span *ngIf="showDescription"> {{ event.description }}</span>
 
             <ng-container
               *ngTemplateOutlet="eventTemplate; context: { $implicit: event }"

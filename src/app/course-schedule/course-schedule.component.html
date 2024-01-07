@@ -2,6 +2,7 @@
 
 <div *ngIf="!selectedEvent">
   <mi-calendar
+    [showDescription]="false"
     [showDateNavigator]="true"
     *ngIf="events$ | async as data"
     [events]="data"
