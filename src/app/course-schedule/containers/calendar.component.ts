@@ -25,7 +25,7 @@ import { from, pipe, tap } from 'rxjs';
 
 interface CalendarEvent {
   id: string;
-  startDate: Date;
+  startDate: Date | { seconds: number; nanoseconds: number }; // Adjusted type
   startTime: string;
   endDate: Date;
   endTime: string;
@@ -52,8 +52,13 @@ interface CalendarEvent {
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
   @Input()
-  set startDate(value: Date) {
-    this._startDate = value || new Date(); // Use today's date as default
+  set startDate(value: { nanoseconds: number; seconds: number } | Date) {
+    if (value instanceof Date) {
+      this._startDate = value;
+    } else {
+      // Convert the timestamp to a Date object
+      this._startDate = new Date(value.seconds * 1000); // Convert seconds to milliseconds
+    }
     this.updateCalendar(this._startDate);
   }
   @Input()
@@ -264,6 +269,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   getEventsForTimeslot(timeslot: string, date: Date): CalendarEvent[] {
     return this.filteredEvents.filter((event) => {
+      console.log('Event', event);
+
       // Transform timeslot and event start time to Date objects for comparison
       const eventStartTime = this.timeslotStringToDate(event.startTime);
       const eventEndTime = this.timeslotStringToDate(event.endTime);
@@ -273,13 +280,20 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         timeslotStartTime.getTime() + this.timeslotIncrement * 60000
       );
 
+      // Convert event.startDate to a Date object if it's not already one
+      const eventStartDate =
+        event.startDate instanceof Date
+          ? event.startDate
+          : new Date(event.startDate.seconds * 1000);
+
+      // Reset the hours for comparison
+      eventStartDate.setHours(0, 0, 0, 0);
+      const currentDate = new Date(date);
+      currentDate.setHours(0, 0, 0, 0);
+
       // Check if the event's start time is within the timeslot
       const isWithinTimeslot =
         eventStartTime >= timeslotStartTime && eventStartTime < timeslotEndTime;
-
-      // Check if the event's date matches the current date
-      const eventStartDate = new Date(event.startDate.setHours(0, 0, 0, 0));
-      const currentDate = new Date(date.setHours(0, 0, 0, 0));
 
       // The event should be included if it starts within the timeslot and has the same date
       return (
@@ -361,11 +375,22 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       timeslotStart.getTime() + this.timeslotIncrement * 60000
     );
 
-    return this.events.filter((e) => {
+    return this.filteredEvents.filter((e) => {
       const start = this.timeslotStringToDate(e.startTime);
       const end = this.timeslotStringToDate(e.endTime);
+
+      // Convert e.startDate to a Date object if it's not already one
+      const eStartDate =
+        e.startDate instanceof Date
+          ? e.startDate
+          : new Date((e.startDate as { seconds: number }).seconds * 1000);
+
+      eStartDate.setHours(0, 0, 0, 0);
+      const currentEventDate = new Date(date);
+      currentEventDate.setHours(0, 0, 0, 0);
+
       return (
-        e.startDate.getDate() === date.getDate() &&
+        eStartDate.getTime() === currentEventDate.getTime() &&
         !(end <= timeslotStart || start >= timeslotEnd)
       );
     });

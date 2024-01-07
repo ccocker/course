@@ -1315,7 +1315,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 
   processTutorPreferences(tutorPreferences, currentUser) {
     const filteredPreferences = tutorPreferences.filter(
-      (p) => p.userId === currentUser.email
+      (p) => p.userId === currentUser?.email
     );
 
     filteredPreferences.forEach((preference) => {
