@@ -86,6 +86,7 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() editableColumns = new EventEmitter<boolean>();
   @Output() emitRecord = new EventEmitter<string>();
   @Output() addRecord = new EventEmitter<void>();
+
   @Output() bulkUpload = new EventEmitter<void>();
   @Output() emitDeleteAll = new EventEmitter<void>();
   @Output() filter = new EventEmitter<string>();

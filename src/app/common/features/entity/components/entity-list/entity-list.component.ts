@@ -157,6 +157,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   deleteEntity(id: string, event: Event): void {
+    console.log('delete entity', id, event);
     event.stopPropagation(); // Prevent row click event from triggering navigation to details view
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '80vw', // 80% of viewport width
@@ -174,7 +175,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
           const firstSegment = this.router.url.split('/')[1];
           this.model.collectionName = firstSegment;
         }
-        // this.entityService.deleteEntity(this.model.collectionName, id);
+        this.firestoreDataService.deleteEntity(this.model.collectionName, id);
       }
     });
   }
@@ -188,10 +189,10 @@ export class EntityListComponent implements OnInit, OnDestroy {
     }
     for (const entity of updatedEntities) {
       try {
-        // await this.entityService.updateEntity(
-        //   this.model.collectionName,
-        //   entity
-        // );
+        this.firestoreDataService.updateEntity(
+          this.model.collectionName,
+          entity
+        );
       } catch (error) {
         error = `Failed to update entity with id ${entity.id}: ${error}`;
         throw error;

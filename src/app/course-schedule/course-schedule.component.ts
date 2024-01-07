@@ -647,7 +647,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
         '-' +
         event['classNumber'];
     });
-    console.log(this.events);
+
     this.collection = 'courseschedules';
     this.store.dispatch(entityActions.getEntities({ url: 'people' }));
     this.store.dispatch(coursesActions.getCourses({ url: 'courses' }));
