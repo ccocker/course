@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -6,7 +6,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +22,9 @@ import {
 import { authActions } from '../../store/actions';
 import { Actions, ofType } from '@ngrx/effects';
 import { combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.interface';
+import { FirebaseAuthService } from '../../services/auth-firebase.service';
 
 @Component({
   selector: 'mi-login',
@@ -40,9 +42,9 @@ import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.inter
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-
+  userExists: boolean | null = null;
   loginError: BackendErrorsInterface | null = null;
   resetPassword = false;
 
@@ -53,8 +55,11 @@ export class LoginComponent {
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
     private store: Store,
-    private actions$: Actions
-  ) {
+    private actions$: Actions,
+    private authService: FirebaseAuthService
+  ) {}
+
+  ngOnInit() {
     this.loginForm = new FormGroup({
       email: new FormControl('craig.cocker@gmail.com', [
         Validators.required,
@@ -68,14 +73,46 @@ export class LoginComponent {
       .subscribe(() => {
         this.dialogRef.close();
       });
+
+    this.loginForm
+      .get('email')!
+      .valueChanges.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((email) => this.authService.checkIfUserExists(email))
+      )
+      .subscribe((exists) => {
+        this.userExists = exists;
+        if (!exists) {
+          console.log('adding first and last name');
+          this.loginForm.addControl(
+            'firstName',
+            new FormControl('', Validators.required)
+          );
+          this.loginForm.addControl(
+            'lastName',
+            new FormControl('', Validators.required)
+          );
+        } else {
+          this.loginForm.removeControl('firstName');
+          this.loginForm.removeControl('lastName');
+        }
+      });
   }
 
   public login() {
+    const credentials = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    };
+
+    // Include firstName and lastName only if user does not exist
+    if (this.userExists === false) {
+      credentials['firstName'] = this.loginForm.value.firstName;
+      credentials['lastName'] = this.loginForm.value.lastName;
+    }
     const request: RegisterAccountInterface = {
-      user: {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password,
-      },
+      user: credentials,
     };
 
     this.store.dispatch(authActions.register({ request }));

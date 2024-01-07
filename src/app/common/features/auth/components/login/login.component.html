@@ -25,6 +25,28 @@
             </mat-error>
           </mat-form-field>
 
+          <ng-container *ngIf="userExists === false">
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" />
+              <mat-error
+                *ngIf="loginForm.get('firstName')?.errors?.['required']"
+              >
+                First name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" />
+              <mat-error
+                *ngIf="loginForm.get('lastName')?.errors?.['required']"
+              >
+                Last name is required
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+
           <mat-error *ngIf="loginError">
             {{ loginError.message }}
           </mat-error>
@@ -33,7 +55,7 @@
             color="primary"
             type="submit"
             class="full-width-button"
-            [disabled]="data.isSubmitting"
+            [disabled]="loginForm.invalid || data.isSubmitting"
           >
             Submit
           </button>

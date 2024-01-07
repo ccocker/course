@@ -59,7 +59,7 @@ export class HomeComponent {
 
   openLoginDialog() {
     const dialogRef = this.dialog.open(LoginComponent, {
-      height: '400px',
+      height: '600px',
       width: '300px',
     });
 

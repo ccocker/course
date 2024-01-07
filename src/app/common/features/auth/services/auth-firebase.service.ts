@@ -33,6 +33,7 @@ import { catchError, switchMap, tap } from 'rxjs';
 import { IOrganisation } from '@miShared/interfaces/IOrganization';
 import { IPerson } from '@miCommon/interfaces';
 import { Gender } from '@miCommon/enums';
+import { updateProfile } from 'firebase/auth';
 
 interface CheckUserExistsResponse {
   exists: boolean;
@@ -52,6 +53,16 @@ export class FirebaseAuthService implements IAuthService {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUserSubject.next(user);
     });
+  }
+
+  public checkIfUserExists(email: string): Observable<boolean> {
+    const functions = getFunctions(this.app);
+    const checkUserExistsFn = httpsCallable(functions, 'checkUserExists');
+
+    return from(checkUserExistsFn({ email })).pipe(
+      map((result) => (result.data as CheckUserExistsResponse).exists),
+      catchError((error) => throwError(() => new Error(error.message)))
+    );
   }
 
   public getCurrentUser(): Observable<any | null> {
@@ -74,6 +85,7 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   public login(credentials: any): Observable<any> {
+    console.log('Credentials:', credentials);
     const functions = getFunctions(this.app);
     const checkUserExistsFn = httpsCallable(functions, 'checkUserExists');
 
@@ -120,21 +132,28 @@ export class FirebaseAuthService implements IAuthService {
       switchMap((result) => {
         const user = result.user;
 
-        // Creating an organization
-        const orgRef = this.createOrganization(user);
+        // Update displayName if firstName and lastName are provided
+        const updateProfilePromise =
+          credentials.firstName && credentials.lastName
+            ? updateProfile(user, {
+                displayName: `${credentials.firstName} ${credentials.lastName}`,
+              })
+            : Promise.resolve();
 
-        // Creating a person
-        const personRef = this.createPerson(user);
-
-        return combineLatest([orgRef, personRef]).pipe(
+        return from(updateProfilePromise).pipe(
+          switchMap(() =>
+            combineLatest([
+              this.createOrganization(user),
+              this.createPerson(user, credentials), // Pass credentials for additional data
+            ])
+          ),
           map(() => ({
             token: user.refreshToken,
             user: user,
-            miId: orgRef['uid'],
+            miId: user.uid,
           }))
         );
       }),
-
       catchError((error) => throwError(() => new Error(error)))
     );
   }
@@ -163,19 +182,19 @@ export class FirebaseAuthService implements IAuthService {
     };
   }
 
-  private createPerson(user: User): Observable<any> {
+  private createPerson(user: User, credentials: any): Observable<any> {
     const personRef = doc(this.db, 'people', user.uid);
-    const defaultPersonData = this.getDefaultPersonData(user);
+    const defaultPersonData = this.getDefaultPersonData(user, credentials);
 
     return from(setDoc(personRef, defaultPersonData, { merge: true }));
   }
 
-  private getDefaultPersonData(user: User): Partial<IPerson> {
+  private getDefaultPersonData(user: User, credentials: any): Partial<IPerson> {
     return {
       id: user.uid,
       miId: user.uid,
-      firstName: user.displayName,
-      lastName: '',
+      firstName: credentials.firstName || '',
+      lastName: credentials.lastName || '',
       age: 0,
       avatar: '',
       banner: '',
