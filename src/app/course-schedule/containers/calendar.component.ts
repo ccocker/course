@@ -69,6 +69,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   events: CalendarEvent[] = [];
   @Input() startTime: string = '00:00';
   @Input() scrollToCurrentTime: boolean = true;
+  @Input() timezone: string;
+
   @Output() eventDoubleClick = new EventEmitter<any>();
 
   @ViewChild('calendar') calendar: ElementRef;

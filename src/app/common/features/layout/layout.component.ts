@@ -79,6 +79,29 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(authActions.getCurrentUser());
+    this.data$.subscribe(({ currentUser }) => {
+      if (currentUser && currentUser.email.includes('cocker')) {
+        // Keep the original menu items
+        this.appConfig.sidenavMenuItems = [
+          { title: 'Dashboard', link: '' },
+          { title: 'Course Schedule', link: 'auth/course-schedule' },
+          { title: 'Courses', link: 'auth/courses' },
+          { title: 'Group Classes', link: 'auth/groupclasses' },
+          { title: 'Offerings', link: 'auth/offerings' },
+          { title: 'Offering Groups', link: 'auth/offeringgroups' },
+          { title: 'Tutor Preferences', link: 'auth/tutorpreferences' },
+          {
+            title: 'People',
+            link: 'auth/people',
+          },
+        ];
+      } else {
+        // Set new menu items
+        this.appConfig.sidenavMenuItems = [
+          { title: 'Course Schedule', link: 'auth/course-schedule' },
+        ];
+      }
+    });
   }
 
   toggleDirection() {
