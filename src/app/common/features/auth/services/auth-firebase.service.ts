@@ -85,7 +85,6 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   public login(credentials: any): Observable<any> {
-    console.log('Credentials:', credentials);
     const functions = getFunctions(this.app);
     const checkUserExistsFn = httpsCallable(functions, 'checkUserExists');
 

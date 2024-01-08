@@ -46,7 +46,7 @@ export const registerEffect = createEffect(
     actions$ = inject(Actions),
     authService = inject(AUTH_SERVICE_TOKEN),
     persistanceService = inject(PersistanceService),
-    firestoreDataService = inject(FirestoreDataService) // Inject your Firestore data service
+    firestoreDataService = inject(FirestoreDataService)
   ) => {
     return actions$.pipe(
       ofType(authActions.register),
@@ -96,7 +96,6 @@ export const registerEffect = createEffect(
   { functional: true }
 );
 
-// Add this effect to your existing auth effects
 export const rehydrateAuthStateEffect = createEffect(
   (actions$ = inject(Actions), authService = inject(AUTH_SERVICE_TOKEN)) => {
     return actions$.pipe(
