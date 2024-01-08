@@ -200,7 +200,7 @@ export class FirebaseAuthService implements IAuthService {
       active: true,
       addresses: [{ label: '', address: '' }],
       phoneNumbers: [{ label: '', country: '', number: '' }],
-      emails: [{ label: '', address: '' }],
+      emails: [{ label: 'User Logon', address: user.email || '' }],
       dates: [{ label: 'Created Date', date: new Date() }],
       notes: [''],
       tags: ['user'],
@@ -211,6 +211,7 @@ export class FirebaseAuthService implements IAuthService {
         userEmail: user.email,
         roles: [],
       },
+      maximumHours: credentials.maximumHours || 0,
     };
   }
 

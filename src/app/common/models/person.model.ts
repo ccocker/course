@@ -43,6 +43,7 @@ export class Person extends BaseModel {
     userEmail: '',
     roles: [],
   };
+  maximumHours: number = 0;
 
   /**
    * Constructor to initialize Person instance.
@@ -77,11 +78,12 @@ export class Person extends BaseModel {
    * Configure listProperties and formProperties arrays.
    */
   private configureProperties(): void {
-    this.listProperties = ['firstName', 'lastName', 'age', 'gender', 'active'];
+    this.listProperties = ['firstName', 'lastName', 'emails', 'maximumHours'];
     this.formProperties = [
       'id',
       'firstName',
       'lastName',
+      'maximumHours',
       'age',
       'gender',
       'active',

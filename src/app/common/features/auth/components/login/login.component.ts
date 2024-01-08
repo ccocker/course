@@ -93,9 +93,14 @@ export class LoginComponent implements OnInit {
             'lastName',
             new FormControl('', Validators.required)
           );
+          this.loginForm.addControl(
+            'maximumHours',
+            new FormControl('', Validators.required)
+          );
         } else {
           this.loginForm.removeControl('firstName');
           this.loginForm.removeControl('lastName');
+          this.loginForm.removeControl('maximumHours');
         }
       });
   }
@@ -110,6 +115,7 @@ export class LoginComponent implements OnInit {
     if (this.userExists === false) {
       credentials['firstName'] = this.loginForm.value.firstName;
       credentials['lastName'] = this.loginForm.value.lastName;
+      credentials['maximumHours'] = this.loginForm.value.maximumHours;
     }
     const request: RegisterAccountInterface = {
       user: credentials,

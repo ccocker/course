@@ -449,4 +449,11 @@ export class MiTableComponent implements OnInit, AfterViewInit, OnChanges {
     // write the workbook to a file
     XLSX.writeFile(workbook, 'en_AL.xlsx');
   }
+
+  getFirstElementIfArray(value: any): any {
+    if (Array.isArray(value)) {
+      return value.length > 0 ? value[0] : 'N/A';
+    }
+    return value;
+  }
 }
