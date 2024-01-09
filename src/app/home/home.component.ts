@@ -1,21 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import { authActions } from '../common/features/auth/store/actions';
+import { miAppConfig } from '../miApp/miApp.config';
 import { LoginComponent } from '../common/features/auth/components/login/login.component';
 import { Router } from '@angular/router';
-
-interface AppConfig {
-  title: string;
-  isRtl: boolean;
-  sidenavMenuItems: string[];
-  loggedInItems: string[];
-  loggedOutItems: string[];
-  showTopNav: boolean;
-  showLogo: boolean;
-  showAppTitle: boolean;
-}
 
 @Component({
   selector: 'mi-home',
@@ -25,17 +13,7 @@ interface AppConfig {
   imports: [CommonModule],
 })
 export class HomeComponent {
-  appConfig: AppConfig = {
-    title: 'RMIT COURSE SCHEDULER',
-    isRtl: false,
-    sidenavMenuItems: ['Dashboard'],
-    loggedInItems: ['Logout'],
-    loggedOutItems: ['Home', 'About', 'Login'],
-    showTopNav: true,
-    showLogo: true,
-    showAppTitle: false,
-  };
-
+  miAppConfig = miAppConfig;
   homePageLinks = [
     { title: 'Login/Register', link: 'https://angular.dev' },
     { title: 'Learn with Tutorials', link: 'courses' },
@@ -46,7 +24,6 @@ export class HomeComponent {
     },
     { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
   ];
-
   constructor(private dialog: MatDialog, private router: Router) {}
 
   onItemClick(item: any) {

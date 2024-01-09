@@ -111,7 +111,6 @@ export class DynamicFormComponent implements OnInit {
    * @returns A FormGroup object.
    */
   private createFormGroup(config: any): FormGroup {
-    console.log('config', config);
     if (!config || typeof config !== 'object') {
       console.error('Invalid config provided to createFormGroup', config);
       return this.fb.group({});

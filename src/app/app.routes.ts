@@ -3,7 +3,7 @@ import { ResetPasswordComponent } from './common/features/auth/components/reset-
 import { HomeComponent } from './home/home.component';
 import { LayoutComponent } from './common/features/layout/layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
-
+import { DashboardComponent } from '@miApp/components/dashboard/dashboard.component';
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
   {
@@ -11,6 +11,7 @@ export const routes: Route[] = [
     component: LayoutComponent,
     canActivate: [AuthGuard], // Apply the AuthGuard here
     children: [
+      { path: 'dashboard', component: DashboardComponent },
       {
         path: 'course-schedule',
         loadChildren: () =>

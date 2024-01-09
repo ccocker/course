@@ -2,24 +2,24 @@
 
 <div
   id="main-container"
-  [attr.dir]="appConfig.isRtl ? 'rtl' : 'ltr'"
+  [attr.dir]="miAppConfig?.isRtl ? 'rtl' : 'ltr'"
   *ngIf="data.currentUser"
 >
-  <mat-toolbar color="primary" [class.toolbar-rtl]="appConfig.isRtl">
+  <mat-toolbar color="primary" [class.toolbar-rtl]="miAppConfig?.isRtl">
     <button mat-icon-button (click)="toggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
 
-    <span class="toolbar-title" *ngIf="appConfig.showAppTitle">{{
-      appConfig.title
+    <span class="toolbar-title" *ngIf="miAppConfig.showAppTitle">{{
+      miAppConfig?.title
     }}</span>
 
     <span class="menu-items">
       <a
         *ngFor="
           let item of data.currentUser
-            ? appConfig.loggedInItems
-            : appConfig.loggedOutItems
+            ? miAppConfig.loggedInItems
+            : miAppConfig.loggedOutItems
         "
         href="javascript:void(0)"
         (click)="onItemClick(item)"
@@ -31,19 +31,19 @@
   </mat-toolbar>
 
   <mat-sidenav-container
-    [class.mat-rtl]="appConfig.isRtl"
-    [class.mat-ltr]="!appConfig.isRtl"
+    [class.mat-rtl]="miAppConfig?.isRtl"
+    [class.mat-ltr]="!miAppConfig?.isRtl"
   >
     <mat-sidenav
       #sidenav
       mode="side"
       opened="true"
-      [attr.dir]="appConfig.isRtl ? 'rtl' : 'ltr'"
+      [attr.dir]="miAppConfig?.isRtl ? 'rtl' : 'ltr'"
     >
       <mat-nav-list>
         <a
           mat-list-item
-          *ngFor="let item of appConfig.sidenavMenuItems"
+          *ngFor="let item of miAppConfig?.sidenavMenuItems"
           (click)="onItemClick(item)"
         >
           {{ item.title }}

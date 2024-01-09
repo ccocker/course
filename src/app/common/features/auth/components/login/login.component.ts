@@ -25,7 +25,9 @@ import { combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.interface';
 import { FirebaseAuthService } from '../../services/auth-firebase.service';
-
+import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
+import { miAppConfig } from '@src/src/app/miApp/miApp.config';
+import { Router } from '@angular/router';
 @Component({
   selector: 'mi-login',
   standalone: true,
@@ -43,6 +45,8 @@ import { FirebaseAuthService } from '../../services/auth-firebase.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  miAppConfig = miAppConfig;
+  currentUser$ = this.store.select(selectCurrentUser);
   loginForm: FormGroup;
   userExists: boolean | null = null;
   loginError: BackendErrorsInterface | null = null;
@@ -56,7 +60,8 @@ export class LoginComponent implements OnInit {
     private dialogRef: MatDialogRef<LoginComponent>,
     private store: Store,
     private actions$: Actions,
-    private authService: FirebaseAuthService
+    private authService: FirebaseAuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -111,7 +116,6 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    // Include firstName and lastName only if user does not exist
     if (this.userExists === false) {
       credentials['firstName'] = this.loginForm.value.firstName;
       credentials['lastName'] = this.loginForm.value.lastName;
@@ -124,10 +128,19 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(authActions.register({ request }));
 
     this.actions$
+      .pipe(ofType(authActions.registerSuccess), take(1))
+      .subscribe((action) => {
+        console.log('action', action.currentUser);
+        const userRole = action.currentUser.userDetail.userRole;
+        const landingPage =
+          this.miAppConfig.defaultLandingPages[userRole] || '/';
+        this.router.navigate([landingPage]);
+        this.dialogRef.close();
+      });
+
+    this.actions$
       .pipe(ofType(authActions.registerFailure), take(1))
       .subscribe((receivedAction) => {
-        console.log('receivedAction', receivedAction);
-        // Ensure that receivedAction contains the 'errors' property of the correct type
         this.loginError = receivedAction.errors;
       });
   }

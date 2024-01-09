@@ -8,6 +8,7 @@
       "@src/*": ["*"],
       "@environments/*": ["src/environments/*"],
       "@miCommon/*": ["src/app/common/*"],
+      "@miApp/*": ["src/app/miApp/*"],
       "@miShared/*": ["src/app/shared/*"]
     },
     "forceConsistentCasingInFileNames": true,

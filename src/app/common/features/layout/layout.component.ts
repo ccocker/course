@@ -10,23 +10,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+import { miAppConfig } from '@miApp/miApp.config';
 import { LoginComponent } from '@miCommon/features/auth/components/login/login.component';
 import { combineLatest } from 'rxjs';
-
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
 import { authActions } from '@miCommon/features/auth/store/actions';
-
-interface AppConfig {
-  title: string;
-  isRtl: boolean;
-  sidenavMenuItems: any;
-  loggedInItems: string[];
-  loggedOutItems: string[];
-  showTopNav: boolean;
-  showLogo: boolean;
-  showAppTitle: boolean;
-}
 
 @Component({
   selector: 'mi-layout',
@@ -46,31 +35,8 @@ interface AppConfig {
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent implements OnInit {
-  appConfig: AppConfig = {
-    title: 'RMIT COURSE SCHEDULER',
-    isRtl: false,
-    sidenavMenuItems: [
-      { title: 'Dashboard', link: '' },
-      { title: 'Course Schedule', link: 'auth/course-schedule' },
-      { title: 'Courses', link: 'auth/courses' },
-      { title: 'Group Classes', link: 'auth/groupclasses' },
-      { title: 'Offerings', link: 'auth/offerings' },
-      { title: 'Offering Groups', link: 'auth/offeringgroups' },
-      { title: 'Tutor Preferences', link: 'auth/tutorpreferences' },
-      {
-        title: 'People',
-        link: 'auth/people',
-      },
-    ],
-    loggedInItems: ['Logout'],
-    loggedOutItems: ['Home', 'About', 'Login'],
-    showTopNav: true,
-    showLogo: true,
-    showAppTitle: false,
-  };
-
   @ViewChild('sidenav') sidenav!: MatSidenav;
-
+  miAppConfig = miAppConfig;
   data$ = combineLatest({
     currentUser: this.store.select(selectCurrentUser),
   });
@@ -82,8 +48,8 @@ export class LayoutComponent implements OnInit {
     this.data$.subscribe(({ currentUser }) => {
       if (currentUser && currentUser.email.includes('cocker')) {
         // Keep the original menu items
-        this.appConfig.sidenavMenuItems = [
-          { title: 'Dashboard', link: '' },
+        this.miAppConfig.sidenavMenuItems = [
+          { title: 'Dashboard', link: 'auth/Dashboard' },
           { title: 'Course Schedule', link: 'auth/course-schedule' },
           { title: 'Courses', link: 'auth/courses' },
           { title: 'Group Classes', link: 'auth/groupclasses' },
@@ -97,7 +63,7 @@ export class LayoutComponent implements OnInit {
         ];
       } else {
         // Set new menu items
-        this.appConfig.sidenavMenuItems = [
+        this.miAppConfig.sidenavMenuItems = [
           { title: 'Course Schedule', link: 'auth/course-schedule' },
         ];
       }
@@ -105,10 +71,10 @@ export class LayoutComponent implements OnInit {
   }
 
   toggleDirection() {
-    this.appConfig.isRtl = !this.appConfig.isRtl;
+    this.miAppConfig.isRtl = !this.miAppConfig.isRtl;
     const mainContainer = document.getElementById('main-container');
     if (mainContainer) {
-      mainContainer.dir = this.appConfig.isRtl ? 'rtl' : 'ltr';
+      mainContainer.dir = this.miAppConfig.isRtl ? 'rtl' : 'ltr';
     }
   }
 
