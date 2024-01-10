@@ -41,7 +41,7 @@ import { selectRooms } from './store/rooms/reducers';
 import { selectOfferings } from './store/offering/reducers';
 import { selectOfferingGroups } from './store/offering-groups/reducers';
 import { selectGroupClasses } from './store/group-classes/reducers';
-import { CalendarComponent } from './containers/calendar.component';
+import { CalendarComponent } from '@miCommon/features/calendar/calendar.component';
 import { selectTutorPreferences } from './store/tutor-preferences/reducers';
 
 @Component({
