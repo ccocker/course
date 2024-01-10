@@ -83,7 +83,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   currentView: 'day' | 'workWeek' | 'week' | 'month' = 'workWeek';
   selectedDate: Date = new Date();
   model!: BaseModel;
-
+  numberOfDaysInMonth: number = 31;
   constructor(private modelFactory: ModelFactory) {}
 
   ngOnInit() {
@@ -219,6 +219,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }
 
     this.dates = month;
+    this.numberOfDaysInMonth = this.getDaysInMonth(
+      this.selectedDate.getMonth(),
+      this.selectedDate.getFullYear()
+    );
   }
 
   navigateTo(direction: 'prev' | 'next') {
@@ -436,5 +440,18 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       default:
         return '';
     }
+  }
+
+  private getDaysInMonth(month: number, year: number): number {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  getGridStyle(): any {
+    if (this.currentView === 'month') {
+      return {
+        'grid-template-columns': `100px repeat(${this.numberOfDaysInMonth}, 1fr)`,
+      };
+    }
+    return {};
   }
 }
