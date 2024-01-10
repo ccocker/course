@@ -130,7 +130,6 @@ export class LoginComponent implements OnInit {
     this.actions$
       .pipe(ofType(authActions.registerSuccess), take(1))
       .subscribe((action) => {
-        console.log('action', action.currentUser);
         const userRole = action.currentUser.userDetail.userRole;
         const landingPage =
           this.miAppConfig.defaultLandingPages[userRole] || '/';

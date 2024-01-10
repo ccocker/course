@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Tutorpreferences } from '@miShared/models';
 
 @Injectable({
   providedIn: 'root',
@@ -12,27 +11,32 @@ export class ModelFactory {
 
     if (this.customSingularConversions.has(route)) {
       modelName = this.customSingularConversions.get(route) ?? '';
+    } else if (route.endsWith('courses')) {
+      modelName = 'course';
+    } else if (route.endsWith('course-schedules')) {
+      modelName = 'courseschedule';
     } else if (route.endsWith('ies')) {
       modelName = route.slice(0, -3) + 'y';
     } else if (route.endsWith('preferences')) {
       modelName = 'tutorpreferences';
     } else if (route.endsWith('es')) {
-      modelName = route.slice(0, -2);
+      modelName = route.slice(0, -1);
     } else if (route.endsWith('s')) {
       modelName = route.slice(0, -1);
     } else {
       modelName = route;
     }
+    modelName = modelName.replace(/-/g, '');
 
     return modelName.charAt(0).toUpperCase() + modelName.slice(1);
   }
 
   async createModel(route: string): Promise<any> {
     let modelName = this.getModelNameFromRoute(route);
+
     let modelFileName = modelName.toLowerCase() + '.model.ts';
 
     try {
-      // First attempt to load from the primary location
       const modelModule = await import(`../models/${modelFileName}`);
       const ModelClass = modelModule[modelName];
       return new ModelClass();
@@ -41,6 +45,7 @@ export class ModelFactory {
         const sharedModelModule = await import(
           `../../miShared/models/${modelFileName}`
         );
+
         const SharedModelClass = sharedModelModule[modelName];
         return new SharedModelClass();
       } catch (sharedError) {

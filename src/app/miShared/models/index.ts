@@ -1,4 +1,5 @@
 export * from './course.model';
+export * from './courseschedule.model';
 export * from './groupclass.model';
 export * from './offering.model';
 export * from './offeringgroup.model';

@@ -51,6 +51,10 @@ export class LayoutComponent implements OnInit {
         this.miAppConfig.sidenavMenuItems = [
           { title: 'Dashboard', link: 'auth/Dashboard' },
           { title: 'Course Schedule', link: 'auth/course-schedule' },
+          {
+            title: 'Course Schedule List',
+            link: 'auth/course-schedules',
+          },
           { title: 'Courses', link: 'auth/courses' },
           { title: 'Group Classes', link: 'auth/groupclasses' },
           { title: 'Offerings', link: 'auth/offerings' },

@@ -20,12 +20,13 @@ import { selectEntities as selectPeopleEntities } from '@miCommon/features/entit
 import { CalendarComponent } from '@miCommon/features/calendar/calendar.component';
 import { selectTutorPreferences } from './store/tutor-preferences/reducers';
 import { events } from './data/events.data';
-// import { courses } from './data/courses.data';
+import { courses } from './data/courses.data';
 // import { offering } from './data/offering.data';
 // import { offeringGroups } from './data/offering-group.data';
 // import { rooms } from './data/rooms.data';
 // import { groupClasses } from './data/group-classes.data';
 import { LoadingComponent } from '@src/src/app/miCommon/components/loading/loading.component';
+import { FirestoreDataService } from '@miCommon/services/firestore.data';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -95,24 +96,45 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   people$: Observable<any>;
   events$: Observable<any>;
   // groupClasses = groupClasses;
-  // courses = courses;
+  courses = courses;
   // offering = offering;
   // offeringGroups = offeringGroups;
   events = events;
   // rooms = rooms;
 
-  constructor(public scheduleService: ScheduleService, private store: Store) {
+  constructor(
+    public scheduleService: ScheduleService,
+    private store: Store,
+    private firestoreDataService: FirestoreDataService
+  ) {
     this.customStartDate = new Date(2024, 2, 4);
   }
 
   ngOnInit() {
-    this.collection = 'courseschedules';
+    this.events.forEach((event) => {
+      event.id =
+        event['offeringGroupCode'] +
+        '-' +
+        event['groupNumber'] +
+        '-' +
+        event['classNumber'];
+      event.description =
+        event['offeringGroupCode'] +
+        '-' +
+        event['groupNumber'] +
+        '-' +
+        event['classNumber'] +
+        '-' +
+        event['roomCode'];
+    });
+
+    this.collection = 'course-schedules';
 
     this.store.dispatch(
       tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' })
     );
     this.store.dispatch(
-      courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
+      courseScheduleActions.getCourseSchedules({ url: 'course-schedules' })
     );
 
     this.people$ = this.store.select(selectPeopleEntities);
@@ -575,11 +597,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     const convertedArray = this.schedule.map((item) =>
       this.convertToPlainObject(item.course)
     );
-    // this.firestoreDataService.uploadBulkData(
-    //   'courseschedules',
-    //   this.events,
-    //   true
-    // );
+    this.firestoreDataService.uploadBulkData('courses', this.courses, true);
   }
 
   convertToPlainObject = (obj: any): any => {

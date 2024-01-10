@@ -2,7 +2,7 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.interface';
 
 export const courseScheduleActions = createActionGroup({
-  source: 'courseschedules',
+  source: 'course-schedules',
   events: {
     'Create course schedule': props<{ url: string; courseSchedule: any }>(),
     'Create course schedule success': props<{ courseSchedule: any }>(),

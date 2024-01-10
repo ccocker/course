@@ -206,8 +206,9 @@ export class FirestoreDataService {
           // If 'id' exists, use it to create the document reference
           docRef = doc(collRef, item.id);
         } else {
-          // If 'id' doesn't exist, let Firebase generate the document ID
-          docRef = doc(collRef);
+          const newId = this.getNewFirestoreId(); // Assuming this method returns a unique ID
+          item.id = newId; // Set the new ID as the item's ID
+          docRef = doc(collRef, newId);
         }
         batch.set(docRef, item);
       });

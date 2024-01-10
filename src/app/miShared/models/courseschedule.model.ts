@@ -1,11 +1,11 @@
-import { BaseModel } from './base.model';
+import { BaseModel } from '@miCommon/models/base.model';
 import { IFormConfiguration } from '@miCommon/helpers/form-configuration';
 
 /**
  * Event class representing a calendar event.
  * This class extends the BaseModel.
  */
-export class Event extends BaseModel {
+export class CourseSchedule extends BaseModel {
   startDate: Date = new Date();
   startTime: string = '';
   endDate: Date = new Date();
@@ -17,7 +17,7 @@ export class Event extends BaseModel {
    * Constructor to initialize Event instance.
    * @param initialData Optional partial data to initialize the instance.
    */
-  constructor(initialData?: Partial<Event>) {
+  constructor(initialData?: Partial<CourseSchedule>) {
     super(initialData ?? {});
     this.assignInitialValues(initialData);
     this.configureProperties();
@@ -31,8 +31,11 @@ export class Event extends BaseModel {
    * Assign initial values to Event instance properties.
    * @param initialData Optional partial data to merge with default values.
    */
-  private assignInitialValues(initialData?: Partial<Event>): void {
-    const mergedData: Event = { ...this, ...initialData } as Event;
+  private assignInitialValues(initialData?: Partial<CourseSchedule>): void {
+    const mergedData: CourseSchedule = {
+      ...this,
+      ...initialData,
+    } as CourseSchedule;
     Object.assign(this, mergedData);
   }
 
