@@ -13,15 +13,3 @@ app-course-schedule .event-radio-buttons input[type="radio"] {
 .event-radio-buttons input[type="radio"] {
   transform: scale(0.5) !important;
 }
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-  .filter-panels {
-    flex-direction: column;
-  }
-
-  .panel {
-    width: 100%; /* Full width on smaller screens */
-    max-width: none; /* Remove max-width constraint */
-  }
-}

@@ -1,10 +1,9 @@
 <button (click)="bulkUpload()">Bulk Upload</button>
 
-<div *ngIf="!selectedEvent">
+<div *ngIf="!selectedEvent && events$ | async as data">
   <mi-calendar
     [showDescription]="false"
     [showDateNavigator]="true"
-    *ngIf="events$ | async as data"
     [events]="data"
     [startDate]="customStartDate"
     [startTime]="'08:00'"
