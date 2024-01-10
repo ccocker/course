@@ -122,12 +122,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
 */
   data$ = combineLatest({
     currentUser: this.store.select(selectCurrentUser),
-    courses: this.store.select(selectCourses),
-    offerings: this.store.select(selectOfferings),
-    offeringgroups: this.store.select(selectOfferingGroups),
-    groupclasses: this.store.select(selectGroupClasses),
     people: this.store.select(selectPeopleEntities),
-    rooms: this.store.select(selectRooms),
     tutorpreferences: this.store.select(selectTutorPreferences),
   });
   collection!: string;
@@ -153,124 +148,37 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.events.forEach((event) => {
-      event.id =
-        event['offeringGroupCode'] +
-        '-' +
-        event['groupNumber'] +
-        '-' +
-        event['classNumber'];
-      event.description =
-        event['offeringGroupCode'] +
-        '-' +
-        event['groupNumber'] +
-        '-' +
-        event['classNumber'] +
-        '-' +
-        event['roomCode'];
-    });
-
     this.collection = 'courseschedules';
-    this.store.dispatch(entityActions.getEntities({ url: 'people' }));
-    this.store.dispatch(coursesActions.getCourses({ url: 'courses' }));
 
-    this.store.dispatch(offeringsActions.getOfferings({ url: 'offerings' }));
-    this.store.dispatch(
-      offeringgroupsActions.getOfferingGroups({ url: 'offeringgroups' })
-    );
-    this.store.dispatch(roomsActions.getRooms({ url: 'rooms' }));
     this.store.dispatch(
       tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' })
     );
     this.store.dispatch(
       courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
     );
-    this.store.dispatch(
-      courseScheduleActions.getCourseSchedules({ url: 'courseschedules' })
-    );
+
     this.people$ = this.store.select(selectPeopleEntities);
     this.events$ = this.store.select(selectEventsEntities);
 
-    this.data$.subscribe((originalData) => {
-      const firstFiveRecords = Object.keys(originalData).reduce(
-        (accumulatedData, key) => {
-          if (Array.isArray(originalData[key])) {
-            accumulatedData[key] = originalData[key].slice(0, 1);
-          }
-          return accumulatedData;
-        },
-        {}
-      );
-    });
+    this.filteredStaffList = this.staffList;
+    this.schedule = this.scheduleService.getSchedule();
 
-    const data$ = combineLatest({
-      courses: this.store.select(selectCourses).pipe(startWith([])),
-      offerings: this.store.select(selectOfferings).pipe(startWith([])),
-      offeringgroups: this.store
-        .select(selectOfferingGroups)
-        .pipe(startWith([])),
-      groupclasses: this.store.select(selectGroupClasses).pipe(startWith([])),
-      people: this.store.select(selectPeopleEntities).pipe(startWith([])),
-      rooms: this.store.select(selectRooms).pipe(startWith([])),
-    });
+    this.determineEarliestStartTime();
 
-    const schedule = data$.pipe(
-      map(
-        ({
-          courses,
-          offerings,
-          offeringgroups,
-          groupclasses,
-          people,
-          rooms,
-        }) => {
-          // Assuming the first record in 'people' array has the lead's data
-          const lead =
-            people && people.length > 0
-              ? `${people[0].firstName} ${people[0].lastName}`
-              : '';
+    this.assignColumnsToEvents();
+    this.assignRowsToEvents();
+    this.generateTimeSlots();
+    this.calculateHeaderColumns();
+    this.weekdays.push(DayOfWeek.Monday);
+    this.weekdays.push(DayOfWeek.Tuesday);
+    this.weekdays.push(DayOfWeek.Wednesday);
+    this.weekdays.push(DayOfWeek.Thursday);
+    this.weekdays.push(DayOfWeek.Friday);
 
-          return (groupclasses || []).map((groupclass) => {
-            const offering = (offerings || []).find(
-              (o) => o.courseCode === groupclass.offeringGroupCode
-            );
-            const course = (courses || []).find(
-              (c) => c.code === offering?.courseCode
-            );
-            const offeringGroup = (offeringgroups || []).find(
-              (og) => og.group === groupclass.groupNumber
-            );
-            const room = (rooms || []).find(
-              (r) => r.roomNumber === groupclass.roomCode
-            );
-            const instructor = (people || []).find(
-              (p) => p.miId === offeringGroup?.leadCode
-            );
+    this.groupColours = this.scheduleService.generateColorShades();
+  }
 
-            // Constructing classReference
-            const classReference = `${course.code}-${offeringGroup?.group}-${groupclass.classNumber} `;
-            let classDetails = {
-              classReference,
-              room,
-              day: groupclass.day,
-              startTime: groupclass.startTime,
-              endTime: groupclass.endTime,
-              courseName: course?.name,
-              lead: instructor
-                ? `${instructor.firstName} ${instructor.lastName}`
-                : '',
-              roomCapacity: room?.capacity,
-            };
-            return classDetails;
-          });
-        }
-      )
-    );
-
-    schedule.subscribe((schedule) => {
-      this.schedule1 = this.events;
-    });
-
+  ngAfterViewInit() {
     this.dataSubscription = this.data$.subscribe((data) => {
       this.currentUser = data.currentUser;
       this.coursesList = this.scheduleService.getAllCourses();
@@ -297,22 +205,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
         this.processTutorPreferences(data.tutorpreferences, this.currentUser);
       }
     });
-    this.filteredStaffList = this.staffList;
-    this.schedule = this.scheduleService.getSchedule();
-
-    this.determineEarliestStartTime();
-
-    this.assignColumnsToEvents();
-    this.assignRowsToEvents();
-    this.generateTimeSlots();
-    this.calculateHeaderColumns();
-    this.weekdays.push(DayOfWeek.Monday);
-    this.weekdays.push(DayOfWeek.Tuesday);
-    this.weekdays.push(DayOfWeek.Wednesday);
-    this.weekdays.push(DayOfWeek.Thursday);
-    this.weekdays.push(DayOfWeek.Friday);
-
-    this.groupColours = this.scheduleService.generateColorShades();
   }
 
   processTutorPreferences(tutorPreferences, currentUser) {
