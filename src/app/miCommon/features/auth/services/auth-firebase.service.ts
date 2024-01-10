@@ -84,6 +84,7 @@ export class FirebaseAuthService implements IAuthService {
 
     return this.currentUserSubject.pipe(
       map((user) => {
+        console.log('Firebase Auth Service User:', user);
         const isValid = !!user;
         console.log('Is user present (token valid)?', isValid, 'User:', user);
         return isValid;

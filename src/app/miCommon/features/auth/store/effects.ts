@@ -100,14 +100,13 @@ export const rehydrateAuthStateEffect = createEffect(
   (actions$ = inject(Actions), authService = inject(AUTH_SERVICE)) => {
     return actions$.pipe(
       ofType(authActions.rehydrateAuthState),
-      switchMap(({ accessToken }) => {
-        // If the token is valid, attempt to fetch the current user's details
-        return authService.validateToken(accessToken).pipe(
-          switchMap((isValidToken) => {
-            if (isValidToken) {
-              return authService.getCurrentUser().pipe(
-                map((currentUser) => {
-                  if (currentUser) {
+      switchMap(({ accessToken }) =>
+        authService.getCurrentUser().pipe(
+          switchMap((currentUser) => {
+            if (currentUser) {
+              return authService.validateToken(accessToken).pipe(
+                map((isValidToken) => {
+                  if (isValidToken) {
                     return authActions.getCurrentUserSuccess({ currentUser });
                   } else {
                     return authActions.getCurrentUserFailure();
@@ -120,8 +119,8 @@ export const rehydrateAuthStateEffect = createEffect(
             }
           }),
           catchError(() => of(authActions.getCurrentUserFailure()))
-        );
-      })
+        )
+      )
     );
   },
   { functional: true }
