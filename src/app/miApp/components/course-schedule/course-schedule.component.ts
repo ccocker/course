@@ -1,11 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { ScheduleService } from './services/schedule.service';
-import { FilterEventsPipe, EnumToArrayPipe } from './events-filter.pipe';
+
 import {
   DayOfWeek,
   ICourse,
@@ -15,39 +11,20 @@ import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map, startWith } from 'rxjs';
 import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
 import { Subscription } from 'rxjs';
-import { MatSelectModule } from '@angular/material/select';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
 import { IPerson } from '@miCommon/interfaces';
 import { DynamicFormComponent } from '@miCommon/features/dynamic-form/dynamic-form.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatRadioModule } from '@angular/material/radio';
 import { courseScheduleActions } from './store/course-schedules/actions';
 import { tutorPreferencesActions } from './store/tutor-preferences/actions';
-import { FirestoreDataService } from '@miCommon/services/firestore.data';
 import { selectEntities as selectEventsEntities } from './store/course-schedules/reducers';
 import { selectEntities as selectPeopleEntities } from '@miCommon/features/entity/store/reducers';
-import { entityActions } from '@miCommon/features/entity/store/actions';
-import { coursesActions } from '../course-schedule/store/courses/actions';
-import { selectCourses } from './store/courses/reducers';
-import { offeringsActions } from './store/offering/actions';
-import { offeringgroupsActions } from './store/offering-groups/actions';
-import { roomsActions } from './store/rooms/actions';
-import { groupClassesActions } from './store/group-classes/actions';
-import { selectRooms } from './store/rooms/reducers';
-import { selectOfferings } from './store/offering/reducers';
-import { selectOfferingGroups } from './store/offering-groups/reducers';
-import { selectGroupClasses } from './store/group-classes/reducers';
 import { CalendarComponent } from '@miCommon/features/calendar/calendar.component';
 import { selectTutorPreferences } from './store/tutor-preferences/reducers';
 import { events } from './data/events.data';
-import { courses } from './data/courses.data';
-import { offering } from './data/offering.data';
-import { offeringGroups } from './data/offering-group.data';
-import { rooms } from './data/rooms.data';
-import { groupClasses } from './data/group-classes.data';
+// import { courses } from './data/courses.data';
+// import { offering } from './data/offering.data';
+// import { offeringGroups } from './data/offering-group.data';
+// import { rooms } from './data/rooms.data';
+// import { groupClasses } from './data/group-classes.data';
 import { LoadingComponent } from '@src/src/app/miCommon/components/loading/loading.component';
 
 @Component({
@@ -55,18 +32,7 @@ import { LoadingComponent } from '@src/src/app/miCommon/components/loading/loadi
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatGridListModule,
-    MatIconModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatToolbarModule,
-    FilterEventsPipe,
-    EnumToArrayPipe,
     DynamicFormComponent,
-    ReactiveFormsModule,
-    MatRadioModule,
     CalendarComponent,
     LoadingComponent,
   ],
@@ -81,7 +47,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   showOnlyUnderstaffed: boolean = false;
   weekdays: string[] = [];
   schedule: IScheduleEvent[];
-  schedule1: any[];
   filteredStaffList: IPerson[] = []; // Filtered list for display in the dropdown
   tutorPreferences: Array<{
     userId: string;
@@ -126,24 +91,17 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     tutorpreferences: this.store.select(selectTutorPreferences),
   });
   collection!: string;
-  schedule1$: Observable<any>;
   selectedEvent: any | null = null;
-
   people$: Observable<any>;
   events$: Observable<any>;
-  groupClasses = groupClasses;
-  courses = courses;
-  offering = offering;
-  offeringGroups = offeringGroups;
+  // groupClasses = groupClasses;
+  // courses = courses;
+  // offering = offering;
+  // offeringGroups = offeringGroups;
   events = events;
-  rooms = rooms;
+  // rooms = rooms;
 
-  constructor(
-    public scheduleService: ScheduleService,
-    private store: Store,
-    private fb: FormBuilder,
-    private firestoreDataService: FirestoreDataService
-  ) {
+  constructor(public scheduleService: ScheduleService, private store: Store) {
     this.customStartDate = new Date(2024, 2, 4);
   }
 
@@ -617,11 +575,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     const convertedArray = this.schedule.map((item) =>
       this.convertToPlainObject(item.course)
     );
-    this.firestoreDataService.uploadBulkData(
-      'courseschedules',
-      this.events,
-      true
-    );
+    // this.firestoreDataService.uploadBulkData(
+    //   'courseschedules',
+    //   this.events,
+    //   true
+    // );
   }
 
   convertToPlainObject = (obj: any): any => {
