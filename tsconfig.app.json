@@ -8,6 +8,6 @@
   "files": ["src/main.ts"],
   "include": [
     "src/**/*.d.ts",
-    "src/app/shared/models/**/*.ts" // Add this line
+    "src/app/miShared/models/**/*.ts" // Add this line
   ]
 }

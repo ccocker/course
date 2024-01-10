@@ -20,7 +20,7 @@ export class ModelFactory {
     } else if (route.endsWith('preferences')) {
       modelName = 'tutorpreferences';
     } else if (route.endsWith('es')) {
-      modelName = route.slice(0, -1);
+      modelName = route.slice(0, -2);
     } else if (route.endsWith('s')) {
       modelName = route.slice(0, -1);
     } else {
@@ -42,6 +42,7 @@ export class ModelFactory {
       return new ModelClass();
     } catch (error) {
       try {
+        console.log(modelFileName);
         const sharedModelModule = await import(
           `../../miShared/models/${modelFileName}`
         );
