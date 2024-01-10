@@ -1,5 +1,5 @@
 import { BaseModel } from '@miCommon/models/base.model';
-import { IOfferingGroup } from '../../course-schedule/interfaces/schedule.interface';
+import { IOfferingGroup } from '@miApp/components/course-schedule/interfaces/schedule.interface';
 
 /**
  * OfferingGroup model representing a group of offerings, including group capacity.

@@ -1,5 +1,5 @@
 import { BaseModel } from '@miCommon/models/base.model';
-import { IOffering } from '../../course-schedule/interfaces/schedule.interface';
+import { IOffering } from '@miApp/components/course-schedule/interfaces/schedule.interface';
 
 /**
  * Offering model representing a specific instance of a course offering, including start and finish dates.

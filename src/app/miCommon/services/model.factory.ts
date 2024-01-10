@@ -37,15 +37,9 @@ export class ModelFactory {
       const ModelClass = modelModule[modelName];
       return new ModelClass();
     } catch (error) {
-      // console.error(
-      //   `Error loading model from primary location for route: ${route}`,
-      //   error
-      // );
-
-      // If the first attempt fails, try the second location
       try {
         const sharedModelModule = await import(
-          `@miShared/models/${modelFileName}`
+          `../../miShared/models/${modelFileName}`
         );
         const SharedModelClass = sharedModelModule[modelName];
         return new SharedModelClass();

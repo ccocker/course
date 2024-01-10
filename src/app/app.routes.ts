@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { ResetPasswordComponent } from '@miCommon/features/auth/components/reset-password/reset-password.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from '@miApp/components/home/home.component';
 import { LayoutComponent } from '@miCommon/features/layout/layout.component';
 import { AuthGuard } from '@miShared/guards/auth.guard';
 import { DashboardComponent } from '@miApp/components/dashboard/dashboard.component';
@@ -15,9 +15,9 @@ export const routes: Route[] = [
       {
         path: 'course-schedule',
         loadChildren: () =>
-          import('./course-schedule/course-schedule.routes').then(
-            (r) => r.routes
-          ),
+          import(
+            '@miApp/components/course-schedule/course-schedule.routes'
+          ).then((r) => r.routes),
       },
       {
         path: ':collection',

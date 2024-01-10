@@ -3,7 +3,7 @@ import {
   IGroupClasses,
   DayOfWeek,
   ITimeslot,
-} from '../../course-schedule/interfaces/schedule.interface';
+} from '@miApp/components/course-schedule/interfaces/schedule.interface';
 
 /**
  * GroupClasses model representing a specific instance of a group class, including staff codes and timeslot.

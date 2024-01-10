@@ -1,5 +1,5 @@
 import { BaseModel } from '@miCommon/models/base.model';
-import { IRoom } from '../../course-schedule/interfaces/schedule.interface';
+import { IRoom } from '@miApp/components/course-schedule/interfaces/schedule.interface';
 
 /**
  * Room model representing a specific room, including building number, floor, and capacity.

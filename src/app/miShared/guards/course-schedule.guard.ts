@@ -5,14 +5,14 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthService } from '../../common/services/authorization.service';
+import { AuthService } from '@miCommon/services/authorization.service';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
-import { selectCurrentUser } from '../../common/features/auth/store/reducers';
-import { IPermission } from '../../common/interfaces';
-import { Person } from '../../common/models';
-import { entityActions } from '../../common/features/entity/store/actions';
+import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
+import { IPermission } from '@miCommon/interfaces';
+import { Person } from '@miCommon/models';
+import { entityActions } from '@miCommon/features/entity/store/actions';
 
 @Injectable({
   providedIn: 'root',

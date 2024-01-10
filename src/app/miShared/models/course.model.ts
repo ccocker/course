@@ -3,8 +3,8 @@ import {
   ICourse,
   ISkill,
   IStaff,
-} from '../../course-schedule/interfaces/schedule.interface';
-import { ITeachingSkills } from '../../course-schedule/interfaces/schedule.interface';
+} from '@miApp/components/course-schedule/interfaces/schedule.interface';
+import { ITeachingSkills } from '@miApp/components/course-schedule/interfaces/schedule.interface';
 
 /**
  * Course model representing a university course and its related information.
