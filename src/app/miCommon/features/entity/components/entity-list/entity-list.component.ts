@@ -215,7 +215,7 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   navigateToDetails(id: string) {
-    this.router.navigate([`/${this.model.collectionName}/details`, id]);
+    this.router.navigate([`auth/${this.model.collectionName}/details`, id]);
   }
 
   hasData(): boolean {
