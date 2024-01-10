@@ -9,14 +9,14 @@ import { isDevMode } from '@angular/core';
 import {
   authFeatureKey,
   authReducer,
-} from './app/common/features/auth/store/reducers';
+} from '@miCommon/features/auth/store/reducers';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
-import * as authEffects from './app/common/features/auth/store/effects';
+import * as authEffects from '@miCommon/features/auth/store/effects';
 import * as feedEffects from '@miCommon/components/feed-component/store/effects';
 import * as popularTagsEffects from '@miCommon/components/popular-tags/store/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { authInterceptor } from './app/shared/services/auth.interceptor';
+import { authInterceptor } from '@miShared/services/auth.interceptor';
 import {
   feedFeatureKey,
   feedReducer,
@@ -26,7 +26,7 @@ import {
   popularTagsReducer,
 } from '@miCommon/components/popular-tags/store/reducers';
 import { PersistanceService } from '@miShared/services/persistance-service';
-import { authActions } from './app/common/features/auth/store/actions';
+import { authActions } from '@miCommon/features/auth/store/actions';
 
 const providers = [
   ...appConfig.providers,

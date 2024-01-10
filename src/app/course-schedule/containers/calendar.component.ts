@@ -19,8 +19,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
-import { ModelFactory } from '../../common/services/model.factory';
-import { BaseModel, Event } from '../../common/models';
+import { ModelFactory } from '@miCommon/services/model.factory';
+import { BaseModel, Event } from '@miCommon/models';
 import { from, pipe, tap } from 'rxjs';
 
 interface CalendarEvent {

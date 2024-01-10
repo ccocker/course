@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { miAppConfig } from '../miApp/miApp.config';
-import { LoginComponent } from '../common/features/auth/components/login/login.component';
+import { LoginComponent } from '@miCommon/features/auth/components/login/login.component';
 import { Router } from '@angular/router';
 
 @Component({

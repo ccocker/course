@@ -2,7 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { feedActions } from './store/actions';
 import { combineLatest } from 'rxjs';
-import { selectIsLoading } from '../../../common/features/auth/store/reducers';
+import { selectIsLoading } from '@miCommon/features/auth/store/reducers';
 import { selectError, selectFeedData } from './store/reducers';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';

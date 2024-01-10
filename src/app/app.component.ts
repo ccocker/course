@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { authActions } from './common/features/auth/store/actions';
+import { authActions } from '@miCommon/features/auth/store/actions';
 
 @Component({
   selector: 'app-root',

@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { selectCurrentUser } from '../../common/features/auth/store/reducers'; // Adjust path as necessary
+import { selectCurrentUser } from '@miCommon/features/auth/store/reducers'; // Adjust path as necessary
 
 @Injectable({
   providedIn: 'root',

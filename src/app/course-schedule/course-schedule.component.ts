@@ -14,7 +14,7 @@ import {
 } from './interfaces/schedule.interface';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map, startWith } from 'rxjs';
-import { selectCurrentUser } from '@src/src/app/common/features/auth/store/reducers';
+import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
 import { Subscription } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -22,15 +22,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { IPerson } from '@miCommon/interfaces';
-import { DynamicFormComponent } from '../common/features/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '@miCommon/features/dynamic-form/dynamic-form.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { courseScheduleActions } from './store/course-schedules/actions';
 import { tutorPreferencesActions } from './store/tutor-preferences/actions';
 import { FirestoreDataService } from '@miCommon/services/firestore.data';
 import { selectEntities as selectEventsEntities } from './store/course-schedules/reducers';
-import { selectEntities as selectPeopleEntities } from '../common/features/entity/store/reducers';
-import { entityActions } from '../common/features/entity/store/actions';
+import { selectEntities as selectPeopleEntities } from '@miCommon/features/entity/store/reducers';
+import { entityActions } from '@miCommon/features/entity/store/actions';
 import { coursesActions } from '../course-schedule/store/courses/actions';
 import { selectCourses } from './store/courses/reducers';
 import { offeringsActions } from './store/offering/actions';

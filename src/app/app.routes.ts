@@ -1,8 +1,8 @@
 import { Route } from '@angular/router';
-import { ResetPasswordComponent } from './common/features/auth/components/reset-password/reset-password.component';
+import { ResetPasswordComponent } from '@miCommon/features/auth/components/reset-password/reset-password.component';
 import { HomeComponent } from './home/home.component';
-import { LayoutComponent } from './common/features/layout/layout.component';
-import { AuthGuard } from './shared/guards/auth.guard';
+import { LayoutComponent } from '@miCommon/features/layout/layout.component';
+import { AuthGuard } from '@miShared/guards/auth.guard';
 import { DashboardComponent } from '@miApp/components/dashboard/dashboard.component';
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
@@ -22,7 +22,7 @@ export const routes: Route[] = [
       {
         path: ':collection',
         loadChildren: () =>
-          import('./common/features/entity/entity.routes').then(
+          import('@miCommon/features/entity/entity.routes').then(
             (r) => r.routes
           ),
       },
@@ -31,21 +31,21 @@ export const routes: Route[] = [
   {
     path: 'global-feed',
     loadChildren: () =>
-      import('./common/features/global-feed/global-feed.routes').then(
+      import('@miCommon/features/global-feed/global-feed.routes').then(
         (r) => r.routes
       ),
   },
   {
     path: 'feed',
     loadChildren: () =>
-      import('./common/features/your-feed/your-feed.routes').then(
+      import('@miCommon/features/your-feed/your-feed.routes').then(
         (r) => r.routes
       ),
   },
   {
     path: 'tags/:slug',
     loadChildren: () =>
-      import('./common/features/tag-feed/tag-feed.routes').then(
+      import('@miCommon/features/tag-feed/tag-feed.routes').then(
         (m) => m.routes
       ),
   },

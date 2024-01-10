@@ -7,9 +7,9 @@
     "paths": {
       "@src/*": ["*"],
       "@environments/*": ["src/environments/*"],
-      "@miCommon/*": ["src/app/common/*"],
+      "@miCommon/*": ["src/app/miCommon/*"],
       "@miApp/*": ["src/app/miApp/*"],
-      "@miShared/*": ["src/app/shared/*"]
+      "@miShared/*": ["src/app/miShared/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "strict": false,

@@ -116,18 +116,6 @@ export const rehydrateAuthStateEffect = createEffect(
   { functional: true }
 );
 
-export const redirectAfterRegisterEffect = createEffect(
-  (actions$ = inject(Actions), router = inject(Router)) => {
-    return actions$.pipe(
-      ofType(authActions.registerSuccess),
-      tap(() => {
-        router.navigateByUrl('/auth/people');
-      })
-    );
-  },
-  { functional: true, dispatch: false }
-);
-
 export const logoutEffect = createEffect(
   (
     actions$ = inject(Actions),

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Tutorpreferences } from '../../shared/models';
+import { Tutorpreferences } from '@miShared/models';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +45,7 @@ export class ModelFactory {
       // If the first attempt fails, try the second location
       try {
         const sharedModelModule = await import(
-          `../../shared/models/${modelFileName}`
+          `@miShared/models/${modelFileName}`
         );
         const SharedModelClass = sharedModelModule[modelName];
         return new SharedModelClass();
