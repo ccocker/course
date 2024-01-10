@@ -80,8 +80,15 @@ export class FirebaseAuthService implements IAuthService {
   }
 
   validateToken(token: string): Observable<boolean> {
-    const isValid = token && typeof token === 'string' && token.length > 0;
-    return of(isValid);
+    console.log('Received token for validation:', token);
+
+    return this.currentUserSubject.pipe(
+      map((user) => {
+        const isValid = !!user;
+        console.log('Is user present (token valid)?', isValid, 'User:', user);
+        return isValid;
+      })
+    );
   }
 
   public login(credentials: any): Observable<any> {

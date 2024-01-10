@@ -26,10 +26,18 @@ import {
   popularTagsReducer,
 } from '@miCommon/components/popular-tags/store/reducers';
 import { PersistanceService } from '@miShared/services/persistance-service';
-import { authActions } from '@miCommon/features/auth/store/actions';
 
+import { authActions } from '@miCommon/features/auth/store/actions';
+import {
+  AUTH_SERVICE,
+  authServiceFactory,
+} from './app/miCommon/features/auth/services/auth-factory.service';
 const providers = [
   ...appConfig.providers,
+  {
+    provide: AUTH_SERVICE,
+    useFactory: authServiceFactory,
+  },
   provideHttpClient(withInterceptors([authInterceptor])),
   provideRouter(routes),
   provideStore({

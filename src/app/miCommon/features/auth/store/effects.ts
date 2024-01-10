@@ -1,21 +1,21 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, from, map, of, switchMap, tap } from 'rxjs';
-import { CurrentUserInterface } from '@miShared/interfaces/current-user.interface';
-import { AUTH_SERVICE_TOKEN } from '../services/auth.service';
+
 import { authActions } from './actions';
 import { Router } from '@angular/router';
 import { BackendErrorsInterface } from '@miShared/interfaces/backendErrors.interface';
 import { PersistanceService } from '@miShared/services/persistance-service';
 import { Store } from '@ngrx/store';
-import { Firestore, doc, getDoc } from 'firebase/firestore';
+
 import { FirestoreDataService } from '../../../services/firestore.data';
-import { Person } from '../../../models';
+
+import { AUTH_SERVICE } from '../services/auth-factory.service';
 
 export const getCurrentUserEffect = createEffect(
   (
     actions$ = inject(Actions),
-    authService = inject(AUTH_SERVICE_TOKEN),
+    authService = inject(AUTH_SERVICE),
     persistanceService = inject(PersistanceService)
   ) => {
     return actions$.pipe(
@@ -44,7 +44,7 @@ export const getCurrentUserEffect = createEffect(
 export const registerEffect = createEffect(
   (
     actions$ = inject(Actions),
-    authService = inject(AUTH_SERVICE_TOKEN),
+    authService = inject(AUTH_SERVICE),
     persistanceService = inject(PersistanceService),
     firestoreDataService = inject(FirestoreDataService)
   ) => {
@@ -97,18 +97,29 @@ export const registerEffect = createEffect(
 );
 
 export const rehydrateAuthStateEffect = createEffect(
-  (actions$ = inject(Actions), authService = inject(AUTH_SERVICE_TOKEN)) => {
+  (actions$ = inject(Actions), authService = inject(AUTH_SERVICE)) => {
     return actions$.pipe(
       ofType(authActions.rehydrateAuthState),
       switchMap(({ accessToken }) => {
-        // You might need to modify this part based on how your authService works
-        return authService.getCurrentUser().pipe(
-          map((currentUser) => {
-            return authActions.getCurrentUserSuccess({ currentUser });
+        // If the token is valid, attempt to fetch the current user's details
+        return authService.validateToken(accessToken).pipe(
+          switchMap((isValidToken) => {
+            if (isValidToken) {
+              return authService.getCurrentUser().pipe(
+                map((currentUser) => {
+                  if (currentUser) {
+                    return authActions.getCurrentUserSuccess({ currentUser });
+                  } else {
+                    return authActions.getCurrentUserFailure();
+                  }
+                }),
+                catchError(() => of(authActions.getCurrentUserFailure()))
+              );
+            } else {
+              return of(authActions.getCurrentUserFailure());
+            }
           }),
-          catchError(() => {
-            return of(authActions.getCurrentUserFailure());
-          })
+          catchError(() => of(authActions.getCurrentUserFailure()))
         );
       })
     );

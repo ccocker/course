@@ -1,1 +1,14 @@
-export const environment = {};
+import { AuthServiceType } from '../app/miCommon/features/auth/enums/auth-service.enum';
+
+export const environment = {
+  production: true,
+  authServiceType: AuthServiceType.Firebase,
+  firebaseConfig: {
+    apiKey: 'AIzaSyDLaPfghjaxecZM3mY37Kj-FTw7e88sayg',
+    authDomain: 'rmit-scheduler.firebaseapp.com',
+    projectId: 'rmit-scheduler',
+    storageBucket: 'rmit-scheduler.appspot.com',
+    messagingSenderId: '536021814788',
+    appId: '1:536021814788:web:3e3decf2d53366bcfeaf51',
+  },
+};

@@ -30,6 +30,11 @@ const authFeature = createFeature({
       validationErrors: action.errors,
     })),
 
+    on(authActions.rehydrateAuthState, (state, action) => ({
+      ...state,
+      isLoading: true,
+    })),
+
     on(authActions.getCurrentUser, (state) => ({
       ...state,
       isLoading: true,
