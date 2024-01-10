@@ -1,5 +1,5 @@
 <div *ngIf="!selectedEvent && events$ | async as data; else loadingTemplate">
-  <button (click)="bulkUpload()">Bulk Upload</button>
+  <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
   <mi-calendar
     [showDescription]="false"
     [showDateNavigator]="true"
@@ -10,16 +10,16 @@
     (eventDoubleClick)="onEventEdit($event)"
   >
     <ng-template let-event>
-      <ng-container>
+      <div class="event-details">
         {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
 
         {{ event?.classNumber }}
         <div>
           {{ event?.roomCode }}
         </div>
-      </ng-container>
+      </div>
 
-      <ng-container class="event-radio-buttons">
+      <div class="event-radio-buttons">
         <label *ngFor="let option of ['H', 'M', 'L', 'X']">
           <input
             type="radio"
@@ -32,7 +32,7 @@
           />
           {{ option }}
         </label>
-      </ng-container>
+      </div>
     </ng-template>
   </mi-calendar>
 </div>

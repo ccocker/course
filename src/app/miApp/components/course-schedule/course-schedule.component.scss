@@ -1,15 +1,26 @@
-app-course-schedule .event-radio-buttons label {
-  font-size: 6px; // Smaller font size
+.event-details {
+  font-size: 10px;
 }
+.event-radio-buttons {
+  display: flex;
+  justify-content: center; // Centers the radio buttons horizontally
+  align-items: center; // Aligns items vertically in the center
+  flex-wrap: wrap; // Allows items to wrap onto the next line if needed
 
-app-course-schedule .event-radio-buttons input[type="radio"] {
-  transform: scale(0.5); // Smaller radio buttons
-}
+  label {
+    display: flex;
+    flex-direction: column; // Stacks radio button and label vertically
+    align-items: center; // Centers the label under the radio button
+    margin-right: 5px; // Adds some space between each radio button group
+    font-size: 10px;
 
-.event-radio-buttons label {
-  font-size: 6px !important;
-}
+    &:last-child {
+      margin-right: 0; // Removes margin from the last radio button group
+    }
 
-.event-radio-buttons input[type="radio"] {
-  transform: scale(0.5) !important;
+    input[type="radio"] {
+      margin-bottom: 5px; // Space between radio button and label
+      transform: scale(0.5); // Adjust the size of radio button if needed
+    }
+  }
 }

@@ -16,13 +16,13 @@ export class HomeComponent {
   miAppConfig = miAppConfig;
   homePageLinks = [
     { title: 'Login/Register', link: 'https://angular.dev' },
-    { title: 'Learn with Tutorials', link: 'courses' },
-    { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
-    {
-      title: 'Angular Language Service',
-      link: 'https://angular.dev/tools/language-service',
-    },
-    { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
+    // { title: 'Learn with Tutorials', link: 'courses' },
+    // { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
+    // {
+    //   title: 'Angular Language Service',
+    //   link: 'https://angular.dev/tools/language-service',
+    // },
+    // { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
   ];
   constructor(private dialog: MatDialog, private router: Router) {}
 
