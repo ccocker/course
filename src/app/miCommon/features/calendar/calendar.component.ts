@@ -155,6 +155,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   onDateSelect(event: any) {
     this.updateCalendar(event.value);
+    this.onViewChange();
   }
 
   updateCalendar(newStartDate: Date) {
@@ -236,6 +237,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     // Update the calendar view based on the new start date
     this.updateCalendar(newStartDate);
+    this.onViewChange();
   }
 
   // Modify this method inside the CalendarComponent class
@@ -419,5 +421,20 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(); // Don't forget to subscribe to trigger the observable
+  }
+
+  get calendarClass(): string {
+    switch (this.currentView) {
+      case 'day':
+        return 'calendar-day';
+      case 'workWeek':
+        return 'calendar-work-week';
+      case 'week':
+        return 'calendar-week';
+      case 'month':
+        return 'calendar-month';
+      default:
+        return '';
+    }
   }
 }

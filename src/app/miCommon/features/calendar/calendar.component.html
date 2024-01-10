@@ -52,7 +52,7 @@
   </div>
 </mat-toolbar>
 
-<div class="calendar" #calendar>
+<div [class]="calendarClass" class="calendar" #calendar>
   <div class="header-row">
     <div class="cell timeslot-header"></div>
     <div class="cell date-cell" *ngFor="let date of dates">

@@ -10,6 +10,22 @@ $sticky-background-color: white;
   height: 100vh;
 }
 
+.calendar-day {
+  grid-template-columns: 100px 1fr;
+}
+
+.calendar-work-week {
+  grid-template-columns: 100px repeat(5, 1fr);
+}
+
+.calendar-week {
+  grid-template-columns: 100px repeat(7, 1fr);
+}
+
+.calendar-month {
+  grid-template-columns: 100px repeat(30, 1fr);
+}
+
 .calendar-toolbar {
   gap: 10px;
 }
