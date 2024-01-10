@@ -1,5 +1,9 @@
 <mat-toolbar class="calendar-toolbar">
   <ng-container *ngIf="showDateNavigator">
+    <button mat-icon-button (click)="goToToday()">
+      <mat-icon>today</mat-icon>
+    </button>
+
     <button mat-icon-button (click)="navigateTo('prev')">
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -51,7 +55,9 @@
     </mat-form-field>
   </div>
 </mat-toolbar>
-
+<div *ngIf="currentView === 'month'" class="month-heading">
+  <h2>{{ getMonthName() }}</h2>
+</div>
 <div
   [class]="calendarClass"
   [ngStyle]="getGridStyle()"

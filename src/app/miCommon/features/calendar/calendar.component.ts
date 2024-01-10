@@ -229,14 +229,32 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     // Get the current start date from the dates array
     const startDate = this.dates[0];
 
-    // Calculate the new start date based on the direction
+    // Determine the number of days to navigate based on the view
+    let daysToNavigate;
+    switch (this.currentView) {
+      case 'day':
+        daysToNavigate = 1;
+        break;
+      case 'workWeek':
+      case 'week':
+        daysToNavigate = 7;
+        break;
+      case 'month':
+        daysToNavigate = this.getDaysInMonth(
+          startDate.getMonth(),
+          startDate.getFullYear()
+        );
+        break;
+      default:
+        daysToNavigate = 0;
+    }
+
+    // Calculate the new start date based on the direction and the current view
     const newStartDate = new Date(startDate);
     if (direction === 'prev') {
-      // Move to the previous day, which could potentially be in the previous week
-      newStartDate.setDate(startDate.getDate() - 7);
+      newStartDate.setDate(startDate.getDate() - daysToNavigate);
     } else {
-      // Move to the next day, which could potentially be in the next week
-      newStartDate.setDate(startDate.getDate() + 7);
+      newStartDate.setDate(startDate.getDate() + daysToNavigate);
     }
 
     // Update the calendar view based on the new start date
@@ -453,5 +471,18 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       };
     }
     return {};
+  }
+
+  getMonthName(): string {
+    return this.selectedDate.toLocaleString('default', {
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+
+  goToToday(): void {
+    this.selectedDate = new Date();
+    this.updateCalendar(this.selectedDate);
+    this.onViewChange();
   }
 }
