@@ -6,7 +6,7 @@ $sticky-background-color: white;
 .calendar {
   display: grid;
   grid-template-columns: 100px repeat(5, 1fr);
-  width: 150%;
+  width: 100%;
   height: 100vh;
 }
 
