@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="data; else noData">
   <h1>{{ collection | titlecase }} List</h1>
 
   <div class="content">
@@ -23,10 +23,8 @@
         (emitDeleteAll)="deleteAll()"
       ></mi-table>
     </ng-container>
-
-    <ng-template #noData>
-      <div class="no-records">There are currently no records.</div>
-      <mi-excel-reader></mi-excel-reader>
-    </ng-template>
   </div>
 </div>
+<ng-template #noData>
+  <mi-loading></mi-loading>
+</ng-template>

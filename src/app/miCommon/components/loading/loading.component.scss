@@ -1,18 +1,11 @@
 .loading-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 100vh;
-  text-align: center;
-  background-color: #f0f0f0; // Feel free to change the color to match your theme
+  height: 100vh; // This can be adjusted to your desired height
+  width: 100%; // This can be adjusted to your desired width
+}
 
-  .loading-image {
-    max-width: 500px; // Adjust the size as needed
-    margin-bottom: 20px;
-  }
-
-  .loading-text {
-    font-size: 24px;
-    color: #333; // Adjust the text color as needed
-  }
+.loading-image {
+  height: 50%;
 }

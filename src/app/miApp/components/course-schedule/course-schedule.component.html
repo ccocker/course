@@ -1,6 +1,5 @@
-<button (click)="bulkUpload()">Bulk Upload</button>
-
-<div *ngIf="!selectedEvent && events$ | async as data">
+<div *ngIf="!selectedEvent && events$ | async as data; else loadingTemplate">
+  <button (click)="bulkUpload()">Bulk Upload</button>
   <mi-calendar
     [showDescription]="false"
     [showDateNavigator]="true"
@@ -43,3 +42,6 @@
   [formGroupData]="selectedEvent"
   (formSubmit)="onFormSubmit($event)"
 ></mi-dynamic-form>
+<ng-template #loadingTemplate>
+  <mi-loading></mi-loading>
+</ng-template>

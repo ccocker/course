@@ -48,6 +48,7 @@ import { offering } from './data/offering.data';
 import { offeringGroups } from './data/offering-group.data';
 import { rooms } from './data/rooms.data';
 import { groupClasses } from './data/group-classes.data';
+import { LoadingComponent } from '@src/src/app/miCommon/components/loading/loading.component';
 
 @Component({
   selector: 'mi-course-schedule',
@@ -67,6 +68,7 @@ import { groupClasses } from './data/group-classes.data';
     ReactiveFormsModule,
     MatRadioModule,
     CalendarComponent,
+    LoadingComponent,
   ],
   templateUrl: './course-schedule.component.html',
   styleUrl: './course-schedule.component.scss',
