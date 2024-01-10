@@ -103,6 +103,7 @@ export const rehydrateAuthStateEffect = createEffect(
       switchMap(({ accessToken }) =>
         authService.getCurrentUser().pipe(
           switchMap((currentUser) => {
+            console.log('rehydrateAuthStateEffect', currentUser);
             if (currentUser) {
               return authService.validateToken(accessToken).pipe(
                 map((isValidToken) => {
