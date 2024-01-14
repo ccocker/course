@@ -577,7 +577,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     // Prepare the preference data
     let preferenceData = {
       userId,
-      id: existingPreference ? existingPreference.id : event['id'], // Use existing eventId if found
+      id: userId + classCode, // Use existing eventId if found
       priority,
       classCode: classCode,
     };
@@ -594,10 +594,47 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   bulkUpload() {
-    const convertedArray = this.schedule.map((item) =>
-      this.convertToPlainObject(item.course)
+    const convertedArray = this.schedule.map((item) => {
+      const course = this.convertToPlainObject(item.course);
+
+      switch (course.code) {
+        case 'BC1':
+          course.description = 'Bootcamp 1: Java';
+          break;
+        case 'BC2':
+          course.description = 'Bootcamp 2: C++';
+          break;
+        case 'WBC':
+          course.description = 'Web Bootcamp: Html, Css, Javascript';
+          break;
+      }
+
+      return course;
+    });
+
+    this.events.forEach((course) => {
+      switch (course.offeringGroupCode) {
+        case 'BC1':
+          course.description = 'Bootcamp 1: Java';
+          break;
+        case 'BC2':
+          course.description = 'Bootcamp 2: C++';
+          break;
+        case 'WBC':
+          course.description = 'Web Bootcamp: Html, Css, Javascript';
+          break;
+      }
+
+      return course;
+    });
+
+    console.log('Converted Array:', convertedArray);
+    console.log('Schedule:', this.schedule);
+    this.firestoreDataService.uploadBulkData(
+      'course-schedules',
+      this.events,
+      true
     );
-    this.firestoreDataService.uploadBulkData('courses', this.courses, true);
   }
 
   convertToPlainObject = (obj: any): any => {
