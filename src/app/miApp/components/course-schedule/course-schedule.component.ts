@@ -594,6 +594,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   bulkUpload() {
+    this.events = events;
     const convertedArray = this.schedule.map((item) => {
       const course = this.convertToPlainObject(item.course);
 
@@ -628,13 +629,12 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       return course;
     });
 
-    console.log('Converted Array:', convertedArray);
-    console.log('Schedule:', this.schedule);
-    this.firestoreDataService.uploadBulkData(
-      'course-schedules',
-      this.events,
-      true
-    );
+    console.log('Course Schedules:', this.events);
+    // this.firestoreDataService.uploadBulkData(
+    //   'course-schedules',
+    //   this.events,
+    //   true
+    // );
   }
 
   convertToPlainObject = (obj: any): any => {
