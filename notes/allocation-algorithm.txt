@@ -3,8 +3,8 @@ Allocate tutors to classes preferencing existing tutors over new tutors.
 Allocate tutors to classes by preference, day, and non consecutive allocations.
 
 1. Create a list of all preferences.
-2. Sort all preferences by tutor (existing then preference count) in ascending order
-3. Sort all tutors preferences in ascending order and grouped by day
+2. Sort all preferences by tutor (preference count) in ascending order
+3. Sort each tutors preferences in ascending order (priority)
 4. Create list of allocations.
    4a. REPEAT UNTIL all preferences have been added.
        i. FOR EACH tutor.
