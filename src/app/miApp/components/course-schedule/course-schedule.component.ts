@@ -630,11 +630,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     });
 
     console.log('Course Schedules:', this.events);
-    // this.firestoreDataService.uploadBulkData(
-    //   'course-schedules',
-    //   this.events,
-    //   true
-    // );
+    this.firestoreDataService.uploadBulkData(
+      'course-schedules',
+      this.events,
+      true
+    );
   }
 
   convertToPlainObject = (obj: any): any => {
