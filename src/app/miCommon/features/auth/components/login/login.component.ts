@@ -130,7 +130,9 @@ export class LoginComponent implements OnInit {
         if (!exists) {
           this.dialogRef = this.dialogRef.updateSize('300px', '600px');
           this.addAdditionalControls();
+          this.clearValidationErrors();
         } else {
+          this.clearValidationErrors();
           this.removeAdditionalControls();
         }
       });
@@ -172,6 +174,10 @@ export class LoginComponent implements OnInit {
       'lastName',
       new FormControl('', Validators.required)
     );
+    this.loginForm.addControl(
+      'maximumHours',
+      new FormControl('', Validators.required)
+    );
   }
 
   removeAdditionalControls() {
@@ -181,9 +187,21 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.contains('lastName')) {
       this.loginForm.removeControl('lastName');
     }
-    this.loginForm.addControl(
-      'maximumHours',
-      new FormControl('', Validators.required)
-    );
+    if (this.loginForm.contains('maximumHours')) {
+      this.loginForm.removeControl('maximumHours');
+    }
+  }
+
+  clearValidationErrors() {
+    Object.keys(this.loginForm.controls).forEach((key) => {
+      const control = this.loginForm.get(key);
+      if (control) {
+        // Option 1: Set as pristine
+        control.markAsPristine();
+
+        // Option 2: Clear validation errors
+        control.setErrors(null);
+      }
+    });
   }
 }
