@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
   miAppConfig = miAppConfig;
   currentUser$ = this.store.select(selectCurrentUser);
   loginForm: FormGroup;
-  userExists: boolean | null = null;
+  existingUser: boolean | null = null;
   loginError: BackendErrorsInterface | null = null;
   resetPassword = false;
 
@@ -75,36 +75,6 @@ export class LoginComponent implements OnInit {
       .subscribe(() => {
         this.dialogRef.close();
       });
-
-    this.loginForm
-      .get('email')!
-      .valueChanges.pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        switchMap((email) => this.authService.checkIfUserExists(email))
-      )
-      .subscribe((exists) => {
-        this.userExists = exists;
-        if (!exists) {
-          console.log('adding first and last name');
-          this.loginForm.addControl(
-            'firstName',
-            new FormControl('', Validators.required)
-          );
-          this.loginForm.addControl(
-            'lastName',
-            new FormControl('', Validators.required)
-          );
-          this.loginForm.addControl(
-            'maximumHours',
-            new FormControl('', Validators.required)
-          );
-        } else {
-          this.loginForm.removeControl('firstName');
-          this.loginForm.removeControl('lastName');
-          this.loginForm.removeControl('maximumHours');
-        }
-      });
   }
 
   public login() {
@@ -113,11 +83,6 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     };
 
-    if (this.userExists === false) {
-      credentials['firstName'] = this.loginForm.value.firstName;
-      credentials['lastName'] = this.loginForm.value.lastName;
-      credentials['maximumHours'] = this.loginForm.value.maximumHours;
-    }
     const request: RegisterAccountInterface = {
       user: credentials,
     };
@@ -153,5 +118,72 @@ export class LoginComponent implements OnInit {
   loginWithFacebook() {
     // Handle Facebook login
     // this.authService.facebookLogin();
+  }
+
+  onEmailBlur() {
+    const email = this.loginForm.get('email')!.value;
+
+    if (email) {
+      this.authService.checkIfUserExists(email).then((exists) => {
+        this.existingUser = exists;
+
+        if (!exists) {
+          this.dialogRef = this.dialogRef.updateSize('300px', '600px');
+          this.addAdditionalControls();
+        } else {
+          this.removeAdditionalControls();
+        }
+      });
+    }
+  }
+
+  checkExistingUser() {
+    this.loginForm
+      .get('email')!
+      .valueChanges.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((email) => this.authService.checkIfUserExists(email))
+      )
+      .subscribe((exists) => {
+        this.existingUser = exists;
+        if (!exists) {
+          this.loginForm.addControl(
+            'firstName',
+            new FormControl('', Validators.required)
+          );
+          this.loginForm.addControl(
+            'lastName',
+            new FormControl('', Validators.required)
+          );
+        } else {
+          this.loginForm.removeControl('firstName');
+          this.loginForm.removeControl('lastName');
+        }
+      });
+  }
+
+  addAdditionalControls() {
+    this.loginForm.addControl(
+      'firstName',
+      new FormControl('', Validators.required)
+    );
+    this.loginForm.addControl(
+      'lastName',
+      new FormControl('', Validators.required)
+    );
+  }
+
+  removeAdditionalControls() {
+    if (this.loginForm.contains('firstName')) {
+      this.loginForm.removeControl('firstName');
+    }
+    if (this.loginForm.contains('lastName')) {
+      this.loginForm.removeControl('lastName');
+    }
+    this.loginForm.addControl(
+      'maximumHours',
+      new FormControl('', Validators.required)
+    );
   }
 }

@@ -10,6 +10,11 @@ export class AuthMockService implements IAuthService {
 
   constructor() {}
 
+  public checkIfUserExists(email: string): Promise<boolean> {
+    console.log('Mock Authentication Service');
+    return Promise.resolve(true);
+  }
+
   login(credentials: any): Observable<any> {
     this.loginStatus.next(true); // Update login status
     return of({ token: 'mock-token', user: 'MockUser' });

@@ -7,4 +7,5 @@ export interface IAuthService {
   getCurrentUser(): Observable<any>;
   validateToken(token: string): Observable<boolean>;
   logout(): void;
+  checkIfUserExists(email: string): Promise<boolean>;
 }

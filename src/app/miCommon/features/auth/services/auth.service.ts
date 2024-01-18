@@ -12,6 +12,11 @@ export const AUTH_SERVICE_TOKEN = new InjectionToken<IAuthService>(
 export class AuthService implements IAuthService {
   private loginStatus = new BehaviorSubject<boolean>(false);
 
+  public checkIfUserExists(email: string): Promise<boolean> {
+    console.log('Mock Authentication Service');
+    return Promise.resolve(true);
+  }
+
   login(credentials: any): Observable<any> {
     // ... login logic
     this.loginStatus.next(true); // Emit true on successful login

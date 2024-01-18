@@ -55,14 +55,24 @@ export class FirebaseAuthService implements IAuthService {
     });
   }
 
-  public checkIfUserExists(email: string): Observable<boolean> {
+  public async checkIfUserExists(email: string): Promise<boolean> {
     const functions = getFunctions(this.app);
     const checkUserExistsFn = httpsCallable(functions, 'checkUserExists');
 
-    return from(checkUserExistsFn({ email })).pipe(
-      map((result) => (result.data as CheckUserExistsResponse).exists),
-      catchError((error) => throwError(() => new Error(error.message)))
-    );
+    try {
+      const result = await checkUserExistsFn({ email });
+      if (!result || !result.data) {
+        throw new Error('Invalid response');
+      }
+      const response = result.data as CheckUserExistsResponse;
+      return response.exists;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error('Unknown error occurred');
+      }
+    }
   }
 
   public getCurrentUser(): Observable<any | null> {
