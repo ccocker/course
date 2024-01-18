@@ -47,6 +47,16 @@
               Last name is required
             </mat-error>
           </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Available Hours</mat-label>
+            <input matInput formControlName="maximumHours" />
+            <mat-error
+              *ngIf="loginForm.get('maximumHours')?.errors?.['required']"
+            >
+              Available Hours is required
+            </mat-error>
+          </mat-form-field>
         </ng-container>
         <mat-error *ngIf="loginError$ | async as loginError">
           {{ loginError.message }}

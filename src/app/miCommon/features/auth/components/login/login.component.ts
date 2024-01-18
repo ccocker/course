@@ -78,10 +78,17 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    const credentials = {
+    const credentials: any = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
+
+    // Add additional fields for new user registration
+    if (this.existingUser === false) {
+      credentials.firstName = this.loginForm.value.firstName;
+      credentials.lastName = this.loginForm.value.lastName;
+      credentials.maximumHours = this.loginForm.value.maximumHours;
+    }
 
     const request: RegisterAccountInterface = {
       user: credentials,
