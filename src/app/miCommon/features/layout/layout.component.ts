@@ -46,7 +46,11 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(authActions.getCurrentUser());
     this.data$.subscribe(({ currentUser }) => {
-      if (currentUser && currentUser.email.includes('cocker')) {
+      if (
+        currentUser &&
+        (currentUser.email === 'craig.cocker@gmail.com' ||
+          currentUser.email === 'rodney.cocker@gmail.com')
+      ) {
         // Keep the original menu items
         this.miAppConfig.sidenavMenuItems = [
           { title: 'Dashboard', link: 'auth/Dashboard' },
