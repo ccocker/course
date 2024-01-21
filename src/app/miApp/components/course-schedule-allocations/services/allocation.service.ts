@@ -28,6 +28,16 @@ export class AllocationService {
 
   constructor() {}
 
+  // Additional method to process and output allocations if needed
+  public processAllocations(preferences: Preference[]): any {
+    debugger;
+    const sortedPreferences = this.sortTutorsPreferences(preferences);
+    const allocations = this.allocateClasses(sortedPreferences);
+
+    console.log('Allocations considering time conflicts:', allocations);
+    return allocations;
+  }
+
   private isTimeOverlap(
     startTime1: string,
     endTime1: string,
@@ -72,12 +82,6 @@ export class AllocationService {
     });
 
     return allocations;
-  }
-
-  // Additional method to process and output allocations if needed
-  public processAllocations(preferences: Preference[]): void {
-    const sortedPreferences = this.sortTutorsPreferences(preferences);
-    const allocations = this.allocateClasses(sortedPreferences);
   }
 
   // Method to sort tutor preferences

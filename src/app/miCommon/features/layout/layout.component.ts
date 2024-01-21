@@ -56,6 +56,10 @@ export class LayoutComponent implements OnInit {
           { title: 'Dashboard', link: 'auth/Dashboard' },
           { title: 'Course Schedule', link: 'auth/course-schedule' },
           {
+            title: 'Course Schedule Allocations',
+            link: 'auth/course-schedule-allocations',
+          },
+          {
             title: 'Course Schedule List',
             link: 'auth/course-schedules',
           },
