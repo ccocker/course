@@ -1,23 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { selectTutorPreferences } from '../course-schedule/store/tutor-preferences/reducers';
-import { entityActions } from '@src/src/app/miCommon/features/entity/store/actions';
-import { CommonModule } from '@angular/common';
 import { tutorPreferencesActions } from '../course-schedule/store/tutor-preferences/actions';
 import { AllocationService } from '@miApp/components/course-schedule-allocations/services/allocation.service';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'mi-course-schedule-allocations',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatSortModule,
+    MatInputModule,
+    MatFormFieldModule,
+  ],
   templateUrl: './course-schedule-allocations.component.html',
-  styleUrl: './course-schedule-allocations.component.scss',
+  styleUrls: ['./course-schedule-allocations.component.scss'],
 })
-export class CourseScheduleAllocationsComponent {
+export class CourseScheduleAllocationsComponent implements AfterViewInit {
   tutorpreferences$: Observable<any[]>;
   tutorPreferencesSubscription: Subscription;
-  allocations: any[];
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['userId', 'classCode', 'priority']; // Adjust columns as needed
+
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private store: Store,
@@ -30,26 +42,27 @@ export class CourseScheduleAllocationsComponent {
     );
     this.tutorpreferences$ = this.store.select(selectTutorPreferences);
 
-    // Subscribe to the tutor preferences observable
     this.tutorPreferencesSubscription = this.tutorpreferences$.subscribe(
       (tutorPreferences) => {
-        console.log('tutorPreferences', tutorPreferences);
         if (tutorPreferences && tutorPreferences.length > 0) {
-          this.allocations =
+          const allocations =
             this.allocationsService.processAllocations(tutorPreferences);
-          console.log(
-            'Allocations considering time conflicts:',
-            this.allocations
-          );
-        } else {
-          console.log('No tutor preferences found');
+          this.dataSource = new MatTableDataSource(allocations);
         }
       }
     );
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   ngOnDestroy() {
-    // Unsubscribe to avoid memory leaks
     if (this.tutorPreferencesSubscription) {
       this.tutorPreferencesSubscription.unsubscribe();
     }
