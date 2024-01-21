@@ -12,7 +12,7 @@ import {
 export class Groupclass extends BaseModel implements IGroupClasses {
   public offeringGroupCode: any = null;
   public roomCode: string = '';
-  public leadCode: any = null;
+  public leadName: any = null;
   public staffCodes: string[] = [];
   public classNumber: number = 0;
   public day: DayOfWeek;

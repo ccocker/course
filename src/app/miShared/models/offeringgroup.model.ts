@@ -7,7 +7,7 @@ import { IOfferingGroup } from '@miApp/components/course-schedule/interfaces/sch
  */
 export class Offeringgroup extends BaseModel implements IOfferingGroup {
   public offeringCode: any = null;
-  public leadCode: any = null;
+  public leadName: string = '';
   public group: number = 0;
   public groupCapacity: number = 0;
 
@@ -45,14 +45,14 @@ export class Offeringgroup extends BaseModel implements IOfferingGroup {
   private configureProperties(): void {
     this.listProperties = [
       'offeringCode',
-      'leadCode',
+      'leadName',
       'group',
       'groupCapacity',
     ];
     this.formProperties = [
       'id',
       'offeringCode',
-      'leadCode',
+      'leadName',
       'group',
       'groupCapacity',
     ];

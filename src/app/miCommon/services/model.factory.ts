@@ -32,6 +32,7 @@ export class ModelFactory {
   }
 
   async createModel(route: string): Promise<any> {
+    debugger;
     let modelName = this.getModelNameFromRoute(route);
 
     let modelFileName = modelName.toLowerCase() + '.model.ts';

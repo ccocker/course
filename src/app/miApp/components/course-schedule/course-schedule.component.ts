@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScheduleService } from './services/schedule.service';
+// import { ScheduleService } from './services/schedule.service';
 
 import {
   DayOfWeek,
@@ -103,7 +103,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   // rooms = rooms;
 
   constructor(
-    public scheduleService: ScheduleService,
+    // public scheduleService: ScheduleService,
     private store: Store,
     private firestoreDataService: FirestoreDataService
   ) {
@@ -141,7 +141,7 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     this.events$ = this.store.select(selectEventsEntities);
 
     this.filteredStaffList = this.staffList;
-    this.schedule = this.scheduleService.getSchedule();
+    // this.schedule = this.scheduleService.getSchedule();
 
     this.determineEarliestStartTime();
 
@@ -155,27 +155,27 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
     this.weekdays.push(DayOfWeek.Thursday);
     this.weekdays.push(DayOfWeek.Friday);
 
-    this.groupColours = this.scheduleService.generateColorShades();
+    // this.groupColours = this.scheduleService.generateColorShades();
   }
 
   ngAfterViewInit() {
     this.dataSubscription = this.data$.subscribe((data) => {
       this.currentUser = data.currentUser;
-      this.coursesList = this.scheduleService.getAllCourses();
+      // this.coursesList = this.scheduleService.getAllCourses();
       this.selectedCourses = this.coursesList.map((course) => course.code);
 
       // Get the complete staff list
-      const completeStaffList = this.scheduleService.getStaff();
+      // const completeStaffList = this.scheduleService.getStaff();
 
       // Check if the current user is in the staff list
-      const currentUserStaffRecord = completeStaffList.find(
-        (staff) => staff.emails[1].address === data.currentUser?.email
-      );
+      // const currentUserStaffRecord = completeStaffList.find(
+      //   (staff) => staff.emails[1].address === data.currentUser?.email
+      // );
 
       // If the current user is a staff member, filter the list; otherwise, use the complete list
-      this.staffList = currentUserStaffRecord
-        ? [currentUserStaffRecord]
-        : completeStaffList;
+      // this.staffList = currentUserStaffRecord
+      //   ? [currentUserStaffRecord]
+      //   : completeStaffList;
 
       // Map the selected staff depending on the filtered staff list
       this.selectedStaff = this.staffList.map((staff) => staff.miId);
@@ -309,11 +309,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   isUnderstaffed(event: IScheduleEvent): boolean {
-    const requiredStaff = this.scheduleService.calculateTutors(
-      event.class.offeringGroupCode['groupCapacity']
-    );
+    // const requiredStaff = this.scheduleService.calculateTutors(
+    //   event.class.offeringGroupCode['groupCapacity']
+    // );
     const assignedStaff = event.class['staff']?.length;
-    return assignedStaff < requiredStaff;
+    return false;
   }
 
   assignRowsToEvents() {
@@ -540,11 +540,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   }
 
   isOverstaffed(event: IScheduleEvent): boolean {
-    const requiredStaff = this.scheduleService.calculateTutors(
-      event.class.offeringGroupCode['groupCapacity']
-    );
+    // const requiredStaff = this.scheduleService.calculateTutors(
+    //   event.class.offeringGroupCode['groupCapacity']
+    // );
     const assignedStaff = event.class['staff']?.length;
-    return assignedStaff > requiredStaff;
+    return false;
   }
 
   filterStaff(searchTerm: string) {

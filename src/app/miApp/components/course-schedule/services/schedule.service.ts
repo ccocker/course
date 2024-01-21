@@ -226,7 +226,7 @@ export class ScheduleService {
     return slots;
   }
 
-  getStaff(): IPerson[] {
+  getStaff(): string {
     const staff: IPerson[] = [
       new Person({
         miId: 'E07581',
@@ -454,7 +454,7 @@ export class ScheduleService {
         ],
       }),
     ];
-    return staff;
+    return 'staff';
   }
   skills: ISkill[] = [
     {
@@ -480,12 +480,12 @@ export class ScheduleService {
   }
 
   private getTutorById(id: string): IPerson | null {
-    const allstaff: IPerson[] = this.getStaff();
-    for (const staff of allstaff) {
-      if (id === staff.miId) {
-        return staff;
-      }
-    }
+    // const allstaff: IPerson[] = this.getStaff();
+    // for (const staff of allstaff) {
+    //   if (id === staff.miId) {
+    //     return staff;
+    //   }
+    // }
     return null;
   }
 
@@ -545,67 +545,67 @@ export class ScheduleService {
   private getOfferingGroups(): IOfferingGroup[] {
     const group: IOfferingGroup[] = [
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 1,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[1],
+        leadName: this.getStaff()[1],
         group: 2,
         groupCapacity: 150,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 3,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[1],
+        leadName: this.getStaff()[1],
         group: 4,
         groupCapacity: 150,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 5,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[1],
+        leadName: this.getStaff()[1],
         group: 6,
         groupCapacity: 150,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 7,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 1,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 2,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 1,
         groupCapacity: 120,
         offeringCode: this.getOfferings()[0],
       },
       {
-        leadCode: this.getStaff()[0],
+        leadName: this.getStaff()[0],
         group: 2,
         groupCapacity: 60,
         offeringCode: this.getOfferings()[0],
@@ -614,11 +614,11 @@ export class ScheduleService {
     return group;
   }
 
-  private getTutors(): IPerson[] {
+  private getTutors(): any {
     const tutors: IPerson[] = [];
     const staffMembers = this.getStaff();
 
-    return staffMembers;
+    return null;
   }
 
   private getGroupClasses(): IGroupClasses[] {
@@ -628,7 +628,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07581']),
+        leadName: this.assignSpecificTutorsToClass(['E07581']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -641,7 +641,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07582']),
+        leadName: this.assignSpecificTutorsToClass(['E07582']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -655,7 +655,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[1],
         roomCode: this.getRooms()[2],
-        leadCode: this.assignSpecificTutorsToClass(['E07583']),
+        leadName: this.assignSpecificTutorsToClass(['E07583']),
         staffCodes: this.assignSpecificTutorsToClass(['E07600', 'E07601']),
         offeringGroupCode: this.getOfferingGroups()[10],
       },
@@ -664,7 +664,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07584']),
+        leadName: this.assignSpecificTutorsToClass(['E07584']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -677,7 +677,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07585']),
+        leadName: this.assignSpecificTutorsToClass(['E07585']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -691,7 +691,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07586']),
+        leadName: this.assignSpecificTutorsToClass(['E07586']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -704,7 +704,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07587']),
+        leadName: this.assignSpecificTutorsToClass(['E07587']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -718,7 +718,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07588']),
+        leadName: this.assignSpecificTutorsToClass(['E07588']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -731,7 +731,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07589']),
+        leadName: this.assignSpecificTutorsToClass(['E07589']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -745,7 +745,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[5],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07590']),
+        leadName: this.assignSpecificTutorsToClass(['E07590']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -758,7 +758,7 @@ export class ScheduleService {
         day: DayOfWeek.Monday,
         timeslot: this.getTimeSlots()[5],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07591']),
+        leadName: this.assignSpecificTutorsToClass(['E07591']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -771,7 +771,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07581']),
+        leadName: this.assignSpecificTutorsToClass(['E07581']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -784,7 +784,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07582']),
+        leadName: this.assignSpecificTutorsToClass(['E07582']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -798,7 +798,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07584']),
+        leadName: this.assignSpecificTutorsToClass(['E07584']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -811,7 +811,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07585']),
+        leadName: this.assignSpecificTutorsToClass(['E07585']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -825,7 +825,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07586']),
+        leadName: this.assignSpecificTutorsToClass(['E07586']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -838,7 +838,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07587']),
+        leadName: this.assignSpecificTutorsToClass(['E07587']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -852,7 +852,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07588']),
+        leadName: this.assignSpecificTutorsToClass(['E07588']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -865,7 +865,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07589']),
+        leadName: this.assignSpecificTutorsToClass(['E07589']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -879,7 +879,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[2],
-        leadCode: this.assignSpecificTutorsToClass(['E07583']),
+        leadName: this.assignSpecificTutorsToClass(['E07583']),
         staffCodes: this.assignSpecificTutorsToClass(['']),
         offeringGroupCode: this.getOfferingGroups()[10],
       },
@@ -888,7 +888,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[5],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07590']),
+        leadName: this.assignSpecificTutorsToClass(['E07590']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -901,7 +901,7 @@ export class ScheduleService {
         day: DayOfWeek.Tuesday,
         timeslot: this.getTimeSlots()[5],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07591']),
+        leadName: this.assignSpecificTutorsToClass(['E07591']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -914,7 +914,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07581']),
+        leadName: this.assignSpecificTutorsToClass(['E07581']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -927,7 +927,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07582']),
+        leadName: this.assignSpecificTutorsToClass(['E07582']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -941,7 +941,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07584']),
+        leadName: this.assignSpecificTutorsToClass(['E07584']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -954,7 +954,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07585']),
+        leadName: this.assignSpecificTutorsToClass(['E07585']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -968,7 +968,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07586']),
+        leadName: this.assignSpecificTutorsToClass(['E07586']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -981,7 +981,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07587']),
+        leadName: this.assignSpecificTutorsToClass(['E07587']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -995,7 +995,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07589']),
+        leadName: this.assignSpecificTutorsToClass(['E07589']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1008,7 +1008,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07590']),
+        leadName: this.assignSpecificTutorsToClass(['E07590']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1021,7 +1021,7 @@ export class ScheduleService {
         day: DayOfWeek.Wednesday,
         timeslot: this.getTimeSlots()[5],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07591']),
+        leadName: this.assignSpecificTutorsToClass(['E07591']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1034,7 +1034,7 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[1],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07583']),
+        leadName: this.assignSpecificTutorsToClass(['E07583']),
         staffCodes: this.assignSpecificTutorsToClass(['E07600']),
         offeringGroupCode: this.getOfferingGroups()[10],
       },
@@ -1043,7 +1043,7 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07589']),
+        leadName: this.assignSpecificTutorsToClass(['E07589']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1056,7 +1056,7 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07588']),
+        leadName: this.assignSpecificTutorsToClass(['E07588']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1069,7 +1069,7 @@ export class ScheduleService {
         day: DayOfWeek.Thursday,
         timeslot: this.getTimeSlots()[5],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07591']),
+        leadName: this.assignSpecificTutorsToClass(['E07591']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1082,7 +1082,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07581']),
+        leadName: this.assignSpecificTutorsToClass(['E07581']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1095,7 +1095,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07582']),
+        leadName: this.assignSpecificTutorsToClass(['E07582']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1109,7 +1109,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[0],
         roomCode: this.getRooms()[2],
-        leadCode: this.assignSpecificTutorsToClass(['E07583']),
+        leadName: this.assignSpecificTutorsToClass(['E07583']),
         staffCodes: this.assignSpecificTutorsToClass(['']),
         offeringGroupCode: this.getOfferingGroups()[10],
       },
@@ -1118,7 +1118,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07584']),
+        leadName: this.assignSpecificTutorsToClass(['E07584']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1131,7 +1131,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[2],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07585']),
+        leadName: this.assignSpecificTutorsToClass(['E07585']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1145,7 +1145,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07586']),
+        leadName: this.assignSpecificTutorsToClass(['E07586']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1158,7 +1158,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[3],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07587']),
+        leadName: this.assignSpecificTutorsToClass(['E07587']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1172,7 +1172,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[0],
-        leadCode: this.assignSpecificTutorsToClass(['E07590']),
+        leadName: this.assignSpecificTutorsToClass(['E07590']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1185,7 +1185,7 @@ export class ScheduleService {
         day: DayOfWeek.Friday,
         timeslot: this.getTimeSlots()[4],
         roomCode: this.getRooms()[1],
-        leadCode: this.assignSpecificTutorsToClass(['E07588']),
+        leadName: this.assignSpecificTutorsToClass(['E07588']),
         staffCodes: this.assignSpecificTutorsToClass([
           'E07600',
           'E07601',
@@ -1219,15 +1219,13 @@ export class ScheduleService {
     return this.scheduleData;
   }
 
-  private assignSpecificTutorsToClass(
-    specificStaffIds?: string[]
-  ): IPerson[] | null {
+  private assignSpecificTutorsToClass(specificStaffIds?: string[]): any {
     // If specific staff IDs are provided, use them to assign staff
-    if (specificStaffIds && specificStaffIds.length > 0) {
-      const allStaff = this.getStaff();
-      return allStaff.filter((staff) => specificStaffIds.includes(staff.miId));
-    }
-    return null;
+    // if (specificStaffIds && specificStaffIds.length > 0) {
+    //   const allStaff = this.getStaff();
+    //   return allStaff.filter((staff) => specificStaffIds.includes(staff.miId));
+    // }
+    return '';
   }
 
   public generateColorShades(): Record<string, Record<string, string>> {

@@ -40,7 +40,7 @@ export interface ICourse {
   description: string;
   teachingSkills: ISkill[];
   baseColour: string;
-  coordinator: IPerson;
+  coordinator: any;
 }
 
 export interface IOffering {
@@ -53,7 +53,7 @@ export interface IOffering {
 
 export interface IOfferingGroup {
   offeringCode: any;
-  leadCode: any;
+  leadName: string;
   group: number;
   groupCapacity: number;
 }
@@ -68,7 +68,7 @@ export interface IRoom {
 export interface IGroupClasses {
   offeringGroupCode: any;
   roomCode: any;
-  leadCode: any;
+  leadName: any;
   staffCodes: any[];
   classNumber: number;
   day: DayOfWeek;
