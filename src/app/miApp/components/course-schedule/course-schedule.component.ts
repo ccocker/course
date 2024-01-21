@@ -582,8 +582,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       classCode: classCode,
     };
 
-    console.log('Updated Preference Data:', preferenceData);
-
     // Dispatch the action with the updated preference data
     this.store.dispatch(
       tutorPreferencesActions.createTutorPreferences({
@@ -629,7 +627,6 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
       return course;
     });
 
-    console.log('Course Schedules:', this.events);
     this.firestoreDataService.uploadBulkData(
       'course-schedules',
       this.events,
@@ -656,25 +653,21 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
   };
 
   onPriorityChange(event: any, selectedPriority: string): void {
-    console.log('Clicked');
     // Show an alert dialog with the selected priority and event details
     alert(
       `Selected priority for event '${event.description}': ${selectedPriority}`
     );
 
     // You can still keep the console.log if you want to log this information as well
-    console.log('Selected priority for event:', event, selectedPriority);
+
     // Additional logic to handle the change can go here
   }
 
   onEventEdit(eventData: any): void {
-    console.log('Event edit:', eventData);
     this.selectedEvent = eventData;
   }
 
   onFormSubmit(updatedEventData: any): void {
-    console.log(updatedEventData);
-
     // Find the index of the event in the array
     const index = this.events.findIndex(
       (event) => event.id === updatedEventData.id

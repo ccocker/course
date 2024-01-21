@@ -157,7 +157,6 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   deleteEntity(id: string, event: Event): void {
-    console.log('delete entity', id, event);
     event.stopPropagation(); // Prevent row click event from triggering navigation to details view
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '80vw', // 80% of viewport width
@@ -210,7 +209,6 @@ export class EntityListComponent implements OnInit, OnDestroy {
   }
 
   deleteAll() {
-    console.log('delete all', this.model.collectionName);
     this.firestoreDataService.deleteAllRecords(this.model.collectionName);
   }
 

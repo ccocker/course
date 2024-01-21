@@ -128,6 +128,7 @@ export class FirestoreDataService {
       throw new Error('Data contains undefined properties');
     }
     const docRef = doc(this.firestore, collectionPath, entity.id);
+
     return from(updateDoc(docRef, entity));
   }
 

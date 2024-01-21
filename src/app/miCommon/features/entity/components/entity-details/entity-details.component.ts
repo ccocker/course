@@ -145,6 +145,7 @@ export class EntityDetailsComponent implements OnInit {
     if (updatedEntity.id === 'new') {
       const newId = this.entityService.getNewFirestoreId();
       updatedEntity.id = newId;
+
       this.addNewEntity(updatedEntity);
     }
 

@@ -52,8 +52,9 @@ export class Offeringgroup extends BaseModel implements IOfferingGroup {
     this.formProperties = [
       'id',
       'offeringCode',
-      'leadName',
       'group',
+      'leadName',
+
       'groupCapacity',
     ];
   }

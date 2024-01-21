@@ -32,7 +32,6 @@ export class ModelFactory {
   }
 
   async createModel(route: string): Promise<any> {
-    debugger;
     let modelName = this.getModelNameFromRoute(route);
 
     let modelFileName = modelName.toLowerCase() + '.model.ts';
@@ -43,7 +42,6 @@ export class ModelFactory {
       return new ModelClass();
     } catch (error) {
       try {
-        console.log(modelFileName);
         const sharedModelModule = await import(
           `../../miShared/models/${modelFileName}`
         );

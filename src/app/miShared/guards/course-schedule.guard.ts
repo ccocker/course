@@ -56,7 +56,6 @@ export class CourseScheduleGuard implements CanActivate {
           requiredPermission
         );
         if (!isAuthorized) {
-          console.log('User is not authorized to perform this action');
           this.router.navigate(['/unauthorized']);
         }
         return isAuthorized;

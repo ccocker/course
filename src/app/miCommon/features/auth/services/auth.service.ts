@@ -13,7 +13,6 @@ export class AuthService implements IAuthService {
   private loginStatus = new BehaviorSubject<boolean>(false);
 
   public checkIfUserExists(email: string): Promise<boolean> {
-    console.log('Mock Authentication Service');
     return Promise.resolve(true);
   }
 

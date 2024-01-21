@@ -51,8 +51,6 @@ export class DynamicFormComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit(): void {
-    console.log('formGroupData', this.formGroupData);
-    console.log('formConfiguration', this.formConfiguration);
     this.formGroup = this.createFormGroup(this.formConfiguration);
   }
 

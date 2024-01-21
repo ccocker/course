@@ -11,7 +11,6 @@ export class AuthMockService implements IAuthService {
   constructor() {}
 
   public checkIfUserExists(email: string): Promise<boolean> {
-    console.log('Mock Authentication Service');
     return Promise.resolve(true);
   }
 

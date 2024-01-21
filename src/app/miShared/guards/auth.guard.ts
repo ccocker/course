@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate {
       filter((currentUser) => currentUser !== undefined),
       take(1),
       map((currentUser) => {
-        console.log('Auth Guard currentUser', currentUser);
         if (!currentUser) {
           // Redirect if no user is present
           this.router.navigate(['/home']);
