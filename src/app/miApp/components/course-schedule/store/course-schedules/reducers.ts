@@ -1,16 +1,16 @@
-import { routerNavigationAction } from '@ngrx/router-store';
-import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { CourseScheduleStateInterface } from '../../interfaces/courseScheduleState.interface';
-import { courseScheduleActions } from './actions';
+import { routerNavigationAction } from '@ngrx/router-store'
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
+import { CourseScheduleStateInterface } from '../../interfaces/courseScheduleState.interface'
+import { courseScheduleActions } from './actions'
 
 const initialState: CourseScheduleStateInterface = {
   isLoading: false,
   error: null,
   data: null,
-};
+}
 
 const courseScheduleFeature = createFeature({
-  name: 'course-schedules',
+  name: 'courseschedules',
   reducer: createReducer(
     initialState,
 
@@ -37,7 +37,7 @@ const courseScheduleFeature = createFeature({
       ...state,
       isLoading: false,
       data: state.data.map((cs) =>
-        cs.id === action.courseSchedule.id ? action.courseSchedule : cs
+        cs.id === action.courseSchedule.id ? action.courseSchedule : cs,
       ),
     })),
     on(courseScheduleActions.updateCourseScheduleFailure, (state, action) => ({
@@ -60,9 +60,9 @@ const courseScheduleFeature = createFeature({
       isLoading: false,
     })),
 
-    on(routerNavigationAction, () => initialState)
+    on(routerNavigationAction, () => initialState),
   ),
-});
+})
 
 export const {
   name: courseScheduleFeatureKey,
@@ -70,18 +70,23 @@ export const {
   selectIsLoading,
   selectError,
   selectData: selectEntityData,
-} = courseScheduleFeature;
+} = courseScheduleFeature
 
 export const selectEntityState = (state: Record<string, any>) =>
-  state[courseScheduleFeatureKey];
+  state[courseScheduleFeatureKey]
+
+export const selectCourseSchedule = createSelector(
+  selectEntityState,
+  (state: CourseScheduleStateInterface) => state?.data,
+)
 
 export const selectEntities = createSelector(
   selectEntityState,
-  (state: CourseScheduleStateInterface) => state?.data
-);
+  (state: CourseScheduleStateInterface) => state?.data,
+)
 
 // Assuming you have a selector to get all entities
 export const selectEntityById = createSelector(
   selectEntities,
-  (entities, props) => entities.find((entity) => entity.id === props.id)
-);
+  (entities, props) => entities.find((entity) => entity.id === props.id),
+)
