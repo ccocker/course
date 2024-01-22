@@ -1,33 +1,75 @@
 <div>
-  <h1>Allocations</h1>
-  <mat-form-field appearance="fill">
-    <mat-label>Filter</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Filter Allocations"
-    />
-  </mat-form-field>
-  <table mat-table [dataSource]="dataSource" matSort>
-    <!-- UserID Column -->
-    <ng-container matColumnDef="userId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>User ID</th>
-      <td mat-cell *matCellDef="let allocation">{{ allocation.userId }}</td>
-    </ng-container>
+  <mat-accordion multi="true">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Allocations </mat-panel-title>
+      </mat-expansion-panel-header>
 
-    <!-- ClassCode Column -->
-    <ng-container matColumnDef="classCode">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Class Code</th>
-      <td mat-cell *matCellDef="let allocation">{{ allocation.classCode }}</td>
-    </ng-container>
+      <div>
+        <h1>Allocations</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Filter Allocations"
+          />
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User ID</th>
+            <td mat-cell *matCellDef="let allocation">
+              {{ allocation.userId }}
+            </td>
+          </ng-container>
 
-    <!-- Priority Column -->
-    <ng-container matColumnDef="priority">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
-      <td mat-cell *matCellDef="let allocation">{{ allocation.priority }}</td>
-    </ng-container>
+          <ng-container matColumnDef="classCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Class Code
+            </th>
+            <td mat-cell *matCellDef="let allocation">
+              {{ allocation.classCode }}
+            </td>
+          </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+          <ng-container matColumnDef="priority">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+            <td mat-cell *matCellDef="let allocation">
+              {{ allocation.priority }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Updated Course Schedules </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div>
+        <table mat-table [dataSource]="dataSource1" matSort>
+          <ng-container matColumnDef="classCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let allocation">
+              {{ allocation.classCode }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="tutors">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tutors</th>
+            <td mat-cell *matCellDef="let allocation">
+              {{ allocation.tutors }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+        </table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

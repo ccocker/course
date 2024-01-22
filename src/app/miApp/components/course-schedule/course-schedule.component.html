@@ -21,6 +21,11 @@
         <div class="lead">
           {{ event?.leadName }}
         </div>
+
+        <div class="tutor">
+          <div>Tutors</div>
+          <div *ngFor="let tutor of event?.tutors">{{ tutor }}</div>
+        </div>
       </div>
 
       <div class="event-radio-buttons">
