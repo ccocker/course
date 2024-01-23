@@ -14,6 +14,7 @@ import { selectEntities } from '../course-schedule/store/course-schedules/reduce
 import { entityActions as peopleActions } from '@miCommon/features/entity/store/actions';
 import { selectEntities as selectPeopleEntities } from '@miCommon/features/entity/store/reducers';
 import { MatExpansionModule } from '@angular/material/expansion'; // Import for expansion module
+import { FirestoreDataService } from '@src/src/app/miCommon/services/firestore.data';
 
 @Component({
   selector: 'mi-course-schedule-allocations',
@@ -43,7 +44,8 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
 
   constructor(
     private store: Store,
-    private allocationsService: AllocationService
+    private allocationsService: AllocationService,
+    private firestoreDataService: FirestoreDataService
   ) {}
 
   ngOnInit() {
@@ -125,6 +127,8 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
 
     // Log updated course schedules if needed
     console.log('Updated Course Schedules: ', updatedCourseSchedules);
+    this.bulkUpload(updatedCourseSchedules);
+
     const simplifiedCourseSchedules = updatedCourseSchedules.map(
       (schedule) => ({
         classCode: schedule.id,
@@ -136,6 +140,10 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
 
     this.dataSource1 = new MatTableDataSource(simplifiedCourseSchedules);
     return updatedCourseSchedules; // Return the new array
+  }
+
+  bulkUpload(data: any) {
+    this.firestoreDataService.uploadBulkData('course-schedules', data, true);
   }
 
   ngOnDestroy() {
