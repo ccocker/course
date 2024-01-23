@@ -717,13 +717,11 @@ export class AllocationService {
   ): Allocation[] {
     let allocations: Allocation[] = this.getPreAllocations() // Get pre-allocations
 
-    this.reportTimeConflicts(allocations, scheduledClasses)
-
-    let remainingPreferences = [...preferences]
+    let tutorAllocationCount: Map<string, number> = new Map() // Track number of allocations per tutor
     let tutorClassTimes: Map<string, ScheduledClass[]> = new Map()
     let classTutorCount: Map<string, number> = new Map() // Track number of tutors per class
 
-    // Incorporate pre-allocated classes into tutorClassTimes
+    // Update tutor allocation count for pre-allocations and incorporate into tutorClassTimes
     for (const alloc of allocations) {
       const classInfo = scheduledClasses.find((sc) => sc.id === alloc.classCode)
       if (classInfo) {
@@ -732,33 +730,33 @@ export class AllocationService {
         }
         tutorClassTimes.get(alloc.userId)!.push(classInfo)
 
-        // Update class tutor count for pre-allocations
-        classTutorCount.set(
-          alloc.classCode,
-          (classTutorCount.get(alloc.classCode) || 0) + 1,
+        tutorAllocationCount.set(
+          alloc.userId,
+          (tutorAllocationCount.get(alloc.userId) || 0) + 1,
         )
       }
     }
 
+    let remainingPreferences = [...preferences]
     while (remainingPreferences.length > 0) {
       let tutorsAllocatedThisRound: Set<string> = new Set()
-      let nextRoundPreferences: Preference[] = [] // Preferences for the next round
+      let nextRoundPreferences: Preference[] = []
 
       for (const pref of remainingPreferences) {
         const classToAllocate = scheduledClasses.find(
           (sc) => sc.id === pref.classCode,
         )
 
-        // Check if the tutor has already been allocated this class
+        // Skip if this preference is already allocated
         if (
           allocations.some(
             (a) => a.userId === pref.userId && a.classCode === pref.classCode,
           )
         ) {
-          continue // Skip if this preference is already allocated
+          continue
         }
 
-        // Check for time conflict, tutor allocation this round, and class tutor count limit
+        // Allocation checks
         if (
           classToAllocate &&
           !tutorsAllocatedThisRound.has(pref.userId) &&
@@ -775,18 +773,17 @@ export class AllocationService {
           })
 
           tutorsAllocatedThisRound.add(pref.userId)
+          tutorClassTimes.get(pref.userId)!.push(classToAllocate)
+          tutorAllocationCount.set(
+            pref.userId,
+            (tutorAllocationCount.get(pref.userId) || 0) + 1,
+          )
           classTutorCount.set(
             pref.classCode,
             (classTutorCount.get(pref.classCode) || 0) + 1,
           )
-
-          // Update tutor's class times
-          if (!tutorClassTimes.has(pref.userId)) {
-            tutorClassTimes.set(pref.userId, [])
-          }
-          tutorClassTimes.get(pref.userId)!.push(classToAllocate)
         } else {
-          // Check if it's possible for this preference to be allocated in the future
+          // Future allocation possibility check
           if (
             !this.hasTimeConflict(
               classToAllocate,
@@ -798,14 +795,22 @@ export class AllocationService {
         }
       }
 
-      // If no new allocations were made and no preferences are carried over, break the loop
       if (nextRoundPreferences.length === remainingPreferences.length) {
         break
       }
-
-      // Prepare for the next round
       remainingPreferences = nextRoundPreferences
     }
+
+    // Convert tutorAllocationCount to an array
+    let tutorAllocationArray = Array.from(
+      tutorAllocationCount,
+      ([userId, numberOfClasses]) => {
+        // Calculate hours based on the provided formula
+        let hours = numberOfClasses * 2 + numberOfClasses * 0.66
+        return { userId, numberOfClasses, hours }
+      },
+    )
+    console.log('Tutor count', tutorAllocationArray)
 
     return allocations
   }
