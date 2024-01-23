@@ -126,7 +126,11 @@ export class CourseScheduleComponent implements OnInit, OnDestroy {
         '-' +
         event['classNumber'] +
         '-' +
-        event['roomCode'];
+        event['roomCode'] +
+        '-' +
+        event['leadName'] +
+        '-' +
+        event['tutors'];
     });
 
     this.collection = 'course-schedules';

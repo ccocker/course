@@ -143,6 +143,20 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
   }
 
   bulkUpload(data: any) {
+    data.forEach((data) => {
+      data.description =
+        data['offeringGroupCode'] +
+        '-' +
+        data['groupNumber'] +
+        '-' +
+        data['classNumber'] +
+        '-' +
+        data['roomCode'] +
+        '-' +
+        data['leadName'] +
+        '-' +
+        data['tutors'];
+    });
     this.firestoreDataService.uploadBulkData('course-schedules', data, true);
   }
 
