@@ -22,7 +22,13 @@
           {{ event?.leadName }}
         </div>
 
-        <div class="tutor">
+        <div
+          class="tutor"
+          *ngIf="
+            currentUser.email === 'rodney.cocker@gmail.com' ||
+            currentUser.email === 'craig.cocker@gmail.com'
+          "
+        >
           <div>Tutors</div>
           <div *ngFor="let tutor of event?.tutors">{{ tutor }}</div>
         </div>
