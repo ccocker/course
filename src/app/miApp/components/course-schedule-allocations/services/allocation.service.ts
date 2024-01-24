@@ -56,7 +56,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'man.hou@rmit.edu.au',
+        userId: 's3465651@student.rmit.edu.au',
         classCode: 'WBC-G1-2',
         priority: 'H',
       },
@@ -66,7 +66,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 's3465651@student.rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'WBC-G1-2',
         priority: 'H',
       },
@@ -76,12 +76,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 's3465651@student.rmit.edu.au',
+        userId: 'man.hou@rmit.edu.au',
         classCode: 'WBC-G1-3',
         priority: 'H',
       },
       {
-        userId: 'ghazia.qaiser@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'WBC-G1-3',
         priority: 'H',
       },
@@ -91,7 +91,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'ghazia.qaiser@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'WBC-G1-4',
         priority: 'H',
       },
@@ -111,7 +111,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'ghazia.qaiser@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'WBC-G2-3',
         priority: 'H',
       },
@@ -131,7 +131,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'shua0043@gmail.com',
+        userId: 'mailtojyotikundu@gmail.com',
         classCode: 'BC1-G1-1',
         priority: 'H',
       },
@@ -146,7 +146,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'hiruni.kegalle@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G1-2',
         priority: 'H',
       },
@@ -171,7 +171,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'renan.guarese@rmit.edu.au',
+        userId: 'milindi.kodikara2@rmit.edu.au',
         classCode: 'BC1-G1-4',
         priority: 'H',
       },
@@ -191,7 +191,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'ghazia.qaiser@rmit.edu.au',
+        userId: 'milindi.kodikara2@rmit.edu.au',
         classCode: 'BC1-G2-1',
         priority: 'H',
       },
@@ -221,7 +221,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'renan.guarese@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G2-3',
         priority: 'H',
       },
@@ -241,7 +241,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'robert.mcquillan@rmit.edu.au',
+        userId: 'milindi.kodikara2@rmit.edu.au',
         classCode: 'BC1-G3-1',
         priority: 'H',
       },
@@ -251,7 +251,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'mailtojyotikundu@gmail.com',
+        userId: 'sohamm973@gmail.com',
         classCode: 'BC1-G3-1',
         priority: 'H',
       },
@@ -261,7 +261,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'renan.guarese@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G3-2',
         priority: 'H',
       },
@@ -286,12 +286,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 's379180@student.rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G3-4',
         priority: 'H',
       },
       {
-        userId: 'yiwei.zhong@rmit.edu.au',
+        userId: 'chaminda.bulumulla2@rmit.edu.au',
         classCode: 'BC1-G3-4',
         priority: 'H',
       },
@@ -371,7 +371,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'waqaralikhan_aus@hotmail.com',
+        userId: 'yiwei.zhong@rmit.edu.au',
         classCode: 'BC1-G5-1',
         priority: 'H',
       },
@@ -386,12 +386,22 @@ export class AllocationService {
         priority: 'H',
       },
       {
+        userId: 'yujin.jinx.huang@rmit.edu',
+        classCode: 'BC1-G5-2',
+        priority: 'H',
+      },
+      {
         userId: 'shay.zheng@rmit.edu.au',
         classCode: 'BC1-G5-3',
         priority: 'H',
       },
       {
         userId: 'yediya.juan@rmit.edu.au',
+        classCode: 'BC1-G5-3',
+        priority: 'H',
+      },
+      {
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G5-3',
         priority: 'H',
       },
@@ -406,7 +416,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'man.hou@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G5-4',
         priority: 'H',
       },
@@ -421,6 +431,11 @@ export class AllocationService {
         priority: 'H',
       },
       {
+        userId: 'man.hou@rmit.edu.au',
+        classCode: 'BC1-G6-1',
+        priority: 'H',
+      },
+      {
         userId: 'chaminda.bulumulla2@rmit.edu.au',
         classCode: 'BC1-G6-2',
         priority: 'H',
@@ -431,7 +446,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'mailtojyotikundu@gmail.com',
+        userId: '**********',
         classCode: 'BC1-G6-2',
         priority: 'H',
       },
@@ -456,17 +471,17 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.tedjopurnomo2@rmit.edu.au',
+        userId: 'milindi.kodikara2@rmit.edu.au',
         classCode: 'BC1-G6-4',
         priority: 'H',
       },
       {
-        userId: 'shay.zheng@rmit.edu.au',
+        userId: 'renan.guarese@rmit.edu.au',
         classCode: 'BC1-G6-4',
         priority: 'H',
       },
       {
-        userId: 'dipto.pratyaksa@rmit.edu.au',
+        userId: 'amina.hossain@rmit.edu.au',
         classCode: 'BC1-G7-1',
         priority: 'H',
       },
@@ -501,7 +516,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'renan.guarese@rmit.edu.au',
+        userId: 'silva.weiye@gmail.com',
         classCode: 'BC1-G7-3',
         priority: 'H',
       },
@@ -516,12 +531,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'hiruni.kegalle@rmit.edu.au',
+        userId: 'milindi.kodikara2@rmit.edu.au',
         classCode: 'BC1-G7-4',
         priority: 'H',
       },
       {
-        userId: 'shua0043@gmail.com',
+        userId: 'renan.guarese@rmit.edu.au',
         classCode: 'BC1-G7-4',
         priority: 'H',
       },
@@ -536,7 +551,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'sohamm973@gmail.com',
+        userId: 'mailtojyotikundu@gmail.com',
         classCode: 'BC2-G1-1',
         priority: 'H',
       },
@@ -546,12 +561,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.tedjopurnomo2@rmit.edu.au',
+        userId: 'md.palash.uddin@rmit.edu.au',
         classCode: 'BC2-G1-2',
         priority: 'H',
       },
       {
-        userId: 'shay.zheng@rmit.edu.au',
+        userId: 'sheryl.hanna.mantik@rmit.edu.au',
         classCode: 'BC2-G1-2',
         priority: 'H',
       },
@@ -566,7 +581,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'chaminda.bulumulla2@rmit.edu.au',
+        userId: 'mailtojyotikundu@gmail.com',
         classCode: 'BC2-G1-3',
         priority: 'H',
       },
@@ -721,7 +736,7 @@ export class AllocationService {
     let tutorClassTimes: Map<string, ScheduledClass[]> = new Map()
     let classTutorCount: Map<string, number> = new Map() // Track number of tutors per class
 
-    // Update tutor allocation count for pre-allocations and incorporate into tutorClassTimes
+    // Update tutor allocation count and class tutor count for pre-allocations
     for (const alloc of allocations) {
       const classInfo = scheduledClasses.find((sc) => sc.id === alloc.classCode)
       if (classInfo) {
@@ -733,6 +748,12 @@ export class AllocationService {
         tutorAllocationCount.set(
           alloc.userId,
           (tutorAllocationCount.get(alloc.userId) || 0) + 1,
+        )
+
+        // Update the tutor count for the class in pre-allocations
+        classTutorCount.set(
+          alloc.classCode,
+          (classTutorCount.get(alloc.classCode) || 0) + 1,
         )
       }
     }
@@ -747,7 +768,6 @@ export class AllocationService {
           (sc) => sc.id === pref.classCode,
         )
 
-        // Skip if this preference is already allocated
         if (
           allocations.some(
             (a) => a.userId === pref.userId && a.classCode === pref.classCode,
@@ -756,7 +776,6 @@ export class AllocationService {
           continue
         }
 
-        // Allocation checks
         if (
           classToAllocate &&
           !tutorsAllocatedThisRound.has(pref.userId) &&
@@ -783,7 +802,6 @@ export class AllocationService {
             (classTutorCount.get(pref.classCode) || 0) + 1,
           )
         } else {
-          // Future allocation possibility check
           if (
             !this.hasTimeConflict(
               classToAllocate,
@@ -798,23 +816,22 @@ export class AllocationService {
       if (nextRoundPreferences.length === remainingPreferences.length) {
         break
       }
+
       remainingPreferences = nextRoundPreferences
     }
 
-    // Convert tutorAllocationCount to an array
     let tutorAllocationArray = Array.from(
       tutorAllocationCount,
       ([userId, numberOfClasses]) => {
-        // Calculate hours based on the provided formula
         let hours = numberOfClasses * 2 + numberOfClasses * 0.66
         return { userId, numberOfClasses, hours }
       },
     )
+    this.reportTimeConflicts(allocations, scheduledClasses)
     console.log('Tutor count', tutorAllocationArray)
 
     return allocations
   }
-
   /*
 public allocateClasses(
     preferences: Preference[],
