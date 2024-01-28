@@ -1,0 +1,30 @@
+.event-details {
+  font-size: 10px;
+}
+.event-radio-buttons {
+  display: flex;
+  justify-content: center; // Centers the radio buttons horizontally
+  align-items: center; // Aligns items vertically in the center
+  flex-wrap: wrap; // Allows items to wrap onto the next line if needed
+
+  label {
+    display: flex;
+    flex-direction: column; // Stacks radio button and label vertically
+    align-items: center; // Centers the label under the radio button
+    margin-right: 5px; // Adds some space between each radio button group
+    font-size: 10px;
+
+    &:last-child {
+      margin-right: 0; // Removes margin from the last radio button group
+    }
+
+    input[type="radio"] {
+      margin-bottom: 5px; // Space between radio button and label
+      transform: scale(0.5); // Adjust the size of radio button if needed
+    }
+  }
+}
+
+.lead {
+  font-weight: bold;
+}
