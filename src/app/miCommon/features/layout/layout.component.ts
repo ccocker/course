@@ -90,7 +90,10 @@ export class LayoutComponent implements OnInit {
       } else {
         // Set a default menu for other users
         this.miAppConfig.sidenavMenuItems = [
-          { title: 'Course Schedule', link: 'auth/course-schedule-tutors' },
+          {
+            title: 'Course Schedule - Tutors',
+            link: 'auth/course-schedule-tutors',
+          },
           // You can add more default menu items here
         ];
       }
