@@ -51,10 +51,14 @@ export class LayoutComponent implements OnInit {
         (currentUser.email === 'craig.cocker@gmail.com' ||
           currentUser.email === 'rodney.cocker@gmail.com')
       ) {
-        // Keep the original menu items
+        // Keep the original menu items for Craig and Rodney
         this.miAppConfig.sidenavMenuItems = [
           { title: 'Dashboard', link: 'auth/Dashboard' },
           { title: 'Course Schedule', link: 'auth/course-schedule' },
+          {
+            title: 'Course Schedule Tutors',
+            link: 'auth/course-schedule-tutors',
+          },
           {
             title: 'Course Schedule Allocations',
             link: 'auth/course-schedule-allocations',
@@ -73,10 +77,21 @@ export class LayoutComponent implements OnInit {
             link: 'auth/people',
           },
         ];
-      } else {
-        // Set new menu items
+      } else if (
+        currentUser &&
+        currentUser.email === 'edouard.amouroux@rmit.edu.au'
+      ) {
+        // Set a different set of menu items specifically for Henry
         this.miAppConfig.sidenavMenuItems = [
+          // Define the menu items that Henry should see
           { title: 'Course Schedule', link: 'auth/course-schedule' },
+          // Add more menu items as needed
+        ];
+      } else {
+        // Set a default menu for other users
+        this.miAppConfig.sidenavMenuItems = [
+          { title: 'Course Schedule', link: 'auth/course-schedule-tutors' },
+          // You can add more default menu items here
         ];
       }
     });

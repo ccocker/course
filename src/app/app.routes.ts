@@ -20,6 +20,13 @@ export const routes: Route[] = [
           ).then((r) => r.routes),
       },
       {
+        path: 'course-schedule-tutors',
+        loadChildren: () =>
+          import(
+            '@miApp/components/course-schedule-tutors/course-schedule-tutors.routes'
+          ).then((r) => r.routes),
+      },
+      {
         path: 'course-schedule-allocations',
         loadChildren: () =>
           import(

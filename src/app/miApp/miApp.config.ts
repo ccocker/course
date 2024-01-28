@@ -33,6 +33,7 @@ export const miAppConfig: MiAppConfig = {
   showAppTitle: false,
   defaultLandingPages: {
     admin: 'auth/dashboard',
-    user: 'auth/course-schedule',
+    userAdmin: 'auth/course-schedule',
+    user: 'auth/course-schedule-tutors',
   },
 };

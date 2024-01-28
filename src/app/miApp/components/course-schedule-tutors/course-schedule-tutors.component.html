@@ -1,0 +1,47 @@
+<div *ngIf="!selectedEvent && events$ | async as data; else loadingTemplate">
+  <h1>Course Allocations are Currently in DRAFT</h1>
+  <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
+  <mi-calendar
+    [showDescription]="false"
+    [showDateNavigator]="true"
+    [showCalendarControls]="false"
+    [events]="data"
+    [currentUser]="currentUser"
+    [startDate]="customStartDate"
+    [startTime]="'08:00'"
+    [scrollToCurrentTime]="false"
+    (eventDoubleClick)="onEventEdit($event)"
+  >
+    <ng-template let-event>
+      <div class="event-details">
+        {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
+
+        {{ event?.classNumber }}
+        <div>
+          {{ event?.roomCode }}
+        </div>
+        <br />
+        <div class="lead">
+          {{ event?.leadName }}
+        </div>
+
+        <div class="tutor">
+          <div>Tutors</div>
+
+          <div *ngFor="let tutor of event?.tutors">
+            <div *ngIf="currentUser.displayName === tutor">{{ tutor }}</div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </mi-calendar>
+</div>
+<mi-dynamic-form
+  *ngIf="selectedEvent"
+  [formConfiguration]="selectedEvent.formConfiguration"
+  [formGroupData]="selectedEvent"
+  (formSubmit)="onFormSubmit($event)"
+></mi-dynamic-form>
+<ng-template #loadingTemplate>
+  <mi-loading></mi-loading>
+</ng-template>

@@ -70,6 +70,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @Input() startTime: string = '00:00';
   @Input() scrollToCurrentTime: boolean = true;
   @Input() timezone: string;
+  @Input() currentUser: any;
+  @Input() showCalendarControls: boolean = true;
 
   @Output() eventDoubleClick = new EventEmitter<any>();
 
@@ -91,6 +93,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.initializeWeek();
     this.initializeTimeslots();
     this.filteredEvents = this.events.slice();
+    console.log('currentUser', this.currentUser);
+    this.filterEvents(this.currentUser?.displayName);
   }
 
   ngAfterViewInit() {

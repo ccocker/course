@@ -90,13 +90,10 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
   }
 
   updateCourseSchedules(allocations, courseSchedules, people) {
-    console.log('Allocations: ', allocations);
-
     // Create a map for quick access to people's details by email
     const peopleMap = new Map(
       people.map((person) => [person.userDetail.userEmail, person])
     );
-    console.log('People Map: ', peopleMap);
 
     // Create a new array with updated course schedules
     const updatedCourseSchedules = courseSchedules.map((schedule) => {
@@ -114,7 +111,6 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
             const tutorName = `${tutor['firstName']} ${tutor['lastName']}`;
             tutorSet.add(tutorName);
           } else {
-            // console.log(`No tutor found for userId: ${a.userId}`);
           }
         }
       });
@@ -126,7 +122,7 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
     });
 
     // Log updated course schedules if needed
-    console.log('Updated Course Schedules: ', updatedCourseSchedules);
+
     this.bulkUpload(updatedCourseSchedules);
 
     const simplifiedCourseSchedules = updatedCourseSchedules.map(
@@ -135,8 +131,6 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
         tutors: schedule.tutors,
       })
     );
-
-    console.log('Simplified Course Schedules: ', simplifiedCourseSchedules);
 
     this.dataSource1 = new MatTableDataSource(simplifiedCourseSchedules);
     return updatedCourseSchedules; // Return the new array

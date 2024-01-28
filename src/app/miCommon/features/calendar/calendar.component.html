@@ -1,4 +1,4 @@
-<mat-toolbar class="calendar-toolbar">
+<mat-toolbar class="calendar-toolbar" *ngIf="showCalendarControls">
   <ng-container *ngIf="showDateNavigator">
     <button mat-icon-button (click)="goToToday()">
       <mat-icon>today</mat-icon>
