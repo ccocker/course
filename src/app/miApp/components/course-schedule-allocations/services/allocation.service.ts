@@ -101,7 +101,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'yiwei.zhong@rmit.edu.au',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'WBC-G2-1',
         priority: 'H',
       },
@@ -276,7 +276,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'trevor.reynolds@rmit.edu.au',
+        userId: 'david.tedjopurnomo2@rmit.edu.au',
         classCode: 'BC1-G3-3',
         priority: 'H',
       },
@@ -446,12 +446,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: '**********',
+        userId: 'david.tedjopurnomo2@rmit.edu.au',
         classCode: 'BC1-G6-2',
         priority: 'H',
       },
       {
-        userId: 'david.tedjopurnomo2@rmit.edu.au',
+        userId: 'trevor.reynolds@rmit.edu.au',
         classCode: 'BC1-G6-3',
         priority: 'H',
       },
