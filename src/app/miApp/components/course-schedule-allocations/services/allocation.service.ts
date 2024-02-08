@@ -236,7 +236,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'shua0043@gmail.com',
         classCode: 'BC1-G2-3',
         priority: 'H',
       },
