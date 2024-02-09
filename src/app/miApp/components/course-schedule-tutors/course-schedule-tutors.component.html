@@ -1,6 +1,6 @@
 <div *ngIf="!selectedEvent && events$ | async as data; else loadingTemplate">
   <h1>Course Allocations are Currently in DRAFT</h1>
-  <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
+  <button (click)="bulkUpload()">Bulk Upload</button>
   <mi-calendar
     [showDescription]="false"
     [showDateNavigator]="true"

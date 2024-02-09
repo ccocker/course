@@ -1,5 +1,5 @@
 <div *ngIf="!selectedEvent && events$ | async as data; else loadingTemplate">
-  <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
+  <button (click)="bulkUpload()">Bulk Upload</button>
   <mi-calendar
     [showDescription]="false"
     [showDateNavigator]="true"
@@ -10,7 +10,12 @@
     (eventDoubleClick)="onEventEdit($event)"
   >
     <ng-template let-event>
-      <div class="event-details">
+      <div
+        class="event-details"
+        [ngClass]="{
+          needStaff: event?.tutors?.includes('David Leon')
+        }"
+      >
         {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
 
         {{ event?.classNumber }}

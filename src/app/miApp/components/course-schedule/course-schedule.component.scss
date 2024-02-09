@@ -18,7 +18,7 @@
       margin-right: 0; // Removes margin from the last radio button group
     }
 
-    input[type="radio"] {
+    input[type='radio'] {
       margin-bottom: 5px; // Space between radio button and label
       transform: scale(0.5); // Adjust the size of radio button if needed
     }
@@ -27,4 +27,9 @@
 
 .lead {
   font-weight: bold;
+}
+
+.needStaff {
+  background-color: #000;
+  color: #fff;
 }
