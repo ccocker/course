@@ -20,7 +20,7 @@ id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active,notes
 19,Sheryl,Mantik,sheryl.mantik@gmail.com,sheryl.hanna.mantik@rmit.edu.au,0421 999 227,Bachelor Hons,E115886,tutor,FALSE,""
 20,Rodney,Cocker,rodney.cocker@gmail.com,rodneyian.cocker@rmit.edu.au,N/A,Masters,E07582,tutor,TRUE,""
 21,Timothy,Wiley,unknown,timothy.wiley@rmit.edu.au,N/A,Doctorate,unknown,tutor,TRUE,""
-22,Edouard,Amouroux,unknown,edouard.amouroux4@rmit.edu.au,N/A,N/A,unknown,tutor,TRUE,""
+22,Edouard,Amouroux,unknown,edouard.amouroux4@rmit.edu.au,N/A,N/A,E105504,tutor,TRUE,""
 23,Halil,Ali,unknown,halil.ali@rmit.edu.au,N/A,Doctorate,unknown,tutor,TRUE,""
 24,Chaminda,Bulumulla,chamindabulumulla@gmail.com,chaminda.bulumulla2@rmit.edu.au,0412 241 265,Doctorate,E117424,tutor,TRUE,""
 25,Saidur,Rahman,unknown,mohammadsaidur.rahman@rmit.edu.au,unknown,unknown,E025766,tutor,FALSE,""
@@ -44,7 +44,7 @@ id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active,notes
 43,Prabath,Abeysekara,prabathabeysekara@gmail.com,prabath.abeysekara@rmit.edu.au,0456 417 865,Phd,E089443,tutor,TRUE,""
 44,Trevor,Reynolds,unknown,trevor.reynolds@rmit.edu.au,unknown,unknown,E054061,tutor,TRUE,""
 45,Muhammad,Qadeer,unknown,hassan.qadeer@rmit.edu.au,0475 906 401,masters,unknown,tutor,FALSE,""
-46,Moshin,Ali,mohsinali@swin.edu.au,mohsin.ali@rmit.edu.au,0488 721 977,Masters,E124058,tutor,TRUE,""
+46,Mohsin,Ali,mohsinali@swin.edu.au,mohsin.ali@rmit.edu.au,0488 721 977,Masters,E124058,tutor,TRUE,""
 47,Shilpa,Patel,shilpa.patel8895@gmail.com,unknown,0468 303 503,Bachelor,unknown,tutor,FALSE,""
 48,Vu,Mai,unknown,vuhuy.mai@rmit.edu.au,unknown,Phd,E073581,tutor,TRUE,""
 49,Steven,Korevaar,unknown,s3544280@student.rmit.edu.au,unknown,Phd,unknown,tutor,TRUE,""
@@ -204,7 +204,7 @@ id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active,notes
 204,Shivangie,Singh,,,,Master,,tutor,TRUE,""
 205,Saravanan,Manickavasagam,,,,Master,,tutor,TRUE,""
 206,Thanh,NGUYEN,thanhnguyenaws2021@gmail.com,unknown,+84903 35 8623,PhD,unknown,tutor,TRUE,""
-207,Dale,Stanbrough,unknown,dale.stanbrough@rmit.edu.au,unknown,unknown,E051233,tutor,TRUE,""
+207,Dale,Stanbrough,dale@stanbrough.com.au,dale.stanbrough@rmit.edu.au,0400 957 781,unknown,E051233,tutor,TRUE,""
 208,Utkarsh,Agarwal,S3932349@student.rmit.edu.au,unknown,0406 489 045,Master,unknown,tutor,TRUE,""
 300,Geordie,Elliot-Kerr,geordieek@gmail.com,s3465651@student.rmit.edu.au,0492 852 807,Secondary,E120652,mentor,TRUE,""
 301,Jacob,Hill,jakemelb87@gmail.com,s3870682@student.rmit.edu.au,0414 096 608,Secondary,E122186,mentor,FALSE,""
@@ -223,3 +223,5 @@ id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active,notes
 314,Artemis,Rossman,rosmanartemis@gmail.com,S3918741@student.rmit.edu.au,0402 970 337,Secondary,E119486,mentor,TRUE,""
 315,Saksham,Jain,sakshamjain2552@gmail.com,S3923854@student.rmit.edu.au,0493 450 366,Secondary,unknown,mentor,TRUE,""
 316,Kulindu,Gamage,workkuls@gmail.com,S3976304@student.rmit.edu.au,0434 715 375,Secondary,unknown,mentor,TRUE,""
+Harrison Gatt - s4008940@student.rmit.edu.au, - recommended by Gayan
+Aleksei Eaves - s4014876@student.rmit.edu.au - recommended by Gayan

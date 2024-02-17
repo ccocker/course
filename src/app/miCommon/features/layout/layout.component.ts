@@ -52,7 +52,8 @@ export class LayoutComponent implements OnInit {
       if (
         currentUser &&
         (currentUser.email === 'craig.cocker@gmail.com' ||
-          currentUser.email === 'rodney.cocker@gmail.com')
+          currentUser.email === 'rodney.cocker@gmail.com' ||
+          currentUser.email === 'edouard.amouroux4@rmit.edu.au')
       ) {
         // Keep the original menu items for Craig and Rodney
         this.miAppConfig.sidenavMenuItems = [

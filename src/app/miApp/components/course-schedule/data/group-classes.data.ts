@@ -74,6 +74,7 @@ export const groupClasses: any[] = [
   {
     offeringGroupCode: 'BC1',
     groupNumber: 'G3',
+    leadName: 'Edouard Amoroux',
     classNumber: '1',
     day: 'M',
     startTime: '10:30',
@@ -83,6 +84,7 @@ export const groupClasses: any[] = [
   {
     offeringGroupCode: 'BC1',
     groupNumber: 'G3',
+    leadName: 'Edouard Amoroux',
     classNumber: '2',
     day: 'T',
     startTime: '10:30',
@@ -92,6 +94,7 @@ export const groupClasses: any[] = [
   {
     offeringGroupCode: 'BC1',
     groupNumber: 'G3',
+    leadName: 'Edouard Amoroux',
     classNumber: '3',
     day: 'W',
     startTime: '10:30',
@@ -101,6 +104,7 @@ export const groupClasses: any[] = [
   {
     offeringGroupCode: 'BC1',
     groupNumber: 'G3',
+    leadName: 'Edouard Amoroux',
     classNumber: '4',
     day: 'F',
     startTime: '10:30',
@@ -359,4 +363,4 @@ export const groupClasses: any[] = [
     endTime: '11:30',
     roomCode: '014.09.023',
   },
-];
+]

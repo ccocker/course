@@ -24,9 +24,9 @@
         <div class="lead">
           {{ event?.leadName }}
         </div>
-
+        <br />
         <div class="tutor">
-          <div>Tutors</div>
+          <div><u>Tutors</u></div>
 
           <div *ngFor="let tutor of event?.tutors">
             <div *ngIf="currentUser.displayName === tutor">{{ tutor }}</div>

@@ -26,7 +26,6 @@
         <div class="lead">
           {{ event?.leadName }}
         </div>
-
         <div
           class="tutor"
           *ngIf="
@@ -36,11 +35,12 @@
             currentUser.email === 'julie.porteous@rmit.edu.au'
           "
         >
-          <div>Tutors</div>
+          <br />
+          <div><u>Tutors</u></div>
           <div *ngFor="let tutor of event?.tutors">{{ tutor }}</div>
         </div>
       </div>
-
+      <!--
       <div class="event-radio-buttons">
         <label *ngFor="let option of ['H', 'M', 'L', 'X']">
           <input
@@ -55,6 +55,7 @@
           {{ option }}
         </label>
       </div>
+      -->
     </ng-template>
   </mi-calendar>
 </div>

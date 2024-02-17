@@ -14,7 +14,7 @@ export const offeringGroups: any[] = [
   {
     group: 'G3',
     offeringCode: 'BC1',
-    leadCode: 'E07582',
+    leadCode: 'Edouard Amoroux',
     groupCapacity: 20,
   },
   {
@@ -41,4 +41,4 @@ export const offeringGroups: any[] = [
     leadCode: 'E07582',
     groupCapacity: 20,
   },
-];
+]
