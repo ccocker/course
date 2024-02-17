@@ -3,7 +3,7 @@
   <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
   <mi-calendar
     [showDescription]="false"
-    [showDateNavigator]="true"
+    [showDateNavigator]="false"
     [showCalendarControls]="false"
     [events]="data"
     [currentUser]="currentUser"
@@ -29,7 +29,7 @@
           <div><u>Tutors</u></div>
 
           <div *ngFor="let tutor of event?.tutors">
-            <div *ngIf="currentUser.displayName === tutor">{{ tutor }}</div>
+            <div>{{ tutor }}</div>
           </div>
         </div>
       </div>

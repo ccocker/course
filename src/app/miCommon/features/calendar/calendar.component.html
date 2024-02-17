@@ -23,18 +23,19 @@
   </ng-container>
 
   <div class="toolbar-options">
-    <mat-form-field>
-      <mat-label>Timeslot Increment</mat-label>
-      <mat-select
-        [(value)]="timeslotIncrement"
-        (selectionChange)="initializeTimeslots()"
-      >
-        <mat-option value="15">15 minutes</mat-option>
-        <mat-option value="30">30 minutes</mat-option>
-        <mat-option value="60">1 hour</mat-option>
-      </mat-select>
-    </mat-form-field>
-
+    <div *ngIf="showDateNavigator">
+      <mat-form-field>
+        <mat-label>Timeslot Increment</mat-label>
+        <mat-select
+          [(value)]="timeslotIncrement"
+          (selectionChange)="initializeTimeslots()"
+        >
+          <mat-option value="15">15 minutes</mat-option>
+          <mat-option value="30">30 minutes</mat-option>
+          <mat-option value="60">1 hour</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <mat-form-field class="search-bar">
       <mat-label>Search Events</mat-label>
       <input
@@ -43,16 +44,17 @@
         placeholder="Search Events"
       />
     </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>View</mat-label>
-      <mat-select [(value)]="currentView" (selectionChange)="onViewChange()">
-        <mat-option value="day">Day View</mat-option>
-        <mat-option value="workWeek">Work Week View</mat-option>
-        <mat-option value="week">Week View</mat-option>
-        <mat-option value="month">Month View</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div *ngIf="showDateNavigator">
+      <mat-form-field>
+        <mat-label>View</mat-label>
+        <mat-select [(value)]="currentView" (selectionChange)="onViewChange()">
+          <mat-option value="day">Day View</mat-option>
+          <mat-option value="workWeek">Work Week View</mat-option>
+          <mat-option value="week">Week View</mat-option>
+          <mat-option value="month">Month View</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 </mat-toolbar>
 <div *ngIf="currentView === 'month'" class="month-heading">
@@ -67,7 +69,7 @@
   <div class="header-row">
     <div class="cell timeslot-header"></div>
     <div class="cell date-cell" *ngFor="let date of dates">
-      {{ date | date : (currentView === "month" ? "EEE, d" : "EEE, d MMM") }}
+      {{ date | date : (currentView === "month" ? "EEE, d" : "EEE") }}
     </div>
   </div>
   <div class="content-row" *ngFor="let timeslot of timeslots; let i = index">

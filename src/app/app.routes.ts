@@ -34,6 +34,13 @@ export const routes: Route[] = [
           ).then((r) => r.routes),
       },
       {
+        path: 'tutor-list',
+        loadChildren: () =>
+          import('@miApp/components/tutor-list/tutor-list.routes').then(
+            (r) => r.routes
+          ),
+      },
+      {
         path: ':collection',
         loadChildren: () =>
           import('@miCommon/features/entity/entity.routes').then(

@@ -1,8 +1,16 @@
 <div *ngIf="!selectedEvent && events$ | async as data; else loadingTemplate">
-  <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
+  <div
+    *ngIf="
+      currentUser.email === 'rodney.cocker@gmail.com' ||
+      currentUser.email === 'craig.cocker@gmail.com'
+    "
+  >
+    <button (click)="bulkUpload()">Bulk Upload</button>
+  </div>
+
   <mi-calendar
     [showDescription]="false"
-    [showDateNavigator]="true"
+    [showDateNavigator]="false"
     [events]="data"
     [startDate]="customStartDate"
     [startTime]="'08:00'"
