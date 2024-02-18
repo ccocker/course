@@ -91,7 +91,7 @@ export class TutorListComponent implements AfterViewInit {
           this.filterValue = 'BC2'
           this.filterEmailsForBC2('BC2')
         }
-        if (this.currentUser?.displayName === 'Edouard Amouroux') {
+        if (this.currentUser?.email === 'edouard.amouroux4@rmit.edu.au') {
           this.filterValue = 'BC1'
           this.filterEmailsForBC2('BC1')
         }
