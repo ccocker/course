@@ -15,7 +15,37 @@
       <ng-container matColumnDef="userId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>User ID</th>
         <td mat-cell *matCellDef="let allocation">
-          {{ allocation }}
+          {{ allocation.userId }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="miId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Enumber</th>
+        <td mat-cell *matCellDef="let allocation">
+          {{ allocation.miId }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+        <td mat-cell *matCellDef="let allocation">
+          {{ allocation.firstName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+        <td mat-cell *matCellDef="let allocation">
+          {{ allocation.lastName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNumbers">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Contact Number
+        </th>
+        <td mat-cell *matCellDef="let allocation">
+          {{ allocation.phoneNumber }}
         </td>
       </ng-container>
 

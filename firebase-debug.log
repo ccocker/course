@@ -1,0 +1,23 @@
+[debug] [2024-02-18T08:24:54.652Z] ----------------------------------------------------------------------
+[debug] [2024-02-18T08:24:54.658Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Microsoft\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2024-02-18T08:24:54.659Z] CLI Version:   13.3.0
+[debug] [2024-02-18T08:24:54.660Z] Platform:      win32
+[debug] [2024-02-18T08:24:54.661Z] Node Version:  v20.9.0
+[debug] [2024-02-18T08:24:54.661Z] Time:          Sun Feb 18 2024 12:24:54 GMT+0400 (Gulf Standard Time)
+[debug] [2024-02-18T08:24:54.661Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-02-18T08:24:54.808Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-02-18T08:24:54.809Z] > authorizing via signed-in user (craig.cocker@gmail.com)
+[debug] [2024-02-18T08:24:54.809Z] [iam] checking project rmit-scheduler for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-02-18T08:24:54.814Z] > refreshing access token with scopes: []
+[debug] [2024-02-18T08:24:54.817Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-02-18T08:24:54.818Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-18T08:24:55.251Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-02-18T08:24:55.252Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-02-18T08:24:55.272Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/rmit-scheduler:testIamPermissions [none]
+[debug] [2024-02-18T08:24:55.273Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/rmit-scheduler:testIamPermissions x-goog-quota-user=projects/rmit-scheduler
+[debug] [2024-02-18T08:24:55.273Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/rmit-scheduler:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-02-18T08:24:56.808Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/rmit-scheduler:testIamPermissions 200
+[debug] [2024-02-18T08:24:56.808Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/rmit-scheduler:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-02-18T08:24:56.809Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/rmit-scheduler/serviceAccounts/rmit-scheduler@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-02-18T08:24:56.810Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/rmit-scheduler/serviceAccounts/rmit-scheduler@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}

@@ -81,6 +81,7 @@ export class Person extends BaseModel {
     this.listProperties = ['firstName', 'lastName', 'emails', 'maximumHours'];
     this.formProperties = [
       'id',
+      'miId',
       'firstName',
       'lastName',
       'maximumHours',
@@ -93,6 +94,7 @@ export class Person extends BaseModel {
       'dates',
       'company',
       'notes',
+      'tags',
     ];
   }
 
@@ -103,6 +105,7 @@ export class Person extends BaseModel {
   private getSpecificFormConfig(): Record<string, IFormConfiguration> {
     return {
       id: { required: false, label: 'Id', type: 'text' },
+      miId: { required: false, label: 'ENumber', type: 'text' },
       firstName: { required: false, label: 'First Name', type: 'text' },
       lastName: { required: false, label: 'Last Name', type: 'text' },
       age: { required: false, label: 'Age', type: 'text' },
@@ -152,6 +155,7 @@ export class Person extends BaseModel {
       },
       company: { required: false, label: 'Company', type: 'text' },
       notes: { required: false, label: 'Notes', type: 'text' },
+      tags: { required: false, label: 'Notes', type: 'array' },
       userDetail: {
         required: false,
         label: 'User Details',
