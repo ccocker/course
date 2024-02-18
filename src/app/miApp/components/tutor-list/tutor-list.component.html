@@ -5,15 +5,19 @@
       <mat-label>Filter</mat-label>
       <input
         matInput
-        (keyup)="applyFilter($event)"
+        #filterValue
+        (keyup)="applyFilter(filterValue.value)"
         placeholder="Filter Allocations"
       />
     </mat-form-field>
+    {{ currentUser?.email }}
+    console.log({{ currentUser?.email }})
+
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="userId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>User ID</th>
         <td mat-cell *matCellDef="let allocation">
-          {{ allocation.userId }}
+          {{ allocation }}
         </td>
       </ng-container>
 
