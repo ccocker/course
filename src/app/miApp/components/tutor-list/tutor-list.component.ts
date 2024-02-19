@@ -38,6 +38,7 @@ export class TutorListComponent implements AfterViewInit {
   people$: Observable<any[]>
   courseScheduleSubscription: Subscription
   tutorPreferencesSubscription: Subscription
+  tutorAllocationsSubscription: Subscription
   dataSource: MatTableDataSource<any>
   dataSource1: MatTableDataSource<any>
   displayedColumns: string[] = [
@@ -106,7 +107,6 @@ export class TutorListComponent implements AfterViewInit {
     ]).subscribe(([tutorPreferences, courseSchedule, people]) => {
       if (tutorPreferences && tutorPreferences.length > 0) {
         // Assuming you have a way to get the current logged-in user's username
-        let currentUserUsername = 'x' // This should be dynamically determined based on the actual logged-in user
         let specificCourse = 'BC1' // The course you're interested in for user 'x'
 
         if (this.currentUser?.displayName === 'Julie Porteous') {
