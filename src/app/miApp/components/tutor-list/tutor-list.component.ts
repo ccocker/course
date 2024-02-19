@@ -1,22 +1,22 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription, combineLatest } from 'rxjs';
-import { selectTutorPreferences } from '../course-schedule/store/tutor-preferences/reducers';
-import { tutorPreferencesActions } from '../course-schedule/store/tutor-preferences/actions';
-import { AllocationService } from './services/tutor-list.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { courseScheduleActions } from '../course-schedule/store/course-schedules/actions';
-import { selectEntities } from '../course-schedule/store/course-schedules/reducers';
-import { entityActions as peopleActions } from '@miCommon/features/entity/store/actions';
-import { selectEntities as selectPeopleEntities } from '@miCommon/features/entity/store/reducers';
-import { MatExpansionModule } from '@angular/material/expansion'; // Import for expansion module
-import { FirestoreDataService } from '@miCommon/services/firestore.data';
-import { map, filter } from 'rxjs/operators';
-import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
+import { Component, ViewChild, AfterViewInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { Observable, Subscription, combineLatest } from 'rxjs'
+import { selectTutorPreferences } from '../course-schedule/store/tutor-preferences/reducers'
+import { tutorPreferencesActions } from '../course-schedule/store/tutor-preferences/actions'
+import { AllocationService } from './services/tutor-list.service'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
+import { MatSort, MatSortModule } from '@angular/material/sort'
+import { CommonModule } from '@angular/common'
+import { MatInputModule } from '@angular/material/input'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { courseScheduleActions } from '../course-schedule/store/course-schedules/actions'
+import { selectEntities } from '../course-schedule/store/course-schedules/reducers'
+import { entityActions as peopleActions } from '@miCommon/features/entity/store/actions'
+import { selectEntities as selectPeopleEntities } from '@miCommon/features/entity/store/reducers'
+import { MatExpansionModule } from '@angular/material/expansion' // Import for expansion module
+import { FirestoreDataService } from '@miCommon/services/firestore.data'
+import { map, filter } from 'rxjs/operators'
+import { selectCurrentUser } from '@miCommon/features/auth/store/reducers'
 
 @Component({
   selector: 'mi-tutor-list',
@@ -33,55 +33,144 @@ import { selectCurrentUser } from '@miCommon/features/auth/store/reducers';
   styleUrls: ['./tutor-list.component.scss'],
 })
 export class TutorListComponent implements AfterViewInit {
-  courseSchedule$: Observable<any[]>;
-  tutorpreferences$: Observable<any[]>;
-  people$: Observable<any[]>;
-  courseScheduleSubscription: Subscription;
-  tutorPreferencesSubscription: Subscription;
-  dataSource: MatTableDataSource<any>;
-  dataSource1: MatTableDataSource<any>;
+  courseSchedule$: Observable<any[]>
+  tutorpreferences$: Observable<any[]>
+  people$: Observable<any[]>
+  courseScheduleSubscription: Subscription
+  tutorPreferencesSubscription: Subscription
+  dataSource: MatTableDataSource<any>
+  dataSource1: MatTableDataSource<any>
   displayedColumns: string[] = [
     'userId',
     'miId',
     'firstName',
     'lastName',
     'phoneNumbers',
-  ]; // Adjust columns as needed
-  displayedColumns1: string[] = ['classCode', 'tutors'];
-  @ViewChild(MatSort) sort: MatSort;
+  ] // Adjust columns as needed
+  displayedColumns1: string[] = ['classCode', 'tutors']
+  @ViewChild(MatSort) sort: MatSort
 
-  currentUser$: Observable<any>; // Assuming "any" is the type of your user, adjust as needed
-  currentUser: any; // Adjust the type as needed
-  public filterValue: string = '';
+  currentUser$: Observable<any> // Assuming "any" is the type of your user, adjust as needed
+  currentUser: any // Adjust the type as needed
+  public filterValue: string = ''
 
   constructor(
     private store: Store,
     private allocationsService: AllocationService,
-    private firestoreDataService: FirestoreDataService
+    private firestoreDataService: FirestoreDataService,
   ) {
-    this.currentUser$ = this.store.select(selectCurrentUser); // Ensure you have a selector for the current user
+    this.currentUser$ = this.store.select(selectCurrentUser) // Ensure you have a selector for the current user
+  }
+
+  filterTutorsByCourse(course: string) {
+    if (!this.dataSource) return
+
+    const filteredAndUniqueTutors = new Map()
+
+    this.dataSource.data
+      .filter((item) => item.classCode && item.classCode.includes(course))
+      .forEach((item) => {
+        if (!filteredAndUniqueTutors.has(item.userId)) {
+          filteredAndUniqueTutors.set(item.userId, item)
+        }
+      })
+
+    this.dataSource.data = Array.from(filteredAndUniqueTutors.values())
   }
 
   ngOnInit() {
     this.currentUser$.subscribe((user) => {
-      this.currentUser = user;
-      this.initializeData();
-    });
+      this.currentUser = user
+      this.initializeData()
+    })
     this.store.dispatch(
-      tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' })
-    );
+      tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' }),
+    )
     this.store.dispatch(
-      courseScheduleActions.getCourseSchedules({ url: 'course-schedules' })
-    );
+      courseScheduleActions.getCourseSchedules({ url: 'course-schedules' }),
+    )
     this.store.dispatch(
-      tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' })
-    );
+      tutorPreferencesActions.getTutorPreferences({ url: 'tutorpreferences' }),
+    )
 
-    this.store.dispatch(peopleActions.getEntities({ url: 'people' })); // Corrected this line
+    this.store.dispatch(peopleActions.getEntities({ url: 'people' })) // Corrected this line
 
-    this.tutorpreferences$ = this.store.select(selectTutorPreferences);
-    this.courseSchedule$ = this.store.select(selectEntities); // Corrected this line
-    this.people$ = this.store.select(selectPeopleEntities); // Corrected this line
+    this.tutorpreferences$ = this.store.select(selectTutorPreferences)
+    this.courseSchedule$ = this.store.select(selectEntities) // Corrected this line
+    this.people$ = this.store.select(selectPeopleEntities) // Corrected this line
+
+    this.tutorPreferencesSubscription = combineLatest([
+      this.tutorpreferences$,
+      this.courseSchedule$,
+      this.people$,
+    ]).subscribe(([tutorPreferences, courseSchedule, people]) => {
+      if (tutorPreferences && tutorPreferences.length > 0) {
+        // Assuming you have a way to get the current logged-in user's username
+        let currentUserUsername = 'x' // This should be dynamically determined based on the actual logged-in user
+        let specificCourse = 'BC1' // The course you're interested in for user 'x'
+
+        if (this.currentUser?.displayName === 'Julie Porteous') {
+          specificCourse = 'BC2'
+        } else if (
+          this.currentUser?.email === 'edouard.amouroux4@rmit.edu.au'
+        ) {
+          specificCourse = 'BC1'
+        }
+        // Filter courseSchedule based on the logged in user's course interest (if username is 'x', then 'BC1')
+        const filteredCourseSchedule = courseSchedule.filter((course) => {
+          // Include the course only if the logged in user is 'x' and the course is 'BC1'
+          // Adjust this condition based on how your courseSchedule structure and user's course interests are defined
+          return course.courseId === specificCourse
+        })
+
+        const allocations = this.allocationsService.processAllocations(
+          tutorPreferences,
+          filteredCourseSchedule,
+        )
+        const uniqueAllocationsMap = new Map() // Use a Map to ensure uniqueness
+
+        const filteredAllocations = allocations.filter((allocation) => {
+          // Include the course only if the logged in user is 'x' and the course is 'BC1'
+          // Adjust this condition based on how your courseSchedule structure and user's course interests are defined
+          return allocation.classCode.includes(specificCourse)
+        })
+
+        filteredAllocations.forEach((allocation) => {
+          const person = people.find(
+            (p) => p.userDetail.userEmail === allocation.userId,
+          )
+          if (person) {
+            uniqueAllocationsMap.set(allocation.userId, {
+              ...allocation,
+              miId: person.miId,
+              firstName: person.firstName,
+              lastName: person.lastName,
+              phoneNumber: person.phoneNumbers[0]
+                ? person.phoneNumbers[0].number
+                : undefined,
+            })
+          }
+        })
+
+        // Now uniqueAllocationsMap contains only allocations for the specific course based on the logged-in user
+        // Use uniqueAllocationsMap as needed here
+
+        // Convert the Map values to an array and set as dataSource
+        this.dataSource = new MatTableDataSource(
+          Array.from(uniqueAllocationsMap.values()),
+        )
+
+        // Apply sorting if needed
+        this.dataSource.sort = this.sort
+
+        // Apply initial filter if needed
+        if (this.filterValue) {
+          this.applyFilter(this.filterValue)
+        }
+      }
+    })
+
+    /*
     this.tutorPreferencesSubscription = combineLatest([
       this.tutorpreferences$,
       this.courseSchedule$,
@@ -90,13 +179,13 @@ export class TutorListComponent implements AfterViewInit {
       if (tutorPreferences && tutorPreferences.length > 0) {
         const allocations = this.allocationsService.processAllocations(
           tutorPreferences,
-          courseSchedule
-        );
+          courseSchedule,
+        )
         const enhancedAllocations = allocations.map((allocation) => {
           // Find the matching person based on userId and userDetail.userEmail
           const person = people.find(
-            (p) => p.userDetail.userEmail === allocation.userId
-          );
+            (p) => p.userDetail.userEmail === allocation.userId,
+          )
 
           // If a matching person is found, add firstName and lastName to the allocation
           if (person) {
@@ -107,24 +196,25 @@ export class TutorListComponent implements AfterViewInit {
               lastName: person.lastName,
               phoneNumber:
                 person.phoneNumbers[0] && person.phoneNumbers[0].number,
-            };
+            }
           }
 
           // Return the allocation unchanged if no matching person is found
-          return allocation;
-        });
-        this.dataSource = new MatTableDataSource(enhancedAllocations);
+          return allocation
+        })
+        this.dataSource = new MatTableDataSource(enhancedAllocations)
         if (this.currentUser?.displayName === 'Julie Porteous') {
-          this.filterValue = 'BC2';
-          this.filterEmailsForBC2('BC2');
+          this.filterValue = 'BC2'
+          this.filterEmailsForBC2('BC2')
         }
         if (this.currentUser?.email === 'edouard.amouroux4@rmit.edu.au') {
-          this.filterValue = 'BC1';
-          this.filterEmailsForBC2('BC1');
+          this.filterValue = 'BC1'
+          this.filterEmailsForBC2('BC1')
         }
-        console.log('Filtered', this.dataSource.data);
-        console.log();
-        /*
+        console.log('Filtered', this.dataSource.data)
+        console.log()
+*/
+    /*
            const henry = new Set(
           this.dataSource.data
             .filter((item) => item.classCode.includes('BC2'))
@@ -139,35 +229,33 @@ export class TutorListComponent implements AfterViewInit {
 
         // this.updateCourseSchedules(allocations, courseSchedule, people);
         */
-      }
-    });
   }
 
   filterEmailsForBC2(course: string) {
     const emailsForBC2 = new Set(
       this.dataSource.data
         .filter((item) => item.classCode && item.classCode.includes(course))
-        .map((item) => item.userId)
-    );
-    this.dataSource.data = Array.from(emailsForBC2);
+        .map((item) => item.userId),
+    )
+    this.dataSource.data = Array.from(emailsForBC2)
   }
 
   transformDataSource(): void {
-    const userIdsSet = new Set();
+    const userIdsSet = new Set()
     const filteredData = this.dataSource.data.filter((item) => {
       if (!userIdsSet.has(item.userId)) {
-        userIdsSet.add(item.userId);
+        userIdsSet.add(item.userId)
       }
-      return true;
-    });
+      return true
+    })
 
     // Now, filteredData contains the desired array with unique userIds
 
     // Update dataSource.data with the filtered array
-    const henry = new Set(filteredData.map((item) => item.userId));
-    let henryArray = [...henry];
+    const henry = new Set(filteredData.map((item) => item.userId))
+    let henryArray = [...henry]
 
-    this.dataSource.data = henryArray;
+    this.dataSource.data = henryArray
   }
 
   initializeData() {
@@ -176,15 +264,15 @@ export class TutorListComponent implements AfterViewInit {
       this.store.dispatch(
         tutorPreferencesActions.getTutorPreferences({
           url: 'tutorpreferences',
-        })
-      );
+        }),
+      )
       this.store.dispatch(
-        courseScheduleActions.getCourseSchedules({ url: 'course-schedules' })
-      );
-      this.store.dispatch(peopleActions.getEntities({ url: 'people' }));
+        courseScheduleActions.getCourseSchedules({ url: 'course-schedules' }),
+      )
+      this.store.dispatch(peopleActions.getEntities({ url: 'people' }))
 
       // Now, with the currentUser, you can filter the courses and tutors accordingly
-      this.setupFilteredTutors();
+      this.setupFilteredTutors()
     }
   }
 
@@ -193,8 +281,8 @@ export class TutorListComponent implements AfterViewInit {
   }
 
   applyFilter(value: string) {
-    console.log('Event', value);
-    this.dataSource.filter = value.trim().toLowerCase(); // This sets the filter string
+    console.log('Event', value)
+    this.dataSource.filter = value.trim().toLowerCase() // This sets the filter string
 
     // Now, to create a Set of userIds based on a condition, filter the dataSource's data array instead
     // const filteredData = this.dataSource.data.filter((item) =>
@@ -264,9 +352,9 @@ export class TutorListComponent implements AfterViewInit {
         '-' +
         data['leadName'] +
         '-' +
-        data['tutors'];
-    });
-    this.firestoreDataService.uploadBulkData('course-schedules', data, true);
+        data['tutors']
+    })
+    this.firestoreDataService.uploadBulkData('course-schedules', data, true)
   }
 
   setupFilteredTutors() {
@@ -281,24 +369,24 @@ export class TutorListComponent implements AfterViewInit {
           // Filter logic here: Use this.currentUser to filter courseSchedule and tutorPreferences
           // Example:
           const myCourses = courseSchedule.filter(
-            (c) => c.leadId === this.currentUser.id
-          );
-          const tutorIds = new Set(myCourses.map((c) => c.tutorId));
-          const tutors = people.filter((p) => tutorIds.has(p.id));
-          return { tutors, myCourses }; // Adjust according to your data structure
-        })
+            (c) => c.leadId === this.currentUser.id,
+          )
+          const tutorIds = new Set(myCourses.map((c) => c.tutorId))
+          const tutors = people.filter((p) => tutorIds.has(p.id))
+          return { tutors, myCourses } // Adjust according to your data structure
+        }),
       )
       .subscribe(({ tutors, myCourses }) => {
         // Use this data to set your dataSource or any other properties you need for display
-      });
+      })
   }
 
   ngOnDestroy() {
     if (this.tutorPreferencesSubscription) {
-      this.tutorPreferencesSubscription.unsubscribe();
+      this.tutorPreferencesSubscription.unsubscribe()
     }
     if (this.tutorPreferencesSubscription) {
-      this.tutorPreferencesSubscription.unsubscribe();
+      this.tutorPreferencesSubscription.unsubscribe()
     }
   }
 }
