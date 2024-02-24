@@ -44,7 +44,7 @@
         placeholder="Search Events"
       />
     </mat-form-field>
-    <button (click)="showAll()">
+    <button *ngIf="!hideShowAll" (click)="showAll()">
       {{ toggleShow ? 'Show Mine' : 'Show All' }}
     </button>
 

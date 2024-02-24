@@ -87,6 +87,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   model!: BaseModel
   numberOfDaysInMonth: number = 31
   toggleShow: boolean = false
+  @Input() hideShowAll: boolean = false
   constructor(private modelFactory: ModelFactory) {}
 
   ngOnInit() {
