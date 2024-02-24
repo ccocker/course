@@ -136,25 +136,7 @@ export class CourseScheduleAllocationsComponent implements AfterViewInit {
     return updatedCourseSchedules // Return the new array
   }
 
-  bulkUploadData(data: any) {
-    data.forEach((data) => {
-      data.description =
-        data['offeringGroupCode'] +
-        '-' +
-        data['groupNumber'] +
-        '-' +
-        data['classNumber'] +
-        '-' +
-        data['roomCode'] +
-        '-' +
-        data['leadName'] +
-        '-' +
-        data['tutors']
-    })
-    this.firestoreDataService.uploadBulkData('course-schedules', data, true)
-  }
-
-  bulkUploadEvents(data: any) {
+  bulkUpload(data: any) {
     data.forEach((data) => {
       data.description =
         data['offeringGroupCode'] +

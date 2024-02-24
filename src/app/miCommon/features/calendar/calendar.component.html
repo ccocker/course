@@ -44,6 +44,10 @@
         placeholder="Search Events"
       />
     </mat-form-field>
+    <button (click)="showAll()">
+      {{ toggleShow ? 'Show Mine' : 'Show All' }}
+    </button>
+
     <div *ngIf="showDateNavigator">
       <mat-form-field>
         <mat-label>View</mat-label>
@@ -69,7 +73,7 @@
   <div class="header-row">
     <div class="cell timeslot-header"></div>
     <div class="cell date-cell" *ngFor="let date of dates">
-      {{ date | date : (currentView === "month" ? "EEE, d" : "EEE") }}
+      {{ date | date: (currentView === 'month' ? 'EEE, d' : 'EEE') }}
     </div>
   </div>
   <div class="content-row" *ngFor="let timeslot of timeslots; let i = index">

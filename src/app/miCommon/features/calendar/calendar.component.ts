@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
 import {
   AfterViewInit,
   Component,
@@ -10,27 +10,27 @@ import {
   Output,
   TemplateRef,
   ViewChild,
-} from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSelectModule } from '@angular/material/select';
-import { ModelFactory } from '@miCommon/services/model.factory';
-import { BaseModel } from '@miCommon/models';
-import { from, pipe, tap } from 'rxjs';
+} from '@angular/core'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatNativeDateModule } from '@angular/material/core'
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatSelectModule } from '@angular/material/select'
+import { ModelFactory } from '@miCommon/services/model.factory'
+import { BaseModel } from '@miCommon/models'
+import { from, pipe, tap } from 'rxjs'
 
 interface CalendarEvent {
-  id: string;
-  startDate: Date | { seconds: number; nanoseconds: number }; // Adjusted type
-  startTime: string;
-  endDate: Date;
-  endTime: string;
-  description: string;
-  color: string;
+  id: string
+  startDate: Date | { seconds: number; nanoseconds: number } // Adjusted type
+  startTime: string
+  endDate: Date
+  endTime: string
+  description: string
+  color: string
 }
 
 @Component({
@@ -54,122 +54,132 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   @Input()
   set startDate(value: { nanoseconds: number; seconds: number } | Date) {
     if (value instanceof Date) {
-      this._startDate = value;
+      this._startDate = value
     } else {
       // Convert the timestamp to a Date object
-      this._startDate = new Date(value.seconds * 1000); // Convert seconds to milliseconds
+      this._startDate = new Date(value.seconds * 1000) // Convert seconds to milliseconds
     }
-    this.updateCalendar(this._startDate);
+    this.updateCalendar(this._startDate)
   }
   @Input()
-  showDateNavigator: boolean = true;
+  showDateNavigator: boolean = true
   @Input()
-  showDescription: boolean = false;
+  showDescription: boolean = false
   @Input()
-  events: CalendarEvent[] = [];
-  @Input() startTime: string = '00:00';
-  @Input() scrollToCurrentTime: boolean = true;
-  @Input() timezone: string;
-  @Input() currentUser: any;
-  @Input() showCalendarControls: boolean = true;
+  events: CalendarEvent[] = []
+  @Input() startTime: string = '00:00'
+  @Input() scrollToCurrentTime: boolean = true
+  @Input() timezone: string
+  @Input() currentUser: any
+  @Input() showCalendarControls: boolean = true
 
-  @Output() eventDoubleClick = new EventEmitter<any>();
+  @Output() eventDoubleClick = new EventEmitter<any>()
 
-  @ViewChild('calendar') calendar: ElementRef;
-  @ContentChild(TemplateRef) eventTemplate: TemplateRef<any>;
-  private _startDate: Date;
-  dates: Date[] = [];
-  timeslots: string[] = [];
-  timeslotIncrement: number = 30;
-  filteredEvents: CalendarEvent[] = [];
-  currentView: 'day' | 'workWeek' | 'week' | 'month' = 'workWeek';
-  selectedDate: Date = new Date();
-  model!: BaseModel;
-  numberOfDaysInMonth: number = 31;
+  @ViewChild('calendar') calendar: ElementRef
+  @ContentChild(TemplateRef) eventTemplate: TemplateRef<any>
+  private _startDate: Date
+  dates: Date[] = []
+  timeslots: string[] = []
+  timeslotIncrement: number = 30
+  filteredEvents: CalendarEvent[] = []
+  currentView: 'day' | 'workWeek' | 'week' | 'month' = 'workWeek'
+  selectedDate: Date = new Date()
+  model!: BaseModel
+  numberOfDaysInMonth: number = 31
+  toggleShow: boolean = false
   constructor(private modelFactory: ModelFactory) {}
 
   ngOnInit() {
-    this.selectedDate = this.startDate || new Date();
-    this.initializeWeek();
-    this.initializeTimeslots();
-    this.filteredEvents = this.events.slice();
-    console.log('currentUser', this.currentUser);
-    this.filterEvents(this.currentUser?.displayName);
+    this.selectedDate = this.startDate || new Date()
+    this.initializeWeek()
+    this.initializeTimeslots()
+    this.filteredEvents = this.events.slice()
+    console.log('currentUser', this.currentUser)
+    this.filterEvents(this.currentUser?.displayName)
+  }
+
+  showAll() {
+    this.toggleShow = !this.toggleShow
+    if (this.toggleShow) {
+      this.filteredEvents = this.events
+    } else {
+      this.filterEvents(this.currentUser?.displayName)
+    }
   }
 
   ngAfterViewInit() {
     if (this.scrollToCurrentTime) {
-      this.scrollToCurrentTimeSlot();
+      this.scrollToCurrentTimeSlot()
     }
   }
 
   get startDate(): Date {
-    return this._startDate;
+    return this._startDate
   }
 
   initializeWeek() {
     switch (this.currentView) {
       case 'day':
-        this.dates = [new Date(this.selectedDate)];
-        break;
+        this.dates = [new Date(this.selectedDate)]
+        break
       case 'workWeek':
-        this.generateWeek(true);
-        break;
+        this.generateWeek(true)
+        break
       case 'week':
-        this.generateWeek(false);
-        break;
+        this.generateWeek(false)
+        break
       case 'month':
-        this.generateMonth();
-        break;
+        this.generateMonth()
+        break
       default:
-        this.generateWeek(false);
+        this.generateWeek(false)
     }
   }
 
   filterEvents(searchTerm: string): void {
     if (!searchTerm) {
-      this.filteredEvents = this.events.slice();
-      return;
+      this.filteredEvents = this.events.slice()
+      return
     }
     this.filteredEvents = this.events.filter((event) =>
-      event.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+      event.description.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
   }
 
   initializeTimeslots() {
-    this.timeslots = []; // clear previous timeslots
+    this.timeslots = [] // clear previous timeslots
 
     // Parse the hour and minutes from the startTime input
-    const [startHour, startMinute] = this.startTime.split(':').map(Number);
+    const [startHour, startMinute] = this.startTime.split(':').map(Number)
 
     // Determine the number of slots per hour based on the increment
-    const slotsPerHour = 60 / this.timeslotIncrement;
+    const slotsPerHour = 60 / this.timeslotIncrement
 
     for (let hour = startHour; hour < 24; hour++) {
       for (let slot = 0; slot < slotsPerHour; slot++) {
-        const minutes = startMinute + slot * this.timeslotIncrement;
-        if (hour === startHour && minutes < startMinute) continue; // Skip slots before the startMinute in the first hour
+        const minutes = startMinute + slot * this.timeslotIncrement
+        if (hour === startHour && minutes < startMinute) continue // Skip slots before the startMinute in the first hour
 
-        const hourFormatted = hour.toString().padStart(2, '0');
-        const minuteFormatted = (minutes % 60).toString().padStart(2, '0');
-        this.timeslots.push(`${hourFormatted}:${minuteFormatted}`);
+        const hourFormatted = hour.toString().padStart(2, '0')
+        const minuteFormatted = (minutes % 60).toString().padStart(2, '0')
+        this.timeslots.push(`${hourFormatted}:${minuteFormatted}`)
       }
     }
   }
 
   onDateSelect(event: any) {
-    this.updateCalendar(event.value);
-    this.onViewChange();
+    this.updateCalendar(event.value)
+    this.onViewChange()
   }
 
   updateCalendar(newStartDate: Date) {
-    this.selectedDate = newStartDate;
-    this.initializeWeek();
+    this.selectedDate = newStartDate
+    this.initializeWeek()
     // Set the start date to the selected date without adjusting to the beginning of the week
-    const startOfWeek = new Date(newStartDate);
+    const startOfWeek = new Date(newStartDate)
 
     // Clear the current dates array
-    this.dates = [];
+    this.dates = []
 
     // Fill the dates array with the new week's dates
     for (let i = 0; i < 7; i++) {
@@ -177,191 +187,191 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         new Date(
           startOfWeek.getFullYear(),
           startOfWeek.getMonth(),
-          startOfWeek.getDate() + i
-        )
-      );
+          startOfWeek.getDate() + i,
+        ),
+      )
     }
   }
 
   onViewChange() {
-    this.initializeWeek();
+    this.initializeWeek()
   }
 
   generateWeek(workWeekOnly: boolean) {
-    let startDay = workWeekOnly ? 1 : 1; // 0 for Sunday, 1 for Monday
+    let startDay = workWeekOnly ? 1 : 1 // 0 for Sunday, 1 for Monday
     let firstDayOfWeek =
-      this.selectedDate.getDate() - this.selectedDate.getDay() + startDay;
-    let week = [];
+      this.selectedDate.getDate() - this.selectedDate.getDay() + startDay
+    let week = []
 
     for (let i = 0; i < 7; i++) {
       let day = new Date(
         this.selectedDate.getFullYear(),
         this.selectedDate.getMonth(),
-        firstDayOfWeek + i
-      );
-      week.push(day);
+        firstDayOfWeek + i,
+      )
+      week.push(day)
     }
 
-    this.dates = workWeekOnly ? week.slice(0, 5) : week; // slice for work week (Mon-Fri)
+    this.dates = workWeekOnly ? week.slice(0, 5) : week // slice for work week (Mon-Fri)
   }
 
   generateMonth() {
-    let month = [];
+    let month = []
     const start = new Date(
       this.selectedDate.getFullYear(),
       this.selectedDate.getMonth(),
-      1
-    );
+      1,
+    )
     const end = new Date(
       this.selectedDate.getFullYear(),
       this.selectedDate.getMonth() + 1,
-      0
-    );
+      0,
+    )
 
     for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
-      month.push(new Date(day));
+      month.push(new Date(day))
     }
 
-    this.dates = month;
+    this.dates = month
     this.numberOfDaysInMonth = this.getDaysInMonth(
       this.selectedDate.getMonth(),
-      this.selectedDate.getFullYear()
-    );
+      this.selectedDate.getFullYear(),
+    )
   }
 
   navigateTo(direction: 'prev' | 'next') {
     // Get the current start date from the dates array
-    const startDate = this.dates[0];
+    const startDate = this.dates[0]
 
     // Determine the number of days to navigate based on the view
-    let daysToNavigate;
+    let daysToNavigate
     switch (this.currentView) {
       case 'day':
-        daysToNavigate = 1;
-        break;
+        daysToNavigate = 1
+        break
       case 'workWeek':
       case 'week':
-        daysToNavigate = 7;
-        break;
+        daysToNavigate = 7
+        break
       case 'month':
         daysToNavigate = this.getDaysInMonth(
           startDate.getMonth(),
-          startDate.getFullYear()
-        );
-        break;
+          startDate.getFullYear(),
+        )
+        break
       default:
-        daysToNavigate = 0;
+        daysToNavigate = 0
     }
 
     // Calculate the new start date based on the direction and the current view
-    const newStartDate = new Date(startDate);
+    const newStartDate = new Date(startDate)
     if (direction === 'prev') {
-      newStartDate.setDate(startDate.getDate() - daysToNavigate);
+      newStartDate.setDate(startDate.getDate() - daysToNavigate)
     } else {
-      newStartDate.setDate(startDate.getDate() + daysToNavigate);
+      newStartDate.setDate(startDate.getDate() + daysToNavigate)
     }
 
     // Update the calendar view based on the new start date
-    this.updateCalendar(newStartDate);
-    this.onViewChange();
+    this.updateCalendar(newStartDate)
+    this.onViewChange()
   }
 
   // Modify this method inside the CalendarComponent class
 
   scrollToCurrentTimeSlot(): void {
-    const now = new Date();
+    const now = new Date()
     // Subtract one hour from the current time
-    now.setHours(now.getHours() - 1);
+    now.setHours(now.getHours() - 1)
 
     // Find the index of the timeslot that's closest to one hour before the current time
     const closestTimeslotIndex = this.timeslots.findIndex((timeslot) => {
-      const timeslotDate = this.timeslotStringToDate(timeslot);
-      return timeslotDate >= now;
-    });
+      const timeslotDate = this.timeslotStringToDate(timeslot)
+      return timeslotDate >= now
+    })
 
     // Adjust index to get the timeslot before the current time
-    const scrollToIndex = Math.max(closestTimeslotIndex - 1, 0);
+    const scrollToIndex = Math.max(closestTimeslotIndex - 1, 0)
 
     setTimeout(() => {
       const timeslotElement = this.calendar.nativeElement.querySelector(
-        `#timeslot-${scrollToIndex}`
-      );
-      timeslotElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 0);
+        `#timeslot-${scrollToIndex}`,
+      )
+      timeslotElement?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 0)
   }
 
   private timeslotStringToDate(timeslot: string): Date {
-    const [hours, minutes] = timeslot.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0); // set hours and minutes, seconds and ms to 0
-    return date;
+    const [hours, minutes] = timeslot.split(':').map(Number)
+    const date = new Date()
+    date.setHours(hours, minutes, 0, 0) // set hours and minutes, seconds and ms to 0
+    return date
   }
 
   getEventsForTimeslot(timeslot: string, date: Date): CalendarEvent[] {
     return this.filteredEvents.filter((event) => {
       // Transform timeslot and event start time to Date objects for comparison
-      const eventStartTime = this.timeslotStringToDate(event.startTime);
-      const eventEndTime = this.timeslotStringToDate(event.endTime);
-      const timeslotStartTime = this.timeslotStringToDate(timeslot);
+      const eventStartTime = this.timeslotStringToDate(event.startTime)
+      const eventEndTime = this.timeslotStringToDate(event.endTime)
+      const timeslotStartTime = this.timeslotStringToDate(timeslot)
       // Calculate the end time of the timeslot
       const timeslotEndTime = new Date(
-        timeslotStartTime.getTime() + this.timeslotIncrement * 60000
-      );
+        timeslotStartTime.getTime() + this.timeslotIncrement * 60000,
+      )
 
       // Convert event.startDate to a Date object if it's not already one
       const eventStartDate =
         event.startDate instanceof Date
           ? event.startDate
-          : new Date(event.startDate.seconds * 1000);
+          : new Date(event.startDate.seconds * 1000)
 
       // Reset the hours for comparison
-      eventStartDate.setHours(0, 0, 0, 0);
-      const currentDate = new Date(date);
-      currentDate.setHours(0, 0, 0, 0);
+      eventStartDate.setHours(0, 0, 0, 0)
+      const currentDate = new Date(date)
+      currentDate.setHours(0, 0, 0, 0)
 
       // Check if the event's start time is within the timeslot
       const isWithinTimeslot =
-        eventStartTime >= timeslotStartTime && eventStartTime < timeslotEndTime;
+        eventStartTime >= timeslotStartTime && eventStartTime < timeslotEndTime
 
       // The event should be included if it starts within the timeslot and has the same date
       return (
         eventStartDate.getTime() === currentDate.getTime() && isWithinTimeslot
-      );
-    });
+      )
+    })
   }
 
   calculateEventStyle(event: CalendarEvent, date: Date, timeslot: string): any {
     // Duration calculation
-    const startTime = this.timeslotStringToDate(event.startTime);
-    const endTime = this.timeslotStringToDate(event.endTime);
-    const durationInMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
-    const durationInSlots = durationInMinutes / this.timeslotIncrement;
+    const startTime = this.timeslotStringToDate(event.startTime)
+    const endTime = this.timeslotStringToDate(event.endTime)
+    const durationInMinutes = (endTime.getTime() - startTime.getTime()) / 60000
+    const durationInSlots = durationInMinutes / this.timeslotIncrement
 
     // Offset calculation
-    const timeslotStart = this.timeslotStringToDate(timeslot);
+    const timeslotStart = this.timeslotStringToDate(timeslot)
     const offsetInMinutes =
-      (startTime.getTime() - timeslotStart.getTime()) / 60000;
-    const offsetInSlots = offsetInMinutes / this.timeslotIncrement;
+      (startTime.getTime() - timeslotStart.getTime()) / 60000
+    const offsetInSlots = offsetInMinutes / this.timeslotIncrement
 
     // Assuming each timeslot's height is 60px.
-    const eventHeight = durationInSlots * 60;
-    const eventTopOffset = offsetInSlots * 60;
+    const eventHeight = durationInSlots * 60
+    const eventTopOffset = offsetInSlots * 60
 
     // Concurrent events calculation
-    const concurrentEvents = this.getConcurrentEvents(event, date, timeslot);
-    const eventIndex = concurrentEvents.findIndex((e) => e.id === event.id);
-    const numberOfConcurrentEvents = concurrentEvents.length;
+    const concurrentEvents = this.getConcurrentEvents(event, date, timeslot)
+    const eventIndex = concurrentEvents.findIndex((e) => e.id === event.id)
+    const numberOfConcurrentEvents = concurrentEvents.length
 
     // You might want to limit the maximum number of concurrent events displayed side by side
     // to avoid events becoming too narrow to be interacted with or read.
-    const maxConcurrentEventsDisplayed = 3;
+    const maxConcurrentEventsDisplayed = 3
     const adjustedNumberOfConcurrentEvents = Math.min(
       numberOfConcurrentEvents,
-      maxConcurrentEventsDisplayed
-    );
-    const widthPerEvent = 100 / adjustedNumberOfConcurrentEvents; // Divide the width equally among concurrent events
+      maxConcurrentEventsDisplayed,
+    )
+    const widthPerEvent = 100 / adjustedNumberOfConcurrentEvents // Divide the width equally among concurrent events
     const eventLeftOffset =
-      (eventIndex % maxConcurrentEventsDisplayed) * widthPerEvent; // Calculate left offset
+      (eventIndex % maxConcurrentEventsDisplayed) * widthPerEvent // Calculate left offset
 
     return {
       position: 'absolute',
@@ -372,56 +382,56 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       'background-color': event.color,
       'z-index': 100 + eventIndex, // Increment z-index to handle slight overlaps
       // Add other styling as needed.
-    };
+    }
   }
 
   calculateEventDurationInSlots(event: CalendarEvent): number {
-    const startTime = this.timeslotStringToDate(event.startTime);
-    const endTime = this.timeslotStringToDate(event.endTime);
-    const durationInMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
-    return durationInMinutes / this.timeslotIncrement;
+    const startTime = this.timeslotStringToDate(event.startTime)
+    const endTime = this.timeslotStringToDate(event.endTime)
+    const durationInMinutes = (endTime.getTime() - startTime.getTime()) / 60000
+    return durationInMinutes / this.timeslotIncrement
   }
 
   // Helper method to calculate the top offset based on the event's start time
   // ...
 
   calculateEventOffset(event: CalendarEvent, timeslot: string): number {
-    const eventStart = this.timeslotStringToDate(event.startTime);
-    const timeslotStart = this.timeslotStringToDate(timeslot);
+    const eventStart = this.timeslotStringToDate(event.startTime)
+    const timeslotStart = this.timeslotStringToDate(timeslot)
     const offsetMinutes =
-      (eventStart.getTime() - timeslotStart.getTime()) / 60000;
-    return offsetMinutes / this.timeslotIncrement;
+      (eventStart.getTime() - timeslotStart.getTime()) / 60000
+    return offsetMinutes / this.timeslotIncrement
   }
 
   getConcurrentEvents(
     event: CalendarEvent,
     date: Date,
-    timeslot: string
+    timeslot: string,
   ): CalendarEvent[] {
-    const timeslotStart = this.timeslotStringToDate(timeslot);
+    const timeslotStart = this.timeslotStringToDate(timeslot)
     const timeslotEnd = new Date(
-      timeslotStart.getTime() + this.timeslotIncrement * 60000
-    );
+      timeslotStart.getTime() + this.timeslotIncrement * 60000,
+    )
 
     return this.filteredEvents.filter((e) => {
-      const start = this.timeslotStringToDate(e.startTime);
-      const end = this.timeslotStringToDate(e.endTime);
+      const start = this.timeslotStringToDate(e.startTime)
+      const end = this.timeslotStringToDate(e.endTime)
 
       // Convert e.startDate to a Date object if it's not already one
       const eStartDate =
         e.startDate instanceof Date
           ? e.startDate
-          : new Date((e.startDate as { seconds: number }).seconds * 1000);
+          : new Date((e.startDate as { seconds: number }).seconds * 1000)
 
-      eStartDate.setHours(0, 0, 0, 0);
-      const currentEventDate = new Date(date);
-      currentEventDate.setHours(0, 0, 0, 0);
+      eStartDate.setHours(0, 0, 0, 0)
+      const currentEventDate = new Date(date)
+      currentEventDate.setHours(0, 0, 0, 0)
 
       return (
         eStartDate.getTime() === currentEventDate.getTime() &&
         !(end <= timeslotStart || start >= timeslotEnd)
-      );
-    });
+      )
+    })
   }
 
   // Inside CalendarComponent
@@ -432,55 +442,55 @@ export class CalendarComponent implements OnInit, AfterViewInit {
           // Assign data from Firestore
           Object.assign(model, {
             ...data,
-          });
+          })
 
-          this.model = model;
+          this.model = model
 
           // Emit the event here, after the model has been created and assigned
-          this.eventDoubleClick.emit(this.model);
-        })
+          this.eventDoubleClick.emit(this.model)
+        }),
       )
-      .subscribe(); // Don't forget to subscribe to trigger the observable
+      .subscribe() // Don't forget to subscribe to trigger the observable
   }
 
   get calendarClass(): string {
     switch (this.currentView) {
       case 'day':
-        return 'calendar-day';
+        return 'calendar-day'
       case 'workWeek':
-        return 'calendar-work-week';
+        return 'calendar-work-week'
       case 'week':
-        return 'calendar-week';
+        return 'calendar-week'
       case 'month':
-        return 'calendar-month';
+        return 'calendar-month'
       default:
-        return '';
+        return ''
     }
   }
 
   private getDaysInMonth(month: number, year: number): number {
-    return new Date(year, month + 1, 0).getDate();
+    return new Date(year, month + 1, 0).getDate()
   }
 
   getGridStyle(): any {
     if (this.currentView === 'month') {
       return {
         'grid-template-columns': `100px repeat(${this.numberOfDaysInMonth}, 1fr)`,
-      };
+      }
     }
-    return {};
+    return {}
   }
 
   getMonthName(): string {
     return this.selectedDate.toLocaleString('default', {
       month: 'long',
       year: 'numeric',
-    });
+    })
   }
 
   goToToday(): void {
-    this.selectedDate = new Date();
-    this.updateCalendar(this.selectedDate);
-    this.onViewChange();
+    this.selectedDate = new Date()
+    this.updateCalendar(this.selectedDate)
+    this.onViewChange()
   }
 }
