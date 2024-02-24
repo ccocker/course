@@ -1,44 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
 type ScheduledClass = {
-  day: string;
-  startTime: string; // Format "HH:mm"
-  endTime: string; // Format "HH:mm"
-  groupNumber: string;
-  id: string;
-};
+  day: string
+  startTime: string // Format "HH:mm"
+  endTime: string // Format "HH:mm"
+  groupNumber: string
+  id: string
+}
 
-const priorityOrder = { H: 1, M: 2, L: 3 };
+const priorityOrder = { H: 1, M: 2, L: 3 }
 
 type Preference = {
-  userId: string;
-  classCode: string;
-  priority: string;
-};
+  userId: string
+  classCode: string
+  priority: string
+}
 
 type Allocation = {
-  userId: string;
-  classCode: string;
-  priority: string;
-};
+  userId: string
+  classCode: string
+  priority: string
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AllocationService {
-  private scheduledClasses: ScheduledClass[];
+  private scheduledClasses: ScheduledClass[]
 
-  private allocations: Allocation[];
+  private allocations: Allocation[]
   constructor() {}
 
   public getScheduleData(schedule: ScheduledClass[]): any {
-    this.scheduledClasses = schedule;
+    this.scheduledClasses = schedule
   }
 
   private getPreAllocations(): Allocation[] {
     // Include all pre-allocated classes here
     // Example:
-    let allocations: Allocation[] = [];
+    let allocations: Allocation[] = []
     allocations.push(
       {
         userId: 'yiwei.zhong@rmit.edu.au',
@@ -446,7 +446,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'hanin.m.aloufi@gmail.com',
+        userId: 'hanin.aloufi@rmit.edu.au',
         classCode: 'BC1-G5-4',
         priority: 'H',
       },
@@ -676,7 +676,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'hanin.m.aloufi@gmail.com',
+        userId: 'hanin.aloufi@rmit.edu.au',
         classCode: 'BC1-G8-4',
         priority: 'H',
       },
@@ -799,15 +799,15 @@ export class AllocationService {
         userId: 'yujin.jinx.huang@rmit.edu',
         classCode: 'BC2-G2-4',
         priority: 'H',
-      }
-    );
+      },
+    )
 
-    return allocations;
+    return allocations
   }
 
   // Additional method to process and output allocations if needed
   public processAllocations(preferences: Preference[], scheduleData: any): any {
-    preferences = this.filterPreferences(preferences);
+    preferences = this.filterPreferences(preferences)
     const excludedTutors = [
       'artemis.rosman@rmit.edu.au',
       'tomaghan@gmail.com',
@@ -847,75 +847,75 @@ export class AllocationService {
       'S3923854@student.rmit.edu.au',
       'workkuls@gmail.com',
       'S3976304@student.rmit.edu.au',
-    ];
+    ]
 
-    preferences = this.filterOutTutors(preferences, excludedTutors);
-    const sortedPreferences = this.sortTutorsPreferences(preferences);
-    preferences = this.sortTutorPreferencesByPriority(sortedPreferences);
+    preferences = this.filterOutTutors(preferences, excludedTutors)
+    const sortedPreferences = this.sortTutorsPreferences(preferences)
+    preferences = this.sortTutorPreferencesByPriority(sortedPreferences)
     const allocations: Allocation[] = this.allocateClasses(
       preferences,
-      scheduleData
-    );
+      scheduleData,
+    )
 
-    return allocations;
+    return allocations
   }
 
   filterPreferences(preferences: Preference[]): Preference[] {
     return preferences.filter(
-      (pref) => pref['priority'] !== 'X' && !pref['classCode'].includes('WBC')
-    );
+      (pref) => pref['priority'] !== 'X' && !pref['classCode'].includes('WBC'),
+    )
   }
 
   public allocateClasses(
     preferences: Preference[],
-    scheduledClasses: ScheduledClass[]
+    scheduledClasses: ScheduledClass[],
   ): Allocation[] {
-    let allocations: Allocation[] = this.getPreAllocations(); // Get pre-allocations
+    let allocations: Allocation[] = this.getPreAllocations() // Get pre-allocations
 
-    let tutorAllocationCount: Map<string, number> = new Map(); // Track number of allocations per tutor
-    let tutorClassTimes: Map<string, ScheduledClass[]> = new Map();
-    let classTutorCount: Map<string, number> = new Map(); // Track number of tutors per class
+    let tutorAllocationCount: Map<string, number> = new Map() // Track number of allocations per tutor
+    let tutorClassTimes: Map<string, ScheduledClass[]> = new Map()
+    let classTutorCount: Map<string, number> = new Map() // Track number of tutors per class
 
     // Update tutor allocation count and class tutor count for pre-allocations
     for (const alloc of allocations) {
       const classInfo = scheduledClasses?.find(
-        (sc) => sc.id === alloc.classCode
-      );
+        (sc) => sc.id === alloc.classCode,
+      )
       if (classInfo) {
         if (!tutorClassTimes.has(alloc.userId)) {
-          tutorClassTimes.set(alloc.userId, []);
+          tutorClassTimes.set(alloc.userId, [])
         }
-        tutorClassTimes.get(alloc.userId)!.push(classInfo);
+        tutorClassTimes.get(alloc.userId)!.push(classInfo)
 
         tutorAllocationCount.set(
           alloc.userId,
-          (tutorAllocationCount.get(alloc.userId) || 0) + 1
-        );
+          (tutorAllocationCount.get(alloc.userId) || 0) + 1,
+        )
 
         // Update the tutor count for the class in pre-allocations
         classTutorCount.set(
           alloc.classCode,
-          (classTutorCount.get(alloc.classCode) || 0) + 1
-        );
+          (classTutorCount.get(alloc.classCode) || 0) + 1,
+        )
       }
     }
 
-    let remainingPreferences = [...preferences];
+    let remainingPreferences = [...preferences]
     while (remainingPreferences.length > 0) {
-      let tutorsAllocatedThisRound: Set<string> = new Set();
-      let nextRoundPreferences: Preference[] = [];
+      let tutorsAllocatedThisRound: Set<string> = new Set()
+      let nextRoundPreferences: Preference[] = []
 
       for (const pref of remainingPreferences) {
         const classToAllocate = scheduledClasses.find(
-          (sc) => sc.id === pref.classCode
-        );
+          (sc) => sc.id === pref.classCode,
+        )
 
         if (
           allocations.some(
-            (a) => a.userId === pref.userId && a.classCode === pref.classCode
+            (a) => a.userId === pref.userId && a.classCode === pref.classCode,
           )
         ) {
-          continue;
+          continue
         }
 
         if (
@@ -923,7 +923,7 @@ export class AllocationService {
           !tutorsAllocatedThisRound.has(pref.userId) &&
           !this.hasTimeConflict(
             classToAllocate,
-            tutorClassTimes.get(pref.userId) || []
+            tutorClassTimes.get(pref.userId) || [],
           ) &&
           (classTutorCount.get(pref.classCode) || 0) < 3
         ) {
@@ -931,47 +931,47 @@ export class AllocationService {
             userId: pref.userId,
             classCode: pref.classCode,
             priority: pref.priority,
-          });
+          })
 
-          tutorsAllocatedThisRound.add(pref.userId);
-          tutorClassTimes.get(pref.userId)!.push(classToAllocate);
+          tutorsAllocatedThisRound.add(pref.userId)
+          tutorClassTimes.get(pref.userId)!.push(classToAllocate)
           tutorAllocationCount.set(
             pref.userId,
-            (tutorAllocationCount.get(pref.userId) || 0) + 1
-          );
+            (tutorAllocationCount.get(pref.userId) || 0) + 1,
+          )
           classTutorCount.set(
             pref.classCode,
-            (classTutorCount.get(pref.classCode) || 0) + 1
-          );
+            (classTutorCount.get(pref.classCode) || 0) + 1,
+          )
         } else {
           if (
             !this.hasTimeConflict(
               classToAllocate,
-              tutorClassTimes.get(pref.userId) || []
+              tutorClassTimes.get(pref.userId) || [],
             )
           ) {
-            nextRoundPreferences.push(pref);
+            nextRoundPreferences.push(pref)
           }
         }
       }
 
       if (nextRoundPreferences.length === remainingPreferences.length) {
-        break;
+        break
       }
 
-      remainingPreferences = nextRoundPreferences;
+      remainingPreferences = nextRoundPreferences
     }
 
     let tutorAllocationArray = Array.from(
       tutorAllocationCount,
       ([userId, numberOfClasses]) => {
-        let hours = numberOfClasses * 2 + numberOfClasses * 0.66;
-        return { userId, numberOfClasses, hours };
-      }
-    );
-    this.reportTimeConflicts(allocations, scheduledClasses);
+        let hours = numberOfClasses * 2 + numberOfClasses * 0.66
+        return { userId, numberOfClasses, hours }
+      },
+    )
+    this.reportTimeConflicts(allocations, scheduledClasses)
 
-    return allocations;
+    return allocations
   }
   /*
 public allocateClasses(
@@ -1144,18 +1144,18 @@ public allocateClasses(
 */
   private sortTutorsPreferences(preferences: Preference[]): Preference[] {
     // Create a shallow copy of the array
-    const preferencesCopy = [...preferences];
+    const preferencesCopy = [...preferences]
 
     const preferenceCount = preferencesCopy.reduce((count, pref) => {
-      count[pref.userId] = (count[pref.userId] || 0) + 1;
-      return count;
-    }, {});
+      count[pref.userId] = (count[pref.userId] || 0) + 1
+      return count
+    }, {})
 
     return preferencesCopy.sort((a, b) => {
-      const countDiff = preferenceCount[a.userId] - preferenceCount[b.userId];
-      if (countDiff !== 0) return countDiff;
-      return a.userId.localeCompare(b.userId);
-    });
+      const countDiff = preferenceCount[a.userId] - preferenceCount[b.userId]
+      if (countDiff !== 0) return countDiff
+      return a.userId.localeCompare(b.userId)
+    })
   }
 
   sortTutorPreferencesByPriority(preferences: Preference[]): Preference[] {
@@ -1163,24 +1163,24 @@ public allocateClasses(
       // Check if same tutor
       if (a.userId === b.userId) {
         // Sort by priority within the same tutor
-        return priorityOrder[a['priority']] - priorityOrder[b['priority']];
+        return priorityOrder[a['priority']] - priorityOrder[b['priority']]
       }
 
       // If different tutors, maintain their current order
-      return 0;
-    });
+      return 0
+    })
   }
 
   filterOutTutors(
     preferences: Preference[],
-    excludedEmails: string[]
+    excludedEmails: string[],
   ): Preference[] {
-    return preferences.filter((pref) => !excludedEmails.includes(pref.userId));
+    return preferences.filter((pref) => !excludedEmails.includes(pref.userId))
   }
 
   private hasTimeConflict(
     classToCheck: ScheduledClass,
-    allocatedClasses: ScheduledClass[]
+    allocatedClasses: ScheduledClass[],
   ): boolean {
     for (const allocatedClass of allocatedClasses) {
       if (
@@ -1188,34 +1188,32 @@ public allocateClasses(
           classToCheck.startTime,
           classToCheck.endTime,
           allocatedClass.startTime,
-          allocatedClass.endTime
+          allocatedClass.endTime,
         )
       ) {
-        return true; // Time conflict found
+        return true // Time conflict found
       }
     }
-    return false;
+    return false
   }
 
   public reportTimeConflicts(
     allocations: Allocation[],
-    scheduledClasses: ScheduledClass[]
+    scheduledClasses: ScheduledClass[],
   ): string[] {
-    let tutorClassTimes: Map<string, ScheduledClass[]> = new Map();
-    let conflictReports: string[] = [];
+    let tutorClassTimes: Map<string, ScheduledClass[]> = new Map()
+    let conflictReports: string[] = []
 
     // Group class times by tutor
     allocations.forEach((alloc) => {
-      const classInfo = scheduledClasses.find(
-        (sc) => sc.id === alloc.classCode
-      );
+      const classInfo = scheduledClasses.find((sc) => sc.id === alloc.classCode)
       if (classInfo) {
         if (!tutorClassTimes.has(alloc.userId)) {
-          tutorClassTimes.set(alloc.userId, []);
+          tutorClassTimes.set(alloc.userId, [])
         }
-        tutorClassTimes.get(alloc.userId)!.push(classInfo);
+        tutorClassTimes.get(alloc.userId)!.push(classInfo)
       }
-    });
+    })
 
     // Check for time conflicts
     tutorClassTimes.forEach((classes, tutor) => {
@@ -1227,26 +1225,26 @@ public allocateClasses(
               classes[i].startTime,
               classes[i].endTime,
               classes[j].startTime,
-              classes[j].endTime
+              classes[j].endTime,
             )
           ) {
             conflictReports.push(
-              `Time conflict for tutor ${tutor} between classes ${classes[i].id} and ${classes[j].id} on ${classes[i].day}`
-            );
+              `Time conflict for tutor ${tutor} between classes ${classes[i].id} and ${classes[j].id} on ${classes[i].day}`,
+            )
           }
         }
       }
-    });
+    })
 
-    return conflictReports;
+    return conflictReports
   }
 
   private isTimeOverlap(
     startTime1: string,
     endTime1: string,
     startTime2: string,
-    endTime2: string
+    endTime2: string,
   ): boolean {
-    return !(endTime1 <= startTime2 || startTime1 >= endTime2);
+    return !(endTime1 <= startTime2 || startTime1 >= endTime2)
   }
 }
