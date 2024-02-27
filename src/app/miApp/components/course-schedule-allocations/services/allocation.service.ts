@@ -196,7 +196,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'snigdha1.mathur@gmail.com',
+        userId: 'snigdha.mathur@rmit.edu.au',
         classCode: 'BC1-G2-1',
         priority: 'H',
       },
@@ -216,7 +216,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'snigdha1.mathur@gmail.com',
+        userId: 'snigdha.mathur@rmit.edu.au',
         classCode: 'BC1-G2-2',
         priority: 'H',
       },
@@ -256,7 +256,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'snigdha1.mathur@gmail.com',
+        userId: 'snigdha.mathur@rmit.edu.au',
         classCode: 'BC1-G2-4',
         priority: 'H',
       },
@@ -476,7 +476,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'snigdha1.mathur@gmail.com',
+        userId: 'snigdha.mathur@rmit.edu.au',
         classCode: 'BC1-G6-1',
         priority: 'H',
       },
