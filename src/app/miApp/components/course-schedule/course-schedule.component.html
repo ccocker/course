@@ -5,12 +5,12 @@
       currentUser.email === 'craig.cocker@gmail.com'
     "
   >
-    <button (click)="bulkUpload()">Bulk Upload</button>
+    <button mat-raised-button (click)="bulkUpload()">Bulk Upload</button>
   </div>
 
   <mi-calendar
     [showDescription]="false"
-    [showDateNavigator]="false"
+    [showDateNavigator]="true"
     [events]="data"
     [startDate]="customStartDate"
     [startTime]="'08:00'"

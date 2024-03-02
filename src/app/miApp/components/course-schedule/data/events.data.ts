@@ -671,4 +671,18 @@ export const events: any[] = [
     startDate: new Date(2024, 2, 8),
     endDate: new Date(2024, 2, 8),
   },
+  {
+    offeringGroupCode: 'PS1',
+    groupNumber: 'G1',
+    classNumber: 1,
+    day: 'M',
+    startTime: '08:30',
+    endTime: '11:30',
+    roomCode: '012.10.005',
+    description: '',
+    leadName: 'Rodney Cocker',
+    color: '#cce0ff',
+    startDate: new Date(2024, 3, 22),
+    endDate: new Date(2024, 3, 22),
+  },
 ]

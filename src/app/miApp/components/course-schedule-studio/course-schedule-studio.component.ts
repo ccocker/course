@@ -103,7 +103,7 @@ export class CourseScheduleStudioComponent implements OnInit, OnDestroy {
     private firestoreDataService: FirestoreDataService,
     private cdr: ChangeDetectorRef,
   ) {
-    this.customStartDate = new Date(2024, 2, 4)
+    this.customStartDate = new Date(2024, 3, 22)
   }
 
   ngOnInit() {

@@ -3,7 +3,7 @@
   <!-- <button (click)="bulkUpload()">Bulk Upload</button> -->
   <mi-calendar
     [showDescription]="false"
-    [showDateNavigator]="false"
+    [showDateNavigator]="true"
     [showCalendarControls]="true"
     [events]="data"
     [currentUser]="currentUser"
@@ -25,6 +25,21 @@
           {{ event?.leadName }}
         </div>
         <br />
+        <div class="event-radio-buttons">
+          <label *ngFor="let option of ['H', 'M', 'L', 'X']">
+            <input
+              type="radio"
+              [value]="option"
+              [name]="event.id"
+              [checked]="
+                tutorPreferencesMap.get(buildClassCode(event)) === option
+              "
+              (change)="updatePreferences(event, option)"
+            />
+            {{ option }}
+          </label>
+        </div>
+        <!--
         <div class="tutor">
           <div><u>Tutors</u></div>
 
@@ -32,7 +47,7 @@
             <div>{{ tutor }}</div>
           </div>
         </div>
-      </div>
+      --></div>
     </ng-template>
   </mi-calendar>
 </div>
