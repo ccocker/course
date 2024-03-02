@@ -86,8 +86,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   selectedDate: Date = new Date()
   model!: BaseModel
   numberOfDaysInMonth: number = 31
+  displayOption: string = 'mine' // Default display option
   toggleShow: boolean = false
+  toggleAvailable: boolean = false
   @Input() hideShowAll: boolean = false
+  @Input() hideShowAvailable: boolean = false
   constructor(private modelFactory: ModelFactory) {}
 
   ngOnInit() {
@@ -99,12 +102,37 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.filterEvents(this.currentUser?.displayName)
   }
 
+  showEvents(option: string) {
+    this.displayOption = option
+
+    switch (option) {
+      case 'all':
+        this.filteredEvents = this.events
+        break
+      case 'mine':
+        this.filterEvents(this.currentUser?.displayName)
+        break
+      case 'needTutors':
+        this.filterEvents('David Leon')
+        break
+    }
+  }
+
   showAll() {
     this.toggleShow = !this.toggleShow
     if (this.toggleShow) {
       this.filteredEvents = this.events
     } else {
       this.filterEvents(this.currentUser?.displayName)
+    }
+  }
+
+  showAvailable() {
+    this.toggleAvailable = !this.toggleAvailable
+    if (this.toggleAvailable) {
+      this.filteredEvents = this.events
+    } else {
+      this.filterEvents('David Leon')
     }
   }
 
