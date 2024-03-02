@@ -448,7 +448,7 @@ export const events: any[] = [
     day: 'F',
     startTime: '16:30',
     endTime: '18:30',
-    roomCode: '012.10.006',
+    roomCode: '012.10.005',
     description: '',
     color: '#999999',
     startDate: new Date(2024, 2, 8),
