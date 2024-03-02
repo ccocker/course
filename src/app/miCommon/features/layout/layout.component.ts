@@ -63,6 +63,10 @@ export class LayoutComponent implements OnInit {
             link: 'auth/course-schedule-bootcamp',
           },
           {
+            title: 'Course Schedule Studio',
+            link: 'auth/course-schedule-studio',
+          },
+          {
             title: 'Course Schedule Allocations',
             link: 'auth/course-schedule-allocations',
           },
