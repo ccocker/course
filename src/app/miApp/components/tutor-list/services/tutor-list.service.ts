@@ -39,6 +39,7 @@ export class AllocationService {
     // Include all pre-allocated classes here
     // Example:
     let allocations: Allocation[] = []
+    /*
     allocations.push(
       {
         userId: 'yiwei.zhong@rmit.edu.au',
@@ -826,7 +827,7 @@ export class AllocationService {
         priority: 'H',
       },
     )
-
+*/
     return allocations
   }
 

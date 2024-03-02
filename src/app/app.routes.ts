@@ -1,9 +1,9 @@
-import { Route } from '@angular/router';
-import { ResetPasswordComponent } from '@miCommon/features/auth/components/reset-password/reset-password.component';
-import { HomeComponent } from '@miApp/components/home/home.component';
-import { LayoutComponent } from '@miCommon/features/layout/layout.component';
-import { AuthGuard } from '@miShared/guards/auth.guard';
-import { DashboardComponent } from '@miApp/components/dashboard/dashboard.component';
+import { Route } from '@angular/router'
+import { ResetPasswordComponent } from '@miCommon/features/auth/components/reset-password/reset-password.component'
+import { HomeComponent } from '@miApp/components/home/home.component'
+import { LayoutComponent } from '@miCommon/features/layout/layout.component'
+import { AuthGuard } from '@miShared/guards/auth.guard'
+import { DashboardComponent } from '@miApp/components/dashboard/dashboard.component'
 export const routes: Route[] = [
   { path: 'home', component: HomeComponent },
   {
@@ -20,10 +20,10 @@ export const routes: Route[] = [
           ).then((r) => r.routes),
       },
       {
-        path: 'course-schedule-tutors',
+        path: 'course-schedule-bootcamp',
         loadChildren: () =>
           import(
-            '@miApp/components/course-schedule-tutors/course-schedule-tutors.routes'
+            '@miApp/components/course-schedule-bootcamp/course-schedule-bootcamp.routes'
           ).then((r) => r.routes),
       },
       {
@@ -37,14 +37,14 @@ export const routes: Route[] = [
         path: 'tutor-list',
         loadChildren: () =>
           import('@miApp/components/tutor-list/tutor-list.routes').then(
-            (r) => r.routes
+            (r) => r.routes,
           ),
       },
       {
         path: ':collection',
         loadChildren: () =>
           import('@miCommon/features/entity/entity.routes').then(
-            (r) => r.routes
+            (r) => r.routes,
           ),
       },
     ],
@@ -53,23 +53,23 @@ export const routes: Route[] = [
     path: 'global-feed',
     loadChildren: () =>
       import('@miCommon/features/global-feed/global-feed.routes').then(
-        (r) => r.routes
+        (r) => r.routes,
       ),
   },
   {
     path: 'feed',
     loadChildren: () =>
       import('@miCommon/features/your-feed/your-feed.routes').then(
-        (r) => r.routes
+        (r) => r.routes,
       ),
   },
   {
     path: 'tags/:slug',
     loadChildren: () =>
       import('@miCommon/features/tag-feed/tag-feed.routes').then(
-        (m) => m.routes
+        (m) => m.routes,
       ),
   },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect to Home
-];
+]

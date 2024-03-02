@@ -1,4 +1,5 @@
 export const events: any[] = [
+  /*
   {
     offeringGroupCode: 'BC1',
     groupNumber: 'G1',
@@ -622,5 +623,5 @@ export const events: any[] = [
     color: '#cce0ff',
     startDate: new Date(2024, 2, 8),
     endDate: new Date(2024, 2, 8),
-  },
+  },*/
 ]

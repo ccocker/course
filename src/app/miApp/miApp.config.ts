@@ -1,13 +1,13 @@
 interface MiAppConfig {
-  title: string;
-  isRtl: boolean;
-  sidenavMenuItems: any;
-  loggedInItems: string[];
-  loggedOutItems: string[];
-  showTopNav: boolean;
-  showLogo: boolean;
-  showAppTitle: boolean;
-  defaultLandingPages: { [role: string]: string };
+  title: string
+  isRtl: boolean
+  sidenavMenuItems: any
+  loggedInItems: string[]
+  loggedOutItems: string[]
+  showTopNav: boolean
+  showLogo: boolean
+  showAppTitle: boolean
+  defaultLandingPages: { [role: string]: string }
 }
 
 export const miAppConfig: MiAppConfig = {
@@ -34,6 +34,6 @@ export const miAppConfig: MiAppConfig = {
   defaultLandingPages: {
     admin: 'auth/dashboard',
     userAdmin: 'auth/course-schedule',
-    user: 'auth/course-schedule-tutors',
+    user: 'auth/course-schedule-bootcamp',
   },
-};
+}
