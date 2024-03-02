@@ -96,7 +96,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.initializeTimeslots()
     this.filteredEvents = this.events.slice()
     console.log('currentUser', this.currentUser)
-    //this.filterEvents(this.currentUser?.displayName)
+    this.filterEvents(this.currentUser?.displayName)
   }
 
   showAll() {

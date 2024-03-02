@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core'
 import { CommonModule } from '@angular/common'
-// import { ScheduleService } from './services/schedule.service';
 
 import {
   DayOfWeek,
@@ -19,13 +18,8 @@ import { selectEntities as selectEventsEntities } from './store/course-schedules
 import { selectEntities as selectPeopleEntities } from '@miCommon/features/entity/store/reducers'
 import { CalendarComponent } from '@miCommon/features/calendar/calendar.component'
 import { selectTutorPreferences } from './store/tutor-preferences/reducers'
-import { courseScheduleFeatureKey } from './store/course-schedules/reducers'
 import { events } from './data/events.data'
 import { courses } from './data/courses.data'
-// import { offering } from './data/offering.data';
-// import { offeringGroups } from './data/offering-group.data';
-// import { rooms } from './data/rooms.data';
-// import { groupClasses } from './data/group-classes.data';
 import { LoadingComponent } from '@src/src/app/miCommon/components/loading/loading.component'
 import { FirestoreDataService } from '@miCommon/services/firestore.data'
 
