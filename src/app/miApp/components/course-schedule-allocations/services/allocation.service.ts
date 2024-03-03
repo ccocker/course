@@ -756,6 +756,11 @@ export class AllocationService {
         priority: 'H',
       },
       {
+        userId: 'david.leon@gmail.com',
+        classCode: 'BC2-G1-4',
+        priority: 'H',
+      },
+      {
         userId: 'ghazia.qaiser@rmit.edu.au',
         classCode: 'BC2-G2-1',
         priority: 'H',
