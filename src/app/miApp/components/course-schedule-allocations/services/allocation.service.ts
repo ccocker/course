@@ -746,11 +746,6 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
-        classCode: 'BC2-G1-4',
-        priority: 'H',
-      },
-      {
         userId: 'steve.quenette@rmit.edu.au',
         classCode: 'BC2-G1-4',
         priority: 'H',
@@ -766,33 +761,8 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'mailtojyotikundu@gmail.com',
-        classCode: 'BC2-G2-1',
-        priority: 'H',
-      },
-      {
-        userId: 'yediya.juan@rmit.edu.au',
-        classCode: 'BC2-G2-1',
-        priority: 'H',
-      },
-      {
-        userId: 'mailtojyotikundu@gmail.com',
-        classCode: 'BC2-G2-2',
-        priority: 'H',
-      },
-      {
         userId: 'justin.perrie@rmit.edu.au',
         classCode: 'BC2-G2-2',
-        priority: 'H',
-      },
-      {
-        userId: 'ghazia.qaiser@rmit.edu.au',
-        classCode: 'BC2-G2-2',
-        priority: 'H',
-      },
-      {
-        userId: 'ghazia.qaiser@rmit.edu.au',
-        classCode: 'BC2-G2-3',
         priority: 'H',
       },
       {
@@ -801,22 +771,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'yediya.juan@rmit.edu.au',
-        classCode: 'BC2-G2-3',
-        priority: 'H',
-      },
-      {
-        userId: 'david.leon@gmail.com',
-        classCode: 'BC2-G2-4',
-        priority: 'H',
-      },
-      {
         userId: 'khuyagbaatar.batsuren@rmit.edu.au',
-        classCode: 'BC2-G2-4',
-        priority: 'H',
-      },
-      {
-        userId: 'yujin.jinx.huang@rmit.edu',
         classCode: 'BC2-G2-4',
         priority: 'H',
       },
@@ -891,7 +846,7 @@ export class AllocationService {
     scheduledClasses: ScheduledClass[],
   ): Allocation[] {
     let allocations: Allocation[] = this.getPreAllocations() // Get pre-allocations
-
+    /*
     let tutorAllocationCount: Map<string, number> = new Map() // Track number of allocations per tutor
     let tutorClassTimes: Map<string, ScheduledClass[]> = new Map()
     let classTutorCount: Map<string, number> = new Map() // Track number of tutors per class
@@ -988,7 +943,7 @@ export class AllocationService {
       },
     )
     this.reportTimeConflicts(allocations, scheduledClasses)
-
+*/
     return allocations
   }
   /*
