@@ -29,7 +29,11 @@
           <div><u>Tutors</u></div>
 
           <div *ngFor="let tutor of event?.tutors">
-            <div>{{ tutor }}</div>
+            <div
+              [innerHTML]="
+                tutor === 'David Leon' ? '<mark>Tutor Required</mark>' : tutor
+              "
+            ></div>
           </div>
         </div>
       </div>
