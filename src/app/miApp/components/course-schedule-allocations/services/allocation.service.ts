@@ -326,7 +326,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'hanin.aloufi@rmit.edu.au',
         classCode: 'BC1-G4-4',
         priority: 'H',
       },
@@ -426,7 +426,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G6-2',
         priority: 'H',
       },
@@ -551,12 +551,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'rejoy.benjamin@rmit.edu.au',
         classCode: 'BC1-G7-4',
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'hanin.aloufi@rmit.edu.au',
         classCode: 'BC1-G7-4',
         priority: 'H',
       },
@@ -571,7 +571,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'mshakeri63@gmail.com',
+        userId: 'mohammad.shakeri@rmit.edu.au',
         classCode: 'BC1-G8-1',
         priority: 'H',
       },
@@ -598,11 +598,6 @@ export class AllocationService {
       {
         userId: 'david.leon@gmail.com',
         classCode: 'BC1-G8-2',
-        priority: 'H',
-      },
-      {
-        userId: 'david.leon@gmail.com',
-        classCode: 'BC1-G8-3',
         priority: 'H',
       },
       {
@@ -626,17 +621,12 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'rejoy.benjamin@rmit.edu.au',
-        classCode: 'BC1-G8-4',
-        priority: 'H',
-      },
-      {
         userId: 'matthewcourtney@protonmail.com',
         classCode: 'BC1-G8-4',
         priority: 'H',
       },
       {
-        userId: 'hanin.aloufi@rmit.edu.au',
+        userId: 'david.leon@gmail.com',
         classCode: 'BC1-G8-4',
         priority: 'H',
       },
