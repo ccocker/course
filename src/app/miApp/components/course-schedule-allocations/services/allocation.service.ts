@@ -596,7 +596,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'amina.hossain@rmit.edu.au',
         classCode: 'BC1-G8-2',
         priority: 'H',
       },
@@ -616,7 +616,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'amina.hossain@rmit.edu.au',
         classCode: 'BC1-G8-4',
         priority: 'H',
       },
@@ -626,7 +626,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'david.leon@gmail.com',
+        userId: 'ghazia.qaiser@rmit.edu.au',
         classCode: 'BC1-G8-4',
         priority: 'H',
       },

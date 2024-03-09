@@ -104,7 +104,10 @@ export class LayoutComponent implements OnInit {
             title: 'Bootcamp Timetable',
             link: 'auth/course-schedule-bootcamp',
           },
-          // You can add more default menu items here
+          {
+            title: 'Course Schedule Studio',
+            link: 'auth/course-schedule-studio',
+          },
         ]
       }
     })
