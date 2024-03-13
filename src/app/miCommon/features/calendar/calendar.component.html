@@ -44,37 +44,38 @@
         placeholder="Search Events"
       />
     </mat-form-field>
-
-    <label>
-      <input
-        type="radio"
-        name="displayOption"
-        value="all"
-        (change)="showEvents('all')"
-        [checked]="displayOption === 'all'"
-      />
-      Show All
-    </label>
-    <label *ngIf="!hideShowAll">
-      <input
-        type="radio"
-        name="displayOption"
-        value="mine"
-        (change)="showEvents('mine')"
-        [checked]="displayOption === 'mine'"
-      />
-      Show Mine
-    </label>
-    <label *ngIf="!hideShowAvailable">
-      <input
-        type="radio"
-        name="displayOption"
-        value="needTutors"
-        (change)="showEvents('needTutors')"
-        [checked]="displayOption === 'needTutors'"
-      />
-      Show Need Tutors
-    </label>
+    <span class="showFilter">
+      <label>
+        <input
+          type="radio"
+          name="displayOption"
+          value="all"
+          (change)="showEvents('all')"
+          [checked]="displayOption === 'all'"
+        />
+        Show All
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="displayOption"
+          value="mine"
+          (change)="showEvents('mine')"
+          [checked]="displayOption === 'mine'"
+        />
+        Show Mine
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="displayOption"
+          value="needTutors"
+          (change)="showEvents('needTutors')"
+          [checked]="displayOption === 'needTutors'"
+        />
+        Show Need Tutors
+      </label>
+    </span>
     <!--
     <button *ngIf="!hideShowAll" (click)="showAll()">
       {{ toggleShow ? 'Show Mine' : 'Show All' }}

@@ -6,25 +6,35 @@
   justify-content: center; // Centers the radio buttons horizontally
   align-items: center; // Aligns items vertically in the center
   flex-wrap: wrap; // Allows items to wrap onto the next line if needed
-  font-size: 64px;
+  font-size: 14px;
   label {
     display: flex;
     flex-direction: column; // Stacks radio button and label vertically
     align-items: center; // Centers the label under the radio button
-    margin: 10px; // Adds some space between each radio button group
-    font-size: 32px;
+    margin: 5px; // Adds some space between each radio button group
+    font-size: 14px;
 
     &:last-child {
       margin-right: 0; // Removes margin from the last radio button group
     }
 
     input[type='radio'] {
-      margin: 10px; // Space between radio button and label
-      transform: scale(1.5); // Adjust the size of radio button if needed
+      margin: 5px; // Space between radio button and label
+      transform: scale(1.2); // Adjust the size of radio button if needed
     }
   }
 }
 
 .lead {
   font-weight: bold;
+}
+
+h1 {
+  z-index: 2;
+  background-color: white;
+  width: 100%;
+  padding-top: 5px;
+  height: 60px;
+  position: absolute;
+  margin-top: -5px;
 }

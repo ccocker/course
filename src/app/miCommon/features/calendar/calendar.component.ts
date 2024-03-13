@@ -86,10 +86,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   selectedDate: Date = new Date()
   model!: BaseModel
   numberOfDaysInMonth: number = 31
-  displayOption: string = 'mine' // Default display option
+  displayOption: string = 'all' // Default display option
   toggleShow: boolean = false
   toggleAvailable: boolean = false
-  @Input() hideShowAll: boolean = false
+  @Input() hideShowAll: boolean = true
   @Input() hideShowAvailable: boolean = false
   constructor(private modelFactory: ModelFactory) {}
 
@@ -100,6 +100,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.filteredEvents = this.events.slice()
     console.log('currentUser', this.currentUser)
     this.filterEvents(this.currentUser?.displayName)
+    this.showEvents('all')
   }
 
   showEvents(option: string) {
