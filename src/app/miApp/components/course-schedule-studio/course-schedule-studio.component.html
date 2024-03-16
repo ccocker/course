@@ -13,7 +13,10 @@
     (eventDoubleClick)="onEventEdit($event)"
   >
     <ng-template let-event>
-      <div class="event-details">
+      <div
+        class="event-details"
+        *ngIf="!event?.offeringGroupCode.includes('WS')"
+      >
         {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
 
         {{ event?.classNumber }}
