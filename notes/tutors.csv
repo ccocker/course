@@ -215,7 +215,7 @@ id,firstName,lastName,p-email,r-email,phone,qual,e-number,type,active,notes
 306,Joseph,Warren,josipwarren@gmail.com,joseph.warren@rmit.edu.au,0449 569 230,Secondary,E122332,mentor,TRUE,""
 307,Arjun,Kumar,arjk626@gmail.com,arjun.kumar@rmit.edu.au,0404 582 357,Secondary,E122092,mentor,TRUE,""
 309,Akshita,Agrawal,akshitaagr1509@gmail.com,akshita.agrawal2@rmit.edu.au,0424 466 329,Secondary,E122166,mentor,TRUE,""
-310,Mitchell,Simmons,mitchellrichardsimmons@gmail.com,mitchell.simmons@rmit.edu.au,0432 797 704,Secondary,E122173,mentor,TRUE,""
+310,Mitchell,Simmons,mitchellrichardsimmons@gmail.com,mitchell.simmons@rmit.edu.au,0432 797 704,Secondary,E122173,mentor,FALSE,""
 311,Ibrahim,Ashab,Ibrahim.ashhab@gmail.com,s3953973@student.rmit.edu.au,0412 120 140,Secondary,E122187,mentor,TRUE,""
 312,Aksharkumar,Amin,aksharamin0501@gmail.com,aksharkumar.amin@rmit.edu.au,0413 251 521,Secondary,E122085,mentor,FALSE,""
 313,Gilbert,Du,duyiqi1717@gmail.com,gilbert.du@rmit.edu.au,0466 652 220,Secondary,E122132,mentor,TRUE,""

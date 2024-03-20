@@ -97,6 +97,19 @@ export class LayoutComponent implements OnInit {
           { title: 'Tutor List', link: 'auth/tutor-list' },
           // Add more menu items as needed
         ]
+      } else if (
+        currentUser &&
+        (currentUser.email === 'halil.ali@rmit.edu.au' ||
+          currentUser.email === 'ryan.kelly@rmit.edu.au')
+      ) {
+        // Set a different set of menu items specifically for Henry
+        this.miAppConfig.sidenavMenuItems = [
+          // Define the menu items that Henry should see
+          {
+            title: 'Course Schedule Studio',
+            link: 'auth/course-schedule-studio',
+          },
+        ]
       } else {
         // Set a default menu for other users
         this.miAppConfig.sidenavMenuItems = [

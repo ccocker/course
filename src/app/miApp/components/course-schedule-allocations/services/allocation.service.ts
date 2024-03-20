@@ -566,48 +566,8 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'jyoti.kundu@rmit.edu.au',
-        classCode: 'BC1-G8-1',
-        priority: 'H',
-      },
-      {
-        userId: 'mohammad.shakeri@rmit.edu.au',
-        classCode: 'BC1-G8-1',
-        priority: 'H',
-      },
-      {
-        userId: 'khuyagbaatar.batsuren@rmit.edu.au',
-        classCode: 'BC1-G8-1',
-        priority: 'H',
-      },
-      {
-        userId: 'joy.chen@rmit.edu.au',
-        classCode: 'BC1-G8-2',
-        priority: 'H',
-      },
-      {
-        userId: 'rejoy.benjamin@rmit.edu.au',
-        classCode: 'BC1-G8-2',
-        priority: 'H',
-      },
-      {
-        userId: 'matthew.courtney@rmit.edu.au',
-        classCode: 'BC1-G8-2',
-        priority: 'H',
-      },
-      {
         userId: 'amina.hossain@rmit.edu.au',
         classCode: 'BC1-G8-2',
-        priority: 'H',
-      },
-      {
-        userId: 'man.hou@rmit.edu.au',
-        classCode: 'BC1-G8-3',
-        priority: 'H',
-      },
-      {
-        userId: 'khuyagbaatar.batsuren@rmit.edu.au',
-        classCode: 'BC1-G8-3',
         priority: 'H',
       },
       {
@@ -616,17 +576,7 @@ export class AllocationService {
         priority: 'H',
       },
       {
-        userId: 'amina.hossain@rmit.edu.au',
-        classCode: 'BC1-G8-4',
-        priority: 'H',
-      },
-      {
         userId: 'matthew.courtney@rmit.edu.au',
-        classCode: 'BC1-G8-4',
-        priority: 'H',
-      },
-      {
-        userId: 'ghazia.qaiser@rmit.edu.au',
         classCode: 'BC1-G8-4',
         priority: 'H',
       },
