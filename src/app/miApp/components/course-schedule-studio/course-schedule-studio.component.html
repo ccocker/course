@@ -12,11 +12,9 @@
     [scrollToCurrentTime]="false"
     (eventDoubleClick)="onEventEdit($event)"
   >
+    /* *ngIf="!event?.offeringGroupCode.includes('WS')" */
     <ng-template let-event>
-      <div
-        class="event-details"
-        *ngIf="!event?.offeringGroupCode.includes('WS')"
-      >
+      <div class="event-details">
         {{ event?.offeringGroupCode }} - {{ event?.groupNumber }} -
 
         {{ event?.classNumber }}

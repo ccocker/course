@@ -32,6 +32,7 @@ export const miAppConfig: MiAppConfig = {
   showLogo: true,
   showAppTitle: false,
   defaultLandingPages: {
+    studio: 'auth/course-schedule-studio',
     admin: 'auth/dashboard',
     userAdmin: 'auth/course-schedule',
     user: 'auth/course-schedule-bootcamp',
