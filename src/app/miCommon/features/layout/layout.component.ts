@@ -98,9 +98,16 @@ export class LayoutComponent implements OnInit {
           // Add more menu items as needed
         ]
       } else if (
-        currentUser &&
-        (currentUser.email === 'halil.ali@rmit.edu.au' ||
-          currentUser.email === 'ryan.kelly@rmit.edu.au')
+        (currentUser &&
+          (currentUser.email === 'halil.ali@rmit.edu.au' ||
+            currentUser.email === 'ryan.kelly@rmit.edu.au' ||
+            currentUser.email === 'dana.mckay@rmit.edu.au' ||
+            currentUser.email === 'senuri.wijenayake@rmit.edu.au')) ||
+        currentUser.email === 'david.eccles@rmit.edu.au' ||
+        currentUser.email === 'santha.sumanasekara@rmit.edu.au' ||
+        currentUser.email === 'xiuzhen.zhang@rmit.edu.au' ||
+        currentUser.email === 'david.leon@gmail.com' ||
+        currentUser.email === 'tuck.wah.leong@rmit.edu.au'
       ) {
         // Set a different set of menu items specifically for Henry
         this.miAppConfig.sidenavMenuItems = [
